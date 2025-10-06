@@ -6,7 +6,7 @@ namespace ConcertJournal.Data
     public class DatabaseContext
     {
         readonly SQLiteAsyncConnection _database;
-        public ConcertJournalDatabase(string dbPath)
+        public DatabaseContext(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Concert>().Wait();
