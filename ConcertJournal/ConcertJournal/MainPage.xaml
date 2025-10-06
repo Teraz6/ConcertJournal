@@ -4,22 +4,53 @@
              x:Class="ConcertJournal.MainPage"
              xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
              xmlns:models="clr-namespace:ConcertJournal.Models"
-             Title="Concert Journal">
-    
-    <VerticalStackLayout
-        VerticalOptions="Center"
-        HorizontalOptions="Center">
-        
-        <Label
-            Text="Add a Concert"
-            FontSize="24"
-            HorizontalOptions="Center"
-            TextColor="White" />
-        
-        <Button
-            Text="Add Concert"
-            Clicked="OnAddConcertClicked"
-            HorizontalOptions="Center" />
+             Title="Event Journal">
 
-    </VerticalStackLayout>
+    <Grid RowDefinitions="*,Auto">
+        
+        <!--MainContent-->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+
+            <Label
+                Text="Add a event"
+                FontSize="24"
+                HorizontalOptions="Center"
+                TextColor="White" />
+
+            <Button
+                Text="Add Event"
+                Clicked="OnAddConcertClicked"
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!--Navigation bar-->
+        <Grid Grid.Row="1"
+              BackgroundColor="#00BBF2"
+              HeightRequest="70"
+              ColumnDefinitions="*,*,*"
+              VerticalOptions="End"
+              Padding="10,10">
+
+            <ImageButton Grid.Column="0"
+                         Source="home.png"
+                         HorizontalOptions="Center"
+                         Clicked="OnStartPageClicked" />
+
+            <ImageButton Grid.Column="1"
+                         Source="plus.png"
+                         HorizontalOptions="Center"
+                         Clicked="OnAddConcertClicked"/>
+
+            <ImageButton Grid.Column="2"
+                         Source="list.png"
+                         HorizontalOptions="Center" 
+                         Clicked="OnConcertListClicked"/>
+        </Grid>
+        
+    </Grid>
+    
 </ContentPage>
