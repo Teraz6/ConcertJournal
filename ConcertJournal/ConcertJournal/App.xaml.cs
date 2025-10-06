@@ -29,7 +29,7 @@ namespace ConcertJournal
             #endif
             });
 
-            MainPage = new StartPage();
+            MainPage = new AppShell();
         }
 
 
