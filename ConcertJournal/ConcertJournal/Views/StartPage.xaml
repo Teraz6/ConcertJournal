@@ -5,11 +5,8 @@
              Title="StartPage">
     <VerticalStackLayout
         VerticalOptions="Center"
-        HorizontalOptions="Center">
-        <Label TextColor="Red"
-            Text="Hello, welcome to Concert journal"
-            FontSize="24"
-            HorizontalOptions="Center" />
+        HorizontalOptions="Center"
+        x:Name="MainStack">
+        <!-- Content will be added dynamically from code-behind -->
     </VerticalStackLayout>
-
 </ContentPage>
