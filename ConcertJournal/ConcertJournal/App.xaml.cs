@@ -1,4 +1,6 @@
-﻿#if WINDOWS
+﻿using ConcertJournal.Views;
+
+#if WINDOWS
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Windows.Graphics;
@@ -27,7 +29,7 @@ namespace ConcertJournal
             #endif
             });
 
-            MainPage = new AppShell();
+            MainPage = new StartPage();
         }
 
 
