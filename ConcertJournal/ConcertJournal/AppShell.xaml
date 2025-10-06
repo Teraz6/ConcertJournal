@@ -4,12 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ConcertJournal"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:views="clr-namespace:ConcertJournal.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarForegroundColor="#c7f5ff"
     Title="ConcertJournal">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!-- Bottom Navigation Bar -->
+    <TabBar>
+        <!-- 1️. Start Page -->
+        <ShellContent
+            Icon="home.png"
+            ContentTemplate="{DataTemplate views:StartPage}" />
+
+        <!-- 2️. Add Concert Page -->
+        <ShellContent
+            Icon="plus.png"
+            ContentTemplate="{DataTemplate views:AddConcertPage}" />
+
+        <!-- 3️. Concert List Page -->
+        <ShellContent
+            Icon="list.png"
+            ContentTemplate="{DataTemplate views:ConcertListPage}" />
+    </TabBar>
 
 </Shell>
