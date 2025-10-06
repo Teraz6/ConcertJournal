@@ -19,6 +19,7 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+		//builder.Services.AddSingleton<ConcertJournalDatabase>(s => new ConcertJournalDatabase(Path.Combine(FileSystem.AppDataDirectory, "ConcertJournalDb1");
 		return builder.Build();
 	}
 }
