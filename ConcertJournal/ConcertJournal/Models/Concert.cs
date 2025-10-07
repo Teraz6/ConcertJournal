@@ -6,6 +6,7 @@ namespace ConcertJournal.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        public string? Title { get; set; }
         public string? BandName { get; set; }
         public string? Venue { get; set; }
         public string? Location { get; set; }

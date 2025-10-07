@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.StartPage"
              Title="StartPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        x:Name="MainStack">
+        <!-- Content will be added dynamically from code-behind -->
     </VerticalStackLayout>
 </ContentPage>
