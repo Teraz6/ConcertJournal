@@ -16,8 +16,7 @@
             <Label
                 Text="This is ConcertListPage."
                 FontSize="24"
-                HorizontalOptions="Center"
-                TextColor="White" />
+                HorizontalOptions="Center" />
         </VerticalStackLayout>
 
         <!--Navigation bar-->
