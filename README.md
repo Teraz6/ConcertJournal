@@ -1,6 +1,4 @@
-# ConcertJournal
-
-Event Journal
+# Event Journal
 
 Ülevaade:
 Tegemist on rakendusega, mis võimaldab inimestel üles märkida üritused, millest nad on osa võtnud.
