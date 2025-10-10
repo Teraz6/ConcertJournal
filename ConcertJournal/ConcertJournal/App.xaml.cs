@@ -20,8 +20,9 @@ namespace ConcertJournal
         {
             InitializeComponent();
 
+
             // Initialize the SQLite database
-            string dbPath = DatabaseHelper.GetDatabasePath();
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "concerts.db3");
             Database = new DatabaseContext(dbPath);
 
             Microsoft.Maui.Handlers.WindowHandler.Mapper.AppendToMapping(nameof(IWindow), (handler, view) =>
