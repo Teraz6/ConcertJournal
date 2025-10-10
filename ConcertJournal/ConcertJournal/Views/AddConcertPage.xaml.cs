@@ -6,10 +6,11 @@ namespace ConcertJournal.Views;
 
 public partial class AddConcertPage : ContentPage
 {
-    private ObservableCollection<string> Performers = new ObservableCollection<string>();
+    
     public AddConcertPage()
     {
         InitializeComponent();
+        BindingContext = this;
     }
     private async void OnStartPageClicked(object sender, EventArgs e)
     {
@@ -25,6 +26,8 @@ public partial class AddConcertPage : ContentPage
     {
         await Navigation.PushAsync(new ConcertListPage(), false);
     }
+
+    public ObservableCollection<string> Performers { get; set; } = new ObservableCollection<string>();
 
     private void AddNewPerformer(object sender, EventArgs e)
     {
@@ -50,6 +53,13 @@ public partial class AddConcertPage : ContentPage
             DisplayAlert("Missing Name", "Please enter a performer's name", "OK");
         }
     }
+    private void RemovePerformer(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is string performer)
+        {
+            Performers.Remove(performer);
+        }
+    }
 
     private async void CreateButton_Clicked(object sender, EventArgs e)
     {
@@ -69,13 +79,19 @@ public partial class AddConcertPage : ContentPage
         await App.Database.SaveConcertAsync(concert);
 
         await DisplayAlert("Success", "Concert saved!", "OK");
+
+        // Clear all input fields safely
+        if (EventTitleEntry != null) EventTitleEntry.Text = string.Empty;
+        if (VenueEntry != null) VenueEntry.Text = string.Empty;
+        if (CountryEntry != null) CountryEntry.Text = string.Empty;
+        if (CityEntry != null) CityEntry.Text = string.Empty;
+        if (NotesEditor != null) NotesEditor.Text = string.Empty;
+        if (DatePicker != null) DatePicker.Date = DateTime.Today;
+
+        // Clear performers list
+        Performers.Clear();
+
     }
 
-    private void RemovePerformer(object sender, EventArgs e)
-    {
-        if (sender is Button button && button.BindingContext is string performer)
-        {
-            Performers.Remove(performer);
-        }
-    }
+
 }
