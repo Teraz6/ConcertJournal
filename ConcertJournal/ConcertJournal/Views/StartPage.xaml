@@ -8,5 +8,6 @@
         HorizontalOptions="Center"
         x:Name="MainStack">
         <!-- Content will be added dynamically from code-behind -->
+        <!--StartPage code will be writen in MainPage.xaml, NOT HERE-->
     </VerticalStackLayout>
 </ContentPage>

@@ -1,4 +1,6 @@
-﻿using ConcertJournal.Views;
+﻿using ConcertJournal.Data;
+using ConcertJournal.Views;
+using ConcertJournal.Services;
 
 #if WINDOWS
 using Microsoft.UI;
@@ -12,9 +14,16 @@ namespace ConcertJournal
     {
         const int WindowWidth = 540;
         const int WindowHeight = 1000;
+
+        public static DatabaseContext Database { get; private set; }
         public App()
         {
             InitializeComponent();
+
+
+            // Initialize the SQLite database
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "concerts.db3");
+            Database = new DatabaseContext(dbPath);
 
             Microsoft.Maui.Handlers.WindowHandler.Mapper.AppendToMapping(nameof(IWindow), (handler, view) =>
             {

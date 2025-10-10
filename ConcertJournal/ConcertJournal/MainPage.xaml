@@ -18,8 +18,7 @@
             <Label
                 Text="Add a event"
                 FontSize="24"
-                HorizontalOptions="Center"
-                TextColor="White" />
+                HorizontalOptions="Center" />
 
             <Button
                 Text="Add Event"
