@@ -11,7 +11,7 @@
               Padding="10">
             <VerticalStackLayout Grid.ColumnSpan="3">
                 
-                <!--PageTitle-->
+                <!--PageTitle and Create button-->
                 <Grid ColumnDefinitions="*,Auto">
                     <Label Grid.Column="0"
                            Text="Create Event"
@@ -19,10 +19,11 @@
                            FontAttributes="Bold"
                            HorizontalOptions="Center"/>
                     <Button Grid.Column="1"
+                            x:Name="SaveButton"
                             Text="Create"
                             BackgroundColor="Green"
                             HorizontalOptions="End"
-                            Clicked="CreateButton_Clicked"/>
+                            Clicked="SaveButton_Clicked"/>
                 </Grid>
 
                 <!--Event Title-->
@@ -112,7 +113,7 @@
                        Margin="0,10,0,10"
                        FontSize="18"/>
                 <DatePicker x:Name="DatePicker"/>
-
+                
                 <!--Notes-->
                 <Label Text="Notes" 
                        Margin="0,10,0,10"

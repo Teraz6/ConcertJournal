@@ -24,7 +24,11 @@ public partial class ConcertListPage : ContentPage
 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
-     
+        if (sender is Button button && button.CommandParameter is Concert selectedConcert)
+        {
+            // Navigate to AddConcertPage with the existing concert
+            await Navigation.PushAsync(new AddConcertPage(selectedConcert));
+        }
     }
 
     private async void OnDeleteClicked(object sender, EventArgs e)

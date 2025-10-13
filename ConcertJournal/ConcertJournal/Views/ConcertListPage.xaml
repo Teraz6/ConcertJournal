@@ -7,90 +7,105 @@
     <Grid RowDefinitions="*,Auto">
 
         <!--MainContent-->
-        <CollectionView x:Name="ConcertListView" Margin="10">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Margin="0,5"
-                            Padding="10"
-                            BackgroundColor="#1E1E1E">
-                        <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
-                            <!-- Concert details -->
-                            <VerticalStackLayout Grid.Column="0">
-                                <Label Text="{Binding EventTitle}" 
-                                   FontSize="18" 
-                                   TextColor="White" 
-                                   FontAttributes="Bold"/>
-                                <Label Text="{Binding Performers}" 
-                                   FontSize="14" 
-                                   TextColor="Gray"/>
-                                
-                                <HorizontalStackLayout Spacing="10">
+        <Grid RowDefinitions="Auto,*">
+
+            <SearchBar Placeholder="Search events"
+                       Margin="5"
+                       CancelButtonColor="Red"
+                       FontSize="16">
+            </SearchBar>
+            
+            <!--Event display-->
+            <CollectionView Grid.Row="1"
+                            x:Name="ConcertListView" 
+                            Margin="5">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!--Use strokeThickness as margin-->
+                        <Border Padding="10"
+                                Stroke="Transparent"
+                                StrokeThickness="10"
+                                StrokeShape="20"
+                                BackgroundColor="DarkCyan">
+                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                            
+                                <!-- Concert details -->
+                                <VerticalStackLayout Grid.Column="0">
+                                    <Label Text="{Binding EventTitle}" 
+                                       FontSize="18" 
+                                       TextColor="White" 
+                                       FontAttributes="Bold"/>
+                                    <Label Text="{Binding Performers}" 
+                                       FontSize="16" 
+                                       TextColor="White"/>
                                     <Label Text="{Binding Venue}" 
-                                           FontSize="14" 
-                                           TextColor="LightGray"/>
-                                    <Label Text="{Binding Country}" 
-                                           FontSize="14" 
-                                           TextColor="LightGray"/>
-                                    <Label Text="{Binding City}" 
-                                           FontSize="14" 
-                                           TextColor="LightGray"/>
-                                </HorizontalStackLayout>
+                                               FontSize="14" 
+                                               TextColor="LightGray"/>
+                                    <HorizontalStackLayout Spacing="10">
+                                        <Label Text="{Binding Country}" 
+                                               FontSize="14" 
+                                               TextColor="LightGray"/>
+                                        <Label Text="{Binding City}" 
+                                               FontSize="14" 
+                                               TextColor="LightGray"/>
+                                    </HorizontalStackLayout>
                                 
-                                <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                   FontSize="12" 
-                                   TextColor="Gray"/>
-                            </VerticalStackLayout>
+                                    <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
+                                           FontSize="12"
+                                           Margin="0,10,0,0"
+                                           TextColor="Gray"/>
+                                </VerticalStackLayout>
 
-                            <!--Button Layout-->
-                            <VerticalStackLayout Grid.Column="1"
-                                                 Spacing="5">
-                                <!--Update button-->
-                                <Button Text="Update"
-                                        BackgroundColor="Green"
-                                        FontSize="18"
-                                        Padding="5"
-                                        VerticalOptions="Center"
-                                        Clicked="OnUpdateClicked"
-                                        BindingContext="{Binding .}" />
+                                <!--Button Layout-->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Spacing="5">
+                                    <!--Update button-->
+                                    <Button Text="Update"
+                                            BackgroundColor="Green"
+                                            FontSize="18"
+                                            Padding="5"
+                                            VerticalOptions="Center"
+                                            Clicked="OnUpdateClicked"
+                                            CommandParameter="{Binding .}" />
                                 
-                                <!-- Delete button -->
-                                <Button Text="Delete"
-                                        BackgroundColor="Red"
-                                        FontSize="18"
-                                        Padding="5"
-                                        VerticalOptions="Center"
-                                        Clicked="OnDeleteClicked"
-                                        BindingContext="{Binding .}" />
-                            </VerticalStackLayout>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                    <!-- Delete button -->
+                                    <Button Text="Delete"
+                                            BackgroundColor="Red"
+                                            FontSize="18"
+                                            Padding="5"
+                                            VerticalOptions="Center"
+                                            Clicked="OnDeleteClicked"
+                                            BindingContext="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-            <!--Navigation bar-->
-        <Grid Grid.Row="1"
-              BackgroundColor="#00BBF2"
-              HeightRequest="70"
-              ColumnDefinitions="*,*,*"
-              VerticalOptions="End"
-              Padding="10,10">
+                <!--Navigation bar-->
+            <Grid Grid.Row="1"
+                  BackgroundColor="#00BBF2"
+                  HeightRequest="70"
+                  ColumnDefinitions="*,*,*"
+                  VerticalOptions="End"
+                  Padding="10,10">
 
-            <ImageButton Grid.Column="0"
-                         Source="home.png"
-                         HorizontalOptions="Center"
-                         Clicked="OnStartPageClicked" />
+                <ImageButton Grid.Column="0"
+                             Source="home.png"
+                             HorizontalOptions="Center"
+                             Clicked="OnStartPageClicked" />
 
-            <ImageButton Grid.Column="1"
-                         Source="plus.png"
-                         HorizontalOptions="Center"
-                         Clicked="OnAddConcertClicked"/>
+                <ImageButton Grid.Column="1"
+                             Source="plus.png"
+                             HorizontalOptions="Center"
+                             Clicked="OnAddConcertClicked"/>
 
-            <ImageButton Grid.Column="2"
-                         Source="list.png"
-                         HorizontalOptions="Center" 
-                         Clicked="OnConcertListClicked"/>
+                <ImageButton Grid.Column="2"
+                             Source="list.png"
+                             HorizontalOptions="Center" 
+                             Clicked="OnConcertListClicked"/>
+            </Grid>  
         </Grid>
-
     </Grid>
 </ContentPage>
