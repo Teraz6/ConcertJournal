@@ -9,11 +9,11 @@
         <!--MainContent-->
         <Grid RowDefinitions="Auto,*">
 
-            <Entry Grid.Row="0"
-                   Placeholder="SearchBar"
-                   Margin="10,0">
-                
-            </Entry>
+            <SearchBar Placeholder="Search events"
+                       Margin="5"
+                       CancelButtonColor="Red"
+                       FontSize="16">
+            </SearchBar>
             
             <!--Event display-->
             <CollectionView Grid.Row="1"
@@ -66,6 +66,7 @@
                                             Padding="5"
                                             VerticalOptions="Center"
                                             Clicked="OnUpdateClicked"
+                                            CommandParameter="{Binding .}"
                                             BindingContext="{Binding .}" />
                                 
                                     <!-- Delete button -->
