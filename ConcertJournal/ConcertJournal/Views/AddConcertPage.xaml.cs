@@ -1,6 +1,8 @@
-using System.Collections.ObjectModel;
 using ConcertJournal.Models;
 using ConcertJournal.Views;
+using Microsoft.Maui.Storage;
+using System.Collections.ObjectModel;
+
 
 namespace ConcertJournal.Views;
 
@@ -8,15 +10,16 @@ public partial class AddConcertPage : ContentPage
 {
     private Concert _existingConcert;
     private ObservableCollection<string> Performers = new ObservableCollection<string>();
+    private ObservableCollection<string> MediaFiles = new ObservableCollection<string>();
 
     public AddConcertPage(Concert existingConcert = null)
     {
         InitializeComponent();
 
         _existingConcert = existingConcert;
-
-        // Bind performers list
+        //Performer and media list
         PerformersList.ItemsSource = Performers;
+        MediaCollectionView.ItemsSource = MediaFiles;
 
         if (_existingConcert != null)
         {
@@ -37,8 +40,16 @@ public partial class AddConcertPage : ContentPage
                 }
             }
 
-            // Change button text to "Save"
+            // Load media
+            if (!string.IsNullOrWhiteSpace(_existingConcert.MediaPaths))
+            {
+                foreach (var path in _existingConcert.MediaPaths.Split(","))
+                    MediaFiles.Add(path.Trim());
+            }
+
+            // Change button and Title text
             SaveButton.Text = "Save";
+            AddConcertPageTitle.Text = "Edit Event";
         }
         else
         {
@@ -90,6 +101,7 @@ public partial class AddConcertPage : ContentPage
             _existingConcert.Notes = NotesEditor?.Text;
             _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
             _existingConcert.Performers = string.Join(", ", Performers);
+            _existingConcert.MediaPaths = string.Join(", ", MediaFiles);
 
             await App.Database.SaveConcertAsync(_existingConcert);
             await DisplayAlert("Success", "Concert updated!", "OK");
@@ -107,24 +119,64 @@ public partial class AddConcertPage : ContentPage
                 City = CityEntry?.Text,
                 Notes = NotesEditor?.Text,
                 Date = DatePicker?.Date ?? DateTime.Today,
-                Performers = string.Join(", ", Performers)
+                Performers = string.Join(", ", Performers),
+                MediaPaths = string.Join(", ", MediaFiles)
             };
 
             await App.Database.SaveConcertAsync(newConcert);
             await DisplayAlert("Success", "Concert created!", "OK");
 
             // Clear all fields for next entry
-            EventTitleEntry.Text = string.Empty;
-            VenueEntry.Text = string.Empty;
-            CountryEntry.Text = string.Empty;
-            CityEntry.Text = string.Empty;
-            NotesEditor.Text = string.Empty;
+            if (EventTitleEntry != null) EventTitleEntry.Text = string.Empty;
+            if (VenueEntry != null) VenueEntry.Text = string.Empty;
+            if (CountryEntry != null) CountryEntry.Text = string.Empty;
+            if (CityEntry != null) CityEntry.Text = string.Empty;
+            if (NotesEditor != null) NotesEditor.Text = string.Empty;
             PerformerEntry.Text = string.Empty;
             Performers.Clear();
-            DatePicker.Date = DateTime.Today;
+            MediaFiles.Clear();
+            if (DatePicker != null) DatePicker.Date = DateTime.Today;
         }
     }
 
+    private async void OnAddImageClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Select an image",
+                FileTypes = FilePickerFileType.Images
+            });
+
+            if (result != null)
+            {
+                // Optional: check file exists
+                if (System.IO.File.Exists(result.FullPath))
+                {
+                    MediaFiles.Add(result.FullPath);
+                }
+                else
+                {
+                    await DisplayAlert("Error", "File does not exist.", "OK");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error picking file", ex.Message, "OK");
+        }
+    }
+
+    private async void OnAddVideoClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var result = await FilePicker.PickAsync(new PickOptions { PickerTitle = "Select Video", FileTypes = FilePickerFileType.Videos });
+            if (result != null) MediaFiles.Add(result.FullPath);
+        }
+        catch (Exception ex) { await DisplayAlert("Error", ex.Message, "OK"); }
+    }
 
     //Navigation code
     private async void OnStartPageClicked(object sender, EventArgs e)

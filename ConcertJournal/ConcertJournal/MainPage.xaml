@@ -2,9 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.MainPage"
-             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
-             xmlns:models="clr-namespace:ConcertJournal.Models"
-             Title="Event Journal">
+             xmlns:models="clr-namespace:ConcertJournal.Models">
 
     <Grid RowDefinitions="*,Auto">
         

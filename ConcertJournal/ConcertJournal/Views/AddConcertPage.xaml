@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.AddConcertPage"
-             Title="AddConcertPage">
+             x:Class="ConcertJournal.Views.AddConcertPage">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
@@ -15,6 +14,7 @@
                     <!--PageTitle and Create button-->
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Grid.Column="0"
+                               x:Name="AddConcertPageTitle"
                                Text="Create Event"
                                FontSize="30"
                                FontAttributes="Bold"
@@ -124,10 +124,34 @@
                             HeightRequest="150"
                             Placeholder="Add Notes"
                             Text="{Binding Notes}"/>
+                    
+                    <!--Media-->
+                    <Label Text="Images/Videos"
+                           Margin="0,10,0,10"
+                           FontSize="18"/>
+                    <HorizontalStackLayout Spacing="5">
+                        <Button Text="Add Image"
+                                Clicked="OnAddImageClicked"/>
+                        <Button Text="Add Video"
+                                Clicked="OnAddVideoClicked"/>
+                    </HorizontalStackLayout>
 
+                    <CollectionView x:Name="MediaCollectionView">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="5" Margin="5" Stroke="GreenYellow">
+                                    <Image Source="{Binding}" HeightRequest="100"/>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" Span="3"/>
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>
+        
         
         <!--Navigation bar-->
         <Grid Grid.Row="1"
