@@ -26,7 +26,7 @@
                                 Stroke="Transparent"
                                 StrokeThickness="10"
                                 StrokeShape="20"
-                                BackgroundColor="#1E1E1E">
+                                BackgroundColor="DarkCyan">
                             <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                             
                                 <!-- Concert details -->
@@ -66,8 +66,7 @@
                                             Padding="5"
                                             VerticalOptions="Center"
                                             Clicked="OnUpdateClicked"
-                                            CommandParameter="{Binding .}"
-                                            BindingContext="{Binding .}" />
+                                            CommandParameter="{Binding .}" />
                                 
                                     <!-- Delete button -->
                                     <Button Text="Delete"
