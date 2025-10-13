@@ -26,7 +26,7 @@ namespace ConcertJournal
 
             // Get concerts from your DB
             var concerts = await App.Database.GetConcertsAsync();
-
+            ConcertsView.ItemsSource = concerts;   // binds to the CollectionView
             // Show button only if there are none
             IsAddButtonVisible = concerts.Count == 0;
         }

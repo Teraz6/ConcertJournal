@@ -87,6 +87,8 @@ public partial class AddConcertPage : ContentPage
         // Save to DB
         await App.Database.SaveConcertAsync(concert);
         await DisplayAlert("Success", "Concert saved!", "OK");
+        await Navigation.PopAsync();   // <- This returns to MainPage
+
 
         // Go back so MainPage.OnAppearing() can refresh/hide the Add button
         await Navigation.PopAsync();
