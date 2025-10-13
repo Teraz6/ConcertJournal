@@ -7,49 +7,88 @@
              Title="Event Journal">
 
     <Grid RowDefinitions="*,Auto">
-        
-        <!--MainContent-->
-        <VerticalStackLayout
-            Grid.Row="0"
-            Grid.Column="1"
-            VerticalOptions="Center"
-            HorizontalOptions="Center">
 
-            <Label
-                Text="Add a event"
-                FontSize="24"
-                HorizontalOptions="Center" />
 
-            <Button
-                Text="Add Event"
-                Clicked="OnAddConcertClicked"
-                HorizontalOptions="Center" />
-        </VerticalStackLayout>
+        <!-- LIST OF CONCERTS -->
+        <CollectionView x:Name="ConcertsView"
+                    Grid.Row="0"
+                    ItemsLayout="VerticalList"
+                    SelectionMode="None">
 
-        <!--Navigation bar-->
-        <Grid Grid.Row="1"
+            <!-- When there are NO concerts, show this -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="24" Spacing="16"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+                    <Label Text="No events yet"
+                             FontSize="24"
+                             HorizontalOptions="Center" />
+                    <Button Text="Add Event"
+                            Clicked="OnAddConcertClicked"
+                            HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            
+            <!-- How each concert looks -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="12" Padding="12" HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                  ColumnDefinitions="*">
+                            <Label Grid.Row="0"
+                     Text="{Binding EventTitle}"
+                     FontSize="20"
+                     FontAttributes="Bold" />
+
+                            <Label Grid.Row="1"
+                     Text="{Binding Performers}"
+                     LineBreakMode="WordWrap" />
+
+                            <Label Grid.Row="2"
+                     Text="{Binding Venue}"
+                     LineBreakMode="WordWrap" />
+
+                            <Grid Grid.Row="3" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <Label Grid.Column="0" Text="{Binding Country}" />
+                                <Label Grid.Column="1" Text="{Binding City}" />
+                            </Grid>
+
+                            <Label Grid.Row="4"
+                     Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" />
+
+                            <Label Grid.Row="5"
+                     Text="{Binding Notes}"
+                     LineBreakMode="WordWrap" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- BOTTOM NAV BAR -->
+            <Grid Grid.Row="1"
               BackgroundColor="#00BBF2"
               HeightRequest="70"
               ColumnDefinitions="*,*,*"
               VerticalOptions="End"
               Padding="10,10">
 
-            <ImageButton Grid.Column="0"
+                <ImageButton Grid.Column="0"
                          Source="home.png"
                          HorizontalOptions="Center"
                          Clicked="OnStartPageClicked" />
 
-            <ImageButton Grid.Column="1"
+                <ImageButton Grid.Column="1"
                          Source="plus.png"
                          HorizontalOptions="Center"
                          Clicked="OnAddConcertClicked"/>
 
-            <ImageButton Grid.Column="2"
+                <ImageButton Grid.Column="2"
                          Source="list.png"
                          HorizontalOptions="Center" 
                          Clicked="OnConcertListClicked"/>
-        </Grid>
-        
+            </Grid>
+
     </Grid>
-    
+
 </ContentPage>

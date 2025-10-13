@@ -111,7 +111,7 @@
                 <Label Text="Date" 
                        Margin="0,10,0,10"
                        FontSize="18"/>
-                <DatePicker x:Name="DatePicker"/>
+                <DatePicker x:Name="EventDatePicker"/>
 
                 <!--Notes-->
                 <Label Text="Notes" 
