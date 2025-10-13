@@ -24,7 +24,7 @@ public partial class ConcertListPage : ContentPage
 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
-     
+
     }
 
     private async void OnDeleteClicked(object sender, EventArgs e)
