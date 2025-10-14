@@ -35,8 +35,7 @@
                            Placeholder="Event Title"
                            Text="{Binding eventTitle}"/>
 
-                    <!--Performer name, TODO: Add multiple performers with 
-                    list coming under entry box with "X" next to it for fast deleting-->
+                    <!--Performer name-->
                     <HorizontalStackLayout>
                         <Label Grid.Row="0"
                                Grid.Column="0"

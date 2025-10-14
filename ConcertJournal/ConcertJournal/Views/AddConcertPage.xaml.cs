@@ -43,8 +43,8 @@ public partial class AddConcertPage : ContentPage
             // Load media
             if (!string.IsNullOrWhiteSpace(_existingConcert.MediaPaths))
             {
-                foreach (var path in _existingConcert.MediaPaths.Split(","))
-                    MediaFiles.Add(path.Trim());
+                foreach (var path in _existingConcert.MediaPaths.Split(";"))
+                    MediaFiles.Add(path);
             }
 
             // Change button and Title text
@@ -101,7 +101,7 @@ public partial class AddConcertPage : ContentPage
             _existingConcert.Notes = NotesEditor?.Text;
             _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
             _existingConcert.Performers = string.Join(", ", Performers);
-            _existingConcert.MediaPaths = string.Join(", ", MediaFiles);
+            _existingConcert.MediaPaths = string.Join("; ", MediaFiles);
 
             await App.Database.SaveConcertAsync(_existingConcert);
             await DisplayAlert("Success", "Concert updated!", "OK");
@@ -120,7 +120,7 @@ public partial class AddConcertPage : ContentPage
                 Notes = NotesEditor?.Text,
                 Date = DatePicker?.Date ?? DateTime.Today,
                 Performers = string.Join(", ", Performers),
-                MediaPaths = string.Join(", ", MediaFiles)
+                MediaPaths = string.Join("; ", MediaFiles)
             };
 
             await App.Database.SaveConcertAsync(newConcert);
@@ -141,41 +141,12 @@ public partial class AddConcertPage : ContentPage
 
     private async void OnAddImageClicked(object sender, EventArgs e)
     {
-        try
-        {
-            var result = await FilePicker.PickAsync(new PickOptions
-            {
-                PickerTitle = "Select an image",
-                FileTypes = FilePickerFileType.Images
-            });
-
-            if (result != null)
-            {
-                // Optional: check file exists
-                if (System.IO.File.Exists(result.FullPath))
-                {
-                    MediaFiles.Add(result.FullPath);
-                }
-                else
-                {
-                    await DisplayAlert("Error", "File does not exist.", "OK");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error picking file", ex.Message, "OK");
-        }
+        await DisplayAlert("Alert", "Uploading function not implemented", "OK");
     }
 
     private async void OnAddVideoClicked(object sender, EventArgs e)
     {
-        try
-        {
-            var result = await FilePicker.PickAsync(new PickOptions { PickerTitle = "Select Video", FileTypes = FilePickerFileType.Videos });
-            if (result != null) MediaFiles.Add(result.FullPath);
-        }
-        catch (Exception ex) { await DisplayAlert("Error", ex.Message, "OK"); }
+        await DisplayAlert("Alert", "Uploading function not implemented", "OK");
     }
 
     //Navigation code

@@ -2,10 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="This is ConcertDetailsPage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+
+            <Button Text="Update"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Clicked="OnUpdateClicked"/>
+
+            <Label Text="{Binding EventTitle}" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" />
+
+            <Label Text="Performers:" FontAttributes="Bold"/>
+            <Label Text="{Binding Performers}" />
+
+            <Label Text="Venue:" FontAttributes="Bold"/>
+            <Label Text="{Binding Venue}" />
+
+            <Label Text="City, Country:" FontAttributes="Bold"/>
+            <Label Text="{Binding City}" />
+            <Label Text="{Binding Country}" />
+
+            <Label Text="Date:" FontAttributes="Bold"/>
+            <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}" />
+
+            <Label Text="Notes:" FontAttributes="Bold"/>
+            <Label Text="{Binding Notes}" />
+
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

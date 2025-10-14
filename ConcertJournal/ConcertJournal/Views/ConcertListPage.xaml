@@ -56,26 +56,36 @@
                                     </VerticalStackLayout>
 
                                     <!--Button Layout-->
-                                    <VerticalStackLayout Grid.Column="1"
-                                                         Spacing="5">
-                                        <!--Update button-->
-                                        <Button Text="Update"
+                                    <HorizontalStackLayout Grid.Column="1"
+                                                           Spacing="10">
+                                        <Button Text="Details"
+                                                BackgroundColor="Transparent"
+                                                FontSize="18"
+                                                FontAttributes="Bold"
+                                                Padding="10"
+                                                VerticalOptions="Center"
+                                                Clicked="OnDetailsClicked"
+                                                BindingContext="{Binding .}" />
+                                        
+                                        <VerticalStackLayout VerticalOptions="Center" Spacing="20">
+                                            <!--Update button-->
+                                            <Button Text="Update"
                                                 BackgroundColor="Green"
                                                 FontSize="18"
-                                                Padding="5"
-                                                VerticalOptions="Center"
+                                                Padding="10"
                                                 Clicked="OnUpdateClicked"
                                                 CommandParameter="{Binding .}" />
-
-                                        <!-- Delete button -->
-                                        <Button Text="Delete"
+                                            
+                                            <!-- Delete button -->
+                                            <Button Text="Delete"
                                                 BackgroundColor="Red"
                                                 FontSize="18"
-                                                Padding="5"
-                                                VerticalOptions="Center"
+                                                Padding="10"
                                                 Clicked="OnDeleteClicked"
                                                 BindingContext="{Binding .}" />
-                                    </VerticalStackLayout>
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                    
                                 </Grid>
                             </Border>
                         </DataTemplate>
