@@ -8,7 +8,6 @@
 
             <Button Text="Update"
                     BackgroundColor="#2196F3"
-                    TextColor="White"
                     CornerRadius="8"
                     Clicked="OnUpdateClicked"/>
 

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConcertJournal.Resources.Themes.AngelTheme">
+    
+    <!-- Angel Theme Colors -->
+    <!-- Sky Blue -->
+    <Color x:Key="Primary">#90CAF9</Color>
+    <!-- Celestial Blue -->
+    <Color x:Key="PrimaryDark">#42A5F5</Color>
+    <!-- Text on blue -->
+    <Color x:Key="PrimaryText">#FFFFFF</Color>
+
+    <!-- Golden Halo -->
+    <Color x:Key="Secondary">#FFF8E1</Color>
+    <!-- Angelic Glow -->
+    <Color x:Key="SecondaryDark">#FFE082</Color>
+    <!-- Deep text on light -->
+    <Color x:Key="SecondaryText">#3E2723</Color>
+
+    <!-- Backgrounds -->
+    <!-- Pure white -->
+    <Color x:Key="Background">#FFFFFF</Color>
+    <!-- Light surface -->
+    <Color x:Key="Surface">#F5F5F5</Color>
+    <!-- Light sky blue tint -->
+    <Color x:Key="Overlay">#E3F2FD</Color>
+    <!-- Very light grey -->
+    <Color x:Key="CardBackground">#FAFAFA</Color>
+
+
+    <!-- Text -->
+    <!-- Near-black text -->
+    <Color x:Key="TextColor">#212121</Color>
+    <!-- Gray for secondary text -->
+    <Color x:Key="MutedText">#757575</Color>
+
+
+    <!-- Common Colors -->
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Black">#000000</Color>
+
+    <!-- Grays -->
+    <Color x:Key="Gray100">#F5F5F5</Color>
+    <Color x:Key="Gray300">#E0E0E0</Color>
+    <Color x:Key="Gray500">#9E9E9E</Color>
+    <Color x:Key="Gray700">#616161</Color>
+    <Color x:Key="Gray900">#212121</Color>
+
+    <!-- Brushes using DynamicResource -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Primary}" />
+    <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{DynamicResource PrimaryDark}" />
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="{DynamicResource PrimaryText}" />
+
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
+    <SolidColorBrush x:Key="SecondaryDarkBrush" Color="{DynamicResource SecondaryDark}" />
+    <SolidColorBrush x:Key="SecondaryTextBrush" Color="{DynamicResource SecondaryText}" />
+
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource Background}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{DynamicResource Surface}" />
+    <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource Overlay}" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackground}" />
+
+    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
+    <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />
+
+    <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource White}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
+</ResourceDictionary>

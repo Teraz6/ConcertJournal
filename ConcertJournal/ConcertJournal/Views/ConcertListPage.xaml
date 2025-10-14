@@ -10,7 +10,7 @@
 
                 <SearchBar Placeholder="Search events"
                            Margin="5"
-                           CancelButtonColor="Red"
+                           CancelButtonColor="#F72C02"
                            FontSize="16">
                 </SearchBar>
 
@@ -25,34 +25,28 @@
                                     Stroke="Transparent"
                                     StrokeThickness="10"
                                     StrokeShape="20"
-                                    BackgroundColor="DarkCyan">
+                                    BackgroundColor="#089E9E">
                                 <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
 
                                     <!-- Concert details -->
                                     <VerticalStackLayout Grid.Column="0">
                                         <Label Text="{Binding EventTitle}" 
                                            FontSize="18" 
-                                           TextColor="White" 
                                            FontAttributes="Bold"/>
                                         <Label Text="{Binding Performers}" 
-                                           FontSize="16" 
-                                           TextColor="White"/>
+                                           FontSize="16" />
                                         <Label Text="{Binding Venue}" 
-                                                   FontSize="14" 
-                                                   TextColor="LightGray"/>
+                                                   FontSize="14" />
                                         <HorizontalStackLayout Spacing="10">
                                             <Label Text="{Binding Country}" 
-                                                   FontSize="14" 
-                                                   TextColor="LightGray"/>
+                                                   FontSize="14" />
                                             <Label Text="{Binding City}" 
-                                                   FontSize="14" 
-                                                   TextColor="LightGray"/>
+                                                   FontSize="14" />
                                         </HorizontalStackLayout>
 
                                         <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                                FontSize="12"
-                                               Margin="0,10,0,0"
-                                               TextColor="Gray"/>
+                                               Margin="0,10,0,0"/>
                                     </VerticalStackLayout>
 
                                     <!--Button Layout-->
@@ -70,7 +64,7 @@
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
                                             <Button Text="Update"
-                                                BackgroundColor="Green"
+                                                BackgroundColor="#09D600"
                                                 FontSize="18"
                                                 Padding="10"
                                                 Clicked="OnUpdateClicked"
@@ -78,7 +72,7 @@
                                             
                                             <!-- Delete button -->
                                             <Button Text="Delete"
-                                                BackgroundColor="Red"
+                                                BackgroundColor="#F72C02"
                                                 FontSize="18"
                                                 Padding="10"
                                                 Clicked="OnDeleteClicked"

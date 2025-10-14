@@ -14,13 +14,13 @@
             HorizontalOptions="Center">
 
             <Label
-                Text="Add a event"
+                Text="Go to settings page"
                 FontSize="24"
                 HorizontalOptions="Center" />
 
             <Button
-                Text="Add Event"
-                Clicked="OnAddConcertClicked"
+                Text="Settings"
+                Clicked="OnSettingsPageClicked"
                 HorizontalOptions="Center" />
         </VerticalStackLayout>
 
