@@ -68,10 +68,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\DevilTheme.xaml">
+	  <MauiXaml Update="Resources\Themes\AngelTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Resources\Styles\AngelTheme.xaml">
+	  <MauiXaml Update="Resources\Themes\DevilTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\AddConcertPage.xaml">

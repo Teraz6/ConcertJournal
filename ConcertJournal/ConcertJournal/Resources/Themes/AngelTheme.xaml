@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<?xaml-comp compile="true" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConcertJournal.Resources.Themes.AngelTheme">
+    
     <!-- Angel Theme Colors -->
     <!-- Sky Blue -->
     <Color x:Key="Primary">#90CAF9</Color>
@@ -10,14 +10,14 @@
     <Color x:Key="PrimaryDark">#42A5F5</Color>
     <!-- Text on blue -->
     <Color x:Key="PrimaryText">#FFFFFF</Color>
-    
+
     <!-- Golden Halo -->
     <Color x:Key="Secondary">#FFF8E1</Color>
     <!-- Angelic Glow -->
     <Color x:Key="SecondaryDark">#FFE082</Color>
     <!-- Deep text on light -->
     <Color x:Key="SecondaryText">#3E2723</Color>
-    
+
     <!-- Backgrounds -->
     <!-- Pure white -->
     <Color x:Key="Background">#FFFFFF</Color>
@@ -27,14 +27,14 @@
     <Color x:Key="Overlay">#E3F2FD</Color>
     <!-- Very light grey -->
     <Color x:Key="CardBackground">#FAFAFA</Color>
-    
+
 
     <!-- Text -->
     <!-- Near-black text -->
     <Color x:Key="TextColor">#212121</Color>
     <!-- Gray for secondary text -->
     <Color x:Key="MutedText">#757575</Color>
-    
+
 
     <!-- Common Colors -->
     <Color x:Key="White">#FFFFFF</Color>

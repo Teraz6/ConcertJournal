@@ -1,5 +1,5 @@
-using ConcertJournal.Services;
-using System.Windows;
+using ConcertJournal.Resources.Themes;
+using Microsoft.Maui.Storage;
 
 namespace ConcertJournal.Views;
 
@@ -12,12 +12,20 @@ public partial class SettingsPage : ContentPage
 
     private bool isAngelTheme = true;
 
-    private void OnSwitchThemeClicked(object sender, RoutedEventArgs e)
+    private void OnSwitchThemeClicked(object sender, EventArgs e)
     {
+        App.Current.Resources.MergedDictionaries.Clear();
+
         if (isAngelTheme)
-            ThemeManager.SetDevilTheme();
+        {
+            App.Current.Resources.MergedDictionaries.Add(new DevilTheme());
+            Preferences.Set("AppTheme", "Devil");
+        }
         else
-            ThemeManager.SetAngelTheme();
+        {
+            App.Current.Resources.MergedDictionaries.Add(new AngelTheme());
+            Preferences.Set("AppTheme", "Angel");
+        }
 
         isAngelTheme = !isAngelTheme;
     }

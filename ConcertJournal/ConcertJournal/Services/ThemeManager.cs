@@ -2,8 +2,8 @@
 {
     public static class ThemeManager
     {
-        private const string DevilThemePath = "Resources/Styles/DevilTheme.xaml";
-        private const string AngelThemePath = "Resources/Styles/AngelTheme.xaml";
+        private const string DevilThemePath = "Resources/Themes/DevilTheme.xaml";
+        private const string AngelThemePath = "Resources/ThemesAngelTheme.xaml";
 
         private static ResourceDictionary? _currentTheme;
 
@@ -14,18 +14,20 @@
                 Source = new Uri($"pack://application:,,,/{themePath}", UriKind.Absolute)
             };
 
-            Application.Current.Resources.MergedDictionaries.Clear();
+            if (Application.Current?.Resources?.MergedDictionaries == null)
+                return;
+
             Application.Current.Resources.MergedDictionaries.Add(newTheme);
         }
 
         public static void SetAngelTheme()
         {
-            ApplyTheme("Resources/Styles/AngelTheme.xaml");
+            ApplyTheme("Resources/Themes/AngelTheme.xaml");
         }
 
         public static void SetDevilTheme()
         {
-            ApplyTheme("Resources/Styles/DevilTheme.xaml");
+            ApplyTheme("Resources/Themes/DevilTheme.xaml");
         }
     }
 }
