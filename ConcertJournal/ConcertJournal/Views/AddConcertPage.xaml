@@ -1,157 +1,179 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.AddConcertPage"
-             Title="AddConcertPage">
+             x:Class="ConcertJournal.Views.AddConcertPage">
 
     <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            
+            <!--MainContent-->
+            <Grid ColumnDefinitions="*,*,*"
+                  Padding="10">
+                <VerticalStackLayout Grid.ColumnSpan="3">
 
-        <!--MainContent-->
-        <Grid ColumnDefinitions="*,*,*"
-              Padding="10">
-            <VerticalStackLayout Grid.ColumnSpan="3">
-                
-                <!--PageTitle and Create button-->
-                <Grid ColumnDefinitions="*,Auto">
-                    <Label Grid.Column="0"
-                           Text="Create Event"
-                           FontSize="30"
-                           FontAttributes="Bold"
-                           HorizontalOptions="Center"/>
-                    <Button Grid.Column="1"
-                            x:Name="SaveButton"
-                            Text="Create"
-                            BackgroundColor="Green"
-                            HorizontalOptions="End"
-                            Clicked="SaveButton_Clicked"/>
-                </Grid>
+                    <!--PageTitle and Create button-->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0"
+                               x:Name="AddConcertPageTitle"
+                               Text="Create Event"
+                               FontSize="30"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"/>
+                        <Button Grid.Column="1"
+                                x:Name="SaveButton"
+                                Text="Create"
+                                BackgroundColor="Green"
+                                HorizontalOptions="End"
+                                Clicked="SaveButton_Clicked"/>
+                    </Grid>
 
-                <!--Event Title-->
-                <Label Text="Event Title"
-                       Margin="0,10,0,10"
-                       FontSize="18"/>
-                <Entry x:Name="EventTitleEntry"
-                       Placeholder="Event Title"
-                       Text="{Binding eventTitle}"/>
-
-                <!--Performer name, TODO: Add multiple performers with 
-                list coming under entry box with "X" next to it for fast deleting-->
-                <HorizontalStackLayout>
-                    <Label Grid.Row="0"
-                           Grid.Column="0"
-                           Text="Performer name" 
-                           Margin="0,15,0,10"
+                    <!--Event Title-->
+                    <Label Text="Event Title"
+                           Margin="0,10,0,10"
                            FontSize="18"/>
-                    <Button Grid.Row="0"
-                            Grid.Column="1"
-                            Text="Add"
-                            BackgroundColor="Transparent"
-                            TextColor="Green"
-                            Margin="0,0,0,0"
-                            FontSize="18"
-                            Clicked="AddNewPerformer"/>
-                </HorizontalStackLayout>
-                <Entry Margin="0,0"
-                       x:Name="PerformerEntry"
-                       Placeholder="Performer"
-                       Text="{Binding Performer}"/>
-                <!--CollectionView to show added performers-->
-                <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal" Spacing="5">
-                                <Label Text="{Binding .}" 
-                                       FontSize="14" 
-                                       VerticalOptions="Center"
-                                       />
-                                <Button Text="X"
-                                        TextColor="Red"
-                                        FontSize="14"
-                                        BackgroundColor="Transparent"
-                                        Clicked="RemovePerformer"
-                                        BindingContext="{Binding .}"/>
-                            </StackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <!--Venue-->
-                <Label Text="Venue" 
-                       Margin="0,10,0,10"
-                       FontSize="18"/>
-                <Entry x:Name="VenueEntry"
-                       Placeholder="Venue" 
-                       Text="{Binding Venue}"/>
+                    <Entry x:Name="EventTitleEntry"
+                           Placeholder="Event Title"
+                           Text="{Binding eventTitle}"/>
 
-                <!--Country & City-->
-                <Grid ColumnDefinitions="*,*"
-                      RowDefinitions="*,*">
-                     <Label Grid.Row="0"
-                            Grid.Column="0"
-                            Text="Country" 
-                            Margin="0,10,0,10"
-                            FontSize="18"/>
-                     <Entry Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,0,10,0"
-                            Placeholder="Country"
-                            x:Name="CountryEntry"
-                            Text="{Binding Country}"/> 
-                     <Label Grid.Row="0"
-                            Grid.Column="1"
-                            Text="City" 
-                            Margin="0,10,0,10"
-                            FontSize="18"/>
-                     <Entry Grid.Row="1"
-                            Grid.Column="1"
-                            Placeholder="City"
-                            x:Name="CityEntry"
-                            Text="{Binding City}"/>
-                </Grid>
-    
-                <!--Date-->
-                <Label Text="Date" 
-                       Margin="0,10,0,10"
-                       FontSize="18"/>
-                <DatePicker x:Name="DatePicker"/>
-                
-                <!--Notes-->
-                <Label Text="Notes" 
-                       Margin="0,10,0,10"
-                       FontSize="18"/>
-                <Editor x:Name="NotesEditor"
-                        AutoSize="TextChanges"
-                        HeightRequest="150"
-                        Placeholder="Add Notes"
-                        Text="{Binding Notes}"/>
+                    <!--Performer name-->
+                    <HorizontalStackLayout>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Performer name" 
+                               Margin="0,15,0,10"
+                               FontSize="18"/>
+                        <Button Grid.Row="0"
+                                Grid.Column="1"
+                                Text="Add"
+                                BackgroundColor="Transparent"
+                                TextColor="Green"
+                                Margin="0,0,0,0"
+                                FontSize="18"
+                                Clicked="AddNewPerformer"/>
+                    </HorizontalStackLayout>
+                    <Entry Margin="0,0"
+                           x:Name="PerformerEntry"
+                           Placeholder="Performer"
+                           Text="{Binding Performer}"/>
+                    <!--CollectionView to show added performers-->
+                    <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                    <Label Text="{Binding .}" 
+                                           FontSize="14" 
+                                           VerticalOptions="Center"
+                                           />
+                                    <Button Text="X"
+                                            TextColor="Red"
+                                            FontSize="14"
+                                            BackgroundColor="Transparent"
+                                            Clicked="RemovePerformer"
+                                            BindingContext="{Binding .}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                    <!--Venue-->
+                    <Label Text="Venue" 
+                           Margin="0,10,0,10"
+                           FontSize="18"/>
+                    <Entry x:Name="VenueEntry"
+                           Placeholder="Venue" 
+                           Text="{Binding Venue}"/>
 
-            </VerticalStackLayout>
-        </Grid>
+                    <!--Country & City-->
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="*,*">
+                        <Label Grid.Row="0"
+                                Grid.Column="0"
+                                Text="Country" 
+                                Margin="0,10,0,10"
+                                FontSize="18"/>
+                        <Entry Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,0,10,0"
+                                Placeholder="Country"
+                                x:Name="CountryEntry"
+                                Text="{Binding Country}"/>
+                        <Label Grid.Row="0"
+                                Grid.Column="1"
+                                Text="City" 
+                                Margin="0,10,0,10"
+                                FontSize="18"/>
+                        <Entry Grid.Row="1"
+                                Grid.Column="1"
+                                Placeholder="City"
+                                x:Name="CityEntry"
+                                Text="{Binding City}"/>
+                    </Grid>
 
+                    <!--Date-->
+                    <Label Text="Date" 
+                           Margin="0,10,0,10"
+                           FontSize="18"/>
+                    <DatePicker x:Name="DatePicker"/>
+
+                    <!--Notes-->
+                    <Label Text="Notes" 
+                           Margin="0,10,0,10"
+                           FontSize="18"/>
+                    <Editor x:Name="NotesEditor"
+                            AutoSize="TextChanges"
+                            HeightRequest="150"
+                            Placeholder="Add Notes"
+                            Text="{Binding Notes}"/>
+                    
+                    <!--Media-->
+                    <Label Text="Images/Videos"
+                           Margin="0,10,0,10"
+                           FontSize="18"/>
+                    <HorizontalStackLayout Spacing="5">
+                        <Button Text="Add Image"
+                                Clicked="OnAddImageClicked"/>
+                        <Button Text="Add Video"
+                                Clicked="OnAddVideoClicked"/>
+                    </HorizontalStackLayout>
+
+                    <CollectionView x:Name="MediaCollectionView">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="5" Margin="5" Stroke="GreenYellow">
+                                    <Image Source="{Binding}" HeightRequest="100"/>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Horizontal" Span="3"/>
+                        </CollectionView.ItemsLayout>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
         
         
         <!--Navigation bar-->
         <Grid Grid.Row="1"
-              BackgroundColor="#00BBF2"
-              HeightRequest="70"
-              ColumnDefinitions="*,*,*"
-              VerticalOptions="End"
-              Padding="10,10">
+                BackgroundColor="#00BBF2"
+                HeightRequest="70"
+                ColumnDefinitions="*,*,*"
+                VerticalOptions="End"
+                Padding="10,10">
 
             <ImageButton Grid.Column="0"
-                         Source="home.png"
-                         HorizontalOptions="Center"
-                         Clicked="OnStartPageClicked" />
+                            Source="home.png"
+                            HorizontalOptions="Center"
+                            Clicked="OnStartPageClicked" />
 
             <ImageButton Grid.Column="1"
-                         Source="plus.png"
-                         HorizontalOptions="Center"
-                         Clicked="OnAddConcertClicked"/>
+                            Source="plus.png"
+                            HorizontalOptions="Center"
+                            Clicked="OnAddConcertClicked"/>
 
             <ImageButton Grid.Column="2"
-                         Source="list.png"
-                         HorizontalOptions="Center" 
-                         Clicked="OnConcertListClicked"/>
+                            Source="list.png"
+                            HorizontalOptions="Center" 
+                            Clicked="OnConcertListClicked"/>
         </Grid>
-
     </Grid>
 </ContentPage>

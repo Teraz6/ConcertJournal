@@ -13,10 +13,6 @@ namespace ConcertJournal.Models
         public string? City { get; set; }
         public DateTime? Date { get; set; }
         public string? Notes { get; set; }
-
-        //For future update
-        //public string? PhotoPath { get; set; }
-        //public string? VideoPath { get; set; }
-
+        public string? MediaPaths { get; set; }
     }
 }
