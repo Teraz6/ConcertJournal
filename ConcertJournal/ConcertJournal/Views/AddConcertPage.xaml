@@ -22,7 +22,7 @@
                         <Button Grid.Column="1"
                                 x:Name="SaveButton"
                                 Text="Create"
-                                BackgroundColor="Green"
+                                BackgroundColor="#0BBD02"
                                 HorizontalOptions="End"
                                 Clicked="SaveButton_Clicked"/>
                     </Grid>
@@ -46,7 +46,7 @@
                                 Grid.Column="1"
                                 Text="Add"
                                 BackgroundColor="Transparent"
-                                TextColor="Green"
+                                TextColor="#0BBD02"
                                 Margin="0,0,0,0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
@@ -65,7 +65,7 @@
                                            VerticalOptions="Center"
                                            />
                                     <Button Text="X"
-                                            TextColor="Red"
+                                            TextColor="#F72C02"
                                             FontSize="14"
                                             BackgroundColor="Transparent"
                                             Clicked="RemovePerformer"
@@ -138,7 +138,7 @@
                     <CollectionView x:Name="MediaCollectionView">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border Padding="5" Margin="5" Stroke="GreenYellow">
+                                <Border Padding="5" Margin="5" Stroke="#0BBD02">
                                     <Image Source="{Binding}" HeightRequest="100"/>
                                 </Border>
                             </DataTemplate>

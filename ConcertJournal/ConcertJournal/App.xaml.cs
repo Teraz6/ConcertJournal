@@ -20,6 +20,7 @@ namespace ConcertJournal
         {
             InitializeComponent();
 
+            ThemeManager.ApplyTheme("Resources/Styles/AngelTheme.xaml");
 
             // Initialize the SQLite database
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "concerts.db3");
