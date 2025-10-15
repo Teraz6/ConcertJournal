@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.AddConcertPage">
+             x:Class="ConcertJournal.Views.AddConcertPage"
+             BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
@@ -22,7 +23,7 @@
                         <Button Grid.Column="1"
                                 x:Name="SaveButton"
                                 Text="Create"
-                                BackgroundColor="#0BBD02"
+                                BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
                                 Clicked="SaveButton_Clicked"/>
                     </Grid>
@@ -46,7 +47,7 @@
                                 Grid.Column="1"
                                 Text="Add"
                                 BackgroundColor="Transparent"
-                                TextColor="#0BBD02"
+                                TextColor="{DynamicResource ButtonGreen}"
                                 Margin="0,0,0,0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
@@ -65,7 +66,7 @@
                                            VerticalOptions="Center"
                                            />
                                     <Button Text="X"
-                                            TextColor="#F72C02"
+                                            TextColor="{DynamicResource ButtonRed}"
                                             FontSize="14"
                                             BackgroundColor="Transparent"
                                             Clicked="RemovePerformer"
@@ -154,7 +155,7 @@
         
         <!--Navigation bar-->
         <Grid Grid.Row="1"
-                BackgroundColor="#00BBF2"
+                BackgroundColor="{DynamicResource NavBarBackground}"
                 HeightRequest="70"
                 ColumnDefinitions="*,*,*"
                 VerticalOptions="End"

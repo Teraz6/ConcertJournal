@@ -68,6 +68,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Resources\Styles\GlobalStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Themes\AngelTheme.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

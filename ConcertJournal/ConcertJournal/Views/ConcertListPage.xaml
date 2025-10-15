@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.ConcertListPage">
+             x:Class="ConcertJournal.Views.ConcertListPage"
+             BackgroundColor="{DynamicResource Background}">
     
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
@@ -10,7 +11,7 @@
 
                 <SearchBar Placeholder="Search events"
                            Margin="5"
-                           CancelButtonColor="#F72C02"
+                           CancelButtonColor="{DynamicResource ButtonRed}"
                            FontSize="16">
                 </SearchBar>
 
@@ -25,7 +26,7 @@
                                     Stroke="Transparent"
                                     StrokeThickness="10"
                                     StrokeShape="20"
-                                    BackgroundColor="#089E9E">
+                                    BackgroundColor="{DynamicResource CardBackground}">
                                 <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
 
                                     <!-- Concert details -->
@@ -54,6 +55,7 @@
                                                            Spacing="10">
                                         <Button Text="Details"
                                                 BackgroundColor="Transparent"
+                                                TextColor="{DynamicResource TextColor}"
                                                 FontSize="18"
                                                 FontAttributes="Bold"
                                                 Padding="10"
@@ -64,19 +66,21 @@
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
                                             <Button Text="Update"
-                                                BackgroundColor="#09D600"
-                                                FontSize="18"
-                                                Padding="10"
-                                                Clicked="OnUpdateClicked"
-                                                CommandParameter="{Binding .}" />
-                                            
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    BackgroundColor="{DynamicResource ButtonGreen}"
+                                                    FontSize="18"
+                                                    Padding="10"
+                                                    Clicked="OnUpdateClicked"
+                                                    CommandParameter="{Binding .}" />
+
                                             <!-- Delete button -->
                                             <Button Text="Delete"
-                                                BackgroundColor="#F72C02"
-                                                FontSize="18"
-                                                Padding="10"
-                                                Clicked="OnDeleteClicked"
-                                                BindingContext="{Binding .}" />
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    BackgroundColor="{DynamicResource ButtonRed}"
+                                                    FontSize="18"
+                                                    Padding="10"
+                                                    Clicked="OnDeleteClicked"
+                                                    BindingContext="{Binding .}" />
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     
@@ -90,7 +94,7 @@
 
         <!--Navigation bar-->
         <Grid Grid.Row="1"
-                BackgroundColor="#00BBF2"
+                BackgroundColor="{DynamicResource NavBarBackground}"
                 HeightRequest="70"
                 ColumnDefinitions="*,*,*"
                 VerticalOptions="End"

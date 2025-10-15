@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.MainPage"
-             xmlns:models="clr-namespace:ConcertJournal.Models">
+             xmlns:models="clr-namespace:ConcertJournal.Models"
+             BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
         
@@ -26,7 +27,7 @@
 
         <!--Navigation bar-->
         <Grid Grid.Row="1"
-              BackgroundColor="#00BBF2"
+              BackgroundColor="{DynamicResource NavBarBackground}"
               HeightRequest="70"
               ColumnDefinitions="*,*,*"
               VerticalOptions="End"

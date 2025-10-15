@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.ConcertDetailsPage">
+             x:Class="ConcertJournal.Views.ConcertDetailsPage"
+             BackgroundColor="{DynamicResource Background}">
     
     <ScrollView>
         <StackLayout Padding="20" Spacing="15">
 
             <Button Text="Update"
-                    BackgroundColor="#2196F3"
+                    BackgroundColor="{DynamicResource ButtonGreen}"
                     CornerRadius="8"
                     Clicked="OnUpdateClicked"/>
 

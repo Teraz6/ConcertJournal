@@ -5,14 +5,45 @@
              Title="SettingsPage"
              BackgroundColor="{DynamicResource Background}">
     
-    <VerticalStackLayout VerticalOptions="Center">
-        <Label 
-            Text="This is settings page"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            TextColor="{DynamicResource PrimaryDark}"/>
+    <Grid RowDefinitions="*,Auto">
+        
+        <!--MainContent-->
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label 
+                Text="This is settings page"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center"
+                TextColor="{DynamicResource TextColor}"/>
 
-        <Button Text="Switch Themes" 
-                Clicked="OnSwitchThemeClicked"/>
-    </VerticalStackLayout>
+            <Button Text="Switch Themes"
+                    TextColor="{DynamicResource ButtonTextColor}"
+                    Clicked="OnSwitchThemeClicked"
+                    BackgroundColor="{DynamicResource ButtonBackground}"/>
+        </VerticalStackLayout>
+
+        <!--Navigation bar-->
+        <Grid Grid.Row="1"
+                    BackgroundColor="{DynamicResource NavBarBackground}"
+                    HeightRequest="70"
+                    ColumnDefinitions="*,*,*"
+                    VerticalOptions="End"
+                    Padding="10,10">
+
+            <ImageButton Grid.Column="0"
+                         Source="home.png"
+                         HorizontalOptions="Center"
+                         Clicked="OnStartPageClicked" />
+
+            <ImageButton Grid.Column="1"
+                         Source="plus.png"
+                         HorizontalOptions="Center"
+                         Clicked="OnAddConcertClicked"/>
+
+            <ImageButton Grid.Column="2"
+                         Source="list.png"
+                         HorizontalOptions="Center" 
+                         Clicked="OnConcertListClicked"/>
+        </Grid>
+    </Grid>
+    
 </ContentPage>
