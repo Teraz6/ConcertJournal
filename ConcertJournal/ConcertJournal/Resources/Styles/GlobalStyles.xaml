@@ -36,5 +36,5 @@
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
     </Style>
-    
+
 </ResourceDictionary>
