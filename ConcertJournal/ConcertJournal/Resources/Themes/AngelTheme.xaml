@@ -80,4 +80,14 @@
     <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource White}" />
     <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
 
+    <!--Black navbar icons-->
+    <!--<ImageSource x:Key="HomeIcon">home_black</ImageSource>
+    <ImageSource x:Key="PlusIcon">plus_black</ImageSource>
+    <ImageSource x:Key="ListIcon">list_black</ImageSource> 
+    <ImageSource x:Key="SettingsIcon">settings_black</ImageSource>-->
+    <FileImageSource x:Key="HomeIcon" File="home_black.png"/>
+    <FileImageSource x:Key="PlusIcon" File="plus_black.png"/>
+    <FileImageSource x:Key="ListIcon" File="list_black.png"/>
+    <FileImageSource x:Key="SettingsIcon" File="settings_black.png"/>
+
 </ResourceDictionary>

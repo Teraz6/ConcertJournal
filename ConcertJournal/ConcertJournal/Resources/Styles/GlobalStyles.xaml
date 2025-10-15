@@ -37,4 +37,11 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
     </Style>
 
+    <Style TargetType="ImageButton">
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="WidthRequest" Value="40"/>
+        <Setter Property="HeightRequest" Value="40"/>
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
 </ResourceDictionary>
