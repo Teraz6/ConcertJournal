@@ -78,10 +78,6 @@
     <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
 
     <!--White navbar icons-->
-    <!--<ImageSource x:Key="HomeIcon">home_white</ImageSource>
-    <ImageSource x:Key="PlusIcon">plus_white</ImageSource>
-    <ImageSource x:Key="ListIcon">list_white</ImageSource>
-    <ImageSource x:Key="SettingsIcon">settings_white</ImageSource>-->
     <FileImageSource x:Key="HomeIcon" File="home_white.png"/>
     <FileImageSource x:Key="PlusIcon" File="plus_white.png"/>
     <FileImageSource x:Key="ListIcon" File="list_white.png"/>

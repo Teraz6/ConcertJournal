@@ -10,16 +10,12 @@
     <!-- Angel Theme Colors -->
     <!-- Sky Blue -->
     <Color x:Key="Primary">#90CAF9</Color>
-    <!-- Celestial Blue -->
     <Color x:Key="PrimaryDark">#42A5F5</Color>
-    <!-- Text on blue -->
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Golden Halo -->
     <Color x:Key="Secondary">#FFF8E1</Color>
-    <!-- Angelic Glow -->
     <Color x:Key="SecondaryDark">#FFE082</Color>
-    <!-- Deep text on light -->
     <Color x:Key="SecondaryText">#212121</Color>
 
     <!-- Backgrounds -->
@@ -81,10 +77,6 @@
     <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
 
     <!--Black navbar icons-->
-    <!--<ImageSource x:Key="HomeIcon">home_black</ImageSource>
-    <ImageSource x:Key="PlusIcon">plus_black</ImageSource>
-    <ImageSource x:Key="ListIcon">list_black</ImageSource> 
-    <ImageSource x:Key="SettingsIcon">settings_black</ImageSource>-->
     <FileImageSource x:Key="HomeIcon" File="home_black.png"/>
     <FileImageSource x:Key="PlusIcon" File="plus_black.png"/>
     <FileImageSource x:Key="ListIcon" File="list_black.png"/>

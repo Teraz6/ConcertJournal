@@ -13,6 +13,7 @@
         <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
     </Style>
 
     <Style TargetType="Entry">
