@@ -20,7 +20,8 @@
                     Toggled="OnThemeToggled"
                     HorizontalOptions="Center"
                     ThumbColor="{DynamicResource Primary}"
-                    OnColor="{DynamicResource Surface}"/>
+                    OnColor="{DynamicResource Surface}"
+                    Scale="2"/>
             
         </VerticalStackLayout>
 
