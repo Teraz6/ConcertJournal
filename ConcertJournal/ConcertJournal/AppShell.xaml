@@ -20,4 +20,8 @@
     <ShellContent
         Route="ConcertListPage"
         ContentTemplate="{DataTemplate views:ConcertListPage}" />
+    
+    <ShellContent
+        Route="SettingsPage"
+        ContentTemplate="{DataTemplate views:SettingsPage}" />
 </Shell>

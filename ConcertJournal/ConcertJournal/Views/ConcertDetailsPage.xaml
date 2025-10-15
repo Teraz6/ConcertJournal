@@ -4,10 +4,10 @@
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              BackgroundColor="{DynamicResource Background}">
-    
+
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
-            <StackLayout Padding="20" Spacing="15">
+            <StackLayout Padding="24" Spacing="20">
 
                 <Button Text="Update"
                         BackgroundColor="{DynamicResource ButtonGreen}"

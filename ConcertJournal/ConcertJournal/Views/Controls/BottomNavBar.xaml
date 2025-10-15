@@ -6,7 +6,7 @@
     
     <Grid BackgroundColor="{DynamicResource NavBarBackground}"
           Padding="10,5"
-          ColumnDefinitions="*,*,*"
+          ColumnDefinitions="*,*,*,*"
           VerticalOptions="End"
           HorizontalOptions="Fill"
           HeightRequest="70">
@@ -37,5 +37,14 @@
             WidthRequest="40"
             HeightRequest="40"
             Clicked="OnListClicked"/>
+        
+        <ImageButton
+            Source="settings.png"
+            Grid.Column="3"
+            Command="{Binding NavigateSettingsCommand, Source={x:Reference NavBarView}}"
+            BackgroundColor="Transparent"
+            WidthRequest="40"
+            HeightRequest="40"
+            Clicked="OnSettingsClicked"/>
     </Grid>
 </ContentView>
