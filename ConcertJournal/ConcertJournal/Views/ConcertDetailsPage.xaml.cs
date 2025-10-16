@@ -36,4 +36,9 @@ public partial class ConcertDetailsPage : ContentPage
             await Navigation.PushAsync(new AddConcertPage(concert));
         }
     }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..", animate: true);
+    }
 }
