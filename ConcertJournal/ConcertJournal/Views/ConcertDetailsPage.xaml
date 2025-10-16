@@ -28,12 +28,12 @@
                 
                 <!-- Custom back button -->
                 <Button Text="← Back"
-                    FontSize="18"
-                    TextColor="White"
-                    BackgroundColor="{DynamicResource ButtonBackground}"
-                    CornerRadius="10"
-                    WidthRequest="100"
-                    Clicked="OnBackClicked" />
+                        FontSize="18"
+                        TextColor="{DynamicResource TextColor}"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        CornerRadius="10"
+                        WidthRequest="100"
+                        Clicked="OnBackClicked" />
 
                 <!-- Performers Section -->
                 <Border StrokeThickness="0"
