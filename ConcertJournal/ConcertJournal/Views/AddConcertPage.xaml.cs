@@ -1,6 +1,7 @@
 using ConcertJournal.Models;
 using ConcertJournal.Views;
 using Microsoft.Maui.Storage;
+using System;
 using System.Collections.ObjectModel;
 
 
@@ -179,4 +180,11 @@ public partial class AddConcertPage : ContentPage
         await DisplayAlert("Alert", "Uploading function not implemented", "OK");
     }
 
+    private void OnRemoveMediaClicked(object sender, EventArgs e)
+    {
+        if (sender is Button button && button.BindingContext is string mediaPath)
+        {
+            MediaFiles.Remove(mediaPath);
+        }
+    }
 }

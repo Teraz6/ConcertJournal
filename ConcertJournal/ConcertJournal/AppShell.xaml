@@ -11,12 +11,10 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage"/>
 
-    <!-- Add Concert Page -->
     <ShellContent
         Route="AddConcertPage"
         ContentTemplate="{DataTemplate views:AddConcertPage}" />
 
-    <!-- Concert List Page -->
     <ShellContent
         Route="ConcertListPage"
         ContentTemplate="{DataTemplate views:ConcertListPage}" />
@@ -24,4 +22,8 @@
     <ShellContent
         Route="SettingsPage"
         ContentTemplate="{DataTemplate views:SettingsPage}" />
+
+    <ShellContent
+        Route="ConcertDetailsPage"
+        ContentTemplate="{DataTemplate views:ConcertDetailsPage}" />
 </Shell>

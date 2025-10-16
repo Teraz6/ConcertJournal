@@ -11,6 +11,7 @@ namespace ConcertJournal
             Routing.RegisterRoute(nameof(AddConcertPage), typeof(AddConcertPage));
             Routing.RegisterRoute(nameof(ConcertListPage), typeof(ConcertListPage));
             Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
+            Routing.RegisterRoute(nameof(ConcertDetailsPage), typeof(ConcertDetailsPage));
         }
 
     }

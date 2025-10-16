@@ -82,7 +82,7 @@
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 12"
                         BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16">   
+                        Padding="16">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Notes"
                                FontSize="20"
@@ -93,6 +93,26 @@
                                TextColor="{DynamicResource TextColor}" />
                     </VerticalStackLayout>
                 </Border>
+
+                <CollectionView x:Name="MediaCollectionView"
+                            ItemsSource="{Binding MediaFiles}"
+                            ItemsLayout="VerticalGrid, 2"
+                            SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="{DynamicResource Primary}"
+                                    StrokeThickness="1"
+                                    Margin="5"
+                                    Padding="3"
+                                    StrokeShape="RoundRectangle 8">
+                                <Image Source="{Binding .}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="140"
+                                       WidthRequest="140" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
                 <!-- Update Button -->
                 <Button Text="Update"
