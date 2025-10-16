@@ -141,7 +141,37 @@ public partial class AddConcertPage : ContentPage
 
     private async void OnAddImageClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Alert", "Uploading function not implemented", "OK");
+        try
+        {
+#if WINDOWS
+            var results = await FilePicker.PickMultipleAsync(new PickOptions
+            {
+                PickerTitle = "Select images",
+                FileTypes = FilePickerFileType.Images
+            });
+#else
+            var results = await FilePicker.PickMultipleAsync(new PickOptions
+            {
+                PickerTitle = "Select images",
+                FileTypes = FilePickerFileType.Images
+            });
+#endif
+
+            if (results != null)
+            {
+                foreach (var file in results)
+                {
+                    if (File.Exists(file.FullPath))
+                    {
+                        MediaFiles.Add(file.FullPath);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to pick image: {ex.Message}", "OK");
+        }
     }
 
     private async void OnAddVideoClicked(object sender, EventArgs e)
