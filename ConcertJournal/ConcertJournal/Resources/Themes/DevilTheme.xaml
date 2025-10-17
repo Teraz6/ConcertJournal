@@ -2,40 +2,43 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Resources.Themes.DevilTheme">
-    
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Styles/GlobalStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <!-- Devil Theme Colors -->
     <!-- Blood Red -->
     <Color x:Key="Primary">#B00020</Color>
-    <!-- Deep Crimson -->
     <Color x:Key="PrimaryDark">#7F0000</Color>
-    <!-- Light on red -->
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Hellfire Red -->
     <Color x:Key="Secondary">#FF5252</Color>
-    <!-- Molten Lava -->
     <Color x:Key="SecondaryDark">#D32F2F</Color>
-    <!-- Light pinkish text -->
     <Color x:Key="SecondaryText">#FFEBEE</Color>
 
 
     <!-- Backgrounds -->
-    <!-- Near black -->
     <Color x:Key="Background">#0B0B0B</Color>
-    <!-- UI surface -->
     <Color x:Key="Surface">#1C1C1C</Color>
-    <!-- Subtle red-black overlay -->
     <Color x:Key="Overlay">#2A0A0A</Color>
-    <!-- Blood-stained dark -->
     <Color x:Key="CardBackground">#1A0000</Color>
 
 
     <!-- Text -->
-    <!-- Bright text -->
     <Color x:Key="TextColor">#F8F8F8</Color>
-    <!-- For hints/labels -->
     <Color x:Key="MutedText">#B0B0B0</Color>
 
+    <!--Button-->
+    <Color x:Key="ButtonBackground">#CCCCCC</Color>
+    <Color x:Key="ButtonTextColor">#000000</Color>
+    <Color x:Key="ButtonBorderColor">#7F0000</Color>
+    <Color x:Key="ButtonGreen">#09BF00</Color>
+    <Color x:Key="ButtonRed">#B30000</Color>
+
+    <!--NavBar-->
+    <Color x:Key="NavBarBackground">#7F0000</Color>
 
     <!-- Common Colors -->
     <Color x:Key="White">#FFFFFF</Color>
@@ -62,9 +65,22 @@
     <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource Overlay}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackground}" />
 
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackground}" />
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{DynamicResource ButtonTextColor}" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{DynamicResource ButtonBorderColor}" />
+    <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
+    <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
+
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />
 
     <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource White}" />
     <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
+
+    <!--White navbar icons-->
+    <FileImageSource x:Key="HomeIcon" File="home_white.png"/>
+    <FileImageSource x:Key="PlusIcon" File="plus_white.png"/>
+    <FileImageSource x:Key="ListIcon" File="list_white.png"/>
+    <FileImageSource x:Key="SettingsIcon" File="settings_white.png"/>
+
 </ResourceDictionary>

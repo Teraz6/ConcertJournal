@@ -1,25 +1,56 @@
 using ConcertJournal.Models;
+using ConcertJournal.Services;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace ConcertJournal.Views;
 
 public partial class ConcertListPage : ContentPage
 {
-	public ConcertListPage()
+
+    private List<Concert> allConcerts = new();
+    private bool sortAscending = true;
+    public ObservableCollection<Concert> Concerts { get; set; } = new();
+
+    public ConcertListPage()
 	{
 		InitializeComponent();
-	}
+        LoadConcerts();
+
+        EventBus.ConcertCreated += async () =>
+        {
+            allConcerts = await App.Database.GetConcertsAsync();
+            ApplySearchAndSort(defaultSort: true); // newest first
+        };
+    }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        var concerts = await App.Database.GetConcertsAsync();
-        ConcertListView.ItemsSource = concerts;
+
+        try
+        {
+            // Load data from your SQLite database
+            allConcerts = await App.Database.GetConcertsAsync();
+
+            Concerts.Clear();
+            foreach (var concert in allConcerts)
+                Concerts.Add(concert);
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load concerts: {ex.Message}", "OK");
+        }
+
+        SortPicker.SelectedIndex = 0;
     }
 
     private async Task LoadConcerts()
     {
-        var concerts = await App.Database.GetConcertsAsync();
-        ConcertListView.ItemsSource = concerts;
+        allConcerts = await App.Database.GetConcertsAsync();
+
+        // Default = newest created first
+        ApplySearchAndSort(defaultSort: true);
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -58,19 +89,75 @@ public partial class ConcertListPage : ContentPage
         }
     }
 
-    //NavigationBar code 
-    private async void OnStartPageClicked(object sender, EventArgs e)
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        await Navigation.PushAsync(new MainPage(),false);
+        ApplySearchAndSort(e.NewTextValue);
     }
 
-    private async void OnAddConcertClicked(object sender, EventArgs e)
+    private void OnSortPickerChanged(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddConcertPage(),false);
+        if (sender is not Picker picker || picker.SelectedItem is null)
+            return;
+
+        string selected = picker.SelectedItem.ToString();
+        string searchText = SearchBar?.Text ?? string.Empty;
+
+        switch (selected)
+        {
+            case "Oldest By Year":
+                sortAscending = true;
+                ApplySearchAndSort(searchText, sortByDate: true, ascending: true);
+                break;
+
+            case "Newest By Year":
+                sortAscending = false;
+                ApplySearchAndSort(searchText, sortByDate: true, ascending: false);
+                break;
+
+            case "Default":
+            default:
+                ApplySearchAndSort(searchText, defaultSort: true);
+                break;
+        }
     }
 
-    private async void OnConcertListClicked(object sender, EventArgs e)
+    private void ApplySearchAndSort(string searchText = "", bool sortByDate = true, bool ascending = true, bool defaultSort = false)
     {
-        await Navigation.PushAsync(new ConcertListPage(), false);
+        var filtered = allConcerts;
+
+        // Filter by search text
+        if (!string.IsNullOrWhiteSpace(searchText))
+        {
+            filtered = filtered
+                .Where(c => c.EventTitle.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                         || c.Performers.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        // Sorting
+        if (defaultSort)
+        {
+            // Default = newest created first
+            filtered = filtered.OrderByDescending(c => c.Id).ToList();
+        }
+        else if (sortByDate)
+        {
+            filtered = ascending
+                ? filtered.OrderBy(c => c.Date).ToList()
+                : filtered.OrderByDescending(c => c.Date).ToList();
+        }
+
+        // Update UI
+        ConcertListView.ItemsSource = filtered;
     }
+
+    private async void OnConcertSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is Concert selected)
+        {
+            await Navigation.PushAsync(new ConcertDetailsPage(selected));
+            ((CollectionView)sender).SelectedItem = null;
+        }
+    }
+
 }

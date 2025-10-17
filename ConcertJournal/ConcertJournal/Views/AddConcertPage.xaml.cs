@@ -1,6 +1,8 @@
 using ConcertJournal.Models;
+using ConcertJournal.Services;
 using ConcertJournal.Views;
 using Microsoft.Maui.Storage;
+using System;
 using System.Collections.ObjectModel;
 
 
@@ -136,12 +138,44 @@ public partial class AddConcertPage : ContentPage
             Performers.Clear();
             MediaFiles.Clear();
             if (DatePicker != null) DatePicker.Date = DateTime.Today;
+
+            EventBus.OnConcertCreated();
         }
     }
 
     private async void OnAddImageClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Alert", "Uploading function not implemented", "OK");
+        try
+        {
+#if WINDOWS
+            var results = await FilePicker.PickMultipleAsync(new PickOptions
+            {
+                PickerTitle = "Select images",
+                FileTypes = FilePickerFileType.Images
+            });
+#else
+            var results = await FilePicker.PickMultipleAsync(new PickOptions
+            {
+                PickerTitle = "Select images",
+                FileTypes = FilePickerFileType.Images
+            });
+#endif
+
+            if (results != null)
+            {
+                foreach (var file in results)
+                {
+                    if (File.Exists(file.FullPath))
+                    {
+                        MediaFiles.Add(file.FullPath);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to pick image: {ex.Message}", "OK");
+        }
     }
 
     private async void OnAddVideoClicked(object sender, EventArgs e)
@@ -149,20 +183,11 @@ public partial class AddConcertPage : ContentPage
         await DisplayAlert("Alert", "Uploading function not implemented", "OK");
     }
 
-    //Navigation code
-    private async void OnStartPageClicked(object sender, EventArgs e)
+    private void OnRemoveMediaClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new MainPage(), false);
+        if (sender is Button button && button.BindingContext is string mediaPath)
+        {
+            MediaFiles.Remove(mediaPath);
+        }
     }
-
-    private async void OnAddConcertClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new AddConcertPage(), false);
-    }
-
-    private async void OnConcertListClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new ConcertListPage(), false);
-    }
-
 }

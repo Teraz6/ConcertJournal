@@ -2,38 +2,41 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Resources.Themes.AngelTheme">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Resources/Styles/GlobalStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
     
     <!-- Angel Theme Colors -->
     <!-- Sky Blue -->
     <Color x:Key="Primary">#90CAF9</Color>
-    <!-- Celestial Blue -->
     <Color x:Key="PrimaryDark">#42A5F5</Color>
-    <!-- Text on blue -->
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Golden Halo -->
     <Color x:Key="Secondary">#FFF8E1</Color>
-    <!-- Angelic Glow -->
     <Color x:Key="SecondaryDark">#FFE082</Color>
-    <!-- Deep text on light -->
-    <Color x:Key="SecondaryText">#3E2723</Color>
+    <Color x:Key="SecondaryText">#212121</Color>
 
     <!-- Backgrounds -->
-    <!-- Pure white -->
     <Color x:Key="Background">#FFFFFF</Color>
-    <!-- Light surface -->
     <Color x:Key="Surface">#F5F5F5</Color>
-    <!-- Light sky blue tint -->
     <Color x:Key="Overlay">#E3F2FD</Color>
-    <!-- Very light grey -->
-    <Color x:Key="CardBackground">#FAFAFA</Color>
-
+    <Color x:Key="CardBackground">#CCCCCC</Color>
+    
+    <!--Button-->
+    <Color x:Key="ButtonBackground">#CCCCCC</Color>
+    <Color x:Key="ButtonTextColor">#212121</Color>
+    <Color x:Key="ButtonBorderColor">#212121</Color>
+    <Color x:Key="ButtonGreen">#09BF00</Color>
+    <Color x:Key="ButtonRed">#B30000</Color>
 
     <!-- Text -->
-    <!-- Near-black text -->
     <Color x:Key="TextColor">#212121</Color>
-    <!-- Gray for secondary text -->
     <Color x:Key="MutedText">#757575</Color>
+    
+    <!--NavBar-->
+    <Color x:Key="NavBarBackground">#90CAF9</Color>
 
 
     <!-- Common Colors -->
@@ -61,9 +64,22 @@
     <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource Overlay}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackground}" />
 
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackground}" />
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{DynamicResource ButtonTextColor}" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{DynamicResource ButtonBorderColor}" />
+    <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
+    <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
+
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />
 
     <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource White}" />
     <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource Black}" />
+
+    <!--Black navbar icons-->
+    <FileImageSource x:Key="HomeIcon" File="home_black.png"/>
+    <FileImageSource x:Key="PlusIcon" File="plus_black.png"/>
+    <FileImageSource x:Key="ListIcon" File="list_black.png"/>
+    <FileImageSource x:Key="SettingsIcon" File="settings_black.png"/>
+
 </ResourceDictionary>

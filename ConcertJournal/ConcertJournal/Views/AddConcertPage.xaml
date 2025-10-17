@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.AddConcertPage">
+             x:Class="ConcertJournal.Views.AddConcertPage"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
@@ -22,7 +24,7 @@
                         <Button Grid.Column="1"
                                 x:Name="SaveButton"
                                 Text="Create"
-                                BackgroundColor="#0BBD02"
+                                BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
                                 Clicked="SaveButton_Clicked"/>
                     </Grid>
@@ -46,7 +48,7 @@
                                 Grid.Column="1"
                                 Text="Add"
                                 BackgroundColor="Transparent"
-                                TextColor="#0BBD02"
+                                TextColor="{DynamicResource ButtonGreen}"
                                 Margin="0,0,0,0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
@@ -65,7 +67,7 @@
                                            VerticalOptions="Center"
                                            />
                                     <Button Text="X"
-                                            TextColor="#F72C02"
+                                            TextColor="{DynamicResource ButtonRed}"
                                             FontSize="14"
                                             BackgroundColor="Transparent"
                                             Clicked="RemovePerformer"
@@ -112,8 +114,9 @@
                     <Label Text="Date" 
                            Margin="0,10,0,10"
                            FontSize="18"/>
-                    <DatePicker x:Name="DatePicker"/>
 
+                    <DatePicker x:Name="DatePicker"/>
+                    
                     <!--Notes-->
                     <Label Text="Notes" 
                            Margin="0,10,0,10"
@@ -128,52 +131,49 @@
                     <Label Text="Images/Videos"
                            Margin="0,10,0,10"
                            FontSize="18"/>
-                    <HorizontalStackLayout Spacing="5">
-                        <Button Text="Add Image"
-                                Clicked="OnAddImageClicked"/>
-                        <Button Text="Add Video"
-                                Clicked="OnAddVideoClicked"/>
-                    </HorizontalStackLayout>
+                    <!-- Upload Button -->
+                    <Button Text="Upload Image(s)"
+                            Clicked="OnAddImageClicked"
+                            BackgroundColor="{DynamicResource ButtonBackground}"
+                            TextColor="{DynamicResource ButtonTextColor}" />
 
-                    <CollectionView x:Name="MediaCollectionView">
+                    <!-- Image Preview -->
+                    <CollectionView x:Name="MediaCollectionView"
+                                    ItemsSource="{Binding MediaFiles}"
+                                    SelectionMode="None">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border Padding="5" Margin="5" Stroke="#0BBD02">
-                                    <Image Source="{Binding}" HeightRequest="100"/>
-                                </Border>
+                                <Grid RowDefinitions="Auto,*">
+                                    <Border Grid.Row="0"
+                                            Padding="5"
+                                            StrokeThickness="0"
+                                            MaximumHeightRequest="500"
+                                            MaximumWidthRequest="500">
+                                        <Image Source="{Binding .}" 
+                                               Aspect="AspectFit"/>
+                                    </Border>
+                                
+                                    <Button Grid.Row="1"
+                                            Text="Remove image"
+                                            TextColor="{DynamicResource White}"
+                                            BackgroundColor="{DynamicResource ButtonRed}"
+                                            FontSize="14"
+                                            FontAttributes="Bold"
+                                            Padding="5"
+                                            Margin="0,0,0,20"
+                                            MaximumWidthRequest="150"
+                                            Clicked="OnRemoveMediaClicked"
+                                            BindingContext="{Binding .}"/>
+                                </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Horizontal" Span="3"/>
-                        </CollectionView.ItemsLayout>
                     </CollectionView>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>
-        
-        
+
+
         <!--Navigation bar-->
-        <Grid Grid.Row="1"
-                BackgroundColor="#00BBF2"
-                HeightRequest="70"
-                ColumnDefinitions="*,*,*"
-                VerticalOptions="End"
-                Padding="10,10">
-
-            <ImageButton Grid.Column="0"
-                            Source="home.png"
-                            HorizontalOptions="Center"
-                            Clicked="OnStartPageClicked" />
-
-            <ImageButton Grid.Column="1"
-                            Source="plus.png"
-                            HorizontalOptions="Center"
-                            Clicked="OnAddConcertClicked"/>
-
-            <ImageButton Grid.Column="2"
-                            Source="list.png"
-                            HorizontalOptions="Center" 
-                            Clicked="OnConcertListClicked"/>
-        </Grid>
+        <controls:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>

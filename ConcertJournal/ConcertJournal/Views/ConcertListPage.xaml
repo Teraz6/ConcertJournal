@@ -1,23 +1,60 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ConcertJournal.Views.ConcertListPage">
+             x:Class="ConcertJournal.Views.ConcertListPage"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             BackgroundColor="{DynamicResource Background}">
     
     <Grid RowDefinitions="*,Auto">
         <ScrollView>
             <!--MainContent-->
             <Grid RowDefinitions="Auto,*">
 
-                <SearchBar Placeholder="Search events"
-                           Margin="5"
-                           CancelButtonColor="#F72C02"
-                           FontSize="16">
-                </SearchBar>
+                <!-- Search and Sort Controls -->
+                <HorizontalStackLayout Spacing="10"
+                                       Margin="0,20,0,0"
+                                       Padding="10"
+                                       HorizontalOptions="Center">
+                    <!-- Search Bar -->
+                    <Border Stroke="Transparent"
+                            StrokeThickness="0"
+                            BackgroundColor="{DynamicResource Surface}"
+                            StrokeShape="RoundRectangle 10">
+
+                        <SearchBar x:Name="SearchBar"
+                                   Placeholder="Search by event or performer"
+                                   TextChanged="OnSearchTextChanged"
+                                   TextColor="{DynamicResource TextColor}"
+                                   WidthRequest="350"
+                                   HeightRequest="50"/>
+                    </Border>
+
+                    <Border Stroke="Transparent"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="100">
+                        <Picker x:Name="SortPicker"
+                                TextColor="{DynamicResource TextColor}"
+                                BackgroundColor="{DynamicResource Surface}"
+                                SelectedIndexChanged="OnSortPickerChanged"
+                                HorizontalOptions="Center"
+                                SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Default</x:String>
+                                <x:String>Oldest By Year</x:String>
+                                <x:String>Newest By Year</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
+                    <!-- Sort Picker -->
+                    
+                </HorizontalStackLayout>
 
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
                                 x:Name="ConcertListView" 
-                                Margin="5">
+                                Margin="5"
+                                ItemsSource="{Binding Concerts}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <!--Use strokeThickness as margin-->
@@ -25,7 +62,7 @@
                                     Stroke="Transparent"
                                     StrokeThickness="10"
                                     StrokeShape="20"
-                                    BackgroundColor="#089E9E">
+                                    BackgroundColor="{DynamicResource CardBackground}">
                                 <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
 
                                     <!-- Concert details -->
@@ -54,6 +91,7 @@
                                                            Spacing="10">
                                         <Button Text="Details"
                                                 BackgroundColor="Transparent"
+                                                TextColor="{DynamicResource TextColor}"
                                                 FontSize="18"
                                                 FontAttributes="Bold"
                                                 Padding="10"
@@ -64,19 +102,21 @@
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
                                             <Button Text="Update"
-                                                BackgroundColor="#09D600"
-                                                FontSize="18"
-                                                Padding="10"
-                                                Clicked="OnUpdateClicked"
-                                                CommandParameter="{Binding .}" />
-                                            
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    BackgroundColor="{DynamicResource ButtonGreen}"
+                                                    FontSize="18"
+                                                    Padding="10"
+                                                    Clicked="OnUpdateClicked"
+                                                    CommandParameter="{Binding .}" />
+
                                             <!-- Delete button -->
                                             <Button Text="Delete"
-                                                BackgroundColor="#F72C02"
-                                                FontSize="18"
-                                                Padding="10"
-                                                Clicked="OnDeleteClicked"
-                                                BindingContext="{Binding .}" />
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    BackgroundColor="{DynamicResource ButtonRed}"
+                                                    FontSize="18"
+                                                    Padding="10"
+                                                    Clicked="OnDeleteClicked"
+                                                    BindingContext="{Binding .}" />
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     
@@ -89,27 +129,6 @@
         </ScrollView>
 
         <!--Navigation bar-->
-        <Grid Grid.Row="1"
-                BackgroundColor="#00BBF2"
-                HeightRequest="70"
-                ColumnDefinitions="*,*,*"
-                VerticalOptions="End"
-                Padding="10,10">
-
-            <ImageButton Grid.Column="0"
-                            Source="home.png"
-                            HorizontalOptions="Center"
-                            Clicked="OnStartPageClicked" />
-
-            <ImageButton Grid.Column="1"
-                            Source="plus.png"
-                            HorizontalOptions="Center"
-                            Clicked="OnAddConcertClicked"/>
-
-            <ImageButton Grid.Column="2"
-                            Source="list.png"
-                            HorizontalOptions="Center" 
-                            Clicked="OnConcertListClicked"/>
-        </Grid>  
+        <controls:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
