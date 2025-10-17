@@ -35,6 +35,17 @@
                         Scale="1.5"/>
             </Grid>
 
+            <HorizontalStackLayout Spacing="20">
+                <Label Text="Export data"
+                       TextColor="{DynamicResource TextColor}"/>
+
+                <Button Text="Export Events"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        CornerRadius="8"
+                        Clicked="OnExportClicked"/>
+                
+            </HorizontalStackLayout>
+
         </VerticalStackLayout>
 
         <!--Navigation bar-->

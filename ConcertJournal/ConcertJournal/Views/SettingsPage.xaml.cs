@@ -1,4 +1,5 @@
 using ConcertJournal.Resources.Themes;
+using ConcertJournal.Services;
 using Microsoft.Maui.Storage;
 
 namespace ConcertJournal.Views;
@@ -30,5 +31,23 @@ public partial class SettingsPage : ContentPage
             App.Current.Resources.MergedDictionaries.Add(new DevilTheme());
         else
             App.Current.Resources.MergedDictionaries.Add(new AngelTheme());
+    }
+
+    private async void OnExportClicked(object sender, EventArgs e)
+    {
+        var concerts = await App.Database.GetConcertsAsync();
+
+        if (concerts.Count == 0)
+        {
+            await DisplayAlert("No Data", "You have no concerts to export.", "OK");
+            return;
+        }
+
+        bool isExcel = await DisplayAlert("Export Format", "Choose export format:", "Excel (.xlsx)", "CSV (.csv)");
+
+        if (isExcel)
+            await ExportServices.ExportConcertsToExcelAsync(concerts, this);
+        else
+            await ExportServices.ExportConcertsToCsvAsync(concerts, this);
     }
 }
