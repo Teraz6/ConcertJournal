@@ -1,4 +1,5 @@
 using ConcertJournal.Models;
+using ConcertJournal.Services;
 using ConcertJournal.Views;
 using Microsoft.Maui.Storage;
 using System;
@@ -137,6 +138,8 @@ public partial class AddConcertPage : ContentPage
             Performers.Clear();
             MediaFiles.Clear();
             if (DatePicker != null) DatePicker.Date = DateTime.Today;
+
+            EventBus.OnConcertCreated();
         }
     }
 

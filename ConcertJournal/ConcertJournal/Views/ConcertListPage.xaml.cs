@@ -1,4 +1,5 @@
 using ConcertJournal.Models;
+using ConcertJournal.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -15,6 +16,12 @@ public partial class ConcertListPage : ContentPage
 	{
 		InitializeComponent();
         LoadConcerts();
+
+        EventBus.ConcertCreated += async () =>
+        {
+            allConcerts = await App.Database.GetConcertsAsync();
+            ApplySearchAndSort(defaultSort: true); // newest first
+        };
     }
 
     protected override async void OnAppearing()
@@ -34,15 +41,16 @@ public partial class ConcertListPage : ContentPage
         {
             await DisplayAlert("Error", $"Failed to load concerts: {ex.Message}", "OK");
         }
+
+        SortPicker.SelectedIndex = 0;
     }
 
     private async Task LoadConcerts()
     {
         allConcerts = await App.Database.GetConcertsAsync();
 
-        // Default sort ascending
-        sortAscending = true;
-        ApplySearchAndSort();
+        // Default = newest created first
+        ApplySearchAndSort(defaultSort: true);
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -88,47 +96,59 @@ public partial class ConcertListPage : ContentPage
 
     private void OnSortPickerChanged(object sender, EventArgs e)
     {
-        var picker = sender as Picker;
-        if (picker.SelectedIndex == -1) return;
-
-        var selected = picker.SelectedItem.ToString();
-
-        if (selected == "Oldest By Year")
-            sortAscending = true;
-        else if (selected == "Newest By Year")
-            sortAscending = false;
-        else
-        {
-            // "Default" selected — no sorting
-            ApplySearchAndSort(SearchBar.Text, skipSorting: true);
+        if (sender is not Picker picker || picker.SelectedItem is null)
             return;
-        }
 
-        ApplySearchAndSort(SearchBar.Text);
+        string selected = picker.SelectedItem.ToString();
+        string searchText = SearchBar?.Text ?? string.Empty;
+
+        switch (selected)
+        {
+            case "Oldest By Year":
+                sortAscending = true;
+                ApplySearchAndSort(searchText, sortByDate: true, ascending: true);
+                break;
+
+            case "Newest By Year":
+                sortAscending = false;
+                ApplySearchAndSort(searchText, sortByDate: true, ascending: false);
+                break;
+
+            case "Default":
+            default:
+                ApplySearchAndSort(searchText, defaultSort: true);
+                break;
+        }
     }
 
-    private void ApplySearchAndSort(string searchText = "", bool skipSorting = false)
+    private void ApplySearchAndSort(string searchText = "", bool sortByDate = true, bool ascending = true, bool defaultSort = false)
     {
-        var filtered = allConcerts
-            .Where(c => string.IsNullOrEmpty(searchText) ||
-                        (c.EventTitle?.ToLower().Contains(searchText.ToLower()) ?? false) ||
-                        (c.Performers?.ToLower().Contains(searchText.ToLower()) ?? false))
-            .ToList();
+        var filtered = allConcerts;
 
-        IEnumerable<Concert> result = filtered;
-
-        if (!skipSorting)
+        // Filter by search text
+        if (!string.IsNullOrWhiteSpace(searchText))
         {
-            result = sortAscending
-                ? filtered.OrderBy(c => c.Date)
-                : filtered.OrderByDescending(c => c.Date);
+            filtered = filtered
+                .Where(c => c.EventTitle.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+                         || c.Performers.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                .ToList();
         }
 
-        Concerts.Clear();
-        foreach (var concert in result)
-            Concerts.Add(concert);
+        // Sorting
+        if (defaultSort)
+        {
+            // Default = newest created first
+            filtered = filtered.OrderByDescending(c => c.Id).ToList();
+        }
+        else if (sortByDate)
+        {
+            filtered = ascending
+                ? filtered.OrderBy(c => c.Date).ToList()
+                : filtered.OrderByDescending(c => c.Date).ToList();
+        }
 
-        ConcertListView.ItemsSource = Concerts;
+        // Update UI
+        ConcertListView.ItemsSource = filtered;
     }
 
     private async void OnConcertSelected(object sender, SelectionChangedEventArgs e)
