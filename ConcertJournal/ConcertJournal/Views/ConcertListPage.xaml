@@ -10,16 +10,51 @@
             <!--MainContent-->
             <Grid RowDefinitions="Auto,*">
 
-                <SearchBar Placeholder="Search events"
-                           Margin="5"
-                           CancelButtonColor="{DynamicResource ButtonRed}"
-                           FontSize="16">
-                </SearchBar>
+                <!-- Search and Sort Controls -->
+                <HorizontalStackLayout Spacing="10"
+                                       Margin="0,20,0,0"
+                                       Padding="10"
+                                       HorizontalOptions="Center">
+                    <!-- Search Bar -->
+                    <Border Stroke="Transparent"
+                            StrokeThickness="0"
+                            BackgroundColor="{DynamicResource Surface}"
+                            StrokeShape="RoundRectangle 10">
+
+                        <SearchBar x:Name="SearchBar"
+                                   Placeholder="Search by event or performer"
+                                   TextChanged="OnSearchTextChanged"
+                                   TextColor="{DynamicResource TextColor}"
+                                   WidthRequest="350"
+                                   HeightRequest="50"/>
+                    </Border>
+
+                    <Border Stroke="Transparent"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="100">
+                        <Picker x:Name="SortPicker"
+                                TextColor="{DynamicResource TextColor}"
+                                BackgroundColor="{DynamicResource Surface}"
+                                SelectedIndexChanged="OnSortPickerChanged"
+                                HorizontalOptions="Center"
+                                SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Default</x:String>
+                                <x:String>Oldest By Year</x:String>
+                                <x:String>Newest By Year</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Border>
+                    <!-- Sort Picker -->
+                    
+                </HorizontalStackLayout>
 
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
                                 x:Name="ConcertListView" 
-                                Margin="5">
+                                Margin="5"
+                                ItemsSource="{Binding Concerts}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <!--Use strokeThickness as margin-->
