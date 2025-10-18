@@ -15,24 +15,32 @@
             Source="{DynamicResource HomeIcon}"
             Grid.Column="0"
             Command="{Binding NavigateHomeCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnHomeClicked"/>
+            Clicked="OnHomeClicked"
+            HeightRequest="60"
+            WidthRequest="100"/>
 
         <ImageButton
             Source="{DynamicResource PlusIcon}"
             Grid.Column="1"
             Command="{Binding NavigateAddCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnAddClicked"/>
+            Clicked="OnAddClicked"
+            HeightRequest="60"
+            WidthRequest="100"/>
 
         <ImageButton
             Source="{DynamicResource ListIcon}"
             Grid.Column="2"
             Command="{Binding NavigateListCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnListClicked"/>
+            Clicked="OnListClicked"
+            HeightRequest="60"
+            WidthRequest="100"/>
         
         <ImageButton
             Source="{DynamicResource SettingsIcon}"
             Grid.Column="3"
             Command="{Binding NavigateSettingsCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnSettingsClicked"/>
+            Clicked="OnSettingsClicked"
+            HeightRequest="60"
+            WidthRequest="100"/>
     </Grid>
 </ContentView>
