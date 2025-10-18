@@ -11,12 +11,10 @@
             <Grid RowDefinitions="Auto,*">
 
                 <!-- Search and Sort Controls -->
-                <HorizontalStackLayout Spacing="10"
-                                       Margin="0,20,0,0"
-                                       Padding="10"
-                                       HorizontalOptions="Center">
+                <Grid ColumnDefinitions="*,Auto">
                     <!-- Search Bar -->
-                    <Border Stroke="Transparent"
+                    <Border Grid.Column="0"
+                            Stroke="Transparent"
                             StrokeThickness="0"
                             BackgroundColor="{DynamicResource Surface}"
                             StrokeShape="RoundRectangle 10">
@@ -24,12 +22,11 @@
                         <SearchBar x:Name="SearchBar"
                                    Placeholder="Search by event or performer"
                                    TextChanged="OnSearchTextChanged"
-                                   TextColor="{DynamicResource TextColor}"
-                                   WidthRequest="350"
-                                   HeightRequest="50"/>
+                                   TextColor="{DynamicResource TextColor}"/>
                     </Border>
 
-                    <Border Stroke="Transparent"
+                    <Border Grid.Column="1"
+                            Stroke="Transparent"
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 20"
                             WidthRequest="100">
@@ -46,9 +43,7 @@
                             </Picker.Items>
                         </Picker>
                     </Border>
-                    <!-- Sort Picker -->
-                    
-                </HorizontalStackLayout>
+                </Grid>
 
                 <!--Event display-->
                 <CollectionView Grid.Row="1"

@@ -9,6 +9,10 @@ using Microsoft.UI.Windowing;
 using Windows.Graphics;
 #endif
 
+#if ANDROID
+using Microsoft.Maui.ApplicationModel; // For Permissions
+#endif
+
 namespace ConcertJournal
 {
     public partial class App : Application
@@ -49,10 +53,29 @@ namespace ConcertJournal
             #endif
             });
 
-            MainPage = new AppShell();
+        MainPage = new AppShell();
+
+#if ANDROID
+            // Request runtime permissions on Android
+            _ = RequestPermissionsOnAndroid();
+#endif
         }
 
-
+#if ANDROID
+        private async Task RequestPermissionsOnAndroid()
+        {
+            try
+            {
+                var mainActivity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
+                if (mainActivity is MainActivity activity)
+                    await activity.RequestAppPermissionsAsync();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Permission request failed: {ex.Message}");
+            }
+        }
+#endif
 
         //protected override Window CreateWindow(IActivationState? activationState)
         //{

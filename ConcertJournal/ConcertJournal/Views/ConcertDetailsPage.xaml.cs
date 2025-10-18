@@ -1,6 +1,9 @@
-using ConcertJournal.Models;
-using System;
+﻿using ConcertJournal.Models;
 using System.Collections.ObjectModel;
+using MauiMap = Microsoft.Maui.Controls.Maps.Map;
+using Microsoft.Maui.Controls.Maps;
+using Microsoft.Maui.Maps;
+using System.Linq;
 
 namespace ConcertJournal.Views;
 
@@ -26,6 +29,25 @@ public partial class ConcertDetailsPage : ContentPage
         }
 
         MediaCollectionView.ItemsSource = MediaFiles;
+    }
+
+    private void OnImageTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Image image && image.Source is FileImageSource source)
+        {
+            PopupImage.Source = source.File;
+            ImageOverlay.IsVisible = true;
+        }
+        else if (sender is Image img)
+        {
+            PopupImage.Source = img.Source;
+            ImageOverlay.IsVisible = true;
+        }
+    }
+
+    private void OnCloseImageTapped(object sender, EventArgs e)
+    {
+        ImageOverlay.IsVisible = false;
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
