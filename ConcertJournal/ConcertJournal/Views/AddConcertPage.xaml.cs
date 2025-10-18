@@ -108,7 +108,7 @@ public partial class AddConcertPage : ContentPage
             await App.Database.SaveConcertAsync(_existingConcert);
             await DisplayAlert("Success", "Concert updated!", "OK");
 
-            await Navigation.PopAsync();
+            await Shell.Current.GoToAsync("..");
         }
         else
         {

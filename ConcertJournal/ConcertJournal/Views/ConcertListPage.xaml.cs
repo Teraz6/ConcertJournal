@@ -1,7 +1,6 @@
 using ConcertJournal.Models;
 using ConcertJournal.Services;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace ConcertJournal.Views;
 

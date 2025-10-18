@@ -53,7 +53,6 @@ namespace ConcertJournal
             #endif
             });
 
-        MainPage = new AppShell();
 
 #if ANDROID
             // Request runtime permissions on Android
@@ -76,6 +75,13 @@ namespace ConcertJournal
             }
         }
 #endif
+
+        // 🔹 NEW: Override CreateWindow instead of using MainPage
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = new Window(new AppShell());
+            return window;
+        }
 
         //protected override Window CreateWindow(IActivationState? activationState)
         //{

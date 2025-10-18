@@ -1,10 +1,5 @@
 ﻿using ConcertJournal.Models;
 using System.Collections.ObjectModel;
-using MauiMap = Microsoft.Maui.Controls.Maps.Map;
-using Microsoft.Maui.Controls.Maps;
-using Microsoft.Maui.Maps;
-using System.Linq;
-
 namespace ConcertJournal.Views;
 
 public partial class ConcertDetailsPage : ContentPage
