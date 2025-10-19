@@ -16,8 +16,8 @@
                 <VerticalStackLayout Grid.ColumnSpan="3">
 
                     <!--PageTitle and Create button-->
-                    <Grid ColumnDefinitions="*,Auto">
-                        <Label Grid.Column="0"
+                    <Grid>
+                        <Label Grid.Column="1"
                                x:Name="AddConcertPageTitle"
                                Text="Create Event"
                                FontSize="30"
@@ -26,6 +26,8 @@
                         <Button Grid.Column="1"
                                 x:Name="SaveButton"
                                 Text="Create"
+                                FontSize="18"
+                                Padding="10"
                                 BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
                                 Clicked="SaveButton_Clicked"/>
@@ -34,24 +36,28 @@
                     <!--Event Title-->
                     <Label Text="Event Title"
                            Margin="0,10,0,10"
-                           FontSize="18"/>
+                           FontSize="18"
+                           FontAttributes="Bold"/>
                     <Entry x:Name="EventTitleEntry"
                            Placeholder="Event Title"
                            Text="{Binding EventTitle}"/>
 
                     <!--Performer name-->
-                    <HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="20">
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Text="Performer name" 
                                Margin="0,15,0,10"
-                               FontSize="18"/>
+                               FontSize="18"
+                               FontAttributes="Bold"/>
                         <Button Grid.Row="0"
                                 Grid.Column="1"
-                                Text="Add"
+                                Text="+Add"
+                                VerticalOptions="Center"
                                 BackgroundColor="Transparent"
                                 TextColor="{DynamicResource ButtonGreen}"
-                                Margin="0,0,0,0"
+                                Margin="0,5,0,0"
+                                Padding="0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
                     </HorizontalStackLayout>
@@ -65,12 +71,13 @@
                             <DataTemplate x:DataType="x:String">
                                 <StackLayout Orientation="Horizontal" Spacing="5">
                                     <Label Text="{Binding .}" 
-                                           FontSize="14" 
+                                           FontSize="16" 
                                            VerticalOptions="Center"
                                            />
                                     <Button Text="X"
                                             TextColor="{DynamicResource ButtonRed}"
-                                            FontSize="14"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
                                             BackgroundColor="Transparent"
                                             Clicked="RemovePerformer"
                                             BindingContext="{Binding .}"/>
@@ -81,7 +88,8 @@
                     <!--Venue-->
                     <Label Text="Venue" 
                            Margin="0,10,0,10"
-                           FontSize="18"/>
+                           FontSize="18"
+                           FontAttributes="Bold"/>
                     <Entry x:Name="VenueEntry"
                            Placeholder="Venue" 
                            Text="{Binding Venue}"/>
@@ -90,39 +98,44 @@
                     <Grid ColumnDefinitions="*,*"
                           RowDefinitions="*,*">
                         <Label Grid.Row="0"
-                                Grid.Column="0"
-                                Text="Country" 
-                                Margin="0,10,0,10"
-                                FontSize="18"/>
+                               Grid.Column="0"
+                               Text="Country" 
+                               Margin="0,10,0,10"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
                         <Entry Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="0,0,10,0"
-                                Placeholder="Country"
-                                x:Name="CountryEntry"
-                                Text="{Binding Country}"/>
+                               Grid.Column="0"
+                               Margin="0,0,10,0"
+                               Placeholder="Country"
+                               x:Name="CountryEntry"
+                               Text="{Binding Country}"/>
                         <Label Grid.Row="0"
-                                Grid.Column="1"
-                                Text="City" 
-                                Margin="0,10,0,10"
-                                FontSize="18"/>
+                               Grid.Column="1"
+                               Text="City" 
+                               Margin="0,10,0,10"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
                         <Entry Grid.Row="1"
-                                Grid.Column="1"
-                                Placeholder="City"
-                                x:Name="CityEntry"
-                                Text="{Binding City}"/>
+                               Grid.Column="1"
+                               Placeholder="City"
+                               x:Name="CityEntry"
+                               Text="{Binding City}"/>
                     </Grid>
 
                     <!--Date-->
                     <Label Text="Date" 
                            Margin="0,10,0,10"
-                           FontSize="18"/>
+                           FontSize="18"
+                           FontAttributes="Bold"/>
 
-                    <DatePicker x:Name="DatePicker"/>
+                    <DatePicker x:Name="DatePicker"
+                                HorizontalOptions="Start"/>
                     
                     <!--Notes-->
                     <Label Text="Notes" 
                            Margin="0,10,0,10"
-                           FontSize="18"/>
+                           FontSize="18"
+                           FontAttributes="Bold"/>
                     <Editor x:Name="NotesEditor"
                             AutoSize="TextChanges"
                             HeightRequest="150"
@@ -133,10 +146,13 @@
                     <!--Media-->
                     <Label Text="Images/Videos"
                            Margin="0,10,0,10"
-                           FontSize="18"/>
+                           FontSize="18"
+                           FontAttributes="Bold"/>
                     <!-- Upload Button -->
                     <Button Text="Upload Image(s)"
                             Clicked="OnAddImageClicked"
+                            HorizontalOptions="Start"
+                            Margin="0,0,0,10"
                             BackgroundColor="{DynamicResource ButtonBackground}"
                             TextColor="{DynamicResource ButtonTextColor}" />
 

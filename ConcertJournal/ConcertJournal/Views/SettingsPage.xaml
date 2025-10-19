@@ -23,10 +23,11 @@
                        Text="Dark theme"
                        TextColor="{DynamicResource TextColor}"
                        FontSize="24"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
 
                 <Switch Grid.Column="1"
-                        HorizontalOptions="End"
+                        HorizontalOptions="Center"
                         x:Name="ThemeSwitch"
                         IsToggled="{Binding IsDevilTheme, Mode=TwoWay}"
                         Toggled="OnThemeToggled"
@@ -35,16 +36,22 @@
                         Scale="1.5"/>
             </Grid>
 
-            <HorizontalStackLayout Spacing="20">
-                <Label Text="Export data"
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Column="0"
+                       Text="Export data"
+                       FontSize="24"
+                       HorizontalOptions="Center"
                        TextColor="{DynamicResource TextColor}"/>
 
-                <Button Text="Export Events"
+                <Button Grid.Column="1"
+                        Text="Export Events"
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         CornerRadius="8"
-                        Clicked="OnExportClicked"/>
+                        Clicked="OnExportClicked"
+                        Margin="40,0"/>
+            </Grid>
                 
-            </HorizontalStackLayout>
+
 
         </VerticalStackLayout>
 

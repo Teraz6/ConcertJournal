@@ -12,40 +12,50 @@
             <!--MainContent-->
             <Grid RowDefinitions="Auto,*">
 
-                <!-- Search and Sort Controls -->
-                <Grid ColumnDefinitions="*,Auto">
-                    <!-- Search Bar -->
-                    <Border Grid.Column="0"
-                            Stroke="Transparent"
-                            StrokeThickness="0"
-                            BackgroundColor="{DynamicResource Surface}"
-                            StrokeShape="RoundRectangle 10">
+                <VerticalStackLayout Grid.Row="0">
+                    
+                    <Label x:Name="AddConcertPageTitle"
+                           Text="Event List"
+                           FontSize="30"
+                           FontAttributes="Bold"
+                           Padding="10"
+                           HorizontalOptions="Center"/>
 
-                        <SearchBar x:Name="SearchBar"
-                                   Placeholder="Search by event or performer"
-                                   TextChanged="OnSearchTextChanged"
-                                   TextColor="{DynamicResource TextColor}"/>
-                    </Border>
-
-                    <Border Grid.Column="1"
-                            Stroke="Transparent"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 20"
-                            WidthRequest="100">
-                        <Picker x:Name="SortPicker"
-                                TextColor="{DynamicResource TextColor}"
+                    <!-- Search and Sort Controls -->
+                    <Grid ColumnDefinitions=".70*,.30*"
+                          ColumnSpacing="10"
+                          Padding="10">
+                        <!-- Search Bar -->
+                        <Border Grid.Column="0"
+                                Stroke="Transparent"
+                                StrokeThickness="0"
                                 BackgroundColor="{DynamicResource Surface}"
-                                SelectedIndexChanged="OnSortPickerChanged"
-                                HorizontalOptions="Center"
-                                SelectedIndex="0">
-                            <Picker.Items>
-                                <x:String>Default</x:String>
-                                <x:String>Oldest By Year</x:String>
-                                <x:String>Newest By Year</x:String>
-                            </Picker.Items>
-                        </Picker>
-                    </Border>
-                </Grid>
+                                StrokeShape="RoundRectangle 10">
+
+                            <SearchBar x:Name="SearchBar"
+                                       Placeholder="Search by title, performer or location"
+                                       TextChanged="OnSearchTextChanged"
+                                       CancelButtonColor="{DynamicResource ButtonRed}"/>
+                        </Border>
+
+                        <Border Grid.Column="1"
+                                Stroke="Transparent"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 11">
+                            <Picker x:Name="SortPicker"
+                                    SelectedIndexChanged="OnSortPickerChanged"
+                                    SelectedIndex="0">
+                                <Picker.Items>
+                                    <x:String>Default</x:String>
+                                    <x:String>Oldest By Year</x:String>
+                                    <x:String>Newest By Year</x:String>
+                                </Picker.Items>
+                            </Picker>
+                        </Border>
+                    </Grid>
+                    
+                </VerticalStackLayout>
+                
 
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
