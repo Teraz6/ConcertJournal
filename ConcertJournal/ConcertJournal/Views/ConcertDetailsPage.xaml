@@ -110,7 +110,7 @@
                             ItemsLayout="VerticalGrid, 2"
                             SelectionMode="None">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="x:String">
                             <Border Stroke="{DynamicResource Primary}"
                                     StrokeThickness="1"
                                     Margin="5"

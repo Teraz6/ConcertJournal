@@ -145,7 +145,7 @@
                                     ItemsSource="{Binding MediaFiles}"
                                     SelectionMode="None">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="x:String">
                                 <Grid RowDefinitions="Auto,*">
                                     <Border Grid.Row="0"
                                             Padding="5"

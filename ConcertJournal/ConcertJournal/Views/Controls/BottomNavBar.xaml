@@ -17,7 +17,8 @@
             Command="{Binding NavigateHomeCommand, Source={x:Reference NavBarView}}"
             Clicked="OnHomeClicked"
             HeightRequest="60"
-            WidthRequest="100"/>
+            WidthRequest="100"
+            Padding="10"/>
 
         <ImageButton
             Source="{DynamicResource PlusIcon}"
@@ -25,7 +26,8 @@
             Command="{Binding NavigateAddCommand, Source={x:Reference NavBarView}}"
             Clicked="OnAddClicked"
             HeightRequest="60"
-            WidthRequest="100"/>
+            WidthRequest="100"
+            Padding="10"/>
 
         <ImageButton
             Source="{DynamicResource ListIcon}"
@@ -33,7 +35,8 @@
             Command="{Binding NavigateListCommand, Source={x:Reference NavBarView}}"
             Clicked="OnListClicked"
             HeightRequest="60"
-            WidthRequest="100"/>
+            WidthRequest="100"
+            Padding="10"/>
         
         <ImageButton
             Source="{DynamicResource SettingsIcon}"
@@ -41,6 +44,7 @@
             Command="{Binding NavigateSettingsCommand, Source={x:Reference NavBarView}}"
             Clicked="OnSettingsClicked"
             HeightRequest="60"
-            WidthRequest="100"/>
+            WidthRequest="100"
+            Padding="10"/>
     </Grid>
 </ContentView>

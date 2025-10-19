@@ -19,7 +19,13 @@ public partial class ConcertListPage : ContentPage
         EventBus.ConcertCreated += async () =>
         {
             allConcerts = await App.Database.GetConcertsAsync();
-            ApplySearchAndSort(defaultSort: true); // newest first
+            ApplySearchAndSort(defaultSort: true);
+        };
+
+        EventBus.ConcertUpdated += async () =>
+        {
+            allConcerts = await App.Database.GetConcertsAsync();
+            ApplySearchAndSort(defaultSort: true);
         };
     }
 

@@ -1,5 +1,7 @@
 ﻿using ConcertJournal.Models;
 using System.Collections.ObjectModel;
+using ConcertJournal.Services;
+
 namespace ConcertJournal.Views;
 
 public partial class ConcertDetailsPage : ContentPage
@@ -16,10 +18,11 @@ public partial class ConcertDetailsPage : ContentPage
         // Load images
         if (!string.IsNullOrWhiteSpace(concert.MediaPaths))
         {
-            var files = concert.MediaPaths.Split("; ", StringSplitOptions.RemoveEmptyEntries);
-            foreach (var file in files)
+            foreach (var path in concert.MediaPaths.Split(';'))
             {
-                MediaFiles.Add(file.Trim());
+                var trimmedPath = path.Trim();
+                if (!string.IsNullOrWhiteSpace(trimmedPath) && File.Exists(trimmedPath))
+                    MediaFiles.Add(trimmedPath);
             }
         }
 
