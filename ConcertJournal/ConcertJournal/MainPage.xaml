@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:ConcertJournal.Models"
              BackgroundColor="{DynamicResource Background}">
 
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,.30*">
         
         <!--MainContent-->
         <Label Grid.Row="0" 
@@ -17,7 +17,7 @@
                FontSize="30"/>
         
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:TitleNavBar Grid.Row="1" />
     </Grid>
     
 </ContentPage>
