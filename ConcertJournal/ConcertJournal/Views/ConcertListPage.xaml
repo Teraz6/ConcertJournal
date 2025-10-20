@@ -53,10 +53,8 @@
                             </Picker>
                         </Border>
                     </Grid>
-                    
                 </VerticalStackLayout>
                 
-
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
                                 x:Name="ConcertListView" 
@@ -90,12 +88,14 @@
 
                                         <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                                FontSize="12"
-                                               Margin="0,10,0,0"/>
+                                               Margin="0,10,0,0"
+                                               TextColor="{DynamicResource MutedText}"/>
                                     </VerticalStackLayout>
 
                                     <!--Button Layout-->
                                     <HorizontalStackLayout Grid.Column="1"
                                                            Spacing="10">
+                                        <!--Details button-->
                                         <Button Text="Details"
                                                 BackgroundColor="Transparent"
                                                 TextColor="{DynamicResource TextColor}"
@@ -104,7 +104,8 @@
                                                 Padding="10"
                                                 VerticalOptions="Center"
                                                 Clicked="OnDetailsClicked"
-                                                BindingContext="{Binding .}" />
+                                                BindingContext="{Binding .}" 
+                                                BorderWidth="0"/>
                                         
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
@@ -114,7 +115,8 @@
                                                     FontSize="18"
                                                     Padding="10"
                                                     Clicked="OnUpdateClicked"
-                                                    CommandParameter="{Binding .}" />
+                                                    CommandParameter="{Binding .}" 
+                                                    BorderWidth="0"/>
 
                                             <!-- Delete button -->
                                             <Button Text="Delete"
@@ -123,7 +125,8 @@
                                                     FontSize="18"
                                                     Padding="10"
                                                     Clicked="OnDeleteClicked"
-                                                    BindingContext="{Binding .}" />
+                                                    BindingContext="{Binding .}" 
+                                                    BorderWidth="0"/>
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     

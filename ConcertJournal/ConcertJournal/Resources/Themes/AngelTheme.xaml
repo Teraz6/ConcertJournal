@@ -9,7 +9,7 @@
     
     <!-- Angel Theme Colors -->
     <!-- Sky Blue -->
-    <Color x:Key="Primary">#90CAF9</Color>
+    <Color x:Key="Primary">#87F1FF</Color>
     <Color x:Key="PrimaryDark">#42A5F5</Color>
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
@@ -22,10 +22,10 @@
     <Color x:Key="Background">#FFFFFF</Color>
     <Color x:Key="Surface">#F5F5F5</Color>
     <Color x:Key="Overlay">#E3F2FD</Color>
-    <Color x:Key="CardBackground">#CCCCCC</Color>
+    <Color x:Key="CardBackground">#E0FFFF</Color>
     
     <!--Button-->
-    <Color x:Key="ButtonBackground">#CCCCCC</Color>
+    <Color x:Key="ButtonBackground">#F5F5F5</Color>
     <Color x:Key="ButtonTextColor">#212121</Color>
     <Color x:Key="ButtonBorderColor">#212121</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
@@ -36,7 +36,7 @@
     <Color x:Key="MutedText">#757575</Color>
     
     <!--NavBar-->
-    <Color x:Key="NavBarBackground">#90CAF9</Color>
+    <Color x:Key="NavBarBackground">#87F1FF</Color>
 
 
     <!-- Common Colors -->

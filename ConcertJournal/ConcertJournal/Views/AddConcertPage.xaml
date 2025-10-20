@@ -28,9 +28,11 @@
                                 Text="Create"
                                 FontSize="18"
                                 Padding="10"
+                                TextColor="{DynamicResource TextColor}"
                                 BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
-                                Clicked="SaveButton_Clicked"/>
+                                Clicked="SaveButton_Clicked"
+                                BorderWidth="0"/>
                     </Grid>
 
                     <!--Event Title-->
@@ -55,6 +57,7 @@
                                 Text="+Add"
                                 VerticalOptions="Center"
                                 BackgroundColor="Transparent"
+                                BorderWidth="0"
                                 TextColor="{DynamicResource ButtonGreen}"
                                 Margin="0,5,0,0"
                                 Padding="0"
@@ -79,6 +82,7 @@
                                             FontSize="16"
                                             FontAttributes="Bold"
                                             BackgroundColor="Transparent"
+                                            BorderWidth="0"
                                             Clicked="RemovePerformer"
                                             BindingContext="{Binding .}"/>
                                 </StackLayout>
@@ -154,7 +158,7 @@
                             HorizontalOptions="Start"
                             Margin="0,0,0,10"
                             BackgroundColor="{DynamicResource ButtonBackground}"
-                            TextColor="{DynamicResource ButtonTextColor}" />
+                            TextColor="{DynamicResource ButtonTextColor}"/>
 
                     <!-- Image Preview -->
                     <CollectionView x:Name="MediaCollectionView"

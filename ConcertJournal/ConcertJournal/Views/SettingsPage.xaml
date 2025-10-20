@@ -45,7 +45,9 @@
 
                 <Button Grid.Column="1"
                         Text="Export Events"
+                        FontSize="16"
                         BackgroundColor="{DynamicResource ButtonBackground}"
+                        BorderColor="{DynamicResource ButtonBorderColor}"
                         CornerRadius="8"
                         Clicked="OnExportClicked"
                         Margin="40,0"/>

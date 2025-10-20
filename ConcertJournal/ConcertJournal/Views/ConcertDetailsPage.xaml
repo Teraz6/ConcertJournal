@@ -12,14 +12,16 @@
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Header Section -->
-                <Border BackgroundColor="{DynamicResource Surface}"
-                        Padding="16">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Padding="16"
+                        StrokeShape="10">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{Binding EventTitle}"
                                FontSize="28"
                                FontAttributes="Bold"
                                TextColor="{DynamicResource TextColor}"
-                               HorizontalOptions="Center" />
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
 
                         <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontSize="16"
@@ -28,13 +30,13 @@
                     </VerticalStackLayout>
                 </Border>
                 
-                <!-- Custom back button -->
+                <!-- Back button -->
                 <Button Text="← Back"
                         FontSize="18"
-                        TextColor="{DynamicResource TextColor}"
+                        TextColor="{DynamicResource ButtonTextColor}"
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         CornerRadius="10"
-                        WidthRequest="100"
+                        HorizontalOptions="Center"
                         Clicked="OnBackClicked" />
 
                 <!-- Performers Section -->
@@ -63,7 +65,7 @@
                                FontAttributes="Bold"
                                TextColor="{DynamicResource TextColor}" />
 
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="5">
                             <Label Text="Venue:"
                                    FontAttributes="Bold"
                                    TextColor="{DynamicResource TextColor}" />
@@ -71,7 +73,7 @@
                                    TextColor="{DynamicResource TextColor}" />
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="20">
                             <Label Text="City:"
                                    FontAttributes="Bold"
                                    TextColor="{DynamicResource TextColor}" />
@@ -105,42 +107,51 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <CollectionView x:Name="MediaCollectionView"
-                            ItemsSource="{Binding MediaFiles}"
-                            ItemsLayout="VerticalGrid, 2"
-                            SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="x:String">
-                            <Border Stroke="{DynamicResource Primary}"
-                                    StrokeThickness="1"
-                                    Margin="5"
-                                    Padding="3"
-                                    StrokeShape="RoundRectangle 8">
-                                <Image Source="{Binding .}"
-                                       Aspect="AspectFill"
-                                       HeightRequest="140"
-                                       WidthRequest="140">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                            NumberOfTapsRequired="1"
-                                            Tapped="OnImageTapped" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
+                <Border StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        Stroke="Transparent"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="Images" 
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}" />
+                        <CollectionView x:Name="MediaCollectionView"
+                                        ItemsSource="{Binding MediaFiles}"
+                                        ItemsLayout="VerticalGrid, 2"
+                                        SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border Stroke="{DynamicResource CardBackground}"
+                                            StrokeShape="RoundRectangle 12"
+                                            Margin="5"
+                                            Padding="3">
+                                        <Image Source="{Binding .}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="140"
+                                                   WidthRequest="140">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                        NumberOfTapsRequired="1"
+                                                        Tapped="OnImageTapped" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                    
+                </Border>
+                
                 <!-- Update Button -->
                 <Button Text="Update"
                         FontSize="18"
                         TextColor="{DynamicResource TextColor}"
                         BackgroundColor="{DynamicResource ButtonGreen}"
-                        CornerRadius="25"
-                        HeightRequest="50"
                         Clicked="OnUpdateClicked"
                         HorizontalOptions="Center"
-                        WidthRequest="180" />
+                        Padding="20,10"/>
             </VerticalStackLayout>
         </ScrollView>
 
@@ -154,9 +165,9 @@
               HorizontalOptions="Fill"
               ZIndex="100">
 
-            <Border BackgroundColor="{DynamicResource Primary}"
+            <Border BackgroundColor="{DynamicResource CardBackground}"
                     StrokeShape="RoundRectangle 10"
-                    Padding="10"
+                    Padding="5"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
 
@@ -171,7 +182,7 @@
                            WidthRequest="30"
                            VerticalOptions="Start"
                            HorizontalOptions="End"
-                           Margin="5">
+                           Margin="0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCloseImageTapped"/>
                         </Image.GestureRecognizers>
@@ -179,7 +190,5 @@
                 </Grid>
             </Border>
         </Grid>
-        
-        
     </Grid>
 </ContentPage>
