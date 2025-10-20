@@ -110,7 +110,7 @@
                         SelectionMode="None">
 
             <!-- When there are NO concerts, show this -->
-            <CollectionView.EmptyView>
+            <!--<CollectionView.EmptyView>
                 <VerticalStackLayout Padding="24" Spacing="16"
                                      VerticalOptions="Center"
                                      HorizontalOptions="Center">
@@ -121,7 +121,7 @@
                             Clicked="OnAddConcertClicked"
                             HorizontalOptions="Center" />
                 </VerticalStackLayout>
-            </CollectionView.EmptyView>
+            </CollectionView.EmptyView>-->
 
             <!-- Concert details -->
             <CollectionView.ItemTemplate>
@@ -159,8 +159,20 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!-- ARROW -> points to the middle button -->
+        <Image x:Name="AddArrow"
+               Source="downarrow.png"
+               Grid.Row="1"
+               HorizontalOptions="Center"    
+               VerticalOptions="End"
+               Margin="0,0,0,10"
+               WidthRequest="120"
+               HeightRequest="120"
+               ZIndex="10" />
+
+
         <!-- BOTTOM NAV BAR -->
-        <Grid Grid.Row="1"
+        <Grid Grid.Row="2"
               BackgroundColor="#00BBF2"
               HeightRequest="70"
               ColumnDefinitions="*,*,*"
