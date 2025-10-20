@@ -73,7 +73,7 @@
                                    TextColor="{DynamicResource TextColor}" />
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout Spacing="20">
+                        <HorizontalStackLayout Spacing="5">
                             <Label Text="City:"
                                    FontAttributes="Bold"
                                    TextColor="{DynamicResource TextColor}" />
@@ -81,7 +81,7 @@
                                    TextColor="{DynamicResource TextColor}" />
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="5">
                             <Label Text="Country:"
                                    FontAttributes="Bold"
                                    TextColor="{DynamicResource TextColor}" />
@@ -149,6 +149,7 @@
                         FontSize="18"
                         TextColor="{DynamicResource TextColor}"
                         BackgroundColor="{DynamicResource ButtonGreen}"
+                        BorderWidth="0"
                         Clicked="OnUpdateClicked"
                         HorizontalOptions="Center"
                         Padding="20,10"/>

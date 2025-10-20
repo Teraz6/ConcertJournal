@@ -45,6 +45,7 @@
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\eventjournallogo.png" />
 		<!-- Splash Screen -->
+		<MauiSplah Include="Resources\Splash\eventjournallogo.png" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 
