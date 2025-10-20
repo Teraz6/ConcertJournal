@@ -2,9 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.MainPage"
+<<<<<<< HEAD
+=======
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+>>>>>>> 6446c03978ca5118e74c99d43fe711054a317a4d
              xmlns:models="clr-namespace:ConcertJournal.Models"
-             Title="Event Journal">
+             BackgroundColor="{DynamicResource Background}">
 
+<<<<<<< HEAD
     <!-- styles for the stats panel (kept lightweight) -->
     <ContentPage.Resources>
         <Style x:Key="StatTitle" 
@@ -195,6 +200,20 @@
                          Clicked="OnConcertListClicked"/>
         </Grid>
 
+=======
+    <Grid RowDefinitions="*,Auto">
+        
+        <!--MainContent-->
+        <Label Grid.Row="0" 
+               Text="Welcome to Concert Journal!"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource TextColor}"
+               FontSize="30"/>
+        
+        <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="1" />
+>>>>>>> 6446c03978ca5118e74c99d43fe711054a317a4d
     </Grid>
 
 </ContentPage>

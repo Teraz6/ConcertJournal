@@ -1,6 +1,7 @@
 ﻿using ConcertJournal.Data;
-using ConcertJournal.Views;
 using ConcertJournal.Services;
+using ConcertJournal.Views;
+using System.Resources;
 
 #if WINDOWS
 using Microsoft.UI;
@@ -20,6 +21,16 @@ namespace ConcertJournal
         {
             InitializeComponent();
 
+
+            // 🔹 Load saved theme preference (default: Angel)
+            string savedTheme = Preferences.Get("AppTheme", "Angel");
+
+            // 🔹 Apply selected theme
+            App.Current?.Resources?.MergedDictionaries?.Clear();
+            if (savedTheme == "Devil")
+                App.Current?.Resources.MergedDictionaries.Add(new Resources.Themes.DevilTheme());
+            else
+                App.Current?.Resources.MergedDictionaries.Add(new Resources.Themes.AngelTheme());
 
             // Initialize the SQLite database
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "concerts.db3");

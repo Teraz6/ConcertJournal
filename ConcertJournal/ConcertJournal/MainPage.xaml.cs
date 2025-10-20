@@ -17,6 +17,7 @@ public partial class MainPage : ContentPage
         set { _isAddButtonVisible = value; OnPropertyChanged(); }
     }
 
+<<<<<<< HEAD
     // Show/hide stats frame
     bool _hasConcerts;
     public bool HasConcerts
@@ -85,6 +86,13 @@ public partial class MainPage : ContentPage
                 case "happened": HappenedCount++; break;
             }
         }
+=======
+        private async void OnSettingsPageClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingsPage(), false);
+        }
+
+>>>>>>> 6446c03978ca5118e74c99d43fe711054a317a4d
     }
 
     // No Status property in your model, so use date-only fallback:

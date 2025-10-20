@@ -2,11 +2,142 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
-             Title="ConcertDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="This is ConcertDetailsPage"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             BackgroundColor="{DynamicResource Background}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                
+                <!-- Header Section -->
+                <Border BackgroundColor="{DynamicResource Surface}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{Binding EventTitle}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalOptions="Center" />
+
+                        <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                               FontSize="16"
+                               TextColor="{DynamicResource MutedText}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- Custom back button -->
+                <Button Text="← Back"
+                        FontSize="18"
+                        TextColor="{DynamicResource TextColor}"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        CornerRadius="10"
+                        WidthRequest="100"
+                        Clicked="OnBackClicked" />
+
+                <!-- Performers Section -->
+                <Border StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12"
+                        BackgroundColor="{DynamicResource CardBackground}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Performers"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}" />
+                        <Label Text="{Binding Performers}"
+                               FontSize="16"
+                               TextColor="{DynamicResource TextColor}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Venue & Location Section -->
+                <Border StrokeShape="RoundRectangle 12"
+                        BackgroundColor="{DynamicResource CardBackground}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Location"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}" />
+
+                        <HorizontalStackLayout>
+                            <Label Text="Venue:"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource TextColor}" />
+                            <Label Text="{Binding Venue}"
+                                   TextColor="{DynamicResource TextColor}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout>
+                            <Label Text="City:"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource TextColor}" />
+                            <Label Text="{Binding City}"
+                                   TextColor="{DynamicResource TextColor}" />
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout>
+                            <Label Text="Country:"
+                                   FontAttributes="Bold"
+                                   TextColor="{DynamicResource TextColor}" />
+                            <Label Text="{Binding Country}"
+                                   TextColor="{DynamicResource TextColor}" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Notes Section -->
+                <Border StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12"
+                        BackgroundColor="{DynamicResource CardBackground}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Notes"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{DynamicResource TextColor}" />
+                        <Label Text="{Binding Notes}"
+                               FontSize="16"
+                               TextColor="{DynamicResource TextColor}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <CollectionView x:Name="MediaCollectionView"
+                            ItemsSource="{Binding MediaFiles}"
+                            ItemsLayout="VerticalGrid, 2"
+                            SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Stroke="{DynamicResource Primary}"
+                                    StrokeThickness="1"
+                                    Margin="5"
+                                    Padding="3"
+                                    StrokeShape="RoundRectangle 8">
+                                <Image Source="{Binding .}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="140"
+                                       WidthRequest="140" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Update Button -->
+                <Button Text="Update"
+                        FontSize="18"
+                        TextColor="{DynamicResource TextColor}"
+                        BackgroundColor="{DynamicResource ButtonGreen}"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Clicked="OnUpdateClicked"
+                        HorizontalOptions="Center"
+                        WidthRequest="180"
+                        Shadow="True" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="1" />
+    </Grid>
 </ContentPage>
