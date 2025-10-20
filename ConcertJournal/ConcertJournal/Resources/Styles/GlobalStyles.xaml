@@ -11,7 +11,7 @@
     <Style TargetType="Button">
         <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackground}" />
         <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
-        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="CornerRadius" Value="10" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="Padding" Value="5" />
     </Style>
@@ -20,22 +20,35 @@
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource MutedText}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="ClearButtonVisibility" Value="WhileEditing" />
+        <Setter Property="Keyboard" Value="Chat" />
     </Style>
 
     <Style TargetType="DatePicker">
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
 
+    <Style TargetType="Picker">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
+    </Style>
+    
     <Style TargetType="SearchBar">
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
         <Setter Property="PlaceholderColor" Value="{DynamicResource MutedText}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CancelButtonColor" Value="{DynamicResource ButtonRed}" />
     </Style>
 
     <Style TargetType="Editor">
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
         <Setter Property="BackgroundColor" Value="{DynamicResource Surface}" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
 
     <Style TargetType="ImageButton">

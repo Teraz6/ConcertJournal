@@ -1,6 +1,6 @@
-using ConcertJournal.Models;
-using System;
+﻿using ConcertJournal.Models;
 using System.Collections.ObjectModel;
+using ConcertJournal.Services;
 
 namespace ConcertJournal.Views;
 
@@ -18,14 +18,34 @@ public partial class ConcertDetailsPage : ContentPage
         // Load images
         if (!string.IsNullOrWhiteSpace(concert.MediaPaths))
         {
-            var files = concert.MediaPaths.Split("; ", StringSplitOptions.RemoveEmptyEntries);
-            foreach (var file in files)
+            foreach (var path in concert.MediaPaths.Split(';'))
             {
-                MediaFiles.Add(file.Trim());
+                var trimmedPath = path.Trim();
+                if (!string.IsNullOrWhiteSpace(trimmedPath) && File.Exists(trimmedPath))
+                    MediaFiles.Add(trimmedPath);
             }
         }
 
         MediaCollectionView.ItemsSource = MediaFiles;
+    }
+
+    private void OnImageTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Image image && image.Source is FileImageSource source)
+        {
+            PopupImage.Source = source.File;
+            ImageOverlay.IsVisible = true;
+        }
+        else if (sender is Image img)
+        {
+            PopupImage.Source = img.Source;
+            ImageOverlay.IsVisible = true;
+        }
+    }
+
+    private void OnCloseImageTapped(object sender, EventArgs e)
+    {
+        ImageOverlay.IsVisible = false;
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)

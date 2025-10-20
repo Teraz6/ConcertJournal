@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             xmlns:models="clr-namespace:ConcertJournal.Models"
+             x:DataType="models:Concert"
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
@@ -108,7 +110,7 @@
                             ItemsLayout="VerticalGrid, 2"
                             SelectionMode="None">
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="x:String">
                             <Border Stroke="{DynamicResource Primary}"
                                     StrokeThickness="1"
                                     Margin="5"
@@ -117,7 +119,13 @@
                                 <Image Source="{Binding .}"
                                        Aspect="AspectFill"
                                        HeightRequest="140"
-                                       WidthRequest="140" />
+                                       WidthRequest="140">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            NumberOfTapsRequired="1"
+                                            Tapped="OnImageTapped" />
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -132,12 +140,46 @@
                         HeightRequest="50"
                         Clicked="OnUpdateClicked"
                         HorizontalOptions="Center"
-                        WidthRequest="180"
-                        Shadow="True" />
+                        WidthRequest="180" />
             </VerticalStackLayout>
         </ScrollView>
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
+
+        <Grid x:Name="ImageOverlay"
+              BackgroundColor="#AA000000"
+              IsVisible="False"
+              VerticalOptions="Fill"
+              HorizontalOptions="Fill"
+              ZIndex="100">
+
+            <Border BackgroundColor="{DynamicResource Primary}"
+                    StrokeShape="RoundRectangle 10"
+                    Padding="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                <Grid>
+                    <Image x:Name="PopupImage"
+                           Aspect="AspectFit"
+                           MinimumHeightRequest="350"
+                           MinimumWidthRequest="350"/>
+
+                    <Image Source="close.png"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           VerticalOptions="Start"
+                           HorizontalOptions="End"
+                           Margin="5">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCloseImageTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+            </Border>
+        </Grid>
+        
+        
     </Grid>
 </ContentPage>
