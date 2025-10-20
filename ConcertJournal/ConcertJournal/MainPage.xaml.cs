@@ -16,8 +16,30 @@ public partial class MainPage : ContentPage
     public bool HasConcerts
     {
         get => _hasConcerts;
-        set { _hasConcerts = value; OnPropertyChanged(); }
+        set
+        {
+            _hasConcerts = value; OnPropertyChanged();
+            // show/hide empty-state texts and arrow when concert list is empty
+            OnPropertyChanged(nameof(ShowEmptyHints));
+        }
     }
+
+    // Indicate that the AddConcert flow is active
+    bool _isAddingConcert;
+    public bool IsAddingConcert
+    {
+        get => _isAddingConcert;
+        set
+        {
+            _isAddingConcert = value;
+            OnPropertyChanged();
+            // ShowEmptyHints depends on this too
+            OnPropertyChanged(nameof(ShowEmptyHints));
+        }
+    }
+
+    // Combined flag used by XAML to show the two text boxes + arrow
+    public bool ShowEmptyHints => !HasConcerts && !IsAddingConcert;
 
     // Status counts
     int _happenedCount, _missedCount, _cancelledCount, _totalCount;
@@ -166,5 +188,13 @@ public partial class MainPage : ContentPage
     public record StatRow(string Name, int Count)
     {
     };
+
+    private async void OnCardTapped(object sender, TappedEventArgs e)
+    {
+        if (e.Parameter is Concert c)
+        {
+            await Navigation.PushAsync(new ConcertDetailsPage(c));
+        }
+    }
 }
 

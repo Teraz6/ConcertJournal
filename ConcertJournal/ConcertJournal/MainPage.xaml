@@ -6,157 +6,194 @@
              BackgroundColor="{DynamicResource Background}">
 
     <!-- styles for the stats panel (kept lightweight) -->
-        <ContentPage.Resources>
-            <Style x:Key="StatTitle" 
+    <ContentPage.Resources>
+        <Style x:Key="StatTitle" 
                TargetType="Label">
-                <Setter Property="FontSize" 
-                    Value="18"/>
-                <Setter Property="FontAttributes" 
-                    Value="Bold"/>
-                <Setter Property="HorizontalTextAlignment" 
-                    Value="Center"/>
-                <Setter Property="FontAutoScalingEnabled"
-                    Value="False"/>
-                <Setter Property="Margin"
-                    Value="0,2,0,0"/>
-            </Style>
-            <Style x:Key="StatValue" 
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontAutoScalingEnabled" Value="False"/>
+            <Setter Property="Margin" Value="0,2,0,0"/>
+        </Style>
+        <Style x:Key="StatValue" 
                TargetType="Label">
-                <Setter Property="FontSize" 
-                    Value="32"/>
-                <Setter Property="FontAttributes" 
-                    Value="Bold"/>
-                <Setter Property="HorizontalTextAlignment" 
-                    Value="Center"/>
-                <Setter Property="FontAutoScalingEnabled"
-                    Value="False"/>
-                <Setter Property="Margin"
-                    Value="0,2,0,0"/>
-            </Style>
-        </ContentPage.Resources>
+            <Setter Property="FontSize" Value="32"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontAutoScalingEnabled" Value="False"/>
+            <Setter Property="Margin" Value="0,2,0,0"/>
+        </Style>
+    </ContentPage.Resources>
 
-        <Grid RowDefinitions="*,*,*">
+    <Grid RowDefinitions="*,*,*">
 
-            <!-- STATS PANEL -->
-            <Border Grid.Row="0" 
+        <!-- STATS PANEL -->
+        <Border Grid.Row="0" 
                x:Name="StatsPanel"
                IsVisible="{Binding HasConcerts}"
                Margin="5" 
                Padding="12" 
                HeightRequest="190">
 
-                <Grid RowDefinitions="Auto,Auto"
+            <Grid RowDefinitions="Auto,Auto"
                   ColumnDefinitions="*,*"
                   RowSpacing="8"
                   ColumnSpacing="24"
                   Margin="0,0,0,12">
 
-                    <VerticalStackLayout 
+                <VerticalStackLayout 
                     Grid.Row="0"
                     Grid.Column="0"
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                        <Label Text="Happened" 
-                           Style="{StaticResource StatTitle}"/>
-                        <Label Text="{Binding HappenedCount}" 
-                           Style="{StaticResource StatValue}"/>
-                    </VerticalStackLayout>
+                    <Label Text="Happened" Style="{StaticResource StatTitle}"/>
+                    <Label Text="{Binding HappenedCount}" Style="{StaticResource StatValue}"/>
+                </VerticalStackLayout>
 
-                    <VerticalStackLayout
+                <VerticalStackLayout
                     Grid.Row="0"
                     Grid.Column="1"
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                        <Label Text="Missed" 
-                           Style="{StaticResource StatTitle}"/>
-                        <Label Text="{Binding MissedCount}" 
-                           Style="{StaticResource StatValue}"/>
-                    </VerticalStackLayout>
+                    <Label Text="Missed" Style="{StaticResource StatTitle}"/>
+                    <Label Text="{Binding MissedCount}" Style="{StaticResource StatValue}"/>
+                </VerticalStackLayout>
 
-                    <VerticalStackLayout
+                <VerticalStackLayout
                     Grid.Row="1"
                     Grid.Column="0" 
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                        <Label Text="Cancelled" 
-                           Style="{StaticResource StatTitle}"/>
-                        <Label Text="{Binding CancelledCount}" 
-                           Style="{StaticResource StatValue}"/>
-                    </VerticalStackLayout>
+                    <Label Text="Cancelled" Style="{StaticResource StatTitle}"/>
+                    <Label Text="{Binding CancelledCount}" Style="{StaticResource StatValue}"/>
+                </VerticalStackLayout>
 
-                    <VerticalStackLayout 
+                <VerticalStackLayout 
                     Grid.Row="1"
                     Grid.Column="1" 
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                        <Label Text="All" 
-                           Style="{StaticResource StatTitle}"/>
-                        <Label Text="{Binding TotalCount}" 
-                           Style="{StaticResource StatValue}"/>
-                    </VerticalStackLayout>
+                    <Label Text="All" Style="{StaticResource StatTitle}"/>
+                    <Label Text="{Binding TotalCount}" Style="{StaticResource StatValue}"/>
+                </VerticalStackLayout>
 
-                </Grid>
-            </Border>
+            </Grid>
+        </Border>
 
-            <!-- LIST OF CONCERTS -->
-            <CollectionView x:Name="ConcertsView"
+        <!-- LIST OF CONCERTS -->
+        <CollectionView x:Name="ConcertsView"
                         Grid.Row="1"
                         ItemsLayout="VerticalList"
                         SelectionMode="None">
 
-                <!-- Concert details -->
-            
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,5"
+            <!-- Concert details -->
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,5"
                             Padding="10"
                             BackgroundColor="#1E1E1E">
-                            <VerticalStackLayout Grid.Column="0">
-                                <Label Text="{Binding EventTitle}" 
+                        
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="OnCardTapped"
+                                CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+
+                        <VerticalStackLayout Grid.Column="0">
+                            
+                            <!-- Title -->
+                            <Label Text="{Binding EventTitle}" 
                                    FontSize="18" 
                                    TextColor="White" 
                                    FontAttributes="Bold"/>
-                                <Label Text="{Binding Performers}" 
+                            
+                            <!-- Performers -->
+                            <Label Text="{Binding Performers}" 
                                    FontSize="14" 
                                    TextColor="Gray"/>
+                            
+                            <!-- Location line -->
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="{Binding Venue}" 
+                                       FontSize="14" 
+                                       TextColor="LightGray"/>
+                                <Label Text="{Binding Country}" 
+                                       FontSize="14" 
+                                       TextColor="LightGray"/>
+                                <Label Text="{Binding City}" 
+                                       FontSize="14" 
+                                       TextColor="LightGray"/>
+                            </HorizontalStackLayout>
 
-                                <HorizontalStackLayout Spacing="10">
-                                    <Label Text="{Binding Venue}" 
-                                       FontSize="14" 
-                                       TextColor="LightGray"/>
-                                    <Label Text="{Binding Country}" 
-                                       FontSize="14" 
-                                       TextColor="LightGray"/>
-                                    <Label Text="{Binding City}" 
-                                       FontSize="14" 
-                                       TextColor="LightGray"/>
-                                </HorizontalStackLayout>
-
-                                <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
+                            <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                    FontSize="12" 
                                    TextColor="Gray"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <!-- centered, middle row -->
+        <Border Grid.Row="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="340"
+                Padding="0"
+                Margin="0"
+                ZIndex="20"
+                IsVisible="{Binding ShowEmptyHints}">
+            <Label 
+                 FontAttributes="Bold"
+                 Text="Rock your memories with Event Journal! Keep track of every gig, festival, and performance you’ve seen — add notes, photos, and videos to relive the moments."
+                 TextColor="#EE5864"
+                 FontSize="14"
+                 LineBreakMode="WordWrap"/>
+        </Border>
 
+        <!-- above the arrow -->
+        <Border Grid.Row="2"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                WidthRequest="340"
+                BackgroundColor="#CC68DE"
+                Padding="16"
+                Margin="12,0,12,120"
+                ZIndex="20"
+                TranslationY="-60"
+                IsVisible="{Binding ShowEmptyHints}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="16" />
+            </Border.StrokeShape>
+            
+            <Label 
+                 FontAttributes="Bold"
+                 Text="Oh, looks like you haven’t logged any events yet! Hit the buttons below to start adding them!"
+                 TextColor="Black"
+                 FontSize="14"
+                 LineBreakMode="WordWrap"/>
+        </Border> 
+        
         <!-- ARROW -> points to the middle button -->
         <Image x:Name="AddArrow"
                Source="downarrow.png"
-               Grid.Row="1"
+               Grid.Row="2"
                HorizontalOptions="Center"    
                VerticalOptions="End"
                Margin="0,0,0,10"
                WidthRequest="120"
                HeightRequest="120"
-               ZIndex="10" />
-
-         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+               ZIndex="10"
+               TranslationX="-50"
+               TranslationY="-64"
+               IsVisible="{Binding ShowEmptyHints}"/>
+        
+        <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="3" />
     </Grid>
 </ContentPage>
