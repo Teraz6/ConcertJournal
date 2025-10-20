@@ -28,7 +28,7 @@
                                 Text="Create"
                                 FontSize="18"
                                 Padding="10"
-                                TextColor="{DynamicResource TextColor}"
+                                TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                 BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
                                 Clicked="SaveButton_Clicked"

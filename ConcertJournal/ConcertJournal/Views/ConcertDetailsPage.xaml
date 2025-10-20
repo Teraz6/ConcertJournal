@@ -29,15 +29,28 @@
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
+
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       Spacing="20">
+                    <!-- Back button -->
+                    <Button Text="← Back"
+                            FontSize="18"
+                            TextColor="{DynamicResource ButtonTextColor}"
+                            BackgroundColor="{DynamicResource ButtonBackground}"
+                            CornerRadius="10"
+                            HorizontalOptions="Center"
+                            Clicked="OnBackClicked" />
+
+                    <!-- Update Button -->
+                    <Button Text="Update"
+                            FontSize="18"
+                            TextColor="{DynamicResource ButtonUpdateDeleteText}"
+                            BackgroundColor="{DynamicResource ButtonGreen}"
+                            BorderWidth="0"
+                            Clicked="OnUpdateClicked"
+                            HorizontalOptions="Center"/>
+                </HorizontalStackLayout>
                 
-                <!-- Back button -->
-                <Button Text="← Back"
-                        FontSize="18"
-                        TextColor="{DynamicResource ButtonTextColor}"
-                        BackgroundColor="{DynamicResource ButtonBackground}"
-                        CornerRadius="10"
-                        HorizontalOptions="Center"
-                        Clicked="OnBackClicked" />
 
                 <!-- Performers Section -->
                 <Border StrokeThickness="0"

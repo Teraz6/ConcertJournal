@@ -55,6 +55,7 @@ public partial class AddConcertPage : ContentPage
             // Change button and Title text
             SaveButton.Text = "Save";
             AddConcertPageTitle.Text = "Edit Event";
+
         }
         else
         {
@@ -155,6 +156,7 @@ public partial class AddConcertPage : ContentPage
             await DisplayAlert("Success", "Concert updated!", "OK");
 
             EventBus.OnConcertUpdated();
+            await Navigation.PushAsync(new ConcertDetailsPage(_existingConcert));
         }
         else
         {

@@ -110,7 +110,7 @@
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
                                             <Button Text="Update"
-                                                    TextColor="{DynamicResource TextColor}"
+                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                                     BackgroundColor="{DynamicResource ButtonGreen}"
                                                     FontSize="18"
                                                     Padding="10"
@@ -120,7 +120,7 @@
 
                                             <!-- Delete button -->
                                             <Button Text="Delete"
-                                                    TextColor="{DynamicResource TextColor}"
+                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                                     BackgroundColor="{DynamicResource ButtonRed}"
                                                     FontSize="18"
                                                     Padding="10"
