@@ -96,7 +96,8 @@
                 <DataTemplate>
                     <Border Margin="0,5"
                             Padding="10"
-                            BackgroundColor="#1E1E1E">
+                            BackgroundColor="#1E1E1E"
+                            ItemsSource="{Binding Concerts}">
                         
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
@@ -145,14 +146,14 @@
                 VerticalOptions="Center"
                 WidthRequest="340"
                 Padding="0"
-                Margin="0"
+                Margin="0,0,0,80"
                 ZIndex="20"
                 IsVisible="{Binding ShowEmptyHints}">
             <Label 
                  FontAttributes="Bold"
                  Text="Rock your memories with Event Journal! Keep track of every gig, festival, and performance you’ve seen — add notes, photos, and videos to relive the moments."
                  TextColor="#EE5864"
-                 FontSize="14"
+                 FontSize="24"
                  LineBreakMode="WordWrap"/>
         </Border>
 
@@ -175,7 +176,7 @@
                  FontAttributes="Bold"
                  Text="Oh, looks like you haven’t logged any events yet! Hit the buttons below to start adding them!"
                  TextColor="Black"
-                 FontSize="14"
+                 FontSize="20"
                  LineBreakMode="WordWrap"/>
         </Border> 
         
@@ -194,6 +195,6 @@
                IsVisible="{Binding ShowEmptyHints}"/>
         
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="3" />
+        <controls:BottomNavBar Grid.Row="2" />
     </Grid>
 </ContentPage>
