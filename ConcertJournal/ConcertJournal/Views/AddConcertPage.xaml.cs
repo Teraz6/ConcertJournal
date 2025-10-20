@@ -1,10 +1,8 @@
 using ConcertJournal.Models;
 using ConcertJournal.Services;
-using ConcertJournal.Views;
-using Microsoft.Maui.Storage;
-using System;
 using System.Collections.ObjectModel;
-
+using Microsoft.Maui.Storage;
+using System.IO;
 
 namespace ConcertJournal.Views;
 
@@ -19,6 +17,7 @@ public partial class AddConcertPage : ContentPage
         InitializeComponent();
 
         _existingConcert = existingConcert;
+        BindingContext = this;
         //Performer and media list
         PerformersList.ItemsSource = Performers;
         MediaCollectionView.ItemsSource = MediaFiles;
@@ -45,8 +44,12 @@ public partial class AddConcertPage : ContentPage
             // Load media
             if (!string.IsNullOrWhiteSpace(_existingConcert.MediaPaths))
             {
-                foreach (var path in _existingConcert.MediaPaths.Split(";"))
-                    MediaFiles.Add(path);
+                foreach (var path in _existingConcert.MediaPaths.Split(';'))
+                {
+                    var trimmedPath = path.Trim();
+                    if (!string.IsNullOrWhiteSpace(trimmedPath) && File.Exists(trimmedPath))
+                        MediaFiles.Add(trimmedPath);
+                }
             }
 
             // Change button and Title text
@@ -91,58 +94,6 @@ public partial class AddConcertPage : ContentPage
         }
     }
 
-    private async void SaveButton_Clicked(object sender, EventArgs e)
-    {
-        // Update existing concert
-        if (_existingConcert != null)
-        {
-            _existingConcert.EventTitle = EventTitleEntry?.Text;
-            _existingConcert.Venue = VenueEntry?.Text;
-            _existingConcert.Country = CountryEntry?.Text;
-            _existingConcert.City = CityEntry?.Text;
-            _existingConcert.Notes = NotesEditor?.Text;
-            _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
-            _existingConcert.Performers = string.Join(", ", Performers);
-            _existingConcert.MediaPaths = string.Join("; ", MediaFiles);
-
-            await App.Database.SaveConcertAsync(_existingConcert);
-            await DisplayAlert("Success", "Concert updated!", "OK");
-
-            await Navigation.PopAsync();
-        }
-        else
-        {
-            // Create new concert
-            var newConcert = new Concert
-            {
-                EventTitle = EventTitleEntry?.Text,
-                Venue = VenueEntry?.Text,
-                Country = CountryEntry?.Text,
-                City = CityEntry?.Text,
-                Notes = NotesEditor?.Text,
-                Date = DatePicker?.Date ?? DateTime.Today,
-                Performers = string.Join(", ", Performers),
-                MediaPaths = string.Join("; ", MediaFiles)
-            };
-
-            await App.Database.SaveConcertAsync(newConcert);
-            await DisplayAlert("Success", "Concert created!", "OK");
-
-            // Clear all fields for next entry
-            if (EventTitleEntry != null) EventTitleEntry.Text = string.Empty;
-            if (VenueEntry != null) VenueEntry.Text = string.Empty;
-            if (CountryEntry != null) CountryEntry.Text = string.Empty;
-            if (CityEntry != null) CityEntry.Text = string.Empty;
-            if (NotesEditor != null) NotesEditor.Text = string.Empty;
-            PerformerEntry.Text = string.Empty;
-            Performers.Clear();
-            MediaFiles.Clear();
-            if (DatePicker != null) DatePicker.Date = DateTime.Today;
-
-            EventBus.OnConcertCreated();
-        }
-    }
-
     private async void OnAddImageClicked(object sender, EventArgs e)
     {
         try
@@ -178,16 +129,63 @@ public partial class AddConcertPage : ContentPage
         }
     }
 
-    private async void OnAddVideoClicked(object sender, EventArgs e)
-    {
-        await DisplayAlert("Alert", "Uploading function not implemented", "OK");
-    }
-
     private void OnRemoveMediaClicked(object sender, EventArgs e)
     {
         if (sender is Button button && button.BindingContext is string mediaPath)
         {
             MediaFiles.Remove(mediaPath);
+        }
+    }
+
+    private async void SaveButton_Clicked(object sender, EventArgs e)
+    {
+        // Update existing concert
+        if (_existingConcert != null)
+        {
+            _existingConcert.EventTitle = EventTitleEntry?.Text;
+            _existingConcert.Venue = VenueEntry?.Text;
+            _existingConcert.Country = CountryEntry?.Text;
+            _existingConcert.City = CityEntry?.Text;
+            _existingConcert.Notes = NotesEditor?.Text;
+            _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
+            _existingConcert.Performers = string.Join(", ", Performers);
+            _existingConcert.MediaPaths = string.Join(";", MediaFiles);
+
+            await App.Database.SaveConcertAsync(_existingConcert);
+            await DisplayAlert("Success", "Concert updated!", "OK");
+
+            EventBus.OnConcertUpdated();
+        }
+        else
+        {
+            // Create new concert
+            var newConcert = new Concert
+            {
+                EventTitle = EventTitleEntry?.Text,
+                Venue = VenueEntry?.Text,
+                Country = CountryEntry?.Text,
+                City = CityEntry?.Text,
+                Notes = NotesEditor?.Text,
+                Date = DatePicker?.Date ?? DateTime.Today,
+                Performers = string.Join(", ", Performers),
+                MediaPaths = string.Join(";", MediaFiles)
+            };
+
+            await App.Database.SaveConcertAsync(newConcert);
+            await DisplayAlert("Success", "Concert created!", "OK");
+
+            // Clear all fields for next entry
+            if (EventTitleEntry != null) EventTitleEntry.Text = string.Empty;
+            if (VenueEntry != null) VenueEntry.Text = string.Empty;
+            if (CountryEntry != null) CountryEntry.Text = string.Empty;
+            if (CityEntry != null) CityEntry.Text = string.Empty;
+            if (NotesEditor != null) NotesEditor.Text = string.Empty;
+            PerformerEntry.Text = string.Empty;
+            Performers.Clear();
+            MediaFiles.Clear();
+            if (DatePicker != null) DatePicker.Date = DateTime.Today;
+
+            EventBus.OnConcertCreated();
         }
     }
 }

@@ -5,8 +5,6 @@
         private const string DevilThemePath = "Resources/Themes/DevilTheme.xaml";
         private const string AngelThemePath = "Resources/ThemesAngelTheme.xaml";
 
-        private static ResourceDictionary? _currentTheme;
-
         public static void ApplyTheme(string themePath)
         {
             var newTheme = new ResourceDictionary
