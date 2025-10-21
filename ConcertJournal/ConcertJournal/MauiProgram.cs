@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using ConcertJournal.Data;
+﻿using ConcertJournal.Data;
+using ConcertJournal.Services;
+using Microsoft.Extensions.Logging;
 
 namespace ConcertJournal;
 
@@ -22,7 +23,8 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<DatabaseContext>(s => new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "ConcertJournalDb1")));
+        builder.Services.AddSingleton<DatabaseContext>(s =>
+            new DatabaseContext(DatabaseHelper.GetDatabasePath()));
         return builder.Build();
 	}
 }

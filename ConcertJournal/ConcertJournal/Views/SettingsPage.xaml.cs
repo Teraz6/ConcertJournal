@@ -50,4 +50,69 @@ public partial class SettingsPage : ContentPage
         else
             await ExportServices.ExportConcertsToCsvAsync(concerts, this);
     }
+
+    //Database Export
+    private async void OnExportDatabaseClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var dbPath = DatabaseHelper.GetDatabasePath();
+
+            if (!File.Exists(dbPath))
+            {
+                await DisplayAlert("Error", "No database file found to export.", "OK");
+                return;
+            }
+
+            // Let user choose where to save
+            var fileName = $"ConcertJournalBackup_{DateTime.Now:yyyyMMdd_HHmm}.db3";
+            var destPath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+
+#if ANDROID
+            // Android: copy to Downloads folder
+            var downloads = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads)?.AbsolutePath;
+            if (downloads != null)
+            {
+                destPath = Path.Combine(downloads, fileName);
+            }
+#endif
+
+            File.Copy(dbPath, destPath, overwrite: true);
+            await DisplayAlert("Success", $"Database exported to:\n{destPath}", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to export database: {ex.Message}", "OK");
+        }
+    }
+
+    //Database Import
+    private async void OnImportDatabaseClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Select a Concert Journal database file",
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.Android, new[] { ".db3" } },
+                { DevicePlatform.WinUI, new[] { ".db3" } },
+                { DevicePlatform.iOS, new[] { ".db3" } },
+            })
+            });
+
+            if (result == null)
+                return;
+
+            var dbPath = DatabaseHelper.GetDatabasePath();
+            File.Copy(result.FullPath, dbPath, overwrite: true);
+
+            await DisplayAlert("Success", "Database imported successfully! Restart the app to see changes.", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to import database: {ex.Message}", "OK");
+        }
+    }
 }
