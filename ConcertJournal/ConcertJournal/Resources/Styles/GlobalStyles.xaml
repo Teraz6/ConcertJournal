@@ -60,6 +60,11 @@
         <Setter Property="BorderWidth" Value="0" />
     </Style>
 
+    <Style TargetType="Border">
+        <Setter Property="StrokeShape" Value="10"/>
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
     <Style TargetType="Switch">
         <Setter Property="Margin" Value="0"/>
     </Style>

@@ -40,9 +40,13 @@
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Entry x:Name="EventTitleEntry"
+                    
+                    <Border>
+                        <Entry x:Name="EventTitleEntry"
                            Placeholder="Event Title"
                            Text="{Binding EventTitle}"/>
+                    </Border>
+                    
 
                     <!--Performer name-->
                     <HorizontalStackLayout Spacing="20">
@@ -64,12 +68,16 @@
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
                     </HorizontalStackLayout>
-                    <Entry Margin="0,0"
+                    
+                    <Border>
+                        <Entry Margin="0,0"
                            x:Name="PerformerEntry"
                            Placeholder="Performer"
                            Text="{Binding Performer}"
                            ReturnType="Default"
                            Completed="AddNewPerformer"/>
+                    </Border>
+                    
                     <!--CollectionView to show added performers-->
                     <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
                         <CollectionView.ItemTemplate>
@@ -96,9 +104,12 @@
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Entry x:Name="VenueEntry"
+                    <Border>
+                        <Entry x:Name="VenueEntry"
                            Placeholder="Venue" 
                            Text="{Binding Venue}"/>
+                    </Border>
+                    
 
                     <!--Country & City-->
                     <Grid ColumnDefinitions="*,*"
@@ -109,23 +120,29 @@
                                Margin="0,10,0,10"
                                FontSize="18"
                                FontAttributes="Bold"/>
-                        <Entry Grid.Row="1"
-                               Grid.Column="0"
-                               Margin="0,0,10,0"
+                        <Border Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,0,10,0">
+                            <Entry 
                                Placeholder="Country"
                                x:Name="CountryEntry"
                                Text="{Binding Country}"/>
+                        </Border>
+                        
                         <Label Grid.Row="0"
                                Grid.Column="1"
                                Text="City" 
                                Margin="0,10,0,10"
                                FontSize="18"
                                FontAttributes="Bold"/>
-                        <Entry Grid.Row="1"
-                               Grid.Column="1"
+                        <Border Grid.Row="1"
+                                Grid.Column="1">
+                            <Entry 
                                Placeholder="City"
                                x:Name="CityEntry"
                                Text="{Binding City}"/>
+                        </Border>
+                        
                     </Grid>
 
                     <!--Date-->
@@ -133,21 +150,24 @@
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-
-                    <DatePicker x:Name="DatePicker"
-                                HorizontalOptions="Start"/>
+                    <Border HorizontalOptions="Start">
+                        <DatePicker x:Name="DatePicker"/>
+                    </Border>
+                    
                     
                     <!--Notes-->
                     <Label Text="Notes" 
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Editor x:Name="NotesEditor"
+                    <Border>
+                        <Editor x:Name="NotesEditor"
                             AutoSize="TextChanges"
                             HeightRequest="150"
                             Placeholder="Add Notes"
                             PlaceholderColor="{DynamicResource MutedText}"
                             Text="{Binding Notes}"/>
+                    </Border>
                     
                     <!--Media-->
                     <Label Text="Images/Videos"
@@ -199,6 +219,6 @@
 
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:BottomNavBar Grid.Row="1"/>
     </Grid>
 </ContentPage>
