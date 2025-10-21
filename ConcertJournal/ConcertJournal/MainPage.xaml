@@ -97,7 +97,7 @@
                 <DataTemplate>
                     <Border Margin="0,5"
                             Padding="10"
-                            BackgroundColor="#1E1E1E">
+                            BackgroundColor="{DynamicResource PrimaryDark}">
                         
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
@@ -110,30 +110,30 @@
                             <!-- Title -->
                             <Label Text="{Binding EventTitle}" 
                                    FontSize="18" 
-                                   TextColor="White" 
+                                   TextColor="{DynamicResource TextColor}" 
                                    FontAttributes="Bold"/>
                             
                             <!-- Performers -->
                             <Label Text="{Binding Performers}" 
                                    FontSize="14" 
-                                   TextColor="Gray"/>
+                                   TextColor="{DynamicResource TextColor}"/>
                             
                             <!-- Location line -->
                             <HorizontalStackLayout Spacing="10">
                                 <Label Text="{Binding Venue}" 
                                        FontSize="14" 
-                                       TextColor="LightGray"/>
+                                       TextColor="{DynamicResource TextColor}"/>
                                 <Label Text="{Binding Country}" 
                                        FontSize="14" 
-                                       TextColor="LightGray"/>
+                                       TextColor="{DynamicResource TextColor}"/>
                                 <Label Text="{Binding City}" 
                                        FontSize="14" 
-                                       TextColor="LightGray"/>
+                                       TextColor="{DynamicResource TextColor}"/>
                             </HorizontalStackLayout>
 
                             <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                    FontSize="12" 
-                                   TextColor="Gray"/>
+                                   TextColor="{DynamicResource TextColor}"/>
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
@@ -152,7 +152,7 @@
             <Label 
                  FontAttributes="Bold"
                  Text="Rock your memories with Event Journal! Keep track of every gig, festival, and performance you’ve seen — add notes, photos, and videos to relive the moments."
-                 TextColor="#EE5864"
+                 TextColor="{DynamicResource TextColor}"
                  FontSize="24"
                  LineBreakMode="WordWrap"/>
         </Border>
@@ -162,7 +162,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="End"
                 WidthRequest="340"
-                BackgroundColor="#CC68DE"
+                BackgroundColor="{DynamicResource Background}"
                 Padding="16"
                 Margin="12,0,12,120"
                 ZIndex="20"
@@ -175,7 +175,7 @@
             <Label 
                  FontAttributes="Bold"
                  Text="Oh, looks like you haven’t logged any events yet! Hit the buttons below to start adding them!"
-                 TextColor="Black"
+                 TextColor="{DynamicResource TextColor}"
                  FontSize="20"
                  LineBreakMode="WordWrap"/>
         </Border> 
