@@ -68,7 +68,7 @@ public partial class MainPage : ContentPage
     public ObservableCollection<StatRow> PerformerStats { get; } = new();
     public ObservableCollection<StatRow> LocationStats { get; } = new();
     public ObservableCollection<StatRow> DateStats { get; } = new();   // <= FIXED
-    public ObservableCollection<string> ConcertsViewList { get; } = new();
+    public ObservableCollection<Concert> Concerts { get; } = new();
 
     public MainPage()
     {
@@ -85,18 +85,14 @@ public partial class MainPage : ContentPage
 
         var concerts = await App.Database.GetConcertsAsync();
 
-        ConcertsViewList.Clear();
+        Concerts.Clear();
         if (concerts != null)
-        {
             foreach (var c in concerts)
-            {
-                ConcertsViewList.Add(c.EventTitle ?? "(Untitled)");
-            }
-        }
+                Concerts.Add(c);
 
-        HasConcerts = concerts?.Count > 0;            // show stats when there are items
+        HasConcerts = Concerts.Count > 0;
 
-        BuildStatusCounts(concerts);                  // fills Happened/Missed/Cancelled/Total
+        BuildStatusCounts(concerts ?? Array.Empty<Concert>());
     }
 
     // ---- Bottom bar navigation ----
@@ -137,11 +133,10 @@ public partial class MainPage : ContentPage
     // Extend here if you add flags like IsCancelled/Attended later.
     private static string GetStatus(Concert c)
     {
+        if (c == null) return "";
 
-        if (c.Date <= DateTime.Today) return "happened"; // fallback
-        return "";
-
-        if (c?.Date is DateTime d && d.Date <= DateTime.Today)
+        // If your model uses DateTime? keep the null-safe check like this:
+        if (c.Date is DateTime d && d.Date <= DateTime.Today)
             return "happened";
 
         return "";
