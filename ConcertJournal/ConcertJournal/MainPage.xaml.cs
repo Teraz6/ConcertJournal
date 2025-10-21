@@ -92,7 +92,7 @@ public partial class MainPage : ContentPage
 
         HasConcerts = Concerts.Count > 0;
 
-        BuildStatusCounts(concerts ?? Array.Empty<Concert>());
+        BuildStatusCounts(concerts ?? new List<Concert>());
     }
 
     // ---- Bottom bar navigation ----

@@ -88,6 +88,7 @@
         <CollectionView x:Name="ConcertsView"
                         Grid.Row="1"
                         ItemsLayout="VerticalList"
+                        ItemsSource="{Binding Concerts}"
                         SelectionMode="None">
 
             <!-- Concert details -->
@@ -96,8 +97,7 @@
                 <DataTemplate>
                     <Border Margin="0,5"
                             Padding="10"
-                            BackgroundColor="#1E1E1E"
-                            ItemsSource="{Binding Concerts}">
+                            BackgroundColor="#1E1E1E">
                         
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
