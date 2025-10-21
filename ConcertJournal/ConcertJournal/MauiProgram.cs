@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ConcertJournal.Data;
+using CommunityToolkit.Maui;
 
 namespace ConcertJournal;
 
@@ -11,6 +12,7 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

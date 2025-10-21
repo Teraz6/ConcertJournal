@@ -31,6 +31,7 @@ public partial class AddConcertPage : ContentPage
             CityEntry.Text = _existingConcert.City;
             NotesEditor.Text = _existingConcert.Notes;
             DatePicker.Date = _existingConcert.Date ?? DateTime.Today;
+            ConcertRating.Rating = _existingConcert.Rating;
 
             // Load performers
             if (!string.IsNullOrWhiteSpace(_existingConcert.Performers))
@@ -149,6 +150,7 @@ public partial class AddConcertPage : ContentPage
             _existingConcert.City = CityEntry?.Text;
             _existingConcert.Notes = NotesEditor?.Text;
             _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
+            _existingConcert.Rating = ConcertRating.Rating;
             _existingConcert.Performers = string.Join(", ", Performers);
             _existingConcert.MediaPaths = string.Join(";", MediaFiles);
 
@@ -169,6 +171,7 @@ public partial class AddConcertPage : ContentPage
                 City = CityEntry?.Text,
                 Notes = NotesEditor?.Text,
                 Date = DatePicker?.Date ?? DateTime.Today,
+                Rating = ConcertRating.Rating,
                 Performers = string.Join(", ", Performers),
                 MediaPaths = string.Join(";", MediaFiles)
             };
@@ -186,6 +189,7 @@ public partial class AddConcertPage : ContentPage
             Performers.Clear();
             MediaFiles.Clear();
             if (DatePicker != null) DatePicker.Date = DateTime.Today;
+            if (ConcertRating != null) ConcertRating.Rating = 3;
 
             EventBus.OnConcertCreated();
         }
