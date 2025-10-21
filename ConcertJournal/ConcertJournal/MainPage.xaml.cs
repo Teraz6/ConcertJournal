@@ -42,21 +42,16 @@ public partial class MainPage : ContentPage
     public bool ShowEmptyHints => !HasConcerts && !IsAddingConcert;
 
     // Status counts
-    int _happenedCount, _missedCount, _cancelledCount, _totalCount;
+    int _happenedCount, _scheduledCount, _totalCount;
     public int HappenedCount
     {
         get => _happenedCount;
         set { _happenedCount = value; OnPropertyChanged(); }
     }
-    public int MissedCount
+    public int ScheduledCount
     {
-        get => _missedCount;
-        set { _missedCount = value; OnPropertyChanged(); }
-    }
-    public int CancelledCount
-    {
-        get => _cancelledCount;
-        set { _cancelledCount = value; OnPropertyChanged(); }
+        get => _scheduledCount;
+        set { _scheduledCount = value; OnPropertyChanged(); }
     }
     public int TotalCount
     {
@@ -108,17 +103,16 @@ public partial class MainPage : ContentPage
     // ===== Stats helpers =====
     private void BuildStatusCounts(IList<Concert> concerts)
     {
-        HappenedCount = MissedCount = CancelledCount = 0;
+        HappenedCount  = ScheduledCount = 0;
         TotalCount = concerts?.Count ?? 0;
         if (concerts == null || concerts.Count == 0) return;
 
         foreach (var c in concerts)
         {
-            var status = GetStatus(c); // "happened" | "missed" | "cancelled" | ""
+            var status = GetStatus(c); // "happened" | "scheduled" | ""
             switch (status)
             {
-                case "cancelled": CancelledCount++; break;
-                case "missed": MissedCount++; break;
+                case "scheduled": ScheduledCount++; break;
                 case "happened": HappenedCount++; break;
             }
         }

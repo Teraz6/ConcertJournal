@@ -6,9 +6,9 @@ namespace ConcertJournal.Views;
 
 public partial class SettingsPage : ContentPage
 {
-	public SettingsPage()
-	{
-		InitializeComponent();
+    public SettingsPage()
+    {
+        InitializeComponent();
 
         // Load last theme state from Preferences
         bool isDevil = Preferences.Get("AppTheme", "Angel") == "Devil";
