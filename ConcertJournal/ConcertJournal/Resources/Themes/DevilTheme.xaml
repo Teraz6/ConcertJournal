@@ -36,6 +36,7 @@
     <Color x:Key="ButtonBorderColor">#FF0000</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
     <Color x:Key="ButtonRed">#B30000</Color>
+    <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
 
     <!--NavBar-->
     <Color x:Key="NavBarBackground">#7F0000</Color>
@@ -70,6 +71,7 @@
     <SolidColorBrush x:Key="ButtonBorderBrush" Color="{DynamicResource ButtonBorderColor}" />
     <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
     <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
+    <SolidColorBrush x:Key="ButtonUpdateDeleteTextBrush" Color="{DynamicResource ButtonUpdateDeleteText}"/>
 
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />
