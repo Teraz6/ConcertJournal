@@ -55,13 +55,13 @@
             
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
-                       Text="Import Database"
+                       Text="Import Excel"
                        FontSize="24"
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource TextColor}"/>
 
                 <Button Grid.Column="1"
-                        Text="Import Database"
+                        Text="Import Excel"
                         FontSize="16"
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         BorderColor="{DynamicResource ButtonBorderColor}"
@@ -69,7 +69,8 @@
                         Clicked="OnImportFromExcelClicked"
                         Margin="40,0"/>
             </Grid>
-
+            
+            <!--Database export-->
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
                        Text="Export Database"
@@ -86,6 +87,24 @@
                         Clicked="OnExportDatabaseClicked"
                         Margin="40,0"/>
             </Grid>
+        
+            <!--For Database import
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Column="0"
+                       Text="Import Database"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource TextColor}"/>
+
+                <Button Grid.Column="1"
+                        Text="Import Database"
+                        FontSize="16"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        BorderColor="{DynamicResource ButtonBorderColor}"
+                        CornerRadius="8"
+                        Clicked="OnExportDatabaseClicked"
+                        Margin="40,0"/>
+            </Grid>-->
         </VerticalStackLayout>
 
         <!--Navigation bar-->
