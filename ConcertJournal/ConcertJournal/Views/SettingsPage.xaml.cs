@@ -87,32 +87,31 @@ public partial class SettingsPage : ContentPage
     }
 
     //Database Import
-    private async void OnImportDatabaseClicked(object sender, EventArgs e)
+    private async void OnImportFromExcelClicked(object sender, EventArgs e)
     {
         try
         {
             var result = await FilePicker.PickAsync(new PickOptions
             {
-                PickerTitle = "Select a Concert Journal database file",
+                PickerTitle = "Select Excel file to import",
                 FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
             {
-                { DevicePlatform.Android, new[] { ".db3" } },
-                { DevicePlatform.WinUI, new[] { ".db3" } },
-                { DevicePlatform.iOS, new[] { ".db3" } },
+                { DevicePlatform.Android, new[] { ".xlsx" } },
+                { DevicePlatform.WinUI, new[] { ".xlsx" } },
+                { DevicePlatform.iOS, new[] { ".xlsx" } }
             })
             });
 
             if (result == null)
                 return;
 
-            var dbPath = DatabaseHelper.GetDatabasePath();
-            File.Copy(result.FullPath, dbPath, overwrite: true);
+            await ImportServices.ImportConcertsFromExcelAsync(result.FullPath);
 
-            await DisplayAlert("Success", "Database imported successfully! Restart the app to see changes.", "OK");
+            await DisplayAlert("Success", "Concerts imported successfully!", "OK");
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"Failed to import database: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Failed to import Excel file: {ex.Message}", "OK");
         }
     }
 }

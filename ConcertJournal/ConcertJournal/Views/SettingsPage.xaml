@@ -66,10 +66,10 @@
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         BorderColor="{DynamicResource ButtonBorderColor}"
                         CornerRadius="8"
-                        Clicked="OnImportDatabaseClicked"
+                        Clicked="OnImportFromExcelClicked"
                         Margin="40,0"/>
             </Grid>
-            
+
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
                        Text="Export Database"
@@ -86,7 +86,6 @@
                         Clicked="OnExportDatabaseClicked"
                         Margin="40,0"/>
             </Grid>
-                
         </VerticalStackLayout>
 
         <!--Navigation bar-->

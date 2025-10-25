@@ -73,6 +73,7 @@ namespace ConcertJournal.Services
             ws.Cell(1, 5).Value = "City";
             ws.Cell(1, 6).Value = "Date";
             ws.Cell(1, 7).Value = "Notes";
+            ws.Cell(1, 8).Value = "MediaPaths";
 
             // Data
             for (int i = 0; i < concerts.Count; i++)
@@ -85,6 +86,7 @@ namespace ConcertJournal.Services
                 ws.Cell(i + 2, 5).Value = c.City;
                 ws.Cell(i + 2, 6).Value = c.Date?.ToString("yyyy-MM-dd");
                 ws.Cell(i + 2, 7).Value = c.Notes;
+                ws.Cell(i + 2, 8).Value = c.MediaPaths;
             }
 
             // Auto-fit columns
