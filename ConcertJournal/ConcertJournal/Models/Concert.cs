@@ -12,6 +12,7 @@ namespace ConcertJournal.Models
         public string? Country { get; set; }
         public string? City { get; set; }
         public DateTime? Date { get; set; }
+        public double Rating { get; set; }
         public string? Notes { get; set; }
         public string? MediaPaths { get; set; }
     }

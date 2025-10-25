@@ -15,6 +15,9 @@ public partial class ConcertDetailsPage : ContentPage
         _concert = concert;
         BindingContext = concert;
 
+        //Hides back button on top of the screen on android
+        NavigationPage.SetHasBackButton(this, false);
+
         // Load images
         if (!string.IsNullOrWhiteSpace(concert.MediaPaths))
         {

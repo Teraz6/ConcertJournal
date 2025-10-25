@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
@@ -27,6 +28,21 @@
                                FontSize="16"
                                TextColor="{DynamicResource MutedText}"
                                HorizontalOptions="Center" />
+
+                        <toolkit:RatingView Rating="{Binding Rating}"
+                                            x:Name="ConcertRating"
+                                            HorizontalOptions="Center"
+                                            EmptyShapeColor="Transparent"
+                                            FillColor="{DynamicResource Primary}"
+                                            FillOption ="Shape"
+                                            IsReadOnly="True"
+                                            ShapePadding="3,7,7,3"
+                                            ShapeDiameter="37"
+                                            MaximumRating="5"
+                                            Shape="Star"
+                                            ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+                                            ShapeBorderThickness="1"
+                                            Spacing="3"/>
                     </VerticalStackLayout>
                 </Border>
 

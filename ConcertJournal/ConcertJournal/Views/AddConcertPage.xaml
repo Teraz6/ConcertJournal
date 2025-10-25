@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.AddConcertPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
@@ -113,7 +114,7 @@
 
                     <!--Country & City-->
                     <Grid ColumnDefinitions="*,*"
-                          RowDefinitions="*,*">
+                          RowDefinitions="*,*,*,*">
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Text="Country" 
@@ -143,17 +144,40 @@
                                Text="{Binding City}"/>
                         </Border>
                         
-                    </Grid>
+                        <!--Date-->
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Text="Date" 
+                               Margin="0,10,0,10"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <Border Grid.Row="3"
+                                Grid.Column="0"
+                                HorizontalOptions="Start">
+                            <DatePicker x:Name="DatePicker"/>
+                        </Border>
 
-                    <!--Date-->
-                    <Label Text="Date" 
-                           Margin="0,10,0,10"
-                           FontSize="18"
-                           FontAttributes="Bold"/>
-                    <Border HorizontalOptions="Start">
-                        <DatePicker x:Name="DatePicker"/>
-                    </Border>
-                    
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               Margin="0,10,0,10"
+                               Text="Rate event"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <toolkit:RatingView Grid.Row="3"
+                                            Grid.Column="1"
+                                            x:Name="ConcertRating"
+                                            EmptyShapeColor="Transparent"
+			                                FillColor="{DynamicResource RatingFill}"
+			                                FillOption ="Shape"
+			                                IsReadOnly="False"
+			                                ShapePadding="0"
+			                                ShapeDiameter="30"
+			                                MaximumRating="5"
+			                                Shape="Star"
+			                                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+			                                ShapeBorderThickness="1"
+			                                Spacing="15"/>
+                    </Grid> 
                     
                     <!--Notes-->
                     <Label Text="Notes" 
