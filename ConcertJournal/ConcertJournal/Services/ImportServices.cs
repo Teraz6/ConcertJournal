@@ -29,8 +29,9 @@ namespace ConcertJournal.Services
                         Country = row.Cell(4).GetString(),
                         City = row.Cell(5).GetString(),
                         Date = DateTime.TryParse(row.Cell(6).GetString(), out var date) ? date : DateTime.Today,
-                        Notes = row.Cell(7).GetString(),
-                        MediaPaths = row.Cell(8).GetString()
+                        Rating = row.Cell(7).GetDouble(),
+                        Notes = row.Cell(8).GetString(),
+                        MediaPaths = row.Cell(9).GetString()
                     };
 
                     concerts.Add(concert);

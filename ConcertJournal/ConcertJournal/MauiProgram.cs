@@ -1,4 +1,5 @@
-﻿using ConcertJournal.Data;
+﻿using CommunityToolkit.Maui;
+using ConcertJournal.Data;
 using ConcertJournal.Services;
 using Microsoft.Extensions.Logging;
 
