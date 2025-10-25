@@ -38,7 +38,7 @@
 
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
-                       Text="Export data"
+                       Text="Export CSV or Excel"
                        FontSize="24"
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource TextColor}"/>
@@ -52,9 +52,40 @@
                         Clicked="OnExportClicked"
                         Margin="40,0"/>
             </Grid>
-                
+            
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Column="0"
+                       Text="Import Database"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource TextColor}"/>
 
+                <Button Grid.Column="1"
+                        Text="Import Database"
+                        FontSize="16"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        BorderColor="{DynamicResource ButtonBorderColor}"
+                        CornerRadius="8"
+                        Clicked="OnImportFromExcelClicked"
+                        Margin="40,0"/>
+            </Grid>
 
+            <Grid ColumnDefinitions="*,*">
+                <Label Grid.Column="0"
+                       Text="Export Database"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       TextColor="{DynamicResource TextColor}"/>
+
+                <Button Grid.Column="1"
+                        Text="Export Database"
+                        FontSize="16"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        BorderColor="{DynamicResource ButtonBorderColor}"
+                        CornerRadius="8"
+                        Clicked="OnExportDatabaseClicked"
+                        Margin="40,0"/>
+            </Grid>
         </VerticalStackLayout>
 
         <!--Navigation bar-->

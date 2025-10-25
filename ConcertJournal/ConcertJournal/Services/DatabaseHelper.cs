@@ -4,8 +4,7 @@
     {
         public static string GetDatabasePath()
         {
-            var basePath = FileSystem.AppDataDirectory;  // This ensures it works on all platforms
-            return Path.Combine(basePath, "ConcertJournal.db3");
+            return Path.Combine(FileSystem.AppDataDirectory, "ConcertJournal.db3");
         }
     }
 }
