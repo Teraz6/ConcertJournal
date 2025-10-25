@@ -32,6 +32,9 @@
     <Color x:Key="ButtonRed">#B30000</Color>
     <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
 
+    <!--Rating-->
+    <Color x:Key="RatingFill">#F2DD13</Color>
+
     <!-- Text -->
     <Color x:Key="TextColor">#212121</Color>
     <Color x:Key="MutedText">#757575</Color>
@@ -71,6 +74,8 @@
     <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
     <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
     <SolidColorBrush x:Key="ButtonUpdateDeleteTextBrush" Color="{DynamicResource ButtonUpdateDeleteText}"/>
+
+    <SolidColorBrush x:Key="RatingFillBrush" Color="{DynamicResource RatingFill}" />
 
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />

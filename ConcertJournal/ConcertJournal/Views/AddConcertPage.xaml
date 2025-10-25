@@ -167,16 +167,16 @@
                                             Grid.Column="1"
                                             x:Name="ConcertRating"
                                             EmptyShapeColor="Transparent"
-			                                FillColor="{DynamicResource Primary}"
+			                                FillColor="{DynamicResource RatingFill}"
 			                                FillOption ="Shape"
 			                                IsReadOnly="False"
-			                                ShapePadding="3,7,7,3"
-			                                ShapeDiameter="37"
+			                                ShapePadding="0"
+			                                ShapeDiameter="30"
 			                                MaximumRating="5"
 			                                Shape="Star"
 			                                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
 			                                ShapeBorderThickness="1"
-			                                Spacing="3"/>
+			                                Spacing="15"/>
                     </Grid> 
                     
                     <!--Notes-->
