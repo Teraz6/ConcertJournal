@@ -45,7 +45,6 @@
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\eventjournallogo.png" />
 		<!-- Splash Screen -->
-		<MauiSplah Include="Resources\Splash\eventjournallogo.png" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 
@@ -106,6 +105,10 @@
 	  <MauiXaml Update="Views\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Splash\" />
 	</ItemGroup>
 
 </Project>
