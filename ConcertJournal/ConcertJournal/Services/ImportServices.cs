@@ -5,7 +5,7 @@ namespace ConcertJournal.Services
 {
     public static class ImportServices
     {
-
+        public static event Action? ConcertsImported;
         public static async Task ImportConcertsFromExcelAsync(string filePath)
         {
             if (!File.Exists(filePath))
@@ -47,6 +47,8 @@ namespace ConcertJournal.Services
             {
                 await App.Database.SaveConcertAsync(concert);
             }
+
+            ConcertsImported?.Invoke();
         }
     }
 }

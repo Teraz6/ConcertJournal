@@ -1,6 +1,5 @@
 using ConcertJournal.Resources.Themes;
 using ConcertJournal.Services;
-using Microsoft.Maui.Storage;
 
 namespace ConcertJournal.Views;
 
@@ -106,12 +105,13 @@ public partial class SettingsPage : ContentPage
                 return;
 
             await ImportServices.ImportConcertsFromExcelAsync(result.FullPath);
-
+            
             await DisplayAlert("Success", "Concerts imported successfully!", "OK");
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"Failed to import Excel file: {ex.Message}", "OK");
         }
+
     }
 }

@@ -53,13 +53,18 @@
                             </Picker>
                         </Border>
                     </Grid>
+
+                    
                 </VerticalStackLayout>
                 
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
                                 x:Name="ConcertListView" 
                                 Margin="5"
-                                ItemsSource="{Binding Concerts}">
+                                ItemsSource="{Binding Concerts}"
+                                SelectionMode="Multiple"
+                                SelectionChanged="OnSelectionChanged"
+                                SelectionChangedCommand="{Binding SelectionChangedCommand}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <!--Use strokeThickness as margin-->
@@ -68,8 +73,19 @@
                                     StrokeThickness="10"
                                     StrokeShape="20"
                                     BackgroundColor="{DynamicResource CardBackground}">
-                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor"
+                                                            Value="{DynamicResource CardBackgroundSelected}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
+                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                                     <!-- Concert details -->
                                     <VerticalStackLayout Grid.Column="0">
                                         <Label Text="{Binding EventTitle}" 
@@ -135,8 +151,25 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                
+                
+                
             </Grid>
         </ScrollView>
+        
+        <!-- Delete selected events button -->
+        <Button x:Name="DeleteSelectedButton"
+                        Text="Delete selected events"
+                        TextColor="{DynamicResource ButtonUpdateDeleteText}"
+                        BackgroundColor="{DynamicResource ButtonRed}"
+                        FontSize="18"
+                        Padding="10"
+                        Margin="20"
+                        Clicked="OnDeleteSelectedClicked" 
+                        BorderWidth="0"
+                        IsVisible="False"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"/>
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
