@@ -92,4 +92,6 @@
     <FileImageSource x:Key="ListIcon" File="list_white.png"/>
     <FileImageSource x:Key="SettingsIcon" File="settings_white.png"/>
 
+    <FileImageSource x:Key="Logo" File="eventjournallogo_white.png"/>
+
 </ResourceDictionary>

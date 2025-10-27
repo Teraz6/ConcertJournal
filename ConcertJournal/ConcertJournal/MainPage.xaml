@@ -5,103 +5,64 @@
              xmlns:models="clr-namespace:ConcertJournal.Models"
              BackgroundColor="{DynamicResource Background}">
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Grid RowDefinitions="*,Auto">
+        <Grid RowDefinitions="*,*"
+              Padding="10">
+            <!--MainContent-->
+            <VerticalStackLayout Grid.Row="0"
+                                 Spacing="20"
+                                 Margin="0,100,0,0">
+                <Image Source="{DynamicResource Logo}"
+                       MaximumHeightRequest="400"
+                       MaximumWidthRequest="400"
+                       HorizontalOptions="Center"
+                       Margin="10"/>
+                <Label Text="Keep track of every gig, festival and performances you've seen" 
+                       HorizontalOptions="Center"
+                       FontSize="24"
+                       HorizontalTextAlignment="Center"/> 
+            </VerticalStackLayout>
 
-        <!--MainContent-->
-        <VerticalStackLayout>
-            <Label
-               Grid.Row="0"
-               Text="Concert Journal"
-               FontSize="30"
-               FontAttributes="Bold"
-               VerticalOptions="Start" 
-               HorizontalOptions="Center"
-               Margin="0,10"/>
-        </VerticalStackLayout>
+            <!-- STATS PANEL -->
+            <Border Grid.Row="1" 
+                   x:Name="StatsPanel"
+                   IsVisible="{Binding HasConcerts}"
+                   Margin="5" 
+                   Padding="12" 
+                   HeightRequest="100">
 
-        <!-- STATS PANEL -->
-        <Border Grid.Row="1" 
-               x:Name="StatsPanel"
-               IsVisible="{Binding HasConcerts}"
-               Margin="5" 
-               Padding="12" 
-               HeightRequest="100">
+                <Grid RowDefinitions="*,*"
+                      ColumnDefinitions="*,*,*"
+                      RowSpacing="8"
+                      ColumnSpacing="24"
+                      Margin="0,0,0,12"
+                      HorizontalOptions="Center">
 
-            <Grid RowDefinitions="Auto,Auto"
-                  ColumnDefinitions="*,*,*"
-                  RowSpacing="8"
-                  ColumnSpacing="24"
-                  Margin="0,0,0,12">
 
-                <VerticalStackLayout 
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Spacing="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
-                    <Label Text="Happened"/>
-                    <Label Text="{Binding HappenedCount}"/>
-                </VerticalStackLayout>
+                    <Label Grid.Row="0" 
+                           Grid.Column="0"
+                           Text="Happened"/>
+                    <Label Grid.Row="1" 
+                        Grid.Column="0"
+                        Text="{Binding HappenedCount}"/>
 
-                <VerticalStackLayout
-                    Grid.Row="0"
-                    Grid.Column="1" 
-                    Spacing="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
-                    <Label Text="Scheduled"/>
-                    <Label Text="{Binding ScheduledCount}"/>
-                </VerticalStackLayout>
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="Scheduled"/>
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding ScheduledCount}"/>
 
-                <VerticalStackLayout 
-                    Grid.Row="0"
-                    Grid.Column="2" 
-                    Spacing="0"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
-                    <Label Text="All"/>
-                    <Label Text="{Binding TotalCount}"/>
-                </VerticalStackLayout>
+                    <Label Grid.Row="0"
+                           Grid.Column="2"
+                           Text="All"/>
+                    <Label Grid.Row="1" 
+                           Grid.Column="2"
+                            Text="{Binding TotalCount}"/>
 
-            </Grid>
-        </Border>
-
-        <!-- TEXT-ONLY WELCOME -->
-        <VerticalStackLayout 
-            Grid.Row="2"         
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            Spacing="10"
-            MaximumWidthRequest="520"
-            Padding="20,0,20,0">
-
-            <BoxView 
-               HeightRequest="2"
-               WidthRequest="64"
-               HorizontalOptions="Center"
-               Color="{DynamicResource TextColor}"
-               Opacity="0.25"
-               CornerRadius="1"
-               IsVisible="False"/>
-
-            <Label 
-                Text="Welcome!"
-                FontSize="34"
-                FontAttributes="Bold"
-                CharacterSpacing="0.5"
-                LineHeight="1.05"
-                HorizontalTextAlignment="Center"
-                TextColor="{DynamicResource TextColor}"/>
-
-            <Label Text="Rock your memories with Event Journal — add gigs, notes, photos and relive the moments."
-                FontSize="22"
-                LineHeight="1.2"
-                CharacterSpacing="0.2"
-                Opacity="0.85"
-                HorizontalTextAlignment="Center"
-                TextColor="{DynamicResource TextColor}"/>
-        </VerticalStackLayout>
-
+                </Grid>
+            </Border>
+        </Grid>
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="3" />
     </Grid>
