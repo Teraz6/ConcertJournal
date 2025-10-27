@@ -1,9 +1,12 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;                      // <= needed for LINQ
+﻿using CommunityToolkit.Maui.Animations;
 using ConcertJournal.Models;            // for Concert
 using ConcertJournal.Views;             // for navigation pages
 using Microsoft.Maui.Controls;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;                      // <= needed for LINQ
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ConcertJournal;
 
@@ -139,42 +142,7 @@ public partial class MainPage : ContentPage
             return "scheduled";  // future
     }
 
-    // Build the three “Top” lists used by your XAML
-    private void BuildTopLists(IList<Concert> concerts)
-    {
-        PerformerStats.Clear();
-        LocationStats.Clear();
-        DateStats.Clear();
 
-        if (concerts == null || concerts.Count == 0) return;
-
-        // Performers (split by comma)
-        var performerCounts = concerts
-            .SelectMany(c => (c.Performers ?? "")
-                .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-            .GroupBy(p => p)
-            .Select(g => new StatRow(g.Key, g.Count()))
-            .OrderByDescending(r => r.Count).ThenBy(r => r.Name).Take(5);
-        foreach (var r in performerCounts) PerformerStats.Add(r);
-
-        // Locations (Country / City)
-        var locationCounts = concerts
-            .Select(c => $"{(c.Country ?? "").Trim()}{(string.IsNullOrWhiteSpace(c.City) ? "" : " / " + c.City.Trim())}")
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-            .GroupBy(s => s)
-            .Select(g => new StatRow(g.Key, g.Count()))
-            .OrderByDescending(r => r.Count).ThenBy(r => r.Name).Take(5);
-        foreach (var r in locationCounts) LocationStats.Add(r);
-
-        // Dates (Month-Year)
-        var dateCounts = concerts
-            .Where(c => c.Date.HasValue)
-            .GroupBy(c => new { c.Date!.Value.Year, c.Date!.Value.Month })
-            .Select(g => new StatRow(new DateTime(g.Key.Year, g.Key.Month, 1).ToString("MMM yyyy"), g.Count()))
-            .OrderByDescending(r => r.Count).ThenBy(r => r.Name).Take(5);
-        foreach (var r in dateCounts) DateStats.Add(r);
-
-    }
 
     // Row model for the small stat lists
     public record StatRow(string Name, int Count)
@@ -188,7 +156,14 @@ public partial class MainPage : ContentPage
             await Navigation.PushAsync(new ConcertDetailsPage(c));
         }
     }
+    public async void Animate()
+    {
+        var label = new Label();
 
-    
+        var fadeAnimation = new FadeAnimation();
+
+        await fadeAnimation.Animate(label);
+    }
+
 }
 

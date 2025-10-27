@@ -3,6 +3,7 @@
              x:Class="ConcertJournal.MainPage"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="Auto,Auto,*,Auto">
@@ -91,9 +92,29 @@
                 CharacterSpacing="0.5"
                 LineHeight="1.05"
                 HorizontalTextAlignment="Center"
-                TextColor="{DynamicResource TextColor}"/>
+                TextColor="{DynamicResource TextColor}"
+                Opacity="0">
 
-            <Label Text="Rock your memories with Event Journal — add gigs, notes, photos and relive the moments."
+                <Label.Behaviors>
+                    <toolkit:AnimationBehavior>
+                        <toolkit:AnimationBehavior.Animations>
+                            <!-- fade in to 1.0 -->
+                            <toolkit:FadeAnimation Opacity="1" Duration="800" Easing="{x:Static Easing.CubicIn}" />
+                            <!-- after it’s visible, gently dim a bit over time -->
+                            <toolkit:FadeAnimation Opacity="0.85" Duration="3000" Easing="{x:Static Easing.SinInOut}" />
+                        </toolkit:AnimationBehavior.Animations>
+                    </toolkit:AnimationBehavior>
+                </Label.Behaviors>
+                <Label.Triggers>
+                    <!-- start the animation when the label loads -->
+                    <EventTrigger Event="Loaded">
+                        <toolkit:StartAnimationAction />
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Label 
+                Text="Rock your memories with Event Journal — add gigs, notes, photos and relive the moments."
                 FontSize="22"
                 LineHeight="1.2"
                 CharacterSpacing="0.2"
