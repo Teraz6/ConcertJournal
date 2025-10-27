@@ -25,21 +25,23 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
         <!--MainContent-->
-        <VerticalStackLayout Spacing="30" Padding="10">
-            <Label Text="Concert Journal"
-           FontSize="30"
-           FontAttributes="Bold"
-           VerticalOptions="Start" 
-           HorizontalOptions="Center"
-           TextColor="{DynamicResource TextColor}"
-           Margin="0,10"/>
+        <VerticalStackLayout>
+            <Label
+               Grid.Row="0"
+               Text="Concert Journal"
+               FontSize="30"
+               FontAttributes="Bold"
+               VerticalOptions="Start" 
+               HorizontalOptions="Center"
+               TextColor="{DynamicResource TextColor}"
+               Margin="0,10"/>
         </VerticalStackLayout>
 
-            <!-- STATS PANEL -->
-        <Border Grid.Row="0" 
+        <!-- STATS PANEL -->
+        <Border Grid.Row="1" 
                x:Name="StatsPanel"
                IsVisible="{Binding HasConcerts}"
                Margin="5" 
@@ -87,7 +89,7 @@
 
         <!-- LIST OF CONCERTS -->
         <CollectionView x:Name="ConcertsView"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         ItemsLayout="VerticalList"
                         ItemsSource="{Binding Concerts}"
                         SelectionMode="None">
@@ -99,7 +101,7 @@
                     <Border Margin="0,5"
                             Padding="10"
                             BackgroundColor="{DynamicResource PrimaryDark}">
-                        
+
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer
                                 Tapped="OnCardTapped"
@@ -107,18 +109,18 @@
                         </Border.GestureRecognizers>
 
                         <VerticalStackLayout Grid.Column="0">
-                            
+
                             <!-- Title -->
                             <Label Text="{Binding EventTitle}" 
                                    FontSize="18" 
                                    TextColor="{DynamicResource TextColor}" 
                                    FontAttributes="Bold"/>
-                            
+
                             <!-- Performers -->
                             <Label Text="{Binding Performers}" 
                                    FontSize="14" 
                                    TextColor="{DynamicResource TextColor}"/>
-                            
+
                             <!-- Location line -->
                             <HorizontalStackLayout Spacing="20">
                                 <Label Text="{Binding Venue}" 
@@ -140,7 +142,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
+
         <!-- centered, middle row -->
         <Border Grid.Row="1"
                 HorizontalOptions="Center"
@@ -172,15 +174,15 @@
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="16" />
             </Border.StrokeShape>
-            
+
             <Label 
                  FontAttributes="Bold"
                  Text="Oh, looks like you haven’t logged any events yet! Hit the buttons below to start adding them!"
                  TextColor="{DynamicResource TextColor}"
                  FontSize="20"
                  LineBreakMode="WordWrap"/>
-        </Border> 
-        
+        </Border>
+
         <!-- ARROW -> points to the middle button -->
         <Image x:Name="AddArrow"
                Source="downarrow.png"
@@ -194,8 +196,8 @@
                TranslationX="-50"
                TranslationY="-64"
                IsVisible="{Binding ShowEmptyHints}"/>
-        
+
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="2" />
+        <controls:BottomNavBar Grid.Row="3" />
     </Grid>
 </ContentPage>
