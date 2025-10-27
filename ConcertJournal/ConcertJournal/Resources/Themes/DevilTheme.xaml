@@ -23,7 +23,8 @@
     <Color x:Key="Background">#0B0B0B</Color>
     <Color x:Key="Surface">#1C1C1C</Color>
     <Color x:Key="Overlay">#2A0A0A</Color>
-    <Color x:Key="CardBackground">#1A0000</Color>
+    <Color x:Key="CardBackground">#660000</Color>
+    <Color x:Key="CardBackgroundSelected">#D32F2F</Color>
 
 
     <!-- Text -->
@@ -31,11 +32,15 @@
     <Color x:Key="MutedText">#B0B0B0</Color>
 
     <!--Button-->
-    <Color x:Key="ButtonBackground">#CCCCCC</Color>
-    <Color x:Key="ButtonTextColor">#000000</Color>
-    <Color x:Key="ButtonBorderColor">#7F0000</Color>
+    <Color x:Key="ButtonBackground">#0B0B0B</Color>
+    <Color x:Key="ButtonTextColor">#FF0000</Color>
+    <Color x:Key="ButtonBorderColor">#FF0000</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
     <Color x:Key="ButtonRed">#B30000</Color>
+    <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
+    
+    <!--Rating-->
+    <Color x:Key="RatingFill">#B00020</Color>
 
     <!--NavBar-->
     <Color x:Key="NavBarBackground">#7F0000</Color>
@@ -64,12 +69,16 @@
     <SolidColorBrush x:Key="SurfaceBrush" Color="{DynamicResource Surface}" />
     <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource Overlay}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackground}" />
+    <SolidColorBrush x:Key="CardBackgroundSelectedBrush" Color="{DynamicResource CardBackgroundSelected}" />
 
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackground}" />
     <SolidColorBrush x:Key="ButtonTextBrush" Color="{DynamicResource ButtonTextColor}" />
     <SolidColorBrush x:Key="ButtonBorderBrush" Color="{DynamicResource ButtonBorderColor}" />
     <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
     <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
+    <SolidColorBrush x:Key="ButtonUpdateDeleteTextBrush" Color="{DynamicResource ButtonUpdateDeleteText}"/>
+
+    <SolidColorBrush x:Key="RatingFillBrush" Color="{DynamicResource RatingFill}" />
 
     <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource TextColor}" />
     <SolidColorBrush x:Key="MutedTextBrush" Color="{DynamicResource MutedText}" />

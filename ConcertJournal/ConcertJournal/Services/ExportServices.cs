@@ -18,13 +18,13 @@ namespace ConcertJournal.Services
             var sb = new StringBuilder();
 
             // Header
-            sb.AppendLine("EventTitle,Performers,Venue,Country,City,Date,Notes");
+            sb.AppendLine("EventTitle,Performers,Venue,Country,City,Date,Rating,Notes");
 
             // Data
             foreach (var c in concerts)
             {
                 var dateString = c.Date?.ToString("yyyy-MM-dd") ?? "";
-                sb.AppendLine($"\"{c.EventTitle}\",\"{c.Performers}\",\"{c.Venue}\",\"{c.Country}\",\"{c.City}\",\"{dateString}\",\"{c.Notes}\"");
+                sb.AppendLine($"\"{c.EventTitle}\",\"{c.Performers}\",\"{c.Venue}\",\"{c.Country}\",\"{c.City}\",\"{dateString}\",\"{c.Rating}\",\"{c.Notes}\"");
             }
 
             var csvBytes = Encoding.UTF8.GetBytes(sb.ToString());
@@ -72,7 +72,9 @@ namespace ConcertJournal.Services
             ws.Cell(1, 4).Value = "Country";
             ws.Cell(1, 5).Value = "City";
             ws.Cell(1, 6).Value = "Date";
-            ws.Cell(1, 7).Value = "Notes";
+            ws.Cell(1, 7).Value = "Rating";
+            ws.Cell(1, 8).Value = "Notes";
+            ws.Cell(1, 9).Value = "MediaPaths";
 
             // Data
             for (int i = 0; i < concerts.Count; i++)
@@ -84,7 +86,9 @@ namespace ConcertJournal.Services
                 ws.Cell(i + 2, 4).Value = c.Country;
                 ws.Cell(i + 2, 5).Value = c.City;
                 ws.Cell(i + 2, 6).Value = c.Date?.ToString("yyyy-MM-dd");
-                ws.Cell(i + 2, 7).Value = c.Notes;
+                ws.Cell(i + 2, 7).Value = c.Rating;
+                ws.Cell(i + 2, 8).Value = c.Notes;
+                ws.Cell(i + 2, 9).Value = c.MediaPaths;
             }
 
             // Auto-fit columns

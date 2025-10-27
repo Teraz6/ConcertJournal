@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
 using ConcertJournal.Data;
+using ConcertJournal.Services;
+using CustomShellMaui;
+using Microsoft.Extensions.Logging;
 
 namespace ConcertJournal;
 
@@ -11,6 +14,8 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
+            .UseCustomShellMaui()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,7 +27,8 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<DatabaseContext>(s => new DatabaseContext(Path.Combine(FileSystem.AppDataDirectory, "ConcertJournalDb1")));
+        builder.Services.AddSingleton<DatabaseContext>(s =>
+            new DatabaseContext(DatabaseHelper.GetDatabasePath()));
         return builder.Build();
 	}
 }
