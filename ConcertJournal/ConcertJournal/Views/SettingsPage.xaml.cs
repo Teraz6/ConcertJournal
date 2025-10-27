@@ -41,13 +41,14 @@ public partial class SettingsPage : ContentPage
             await DisplayAlert("No Data", "You have no concerts to export.", "OK");
             return;
         }
+        //Uncomment below to add csv option 
 
-        bool isExcel = await DisplayAlert("Export Format", "Choose export format:", "Excel (.xlsx)", "CSV (.csv)");
+        //bool isExcel = await DisplayAlert("Export Format", "Choose export format:", "Excel (.xlsx)", "CSV (.csv)");
 
-        if (isExcel)
+        //if (isExcel)
             await ExportServices.ExportConcertsToExcelAsync(concerts, this);
-        else
-            await ExportServices.ExportConcertsToCsvAsync(concerts, this);
+        //else
+        //    await ExportServices.ExportConcertsToCsvAsync(concerts, this);
     }
 
     //Database Export

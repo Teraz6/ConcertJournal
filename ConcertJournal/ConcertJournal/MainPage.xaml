@@ -13,7 +13,7 @@
                Text="Welcome to Concert Journal!"
                VerticalOptions="Center" 
                HorizontalOptions="Center"
-               TextColor="{DynamicResource TextColor}"
+               TextColor="{DynamicResource TextColor}" 
                FontSize="30"/>
         
         <!--Navigation bar-->

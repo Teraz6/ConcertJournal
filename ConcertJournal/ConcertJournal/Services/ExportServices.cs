@@ -13,50 +13,50 @@ namespace ConcertJournal.Services
     public class ExportServices
     {
         // ===================== CSV EXPORT =====================
-        public static async Task ExportConcertsToCsvAsync(List<Concert> concerts, Page page, string defaultFileName = "Concerts.csv")
-        {
-            var sb = new StringBuilder();
+//        public static async Task ExportConcertsToCsvAsync(List<Concert> concerts, Page page, string defaultFileName = "Concerts.csv")
+//        {
+//            var sb = new StringBuilder();
 
-            // Header
-            sb.AppendLine("EventTitle,Performers,Venue,Country,City,Date,Rating,Notes");
+//            // Header
+//            sb.AppendLine("EventTitle,Performers,Venue,Country,City,Date,Rating,Notes");
 
-            // Data
-            foreach (var c in concerts)
-            {
-                var dateString = c.Date?.ToString("yyyy-MM-dd") ?? "";
-                sb.AppendLine($"\"{c.EventTitle}\",\"{c.Performers}\",\"{c.Venue}\",\"{c.Country}\",\"{c.City}\",\"{dateString}\",\"{c.Rating}\",\"{c.Notes}\"");
-            }
+//            // Data
+//            foreach (var c in concerts)
+//            {
+//                var dateString = c.Date?.ToString("yyyy-MM-dd") ?? "";
+//                sb.AppendLine($"\"{c.EventTitle}\",\"{c.Performers}\",\"{c.Venue}\",\"{c.Country}\",\"{c.City}\",\"{dateString}\",\"{c.Rating}\",\"{c.Notes}\"");
+//            }
 
-            var csvBytes = Encoding.UTF8.GetBytes(sb.ToString());
+//            var csvBytes = Encoding.UTF8.GetBytes(sb.ToString());
 
-#if WINDOWS
-            // Ask user where to save file
-            var picker = new FileSavePicker();
-            var window = (Microsoft.Maui.Controls.Application.Current?.Windows?.FirstOrDefault()?.Handler?.PlatformView as Microsoft.UI.Xaml.Window);
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-            InitializeWithWindow.Initialize(picker, hwnd);
+//#if WINDOWS
+//            // Ask user where to save file
+//            var picker = new FileSavePicker();
+//            var window = (Microsoft.Maui.Controls.Application.Current?.Windows?.FirstOrDefault()?.Handler?.PlatformView as Microsoft.UI.Xaml.Window);
+//            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+//            InitializeWithWindow.Initialize(picker, hwnd);
 
-            picker.SuggestedFileName = defaultFileName;
-            picker.FileTypeChoices.Add("CSV File", new List<string> { ".csv" });
+//            picker.SuggestedFileName = defaultFileName;
+//            picker.FileTypeChoices.Add("CSV File", new List<string> { ".csv" });
 
-            StorageFile file = await picker.PickSaveFileAsync();
-            if (file != null)
-            {
-                await FileIO.WriteBytesAsync(file, csvBytes);
-                await page.DisplayAlert("Export Complete", $"Saved to: {file.Path}", "OK");
-            }
-#else
-            // Mobile: save to temp and share
-            string path = Path.Combine(FileSystem.CacheDirectory, defaultFileName);
-            await File.WriteAllBytesAsync(path, csvBytes);
+//            StorageFile file = await picker.PickSaveFileAsync();
+//            if (file != null)
+//            {
+//                await FileIO.WriteBytesAsync(file, csvBytes);
+//                await page.DisplayAlert("Export Complete", $"Saved to: {file.Path}", "OK");
+//            }
+//#else
+//            // Mobile: save to temp and share
+//            string path = Path.Combine(FileSystem.CacheDirectory, defaultFileName);
+//            await File.WriteAllBytesAsync(path, csvBytes);
 
-            await Share.RequestAsync(new ShareFileRequest
-            {
-                Title = "Export Concerts (CSV)",
-                File = new ShareFile(path)
-            });
-#endif
-        }
+//            await Share.RequestAsync(new ShareFileRequest
+//            {
+//                Title = "Export Concerts (CSV)",
+//                File = new ShareFile(path)
+//            });
+//#endif
+//        }
 
 
         // ===================== EXCEL EXPORT =====================

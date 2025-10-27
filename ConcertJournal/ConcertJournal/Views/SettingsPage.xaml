@@ -38,13 +38,13 @@
 
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
-                       Text="Export CSV or Excel"
+                       Text="Export Events"
                        FontSize="24"
                        HorizontalOptions="Center"
                        TextColor="{DynamicResource TextColor}"/>
 
                 <Button Grid.Column="1"
-                        Text="Export Events"
+                        Text="Export Excel"
                         FontSize="16"
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         BorderColor="{DynamicResource ButtonBorderColor}"
