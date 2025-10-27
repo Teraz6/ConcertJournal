@@ -71,7 +71,7 @@
             </Grid>
             
             <!--Database export-->
-            <Grid ColumnDefinitions="*,*">
+            <!--<Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
                        Text="Export Database"
                        FontSize="24"
@@ -88,7 +88,7 @@
                         Margin="40,0"/>
             </Grid>
         
-            <!--For Database import-->
+            --><!--For Database import--><!--
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
                        Text="Import Database"
@@ -104,7 +104,7 @@
                         CornerRadius="8"
                         Clicked="OnImportDatabaseClicked"
                         Margin="40,0"/>
-            </Grid>
+            </Grid>-->
         </VerticalStackLayout>
 
         <!--Navigation bar-->

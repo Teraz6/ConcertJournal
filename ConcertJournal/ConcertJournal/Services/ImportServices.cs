@@ -6,17 +6,13 @@ namespace ConcertJournal.Services
     public static class ImportServices
     {
         public static event Action? ConcertsImported;
-        public static async Task ImportConcertsFromExcelAsync(string filePath)
+        public static async Task ImportConcertsFromExcelAsync(Stream excelStream)
         {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("Excel file not found", filePath);
-
-            using var workbook = new XLWorkbook(filePath);
+            using var workbook = new XLWorkbook(excelStream);
             var worksheet = workbook.Worksheet(1); // Assuming first sheet
 
             var concerts = new List<Concert>();
 
-            // Skip header row (start at row 2)
             foreach (var row in worksheet.RowsUsed().Skip(1))
             {
                 try
@@ -42,7 +38,6 @@ namespace ConcertJournal.Services
                 }
             }
 
-            // Save to SQLite database
             foreach (var concert in concerts)
             {
                 await App.Database.SaveConcertAsync(concert);
