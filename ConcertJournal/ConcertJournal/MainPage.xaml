@@ -25,11 +25,13 @@
 
             <!-- STATS PANEL -->
             <Border Grid.Row="1" 
-                   x:Name="StatsPanel"
-                   IsVisible="{Binding HasConcerts}"
-                   Margin="5" 
-                   Padding="12" 
-                   HeightRequest="100">
+                    x:Name="StatsPanel"
+                    IsVisible="{Binding HasConcerts}"
+                    Margin="5" 
+                    Padding="12" 
+                    HeightRequest="100"
+                    StrokeThickness="2"
+                    Stroke="{DynamicResource Primary}">
 
                 <Grid RowDefinitions="*,*"
                       ColumnDefinitions="*,*,*"
