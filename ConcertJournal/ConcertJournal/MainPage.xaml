@@ -87,71 +87,14 @@
             </Grid>
         </Border>
 
-        <!-- LIST OF CONCERTS -->
-        <CollectionView x:Name="ConcertsView"
-                        Grid.Row="2"
-                        ItemsLayout="VerticalList"
-                        ItemsSource="{Binding Concerts}"
-                        SelectionMode="None">
-
-            <!-- Concert details -->
-
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Margin="0,5"
-                            Padding="10"
-                            BackgroundColor="{DynamicResource PrimaryDark}">
-
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Tapped="OnCardTapped"
-                                CommandParameter="{Binding .}" />
-                        </Border.GestureRecognizers>
-
-                        <VerticalStackLayout Grid.Column="0">
-
-                            <!-- Title -->
-                            <Label Text="{Binding EventTitle}" 
-                                   FontSize="18" 
-                                   TextColor="{DynamicResource TextColor}" 
-                                   FontAttributes="Bold"/>
-
-                            <!-- Performers -->
-                            <Label Text="{Binding Performers}" 
-                                   FontSize="14" 
-                                   TextColor="{DynamicResource TextColor}"/>
-
-                            <!-- Location line -->
-                            <HorizontalStackLayout Spacing="20">
-                                <Label Text="{Binding Venue}" 
-                                       FontSize="14" 
-                                       TextColor="{DynamicResource TextColor}"/>
-                                <Label Text="{Binding Country}" 
-                                       FontSize="14" 
-                                       TextColor="{DynamicResource TextColor}"/>
-                                <Label Text="{Binding City}" 
-                                       FontSize="14" 
-                                       TextColor="{DynamicResource TextColor}"/>
-                            </HorizontalStackLayout>
-
-                            <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                   FontSize="12" 
-                                   TextColor="{DynamicResource TextColor}"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
         <!-- centered, middle row -->
-        <Border Grid.Row="1"
+        <Border Grid.Row="3"
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 WidthRequest="340"
                 Padding="0"
                 Margin="0,0,0,80"
-                ZIndex="20"
-                IsVisible="{Binding ShowEmptyHints}">
+                ZIndex="20">
             <Label 
                  FontAttributes="Bold"
                  Text="Rock your memories with Event Journal! Keep track of every gig, festival, and performance you’ve seen — add notes, photos, and videos to relive the moments."
@@ -159,43 +102,6 @@
                  FontSize="24"
                  LineBreakMode="WordWrap"/>
         </Border>
-
-        <!-- above the arrow -->
-        <Border Grid.Row="2"
-                HorizontalOptions="Center"
-                VerticalOptions="End"
-                WidthRequest="340"
-                BackgroundColor="{DynamicResource Background}"
-                Padding="16"
-                Margin="12,0,12,120"
-                ZIndex="20"
-                TranslationY="-60"
-                IsVisible="{Binding ShowEmptyHints}">
-            <Border.StrokeShape>
-                <RoundRectangle CornerRadius="16" />
-            </Border.StrokeShape>
-
-            <Label 
-                 FontAttributes="Bold"
-                 Text="Oh, looks like you haven’t logged any events yet! Hit the buttons below to start adding them!"
-                 TextColor="{DynamicResource TextColor}"
-                 FontSize="20"
-                 LineBreakMode="WordWrap"/>
-        </Border>
-
-        <!-- ARROW -> points to the middle button -->
-        <Image x:Name="AddArrow"
-               Source="downarrow.png"
-               Grid.Row="2"
-               HorizontalOptions="Center"    
-               VerticalOptions="End"
-               Margin="0,0,0,10"
-               WidthRequest="120"
-               HeightRequest="120"
-               ZIndex="10"
-               TranslationX="-50"
-               TranslationY="-64"
-               IsVisible="{Binding ShowEmptyHints}"/>
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="3" />
