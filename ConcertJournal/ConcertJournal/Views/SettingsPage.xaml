@@ -88,7 +88,7 @@
                         Margin="40,0"/>
             </Grid>
         
-            <!--For Database import
+            <!--For Database import-->
             <Grid ColumnDefinitions="*,*">
                 <Label Grid.Column="0"
                        Text="Import Database"
@@ -102,9 +102,9 @@
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         BorderColor="{DynamicResource ButtonBorderColor}"
                         CornerRadius="8"
-                        Clicked="OnExportDatabaseClicked"
+                        Clicked="OnImportDatabaseClicked"
                         Margin="40,0"/>
-            </Grid>-->
+            </Grid>
         </VerticalStackLayout>
 
         <!--Navigation bar-->

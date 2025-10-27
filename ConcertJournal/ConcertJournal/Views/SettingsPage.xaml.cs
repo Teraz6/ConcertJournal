@@ -121,4 +121,43 @@ public partial class SettingsPage : ContentPage
         }
 
     }
+
+    private async void OnImportDatabaseClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            // Pick a .db3 file
+            var result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Select a Concert Journal database file",
+                FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.Android, new[] { ".db3" } },
+                { DevicePlatform.WinUI, new[] { ".db3" } },
+                { DevicePlatform.iOS, new[] { ".db3" } },
+            })
+            });
+
+            if (result == null)
+                return; // user canceled
+
+            // Destination path (your app's database location)
+            var dbPath = DatabaseHelper.GetDatabasePath();
+
+            // Copy the picked file to your app's database path
+            using var stream = await result.OpenReadAsync(); // works for cloud files
+            using var destStream = File.Create(dbPath);
+            await stream.CopyToAsync(destStream);
+
+            await DisplayAlert("Success", "Database imported successfully! Restart the app to see changes.", "OK");
+
+            // Optional: reload data immediately
+            EventBus.OnConcertCreated();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to import database: {ex.Message}", "OK");
+        }
+    }
+
 }
