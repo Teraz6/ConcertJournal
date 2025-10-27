@@ -177,7 +177,10 @@ public partial class ConcertListPage : ContentPage
         if (sender is CollectionView cv)
         {
             _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList();
-            DeleteSelectedButton.IsVisible = _selectedConcerts.Count > 0;
+
+            bool hasSelection = _selectedConcerts.Count > 0;
+            DeleteSelectedButton.IsVisible = hasSelection;
+            UnselectAllButton.IsVisible = hasSelection;
         }
     }
 
@@ -205,6 +208,18 @@ public partial class ConcertListPage : ContentPage
         DeleteSelectedButton.IsVisible = false;
 
         await LoadConcerts(); // refresh list
+    }
+
+    private void OnUnselectAllClicked(object sender, EventArgs e)
+    {
+        _selectedConcerts.Clear();
+
+        // Clear selection in CollectionView
+        ConcertListView.SelectedItems.Clear();
+
+        // Hide both buttons when no selection
+        DeleteSelectedButton.IsVisible = false;
+        UnselectAllButton.IsVisible = false;
     }
 
 }

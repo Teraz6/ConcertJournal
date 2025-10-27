@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">

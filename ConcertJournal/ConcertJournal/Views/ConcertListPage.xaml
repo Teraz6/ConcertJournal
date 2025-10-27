@@ -156,20 +156,37 @@
                 
             </Grid>
         </ScrollView>
-        
-        <!-- Delete selected events button -->
-        <Button x:Name="DeleteSelectedButton"
+
+            <Button x:Name="DeleteSelectedButton"
                         Text="Delete selected events"
                         TextColor="{DynamicResource ButtonUpdateDeleteText}"
                         BackgroundColor="{DynamicResource ButtonRed}"
+                        BorderColor="{DynamicResource TextColor}"
+                        BorderWidth="2"
                         FontSize="18"
                         Padding="10"
                         Margin="20"
                         Clicked="OnDeleteSelectedClicked" 
-                        BorderWidth="0"
                         IsVisible="False"
-                        HorizontalOptions="Center"
+                        HorizontalOptions="End"
                         VerticalOptions="Start"/>
+            
+            <Button x:Name="UnselectAllButton"
+                        Text="Unselect all"
+                        TextColor="{DynamicResource ButtonUpdateDeleteText}"
+                        BackgroundColor="{DynamicResource ButtonGreen}"
+                        BorderColor="{DynamicResource TextColor}"
+                        BorderWidth="2"
+                        FontSize="18"
+                        Padding="10"
+                        Margin="20"
+                        Clicked="OnUnselectAllClicked" 
+                        IsVisible="False"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"/>
+            
+        <!-- Delete selected events button -->
+        
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />

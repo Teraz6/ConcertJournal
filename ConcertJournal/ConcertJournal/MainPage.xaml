@@ -17,8 +17,9 @@
                        MaximumWidthRequest="400"
                        HorizontalOptions="Center"
                        Margin="10"/>
-                <Label Text="Keep track of every gig, festival and performances you've seen" 
+                <Label Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
                        HorizontalOptions="Center"
+                       FontAttributes="Italic"
                        FontSize="24"
                        HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
