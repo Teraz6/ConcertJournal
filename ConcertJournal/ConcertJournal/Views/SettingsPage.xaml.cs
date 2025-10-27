@@ -104,8 +104,15 @@ public partial class SettingsPage : ContentPage
             if (result == null)
                 return;
 
+            using var stream = await result.OpenReadAsync();
+            string tempPath = Path.Combine(FileSystem.AppDataDirectory, "temp_import.xlsx");
+
+            using (var fileStream = File.Create(tempPath))
+            {
+                await stream.CopyToAsync(fileStream);
+            }
+
             await ImportServices.ImportConcertsFromExcelAsync(result.FullPath);
-            
             await DisplayAlert("Success", "Concerts imported successfully!", "OK");
         }
         catch (Exception ex)

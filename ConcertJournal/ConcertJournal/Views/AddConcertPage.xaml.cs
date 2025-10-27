@@ -1,8 +1,6 @@
 using ConcertJournal.Models;
 using ConcertJournal.Services;
 using System.Collections.ObjectModel;
-using Microsoft.Maui.Storage;
-using System.IO;
 
 namespace ConcertJournal.Views;
 
