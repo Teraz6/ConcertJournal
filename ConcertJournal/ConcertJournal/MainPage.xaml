@@ -1,23 +1,108 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.MainPage"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              BackgroundColor="{DynamicResource Background}">
 
-    <Grid RowDefinitions="*,.30*">
-        
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
         <!--MainContent-->
-        <Label Grid.Row="0" 
-               Text="Welcome to Concert Journal!"
-               VerticalOptions="Center" 
+        <VerticalStackLayout>
+            <Label
+               Grid.Row="0"
+               Text="Concert Journal"
+               FontSize="30"
+               FontAttributes="Bold"
+               VerticalOptions="Start" 
                HorizontalOptions="Center"
-               TextColor="{DynamicResource TextColor}" 
-               FontSize="30"/>
-        
+               Margin="0,10"/>
+        </VerticalStackLayout>
+
+        <!-- STATS PANEL -->
+        <Border Grid.Row="1" 
+               x:Name="StatsPanel"
+               IsVisible="{Binding HasConcerts}"
+               Margin="5" 
+               Padding="12" 
+               HeightRequest="100">
+
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="*,*,*"
+                  RowSpacing="8"
+                  ColumnSpacing="24"
+                  Margin="0,0,0,12">
+
+                <VerticalStackLayout 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Spacing="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                    <Label Text="Happened"/>
+                    <Label Text="{Binding HappenedCount}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    Grid.Row="0"
+                    Grid.Column="1" 
+                    Spacing="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                    <Label Text="Scheduled"/>
+                    <Label Text="{Binding ScheduledCount}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout 
+                    Grid.Row="0"
+                    Grid.Column="2" 
+                    Spacing="0"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                    <Label Text="All"/>
+                    <Label Text="{Binding TotalCount}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Border>
+
+        <!-- TEXT-ONLY WELCOME -->
+        <VerticalStackLayout 
+            Grid.Row="2"         
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            Spacing="10"
+            MaximumWidthRequest="520"
+            Padding="20,0,20,0">
+
+            <BoxView 
+               HeightRequest="2"
+               WidthRequest="64"
+               HorizontalOptions="Center"
+               Color="{DynamicResource TextColor}"
+               Opacity="0.25"
+               CornerRadius="1"
+               IsVisible="False"/>
+
+            <Label 
+                Text="Welcome!"
+                FontSize="34"
+                FontAttributes="Bold"
+                CharacterSpacing="0.5"
+                LineHeight="1.05"
+                HorizontalTextAlignment="Center"
+                TextColor="{DynamicResource TextColor}"/>
+
+            <Label Text="Rock your memories with Event Journal — add gigs, notes, photos and relive the moments."
+                FontSize="22"
+                LineHeight="1.2"
+                CharacterSpacing="0.2"
+                Opacity="0.85"
+                HorizontalTextAlignment="Center"
+                TextColor="{DynamicResource TextColor}"/>
+        </VerticalStackLayout>
+
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:BottomNavBar Grid.Row="3" />
     </Grid>
-    
 </ContentPage>
