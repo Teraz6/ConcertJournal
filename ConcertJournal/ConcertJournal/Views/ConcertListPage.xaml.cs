@@ -95,7 +95,7 @@ public partial class ConcertListPage : ContentPage
     //When clicked on Details button it will take you to Details page
     private async void OnDetailsClicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is Concert concert)
+        if (sender is ImageButton button && button.BindingContext is Concert concert)
         {
             await Navigation.PushAsync(new ConcertDetailsPage(concert));
         }

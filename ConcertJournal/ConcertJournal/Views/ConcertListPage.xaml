@@ -112,16 +112,16 @@
                                     <HorizontalStackLayout Grid.Column="1"
                                                            Spacing="10">
                                         <!--Details button-->
-                                        <Button Text="Details"
-                                                BackgroundColor="Transparent"
-                                                TextColor="{DynamicResource TextColor}"
-                                                FontSize="18"
-                                                FontAttributes="Bold"
-                                                Padding="10"
-                                                VerticalOptions="Center"
-                                                Clicked="OnDetailsClicked"
-                                                BindingContext="{Binding .}" 
-                                                BorderWidth="0"/>
+                                        <ImageButton Source="{DynamicResource DetailsIcon}"
+                                                     BackgroundColor="Transparent"
+                                                     WidthRequest="60"
+                                                     HeightRequest="60"
+                                                     Padding="10"
+                                                     VerticalOptions="Center"
+                                                     Clicked="OnDetailsClicked"
+                                                     BindingContext="{Binding .}" 
+                                                     BorderWidth="0"
+                                                     IsEnabled="True"/>
                                         
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
