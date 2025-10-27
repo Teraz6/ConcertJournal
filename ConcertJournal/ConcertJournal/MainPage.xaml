@@ -27,40 +27,54 @@
             <Border Grid.Row="1" 
                     x:Name="StatsPanel"
                     IsVisible="{Binding HasConcerts}"
-                    Margin="5" 
-                    Padding="12" 
-                    HeightRequest="100"
                     StrokeThickness="2"
-                    Stroke="{DynamicResource Primary}">
+                    Stroke="{DynamicResource Primary}"
+                    Padding="10"
+                    VerticalOptions="Center">
 
                 <Grid RowDefinitions="*,*"
-                      ColumnDefinitions="*,*,*"
-                      RowSpacing="8"
-                      ColumnSpacing="24"
-                      Margin="0,0,0,12"
-                      HorizontalOptions="Center">
-
-
-                    <Label Grid.Row="0" 
-                           Grid.Column="0"
-                           Text="Happened"/>
-                    <Label Grid.Row="1" 
-                        Grid.Column="0"
-                        Text="{Binding HappenedCount}"/>
+                      ColumnDefinitions="*,*,*">
 
                     <Label Grid.Row="0"
-                           Grid.Column="1"
-                           Text="Scheduled"/>
-                    <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding ScheduledCount}"/>
+                           Grid.ColumnSpan="3"
+                           Text="Statistics"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
 
-                    <Label Grid.Row="0"
-                           Grid.Column="2"
-                           Text="All"/>
-                    <Label Grid.Row="1" 
-                           Grid.Column="2"
-                            Text="{Binding TotalCount}"/>
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="0"
+                                         HorizontalOptions="Center"
+                                         Spacing="15">
+                        <Label Text="Ended"
+                               FontSize="24"/>
+                        <Label Text="{Binding HappenedCount}"
+                               HorizontalOptions="Center"
+                               FontSize="24"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="1"
+                                         Spacing="15"
+                                         HorizontalOptions="Center">
+                        <Label Text="Upcoming"
+                               FontSize="24"/>
+                        <Label Text="{Binding ScheduledCount}"
+                               HorizontalOptions="Center"
+                               FontSize="24"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="2"
+                                         Spacing="15"
+                                         HorizontalOptions="Center">
+                        <Label Text="Total"
+                               FontSize="24"/>
+                        <Label Text="{Binding TotalCount}"
+                               HorizontalOptions="Center"
+                               FontSize="24"/>
+                    </VerticalStackLayout>
+                    
 
                 </Grid>
             </Border>
