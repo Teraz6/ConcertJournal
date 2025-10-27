@@ -6,13 +6,15 @@
     <!-- Global Styles -->
     <Style TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
 
     <Style TargetType="Button">
         <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackground}" />
         <Setter Property="TextColor" Value="{DynamicResource ButtonTextColor}" />
         <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="{DynamicResource ButtonBorderColor}" />
         <Setter Property="Padding" Value="5" />
     </Style>
 
@@ -56,6 +58,11 @@
         <Setter Property="WidthRequest" Value="40"/>
         <Setter Property="HeightRequest" Value="40"/>
         <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <Style TargetType="Border">
+        <Setter Property="StrokeShape" Value="10"/>
+        <Setter Property="BackgroundColor" Value="Transparent" />
     </Style>
 
     <Style TargetType="Switch">

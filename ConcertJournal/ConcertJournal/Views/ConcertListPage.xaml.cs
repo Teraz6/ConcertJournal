@@ -8,6 +8,7 @@ public partial class ConcertListPage : ContentPage
 {
 
     private List<Concert> allConcerts = new();
+    private List<Concert> _selectedConcerts = new();
     private bool sortAscending = true;
     public ObservableCollection<Concert> Concerts { get; set; } = new();
 
@@ -23,6 +24,12 @@ public partial class ConcertListPage : ContentPage
         };
 
         EventBus.ConcertUpdated += async () =>
+        {
+            allConcerts = await App.Database.GetConcertsAsync();
+            ApplySearchAndSort(defaultSort: true);
+        };
+
+        ImportServices.ConcertsImported += async () =>
         {
             allConcerts = await App.Database.GetConcertsAsync();
             ApplySearchAndSort(defaultSort: true);
@@ -163,6 +170,41 @@ public partial class ConcertListPage : ContentPage
             await Navigation.PushAsync(new ConcertDetailsPage(selected));
             ((CollectionView)sender).SelectedItem = null;
         }
+    }
+
+    private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is CollectionView cv)
+        {
+            _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList();
+            DeleteSelectedButton.IsVisible = _selectedConcerts.Count > 0;
+        }
+    }
+
+    private async void OnDeleteSelectedClicked(object sender, EventArgs e)
+    {
+        if (_selectedConcerts.Count == 0)
+        {
+            await DisplayAlert("No selection", "Please select at least one concert.", "OK");
+            return;
+        }
+
+        bool confirm = await DisplayAlert(
+            "Delete",
+            $"Are you sure you want to delete {_selectedConcerts.Count} selected concerts?",
+            "Yes", "No");
+
+        if (!confirm)
+            return;
+
+        // Delete all selected concerts in parallel
+        var deleteTasks = _selectedConcerts.Select(concert => App.Database.DeleteConcertAsync(concert));
+        await Task.WhenAll(deleteTasks);
+
+        _selectedConcerts.Clear();
+        DeleteSelectedButton.IsVisible = false;
+
+        await LoadConcerts(); // refresh list
     }
 
 }

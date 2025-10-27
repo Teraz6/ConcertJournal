@@ -57,7 +57,9 @@
 
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="CustomShellMaui" Version="1.0.6" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.120" />
@@ -65,6 +67,12 @@
 		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.120" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="System.ObjectModel" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\Controls\TitleNavBar.xaml.cs">
+	    <DependentUpon>TitleNavBar.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,6 +94,9 @@
 	  <MauiXaml Update="Views\ConcertListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Controls\TitleNavBar.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Controls\BottomNavBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -95,6 +106,10 @@
 	  <MauiXaml Update="Views\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Splash\" />
 	</ItemGroup>
 
 </Project>

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.AddConcertPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
@@ -28,9 +29,11 @@
                                 Text="Create"
                                 FontSize="18"
                                 Padding="10"
+                                TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                 BackgroundColor="{DynamicResource ButtonGreen}"
                                 HorizontalOptions="End"
-                                Clicked="SaveButton_Clicked"/>
+                                Clicked="SaveButton_Clicked"
+                                BorderWidth="0"/>
                     </Grid>
 
                     <!--Event Title-->
@@ -38,9 +41,13 @@
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Entry x:Name="EventTitleEntry"
+                    
+                    <Border>
+                        <Entry x:Name="EventTitleEntry"
                            Placeholder="Event Title"
                            Text="{Binding EventTitle}"/>
+                    </Border>
+                    
 
                     <!--Performer name-->
                     <HorizontalStackLayout Spacing="20">
@@ -55,16 +62,23 @@
                                 Text="+Add"
                                 VerticalOptions="Center"
                                 BackgroundColor="Transparent"
+                                BorderWidth="0"
                                 TextColor="{DynamicResource ButtonGreen}"
                                 Margin="0,5,0,0"
                                 Padding="0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
                     </HorizontalStackLayout>
-                    <Entry Margin="0,0"
+                    
+                    <Border>
+                        <Entry Margin="0,0"
                            x:Name="PerformerEntry"
                            Placeholder="Performer"
-                           Text="{Binding Performer}"/>
+                           Text="{Binding Performer}"
+                           ReturnType="Default"
+                           Completed="AddNewPerformer"/>
+                    </Border>
+                    
                     <!--CollectionView to show added performers-->
                     <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
                         <CollectionView.ItemTemplate>
@@ -79,6 +93,7 @@
                                             FontSize="16"
                                             FontAttributes="Bold"
                                             BackgroundColor="Transparent"
+                                            BorderWidth="0"
                                             Clicked="RemovePerformer"
                                             BindingContext="{Binding .}"/>
                                 </StackLayout>
@@ -90,59 +105,94 @@
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Entry x:Name="VenueEntry"
+                    <Border>
+                        <Entry x:Name="VenueEntry"
                            Placeholder="Venue" 
                            Text="{Binding Venue}"/>
+                    </Border>
+                    
 
                     <!--Country & City-->
                     <Grid ColumnDefinitions="*,*"
-                          RowDefinitions="*,*">
+                          RowDefinitions="*,*,*,*">
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Text="Country" 
                                Margin="0,10,0,10"
                                FontSize="18"
                                FontAttributes="Bold"/>
-                        <Entry Grid.Row="1"
-                               Grid.Column="0"
-                               Margin="0,0,10,0"
+                        <Border Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,0,10,0">
+                            <Entry 
                                Placeholder="Country"
                                x:Name="CountryEntry"
                                Text="{Binding Country}"/>
+                        </Border>
+                        
                         <Label Grid.Row="0"
                                Grid.Column="1"
                                Text="City" 
                                Margin="0,10,0,10"
                                FontSize="18"
                                FontAttributes="Bold"/>
-                        <Entry Grid.Row="1"
-                               Grid.Column="1"
+                        <Border Grid.Row="1"
+                                Grid.Column="1">
+                            <Entry 
                                Placeholder="City"
                                x:Name="CityEntry"
                                Text="{Binding City}"/>
-                    </Grid>
+                        </Border>
+                        
+                        <!--Date-->
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Text="Date" 
+                               Margin="0,10,0,10"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <Border Grid.Row="3"
+                                Grid.Column="0"
+                                HorizontalOptions="Start">
+                            <DatePicker x:Name="DatePicker"/>
+                        </Border>
 
-                    <!--Date-->
-                    <Label Text="Date" 
-                           Margin="0,10,0,10"
-                           FontSize="18"
-                           FontAttributes="Bold"/>
-
-                    <DatePicker x:Name="DatePicker"
-                                HorizontalOptions="Start"/>
-
+                        <Label Grid.Row="2"
+                               Grid.Column="1"
+                               Margin="0,10,0,10"
+                               Text="Rate event"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <toolkit:RatingView Grid.Row="3"
+                                            Grid.Column="1"
+                                            x:Name="ConcertRating"
+                                            EmptyShapeColor="Transparent"
+			                                FillColor="{DynamicResource RatingFill}"
+			                                FillOption ="Shape"
+			                                IsReadOnly="False"
+			                                ShapePadding="0"
+			                                ShapeDiameter="30"
+			                                MaximumRating="5"
+			                                Shape="Star"
+			                                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+			                                ShapeBorderThickness="1"
+			                                Spacing="7"/>
+                    </Grid> 
+                    
                     <!--Notes-->
                     <Label Text="Notes" 
                            Margin="0,10,0,10"
                            FontSize="18"
                            FontAttributes="Bold"/>
-                    <Editor x:Name="NotesEditor"
+                    <Border>
+                        <Editor x:Name="NotesEditor"
                             AutoSize="TextChanges"
                             HeightRequest="150"
                             Placeholder="Add Notes"
                             PlaceholderColor="{DynamicResource MutedText}"
                             Text="{Binding Notes}"/>
-
+                    </Border>
+                    
                     <!--Media-->
                     <Label Text="Images/Videos"
                            Margin="0,10,0,10"
@@ -154,7 +204,7 @@
                             HorizontalOptions="Start"
                             Margin="0,0,0,10"
                             BackgroundColor="{DynamicResource ButtonBackground}"
-                            TextColor="{DynamicResource ButtonTextColor}" />
+                            TextColor="{DynamicResource ButtonTextColor}"/>
 
                     <!-- Image Preview -->
                     <CollectionView x:Name="MediaCollectionView"
@@ -193,6 +243,6 @@
 
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:BottomNavBar Grid.Row="1"/>
     </Grid>
 </ContentPage>

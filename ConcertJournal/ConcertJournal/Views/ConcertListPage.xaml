@@ -53,15 +53,18 @@
                             </Picker>
                         </Border>
                     </Grid>
+
                     
                 </VerticalStackLayout>
                 
-
                 <!--Event display-->
                 <CollectionView Grid.Row="1"
                                 x:Name="ConcertListView" 
                                 Margin="5"
-                                ItemsSource="{Binding Concerts}">
+                                ItemsSource="{Binding Concerts}"
+                                SelectionMode="Multiple"
+                                SelectionChanged="OnSelectionChanged"
+                                SelectionChangedCommand="{Binding SelectionChangedCommand}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <!--Use strokeThickness as margin-->
@@ -70,8 +73,19 @@
                                     StrokeThickness="10"
                                     StrokeShape="20"
                                     BackgroundColor="{DynamicResource CardBackground}">
-                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                                <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor"
+                                                            Value="{DynamicResource CardBackgroundSelected}" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
 
+                                <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
                                     <!-- Concert details -->
                                     <VerticalStackLayout Grid.Column="0">
                                         <Label Text="{Binding EventTitle}" 
@@ -90,12 +104,14 @@
 
                                         <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                                FontSize="12"
-                                               Margin="0,10,0,0"/>
+                                               Margin="0,10,0,0"
+                                               TextColor="{DynamicResource MutedText}"/>
                                     </VerticalStackLayout>
 
                                     <!--Button Layout-->
                                     <HorizontalStackLayout Grid.Column="1"
                                                            Spacing="10">
+                                        <!--Details button-->
                                         <Button Text="Details"
                                                 BackgroundColor="Transparent"
                                                 TextColor="{DynamicResource TextColor}"
@@ -104,26 +120,29 @@
                                                 Padding="10"
                                                 VerticalOptions="Center"
                                                 Clicked="OnDetailsClicked"
-                                                BindingContext="{Binding .}" />
+                                                BindingContext="{Binding .}" 
+                                                BorderWidth="0"/>
                                         
                                         <VerticalStackLayout VerticalOptions="Center" Spacing="20">
                                             <!--Update button-->
                                             <Button Text="Update"
-                                                    TextColor="{DynamicResource TextColor}"
+                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                                     BackgroundColor="{DynamicResource ButtonGreen}"
                                                     FontSize="18"
                                                     Padding="10"
                                                     Clicked="OnUpdateClicked"
-                                                    CommandParameter="{Binding .}" />
+                                                    CommandParameter="{Binding .}" 
+                                                    BorderWidth="0"/>
 
                                             <!-- Delete button -->
                                             <Button Text="Delete"
-                                                    TextColor="{DynamicResource TextColor}"
+                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                                     BackgroundColor="{DynamicResource ButtonRed}"
                                                     FontSize="18"
                                                     Padding="10"
                                                     Clicked="OnDeleteClicked"
-                                                    BindingContext="{Binding .}" />
+                                                    BindingContext="{Binding .}" 
+                                                    BorderWidth="0"/>
                                         </VerticalStackLayout>
                                     </HorizontalStackLayout>
                                     
@@ -132,8 +151,25 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                
+                
+                
             </Grid>
         </ScrollView>
+        
+        <!-- Delete selected events button -->
+        <Button x:Name="DeleteSelectedButton"
+                        Text="Delete selected events"
+                        TextColor="{DynamicResource ButtonUpdateDeleteText}"
+                        BackgroundColor="{DynamicResource ButtonRed}"
+                        FontSize="18"
+                        Padding="10"
+                        Margin="20"
+                        Clicked="OnDeleteSelectedClicked" 
+                        BorderWidth="0"
+                        IsVisible="False"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Start"/>
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
