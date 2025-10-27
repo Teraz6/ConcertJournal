@@ -197,8 +197,9 @@ public partial class ConcertListPage : ContentPage
         if (!confirm)
             return;
 
-        foreach (var concert in _selectedConcerts)
-            await App.Database.DeleteConcertAsync(concert);
+        // Delete all selected concerts in parallel
+        var deleteTasks = _selectedConcerts.Select(concert => App.Database.DeleteConcertAsync(concert));
+        await Task.WhenAll(deleteTasks);
 
         _selectedConcerts.Clear();
         DeleteSelectedButton.IsVisible = false;
