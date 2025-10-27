@@ -18,11 +18,14 @@ public partial class MainPage : ContentPage
         get => _hasConcerts;
         set
         {
-            _hasConcerts = value; OnPropertyChanged();
-            // show/hide empty-state texts and arrow when concert list is empty
-            OnPropertyChanged(nameof(ShowEmptyHints));
+            _hasConcerts = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(ShowEmptyHints));   // already there
+            OnPropertyChanged(nameof(ShowWelcomeHero));  // NEW
         }
     }
+
+    public bool ShowWelcomeHero => !IsAddingConcert;
 
     // Indicate that the AddConcert flow is active
     bool _isAddingConcert;
@@ -33,8 +36,8 @@ public partial class MainPage : ContentPage
         {
             _isAddingConcert = value;
             OnPropertyChanged();
-            // ShowEmptyHints depends on this too
-            OnPropertyChanged(nameof(ShowEmptyHints));
+            OnPropertyChanged(nameof(ShowEmptyHints));   // already there
+            OnPropertyChanged(nameof(ShowWelcomeHero));  // NEW
         }
     }
 
@@ -103,7 +106,7 @@ public partial class MainPage : ContentPage
     // ===== Stats helpers =====
     private void BuildStatusCounts(IList<Concert> concerts)
     {
-        HappenedCount  = ScheduledCount = 0;
+        HappenedCount = ScheduledCount = 0;
         TotalCount = concerts?.Count ?? 0;
         if (concerts == null || concerts.Count == 0) return;
 
@@ -122,7 +125,7 @@ public partial class MainPage : ContentPage
         await Navigation.PushAsync(new SettingsPage(), false);
     }
 
-    
+
     private static string GetStatus(Concert c)
     {
         if (c == null || !c.Date.HasValue)
@@ -185,5 +188,7 @@ public partial class MainPage : ContentPage
             await Navigation.PushAsync(new ConcertDetailsPage(c));
         }
     }
+
+    
 }
 
