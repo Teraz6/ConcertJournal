@@ -16,7 +16,6 @@
                FontAttributes="Bold"
                VerticalOptions="Start" 
                HorizontalOptions="Center"
-               TextColor="{DynamicResource TextColor}"
                Margin="0,10"/>
         </VerticalStackLayout>
 
@@ -40,8 +39,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="Happened" Style="{DynamicResource StatTitle}"/>
-                    <Label Text="{Binding HappenedCount}" Style="{DynamicResource StatValue}"/>
+                    <Label Text="Happened"/>
+                    <Label Text="{Binding HappenedCount}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout
@@ -50,8 +49,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="Scheduled" Style="{DynamicResource StatTitle}"/>
-                    <Label Text="{Binding ScheduledCount}" Style="{DynamicResource StatValue}"/>
+                    <Label Text="Scheduled"/>
+                    <Label Text="{Binding ScheduledCount}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout 
@@ -60,8 +59,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="All" Style="{DynamicResource StatTitle}"/>
-                    <Label Text="{Binding TotalCount}" Style="{DynamicResource StatValue}"/>
+                    <Label Text="All"/>
+                    <Label Text="{Binding TotalCount}"/>
                 </VerticalStackLayout>
 
             </Grid>
