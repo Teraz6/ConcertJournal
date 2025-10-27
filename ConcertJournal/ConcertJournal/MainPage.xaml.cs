@@ -122,18 +122,18 @@ public partial class MainPage : ContentPage
         await Navigation.PushAsync(new SettingsPage(), false);
     }
 
-    // No Status property in your model, so use date-only fallback:
-    // past/ today => "happened"; future => "" (ignored in counts).
-    // Extend here if you add flags like IsCancelled/Attended later.
+    
     private static string GetStatus(Concert c)
     {
-        if (c == null) return "";
+        if (c == null || !c.Date.HasValue)
+            return "";
 
-        // If your model uses DateTime? keep the null-safe check like this:
-        if (c.Date is DateTime d && d.Date <= DateTime.Today)
-            return "happened";
+        var d = c.Date.Value.Date;
 
-        return "";
+        if (d <= DateTime.Today)
+            return "happened";   // past or today
+        else
+            return "scheduled";  // future
     }
 
     // Build the three “Top” lists used by your XAML
