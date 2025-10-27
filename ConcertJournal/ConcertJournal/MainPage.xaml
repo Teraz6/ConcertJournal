@@ -5,39 +5,7 @@
              xmlns:models="clr-namespace:ConcertJournal.Models"
              BackgroundColor="{DynamicResource Background}">
 
-    <!-- styles for the stats panel (kept lightweight) -->
-    <ContentPage.Resources>
-        <Style x:Key="StatTitle" 
-               TargetType="Label">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="FontAutoScalingEnabled" Value="False"/>
-            <Setter Property="Margin" Value="0,2,0,0"/>
-        </Style>
-        <Style x:Key="StatValue" 
-               TargetType="Label">
-            <Setter Property="FontSize" Value="32"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="FontAutoScalingEnabled" Value="False"/>
-            <Setter Property="Margin" Value="0,2,0,0"/>
-        </Style>
-    </ContentPage.Resources>
-
-
-    <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <!-- 0: title -->
-            <RowDefinition Height="Auto"/>
-            <!-- 1: stats -->
-            <RowDefinition Height="*"/>
-            <!-- 2: welcome -->
-            <RowDefinition Height="Auto"/>
-            <!-- 3: bottom nav -->
-        </Grid.RowDefinitions>
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
         <!--MainContent-->
         <VerticalStackLayout>
@@ -72,8 +40,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="Happened" Style="{StaticResource StatTitle}"/>
-                    <Label Text="{Binding HappenedCount}" Style="{StaticResource StatValue}"/>
+                    <Label Text="Happened" Style="{DynamicResource StatTitle}"/>
+                    <Label Text="{Binding HappenedCount}" Style="{DynamicResource StatValue}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout
@@ -82,8 +50,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="Scheduled" Style="{StaticResource StatTitle}"/>
-                    <Label Text="{Binding ScheduledCount}" Style="{StaticResource StatValue}"/>
+                    <Label Text="Scheduled" Style="{DynamicResource StatTitle}"/>
+                    <Label Text="{Binding ScheduledCount}" Style="{DynamicResource StatValue}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout 
@@ -92,8 +60,8 @@
                     Spacing="0"
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
-                    <Label Text="All" Style="{StaticResource StatTitle}"/>
-                    <Label Text="{Binding TotalCount}" Style="{StaticResource StatValue}"/>
+                    <Label Text="All" Style="{DynamicResource StatTitle}"/>
+                    <Label Text="{Binding TotalCount}" Style="{DynamicResource StatValue}"/>
                 </VerticalStackLayout>
 
             </Grid>
