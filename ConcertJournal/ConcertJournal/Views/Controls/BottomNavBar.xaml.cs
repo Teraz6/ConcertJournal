@@ -8,6 +8,7 @@ public partial class BottomNavBar : ContentView
     public ICommand NavigateAddCommand { get; }
     public ICommand NavigateListCommand { get; }
     public ICommand NavigateSettingsCommand { get; }
+    public ICommand NavigateStatisticsCommand { get; }
 
     public BottomNavBar()
     {
@@ -21,17 +22,23 @@ public partial class BottomNavBar : ContentView
         await Shell.Current.GoToAsync($"//MainPage");
     }
 
+    private async void OnListClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync($"//ConcertListPage");
+    }
+
     private async void OnAddClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync($"//AddConcertPage");
     }
 
-    private async void OnListClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync($"//ConcertListPage");
-    }
     private async void OnSettingsClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync($"//SettingsPage");
+    }
+
+    private async void OnStatisticsClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync($"//StatisticsPage");
     }
 }
