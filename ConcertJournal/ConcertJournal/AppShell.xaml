@@ -26,4 +26,8 @@
     <ShellContent
         Route="ConcertDetailsPage"
         ContentTemplate="{DataTemplate views:ConcertDetailsPage}" />
+    
+    <ShellContent
+        Route="StatisticsPage"
+        ContentTemplate="{DataTemplate views:StatisticsPage}" />
 </Shell>

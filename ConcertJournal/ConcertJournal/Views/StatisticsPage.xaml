@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConcertJournal.Views.StatisticsPage"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             BackgroundColor="{DynamicResource Background}">
+
+    <Grid RowDefinitions="*,Auto">
+        <!--Main content-->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="Statistics Page is under construction"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center"/>
+
+                <Image Source="maintenance.gif"
+                       IsAnimationPlaying="True"
+                       HorizontalOptions="Center"
+                       MaximumWidthRequest="400"
+                       Aspect="AspectFit"
+                       Margin="10"/>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="1" />
+    </Grid>
+</ContentPage>
