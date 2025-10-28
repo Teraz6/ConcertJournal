@@ -10,30 +10,17 @@ public partial class ConcertListPage : ContentPage
     private List<Concert> allConcerts = new();
     private List<Concert> _selectedConcerts = new();
     private bool sortAscending = true;
+    private const string SortPreferenceKey = "SortPickerSelection";
     public ObservableCollection<Concert> Concerts { get; set; } = new();
 
     public ConcertListPage()
 	{
 		InitializeComponent();
-        LoadConcerts();
+        LoadConcertsAsync();
 
-        EventBus.ConcertCreated += async () =>
-        {
-            allConcerts = await App.Database.GetConcertsAsync();
-            ApplySearchAndSort(defaultSort: true);
-        };
-
-        EventBus.ConcertUpdated += async () =>
-        {
-            allConcerts = await App.Database.GetConcertsAsync();
-            ApplySearchAndSort(defaultSort: true);
-        };
-
-        ImportServices.ConcertsImported += async () =>
-        {
-            allConcerts = await App.Database.GetConcertsAsync();
-            ApplySearchAndSort(defaultSort: true);
-        };
+        EventBus.ConcertCreated -= async () => await LoadConcertsAsync();
+        EventBus.ConcertUpdated -= async () => await LoadConcertsAsync();
+        ImportServices.ConcertsImported -= async () => await LoadConcertsAsync();
     }
 
     protected override async void OnAppearing()
@@ -54,15 +41,24 @@ public partial class ConcertListPage : ContentPage
             await DisplayAlert("Error", $"Failed to load concerts: {ex.Message}", "OK");
         }
 
-        SortPicker.SelectedIndex = 0;
+        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
+
+        if (SortPicker.Items.Contains(savedSort))
+        {
+            SortPicker.SelectedItem = savedSort;
+        }
+        else
+        {
+            SortPicker.SelectedItem = "Default";
+        }
+        await ApplySortFromPreferenceAsync(savedSort);
     }
 
-    private async Task LoadConcerts()
+    private async Task LoadConcertsAsync()
     {
         allConcerts = await App.Database.GetConcertsAsync();
-
-        // Default = newest created first
-        ApplySearchAndSort(defaultSort: true);
+        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
+        await ApplySortFromPreferenceAsync(savedSort);
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -87,7 +83,7 @@ public partial class ConcertListPage : ContentPage
             if (confirm)
             {
                 await App.Database.DeleteConcertAsync(concert);
-                await LoadConcerts(); // Refresh the list
+                await LoadConcertsAsync(); // Refresh the list
             }
         }
     }
@@ -101,27 +97,18 @@ public partial class ConcertListPage : ContentPage
         }
     }
 
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private async Task ApplySortFromPreferenceAsync(string selected)
     {
-        ApplySearchAndSort(e.NewTextValue);
-    }
-
-    private void OnSortPickerChanged(object sender, EventArgs e)
-    {
-        if (sender is not Picker picker || picker.SelectedItem is null)
-            return;
-
-        string selected = picker.SelectedItem.ToString();
         string searchText = SearchBar?.Text ?? string.Empty;
 
         switch (selected)
         {
-            case "Oldest By Year":
+            case "Oldest By Date":
                 sortAscending = true;
                 ApplySearchAndSort(searchText, sortByDate: true, ascending: true);
                 break;
 
-            case "Newest By Year":
+            case "Newest By Date":
                 sortAscending = false;
                 ApplySearchAndSort(searchText, sortByDate: true, ascending: false);
                 break;
@@ -131,13 +118,14 @@ public partial class ConcertListPage : ContentPage
                 ApplySearchAndSort(searchText, defaultSort: true);
                 break;
         }
+        await Task.CompletedTask;
     }
 
     private void ApplySearchAndSort(string searchText = "", bool sortByDate = true, bool ascending = true, bool defaultSort = false)
     {
         var filtered = allConcerts;
 
-        // Filter by search text
+        // Filter
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             filtered = filtered
@@ -146,21 +134,36 @@ public partial class ConcertListPage : ContentPage
                 .ToList();
         }
 
-        // Sorting
+        // Sort
         if (defaultSort)
-        {
-            // Default = newest created first
             filtered = filtered.OrderByDescending(c => c.Id).ToList();
-        }
         else if (sortByDate)
-        {
             filtered = ascending
                 ? filtered.OrderBy(c => c.Date).ToList()
                 : filtered.OrderByDescending(c => c.Date).ToList();
-        }
 
         // Update UI
         ConcertListView.ItemsSource = filtered;
+    }
+
+    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    {
+        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
+        _ = ApplySortFromPreferenceAsync(savedSort);
+    }
+
+    private void OnSortPickerChanged(object sender, EventArgs e)
+    {
+        if (sender is not Picker picker || picker.SelectedItem is null)
+            return;
+
+        string selected = picker.SelectedItem.ToString();
+
+        // Save preference
+        Preferences.Set(SortPreferenceKey, selected);
+
+        // Apply sorting immediately
+        _ = ApplySortFromPreferenceAsync(selected);
     }
 
     private async void OnConcertSelected(object sender, SelectionChangedEventArgs e)
@@ -208,7 +211,7 @@ public partial class ConcertListPage : ContentPage
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
 
-        await LoadConcerts(); // refresh list
+        await LoadConcertsAsync(); // refresh list
     }
 
     private void OnUnselectAllClicked(object sender, EventArgs e)
