@@ -23,6 +23,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Italic.ttf", "OpenSansItalic");
             });
 
+        builder.ConfigureMauiHandlers(handlers => { });
 
 #if DEBUG
         builder.Logging.AddDebug();

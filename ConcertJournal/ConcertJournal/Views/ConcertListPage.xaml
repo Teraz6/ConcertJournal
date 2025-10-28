@@ -47,8 +47,8 @@
                                     SelectedIndex="0">
                                 <Picker.Items>
                                     <x:String>Default</x:String>
-                                    <x:String>Oldest By Year</x:String>
-                                    <x:String>Newest By Year</x:String>
+                                    <x:String>Oldest By Date</x:String>
+                                    <x:String>Newest By Date</x:String>
                                 </Picker.Items>
                             </Picker>
                         </Border>

@@ -7,26 +7,27 @@
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
-        <Grid RowDefinitions="*,*"
-              Padding="10">
-            <!--MainContent-->
-            <VerticalStackLayout Grid.Row="0"
-                                 Spacing="20"
-                                 Margin="0,100,0,0">
-                <Image Source="{DynamicResource Logo}"
-                       MaximumHeightRequest="400"
-                       MaximumWidthRequest="400"
-                       HorizontalOptions="Center"
-                       Margin="10"/>
-                <Label Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
-                       HorizontalOptions="Center"
-                       FontFamily="OpenSansItalic"
-                       FontAttributes="Italic"
-                       FontSize="24"
-                       HorizontalTextAlignment="Center"/>
-            </VerticalStackLayout>
-        </Grid>
-        
+        <ScrollView Grid.Row="0">
+            <Grid RowDefinitions="*,*"
+                  Padding="10">
+                <!--MainContent-->
+                <VerticalStackLayout Grid.Row="0"
+                                     Spacing="20"
+                                     Margin="0,100,0,0">
+                    <Image Source="{DynamicResource Logo}"
+                           MaximumHeightRequest="400"
+                           MaximumWidthRequest="400"
+                           HorizontalOptions="Center"
+                           Margin="10"/>
+                    <Label Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
+                           HorizontalOptions="Center"
+                           FontFamily="OpenSansItalic"
+                           FontAttributes="Italic"
+                           FontSize="24"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
     </Grid>
