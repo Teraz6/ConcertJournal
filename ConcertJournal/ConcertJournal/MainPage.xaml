@@ -19,6 +19,7 @@
                        Margin="10"/>
                 <Label Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
                        HorizontalOptions="Center"
+                       FontFamily="OpenSansItalic"
                        FontAttributes="Italic"
                        FontSize="24"
                        HorizontalTextAlignment="Center"/>
