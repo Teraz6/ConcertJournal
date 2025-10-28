@@ -5,6 +5,9 @@ namespace ConcertJournal.Views;
 
 public partial class SettingsPage : ContentPage
 {
+
+    private const string DefaultCountryKey = "DefaultCountry";
+    private const string DefaultCityKey = "DefaultCity";
     public SettingsPage()
     {
         InitializeComponent();
@@ -13,6 +16,24 @@ public partial class SettingsPage : ContentPage
         bool isDevil = Preferences.Get("AppTheme", "Angel") == "Devil";
         ThemeSwitch.IsToggled = isDevil;
         ApplyTheme(isDevil);
+
+        string savedCountry = Preferences.Get(DefaultCountryKey, string.Empty);
+        CountryEntry.Text = savedCountry;
+
+        string savedCity = Preferences.Get(DefaultCityKey, string.Empty);
+        CityEntry.Text = savedCity;
+    }
+
+    private void OnSaveClicked(object sender, EventArgs e)
+    {
+        string country = CountryEntry.Text?.Trim() ?? string.Empty;
+        string city = CityEntry.Text?.Trim() ?? string.Empty;
+
+        // Save to preferences
+        Preferences.Set(DefaultCountryKey, country);
+        Preferences.Set(DefaultCityKey, city);
+
+        DisplayAlert("Values set", $"Country: {country}\nCity: {city}", "OK");
     }
 
     private void OnThemeToggled(object sender, ToggledEventArgs e)
@@ -41,50 +62,10 @@ public partial class SettingsPage : ContentPage
             await DisplayAlert("No Data", "You have no concerts to export.", "OK");
             return;
         }
-        //Uncomment below to add csv option 
-
-        //bool isExcel = await DisplayAlert("Export Format", "Choose export format:", "Excel (.xlsx)", "CSV (.csv)");
-
-        //if (isExcel)
-            await ExportServices.ExportConcertsToExcelAsync(concerts, this);
-        //else
-        //    await ExportServices.ExportConcertsToCsvAsync(concerts, this);
+        
+        await ExportServices.ExportConcertsToExcelAsync(concerts, this);
     }
 
-    //Database Export
-//    private async void OnExportDatabaseClicked(object sender, EventArgs e)
-//    {
-//        try
-//        {
-//            var dbPath = DatabaseHelper.GetDatabasePath();
-
-//            if (!File.Exists(dbPath))
-//            {
-//                await DisplayAlert("Error", "No database file found to export.", "OK");
-//                return;
-//            }
-
-//            // Let user choose where to save
-//            var fileName = $"ConcertJournalBackup_{DateTime.Now:yyyyMMdd_HHmm}.db3";
-//            var destPath = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
-
-//#if ANDROID
-//            // Android: copy to Downloads folder
-//            var downloads = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads)?.AbsolutePath;
-//            if (downloads != null)
-//            {
-//                destPath = Path.Combine(downloads, fileName);
-//            }
-//#endif
-
-//            File.Copy(dbPath, destPath, overwrite: true);
-//            await DisplayAlert("Success", $"Database exported to:\n{destPath}", "OK");
-//        }
-//        catch (Exception ex)
-//        {
-//            await DisplayAlert("Error", $"Failed to export database: {ex.Message}", "OK");
-//        }
-//    }
 
     //Database Import
     private async void OnImportFromExcelClicked(object sender, EventArgs e)
@@ -117,43 +98,5 @@ public partial class SettingsPage : ContentPage
         }
 
     }
-
-    //private async void OnImportDatabaseClicked(object sender, EventArgs e)
-    //{
-    //    try
-    //    {
-    //        // Pick a .db3 file
-    //        var result = await FilePicker.PickAsync(new PickOptions
-    //        {
-    //            PickerTitle = "Select a Concert Journal database file",
-    //            FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-    //        {
-    //            { DevicePlatform.Android, new[] { ".db3" } },
-    //            { DevicePlatform.WinUI, new[] { ".db3" } },
-    //            { DevicePlatform.iOS, new[] { ".db3" } },
-    //        })
-    //        });
-
-    //        if (result == null)
-    //            return; // user canceled
-
-    //        // Destination path (your app's database location)
-    //        var dbPath = DatabaseHelper.GetDatabasePath();
-
-    //        // Copy the picked file to your app's database path
-    //        using var stream = await result.OpenReadAsync(); // works for cloud files
-    //        using var destStream = File.Create(dbPath);
-    //        await stream.CopyToAsync(destStream);
-
-    //        await DisplayAlert("Success", "Database imported successfully! Restart the app to see changes.", "OK");
-
-    //        // Optional: reload data immediately
-    //        EventBus.OnConcertCreated();
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        await DisplayAlert("Error", $"Failed to import database: {ex.Message}", "OK");
-    //    }
-    //}
 
 }
