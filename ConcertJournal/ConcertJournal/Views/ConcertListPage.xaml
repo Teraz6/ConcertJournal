@@ -65,13 +65,17 @@
                                 SelectionMode="Multiple"
                                 SelectionChanged="OnSelectionChanged"
                                 SelectionChangedCommand="{Binding SelectionChangedCommand}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                                           ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <!--Use strokeThickness as margin-->
                             <Border Padding="10"
-                                    Stroke="Transparent"
-                                    StrokeThickness="10"
-                                    StrokeShape="20"
+                                    Stroke="{DynamicResource CardBorder}"
+                                    StrokeThickness="1"
+                                    StrokeShape="RoundRectangle 12"
                                     BackgroundColor="{DynamicResource CardBackground}">
                                 <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="CommonStates">
@@ -173,9 +177,9 @@
             
             <Button x:Name="UnselectAllButton"
                         Text="Unselect all"
-                        TextColor="{DynamicResource ButtonUpdateDeleteText}"
-                        BackgroundColor="{DynamicResource ButtonGreen}"
-                        BorderColor="{DynamicResource TextColor}"
+                        TextColor="{DynamicResource ButtonTextColor}"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        BorderColor="{DynamicResource ButtonBorderColor}"
                         BorderWidth="2"
                         FontSize="18"
                         Padding="10"

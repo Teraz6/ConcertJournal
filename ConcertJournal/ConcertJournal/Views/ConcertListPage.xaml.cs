@@ -206,6 +206,7 @@ public partial class ConcertListPage : ContentPage
 
         _selectedConcerts.Clear();
         DeleteSelectedButton.IsVisible = false;
+        UnselectAllButton.IsVisible = false;
 
         await LoadConcerts(); // refresh list
     }

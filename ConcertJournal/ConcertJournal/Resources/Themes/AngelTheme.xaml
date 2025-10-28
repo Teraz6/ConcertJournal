@@ -21,8 +21,10 @@
     <!-- Backgrounds -->
     <Color x:Key="Background">#FFFFFF</Color>
     <Color x:Key="Surface">#F5F5F5</Color>
+    <Color x:Key="SurfaceDark">#D9D9D9</Color>
     <Color x:Key="Overlay">#E3F2FD</Color>
     <Color x:Key="CardBackground">#E0FFFF</Color>
+    <Color x:Key="CardBorder">#212121</Color>
     <Color x:Key="CardBackgroundSelected">#87F1FF</Color>
 
     <!--Button-->
@@ -66,8 +68,10 @@
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource Background}" />
     <SolidColorBrush x:Key="SurfaceBrush" Color="{DynamicResource Surface}" />
+    <SolidColorBrush x:Key="SurfaceDarkBrush" Color="{DynamicResource SurfaceDark}" />
     <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource Overlay}" />
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="{DynamicResource CardBackground}" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{DynamicResource CardBorder}" />
     <SolidColorBrush x:Key="CardBackgroundSelectedBrush" Color="{DynamicResource CardBackgroundSelected}" />
 
     <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{DynamicResource ButtonBackground}" />
