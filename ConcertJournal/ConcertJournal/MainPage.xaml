@@ -18,53 +18,16 @@
                        MaximumWidthRequest="400"
                        HorizontalOptions="Center"
                        Margin="10"/>
-                <Label Text="Keep track of every gig, festival and performances you've seen" 
+                <Label Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
                        HorizontalOptions="Center"
+                       FontFamily="OpenSansItalic"
+                       FontAttributes="Italic"
                        FontSize="24"
-                       HorizontalTextAlignment="Center"/> 
+                       HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
-
-            <!-- STATS PANEL -->
-            <Border Grid.Row="1" 
-                   x:Name="StatsPanel"
-                   IsVisible="{Binding HasConcerts}"
-                   Margin="5" 
-                   Padding="12" 
-                   HeightRequest="100">
-
-                <Grid RowDefinitions="*,*"
-                      ColumnDefinitions="*,*,*"
-                      RowSpacing="8"
-                      ColumnSpacing="24"
-                      Margin="0,0,0,12"
-                      HorizontalOptions="Center">
-
-
-                    <Label Grid.Row="0" 
-                           Grid.Column="0"
-                           Text="Happened"/>
-                    <Label Grid.Row="1" 
-                        Grid.Column="0"
-                        Text="{Binding HappenedCount}"/>
-
-                    <Label Grid.Row="0"
-                           Grid.Column="1"
-                           Text="Scheduled"/>
-                    <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding ScheduledCount}"/>
-
-                    <Label Grid.Row="0"
-                           Grid.Column="2"
-                           Text="All"/>
-                    <Label Grid.Row="1" 
-                           Grid.Column="2"
-                            Text="{Binding TotalCount}"/>
-
-                </Grid>
-            </Border>
         </Grid>
+        
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="3" />
+        <controls:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
