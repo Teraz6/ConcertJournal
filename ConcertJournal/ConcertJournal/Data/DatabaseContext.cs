@@ -32,5 +32,23 @@ namespace ConcertJournal.Data
         {
             return _database.DeleteAsync(concert);
         }
+
+        public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take)
+        {
+            try
+            {
+                // Always include OrderBy before Skip/Take
+                return await _database.Table<Concert>()
+                                      .OrderByDescending(c => c.Id) // or whatever sort order you use
+                                      .Skip(skip)
+                                      .Take(take)
+                                      .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in GetConcertsPagedAsync: {ex.Message}");
+                return new List<Concert>();
+            }
+        }
     }
 }

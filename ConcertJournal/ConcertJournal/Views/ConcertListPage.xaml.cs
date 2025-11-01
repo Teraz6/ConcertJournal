@@ -1,6 +1,7 @@
-using ConcertJournal.Models;
+﻿using ConcertJournal.Models;
 using ConcertJournal.Services;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ConcertJournal.Views;
 
@@ -9,32 +10,41 @@ public partial class ConcertListPage : ContentPage
 
     private List<Concert> allConcerts = new();
     private List<Concert> _selectedConcerts = new();
+    
+    public ObservableCollection<Concert> Concerts { get; set; } = new(); // Items currently displayed
+    private List<Concert> allConcertsLoaded = new();  // raw paged items from DB
+
+    //Sorting
     private bool sortAscending = true;
     private const string SortPreferenceKey = "SortPickerSelection";
-    public ObservableCollection<Concert> Concerts { get; set; } = new();
+
+    //For optimizing loading
+    private const int PageSize = 10;
+    private int _currentPage = 0;
+    private bool _isLoadingMore = false;
+    private bool _hasMoreItems = true;
 
     public ConcertListPage()
 	{
 		InitializeComponent();
-        LoadConcertsAsync();
 
-        EventBus.ConcertCreated -= async () => await LoadConcertsAsync();
-        EventBus.ConcertUpdated -= async () => await LoadConcertsAsync();
-        ImportServices.ConcertsImported -= async () => await LoadConcertsAsync();
+
+        EventBus.ConcertCreated += async () => await RefreshAllAsync();
+        EventBus.ConcertUpdated += async () => await RefreshAllAsync();
+        ImportServices.ConcertsImported += async () => await RefreshAllAsync();
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        BindingContext = this;
 
         try
         {
-            // Load data from your SQLite database
-            allConcerts = await App.Database.GetConcertsAsync();
-
+            _currentPage = 0;
+            _hasMoreItems = true;
             Concerts.Clear();
-            foreach (var concert in allConcerts)
-                Concerts.Add(concert);
+            await LoadMoreConcertsAsync();
         }
         catch (Exception ex)
         {
@@ -54,11 +64,67 @@ public partial class ConcertListPage : ContentPage
         await ApplySortFromPreferenceAsync(savedSort);
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        EventBus.ConcertCreated -= async () => await RefreshAllAsync();
+        EventBus.ConcertUpdated -= async () => await RefreshAllAsync();
+        ImportServices.ConcertsImported -= async () => await RefreshAllAsync();
+    }   
+
+    private async Task RefreshAllAsync()
+    {
+        _currentPage = 0;
+        _hasMoreItems = true;
+        Concerts.Clear();
+        await LoadMoreConcertsAsync();
+    }
+
+    //Not used. Loads entire list and is bad for performance
     private async Task LoadConcertsAsync()
     {
         allConcerts = await App.Database.GetConcertsAsync();
         string savedSort = Preferences.Get(SortPreferenceKey, "Default");
         await ApplySortFromPreferenceAsync(savedSort);
+    }
+
+    private async Task LoadMoreConcertsAsync()
+    {
+        if (_isLoadingMore || !_hasMoreItems) return;
+        _isLoadingMore = true;
+
+        try
+        {
+            int skip = _currentPage * PageSize;
+            var newConcerts = await App.Database.GetConcertsPagedAsync(skip, PageSize);
+            _currentPage++;
+
+            if (newConcerts.Count == 0)
+            {
+                _hasMoreItems = false;
+                return;
+            }
+
+            allConcertsLoaded.AddRange(newConcerts);
+
+            // Apply current filter/sort
+            ApplySearchAndSort(SearchBar?.Text ?? string.Empty);
+
+            if (newConcerts.Count < PageSize)
+                _hasMoreItems = false;
+        }
+        finally
+        {
+            _isLoadingMore = false;
+        }
+
+    }
+
+    private async void OnRemainingItemsThresholdReached(object sender, EventArgs e)
+    {
+        if (_isLoadingMore) return;
+        await LoadMoreConcertsAsync();
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
@@ -83,7 +149,7 @@ public partial class ConcertListPage : ContentPage
             if (confirm)
             {
                 await App.Database.DeleteConcertAsync(concert);
-                await LoadConcertsAsync(); // Refresh the list
+                await RefreshAllAsync(); // Refresh the list
             }
         }
     }
@@ -121,11 +187,11 @@ public partial class ConcertListPage : ContentPage
         await Task.CompletedTask;
     }
 
+    // Applies search filter and sorting to the allConcerts list and updates the UI. ToDo: Add small delay for better performance
     private void ApplySearchAndSort(string searchText = "", bool sortByDate = true, bool ascending = true, bool defaultSort = false)
     {
-        var filtered = allConcerts;
+        var filtered = allConcertsLoaded;
 
-        // Filter
         if (!string.IsNullOrWhiteSpace(searchText))
         {
             filtered = filtered
@@ -134,7 +200,6 @@ public partial class ConcertListPage : ContentPage
                 .ToList();
         }
 
-        // Sort
         if (defaultSort)
             filtered = filtered.OrderByDescending(c => c.Id).ToList();
         else if (sortByDate)
@@ -142,8 +207,9 @@ public partial class ConcertListPage : ContentPage
                 ? filtered.OrderBy(c => c.Date).ToList()
                 : filtered.OrderByDescending(c => c.Date).ToList();
 
-        // Update UI
-        ConcertListView.ItemsSource = filtered;
+        Concerts.Clear();
+        foreach (var c in filtered)
+            Concerts.Add(c);
     }
 
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -211,7 +277,7 @@ public partial class ConcertListPage : ContentPage
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
 
-        await LoadConcertsAsync(); // refresh list
+        await RefreshAllAsync(); // refresh list
     }
 
     private void OnUnselectAllClicked(object sender, EventArgs e)
