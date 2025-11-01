@@ -33,22 +33,30 @@ namespace ConcertJournal.Data
             return _database.DeleteAsync(concert);
         }
 
-        public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take)
+        public Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true)
         {
-            try
+            AsyncTableQuery<Concert> query = _database.Table<Concert>();
+
+            // Sorting
+            switch (sortBy)
             {
-                // Always include OrderBy before Skip/Take
-                return await _database.Table<Concert>()
-                                      .OrderByDescending(c => c.Id) // or whatever sort order you use
-                                      .Skip(skip)
-                                      .Take(take)
-                                      .ToListAsync();
+                case "NewestByDate":
+                    query = ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date);
+                    break;
+
+                case "OldestByDate":
+                    query = ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date);
+                    break;
+
+                default:
+                    query = query.OrderByDescending(c => c.Id); // Default: newest inserted first
+                    break;
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error in GetConcertsPagedAsync: {ex.Message}");
-                return new List<Concert>();
-            }
+
+            // Apply paging
+            query = query.Skip(skip).Take(take);
+
+            return query.ToListAsync();
         }
     }
 }

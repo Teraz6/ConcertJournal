@@ -97,7 +97,23 @@ public partial class ConcertListPage : ContentPage
         try
         {
             int skip = _currentPage * PageSize;
-            var newConcerts = await App.Database.GetConcertsPagedAsync(skip, PageSize);
+
+            // Determine current sort
+            string sortBy = "Default";
+            bool ascending = true;
+
+            if (SortPicker.SelectedItem?.ToString() == "Oldest By Date")
+            {
+                sortBy = "OldestByDate";
+                ascending = true;
+            }
+            else if (SortPicker.SelectedItem?.ToString() == "Newest By Date")
+            {
+                sortBy = "NewestByDate";
+                ascending = false;
+            }
+
+            var newConcerts = await App.Database.GetConcertsPagedAsync(skip, PageSize, sortBy, ascending);
             _currentPage++;
 
             if (newConcerts.Count == 0)
@@ -106,10 +122,8 @@ public partial class ConcertListPage : ContentPage
                 return;
             }
 
-            allConcertsLoaded.AddRange(newConcerts);
-
-            // Apply current filter/sort
-            ApplySearchAndSort(SearchBar?.Text ?? string.Empty);
+            foreach (var c in newConcerts)
+                Concerts.Add(c);
 
             if (newConcerts.Count < PageSize)
                 _hasMoreItems = false;
@@ -118,7 +132,6 @@ public partial class ConcertListPage : ContentPage
         {
             _isLoadingMore = false;
         }
-
     }
 
     private async void OnRemainingItemsThresholdReached(object sender, EventArgs e)
@@ -165,26 +178,10 @@ public partial class ConcertListPage : ContentPage
 
     private async Task ApplySortFromPreferenceAsync(string selected)
     {
-        string searchText = SearchBar?.Text ?? string.Empty;
-
-        switch (selected)
-        {
-            case "Oldest By Date":
-                sortAscending = true;
-                ApplySearchAndSort(searchText, sortByDate: true, ascending: true);
-                break;
-
-            case "Newest By Date":
-                sortAscending = false;
-                ApplySearchAndSort(searchText, sortByDate: true, ascending: false);
-                break;
-
-            case "Default":
-            default:
-                ApplySearchAndSort(searchText, defaultSort: true);
-                break;
-        }
-        await Task.CompletedTask;
+        _currentPage = 0;
+        _hasMoreItems = true;
+        Concerts.Clear();
+        await LoadMoreConcertsAsync();
     }
 
     // Applies search filter and sorting to the allConcerts list and updates the UI. ToDo: Add small delay for better performance
@@ -224,11 +221,9 @@ public partial class ConcertListPage : ContentPage
             return;
 
         string selected = picker.SelectedItem.ToString();
-
-        // Save preference
         Preferences.Set(SortPreferenceKey, selected);
 
-        // Apply sorting immediately
+        // Refresh with new sort
         _ = ApplySortFromPreferenceAsync(selected);
     }
 
