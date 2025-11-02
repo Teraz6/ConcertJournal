@@ -142,7 +142,7 @@ public partial class ConcertListPage : ContentPage
 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.CommandParameter is Concert selectedConcert)
+        if (sender is ImageButton button && button.CommandParameter is Concert selectedConcert)
         {
             // Navigate to AddConcertPage with the existing concert
             await Navigation.PushAsync(new AddConcertPage(selectedConcert));
@@ -151,7 +151,7 @@ public partial class ConcertListPage : ContentPage
 
     private async void OnDeleteClicked(object sender, EventArgs e)
     {
-        if (sender is Button button && button.BindingContext is Concert concert)
+        if (sender is ImageButton button && button.BindingContext is Concert concert)
         {
             bool confirm = await DisplayAlert(
                 "Delete Concert",
