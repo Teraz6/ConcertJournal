@@ -60,7 +60,7 @@
                                 x:Name="ConcertListView" 
                                 Margin="5"
                                 ItemsSource="{Binding Concerts}"
-                                RemainingItemsThreshold="3"
+                                RemainingItemsThreshold="5"
                                 RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                                 SelectionMode="Multiple"
                                 SelectionChanged="OnSelectionChanged"
@@ -127,26 +127,26 @@
                                                      BorderWidth="0"
                                                      IsEnabled="True"/>
 
-                                    <VerticalStackLayout VerticalOptions="Center" Spacing="20">
-                                        <!--Update button-->
-                                        <Button Text="Update"
-                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
-                                                    BackgroundColor="{DynamicResource ButtonGreen}"
-                                                    FontSize="18"
-                                                    Padding="10"
-                                                    Clicked="OnUpdateClicked"
-                                                    CommandParameter="{Binding .}" 
-                                                    BorderWidth="0"/>
+                                    <VerticalStackLayout VerticalOptions="Center" Spacing="10">
+                                        <!--Edit button-->
+                                        <ImageButton Source="{DynamicResource EditIcon}"
+                                                     BackgroundColor="Transparent"
+                                                     HeightRequest="45"
+                                                     WidthRequest="45"
+                                                     Padding="0"
+                                                     Clicked="OnUpdateClicked"
+                                                     CommandParameter="{Binding .}" 
+                                                     BorderWidth="0"/>
 
                                         <!-- Delete button -->
-                                        <Button Text="Delete"
-                                                    TextColor="{DynamicResource ButtonUpdateDeleteText}"
-                                                    BackgroundColor="{DynamicResource ButtonRed}"
-                                                    FontSize="18"
-                                                    Padding="10"
-                                                    Clicked="OnDeleteClicked"
-                                                    BindingContext="{Binding .}" 
-                                                    BorderWidth="0"/>
+                                        <ImageButton Source="{DynamicResource DeleteIcon}"
+                                                     BackgroundColor="Transparent"
+                                                     HeightRequest="45"
+                                                     WidthRequest="45"
+                                                     Padding="0"
+                                                     Clicked="OnDeleteClicked"
+                                                     BindingContext="{Binding .}" 
+                                                     BorderWidth="0"/>
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
 

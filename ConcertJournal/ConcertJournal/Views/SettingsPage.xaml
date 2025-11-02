@@ -34,15 +34,34 @@
                             Toggled="OnThemeToggled"
                             ThumbColor="{DynamicResource Primary}"
                             OnColor="{DynamicResource Surface}"
-                            Scale="1.5"/>
+                            Scale="1.5">
+                    </Switch>
                 </Grid>
 
+                <!--Import/Export-->
                 <Label Text="Import/Export" 
                        FontSize="28"
                        TextColor="{DynamicResource TextColor}"
                        Margin="0,20,0,0"
                        HorizontalOptions="Center"/>
 
+                <Grid ColumnDefinitions="*,*">
+                    <Label Grid.Column="0"
+                           Text="Import Excel"
+                           FontSize="24"
+                           HorizontalOptions="Center"
+                           TextColor="{DynamicResource TextColor}"/>
+
+                    <Button Grid.Column="1"
+                            Text="Import Excel"
+                            FontSize="16"
+                            BackgroundColor="{DynamicResource ButtonBackground}"
+                            BorderColor="{DynamicResource ButtonBorderColor}"
+                            CornerRadius="8"
+                            Clicked="OnImportFromExcelClicked"
+                            Margin="40,0"/>
+                </Grid>
+                
                 <Grid ColumnDefinitions="*,*">
                     <Label Grid.Column="0"
                            Text="Export Events"
@@ -60,22 +79,7 @@
                             Margin="40,0"/>
                 </Grid>
             
-                <Grid ColumnDefinitions="*,*">
-                    <Label Grid.Column="0"
-                           Text="Import Excel"
-                           FontSize="24"
-                           HorizontalOptions="Center"
-                           TextColor="{DynamicResource TextColor}"/>
-
-                    <Button Grid.Column="1"
-                            Text="Import Excel"
-                            FontSize="16"
-                            BackgroundColor="{DynamicResource ButtonBackground}"
-                            BorderColor="{DynamicResource ButtonBorderColor}"
-                            CornerRadius="8"
-                            Clicked="OnImportFromExcelClicked"
-                            Margin="40,0"/>
-                </Grid>
+                
 
                 <Label Text="Default values"
                        FontSize="28"
