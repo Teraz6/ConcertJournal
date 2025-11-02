@@ -20,7 +20,7 @@
                            HorizontalOptions="Center"/>
 
                 <!-- Search and Sort Controls -->
-                <Grid ColumnDefinitions=".70*,.30*"
+                <Grid ColumnDefinitions=".60*,.40*"
                           ColumnSpacing="10"
                           Padding="10">
                     <!-- Search Bar -->
