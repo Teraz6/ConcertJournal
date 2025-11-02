@@ -33,9 +33,18 @@ namespace ConcertJournal.Data
             return _database.DeleteAsync(concert);
         }
 
-        public Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true)
+        public Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true, string searchText = "")
         {
             AsyncTableQuery<Concert> query = _database.Table<Concert>();
+
+            // Apply search filter
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                string lower = searchText.ToLower();
+                query = query.Where(c =>
+                    c.EventTitle.ToLower().Contains(lower) ||
+                    c.Performers.ToLower().Contains(lower));
+            }
 
             // Sorting
             switch (sortBy)
@@ -54,9 +63,7 @@ namespace ConcertJournal.Data
             }
 
             // Apply paging
-            query = query.Skip(skip).Take(take);
-
-            return query.ToListAsync();
+            return query.Skip(skip).Take(take).ToListAsync();
         }
     }
 }

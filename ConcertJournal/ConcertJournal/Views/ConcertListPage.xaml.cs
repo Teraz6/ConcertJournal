@@ -81,14 +81,6 @@ public partial class ConcertListPage : ContentPage
         await LoadMoreConcertsAsync();
     }
 
-    //Not used. Loads entire list and is bad for performance
-    private async Task LoadConcertsAsync()
-    {
-        allConcerts = await App.Database.GetConcertsAsync();
-        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
-        await ApplySortFromPreferenceAsync(savedSort);
-    }
-
     private async Task LoadMoreConcertsAsync()
     {
         if (_isLoadingMore || !_hasMoreItems) return;
@@ -97,10 +89,9 @@ public partial class ConcertListPage : ContentPage
         try
         {
             int skip = _currentPage * PageSize;
-
-            // Determine current sort
             string sortBy = "Default";
             bool ascending = true;
+            string searchText = SearchBar?.Text ?? string.Empty;
 
             if (SortPicker.SelectedItem?.ToString() == "Oldest By Date")
             {
@@ -113,7 +104,7 @@ public partial class ConcertListPage : ContentPage
                 ascending = false;
             }
 
-            var newConcerts = await App.Database.GetConcertsPagedAsync(skip, PageSize, sortBy, ascending);
+            var newConcerts = await App.Database.GetConcertsPagedAsync(skip, PageSize, sortBy, ascending, searchText);
             _currentPage++;
 
             if (newConcerts.Count == 0)
@@ -184,35 +175,12 @@ public partial class ConcertListPage : ContentPage
         await LoadMoreConcertsAsync();
     }
 
-    // Applies search filter and sorting to the allConcerts list and updates the UI. ToDo: Add small delay for better performance
-    private void ApplySearchAndSort(string searchText = "", bool sortByDate = true, bool ascending = true, bool defaultSort = false)
+    private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        var filtered = allConcertsLoaded;
-
-        if (!string.IsNullOrWhiteSpace(searchText))
-        {
-            filtered = filtered
-                .Where(c => c.EventTitle.Contains(searchText, StringComparison.OrdinalIgnoreCase)
-                         || c.Performers.Contains(searchText, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-        }
-
-        if (defaultSort)
-            filtered = filtered.OrderByDescending(c => c.Id).ToList();
-        else if (sortByDate)
-            filtered = ascending
-                ? filtered.OrderBy(c => c.Date).ToList()
-                : filtered.OrderByDescending(c => c.Date).ToList();
-
+        _currentPage = 0;
+        _hasMoreItems = true;
         Concerts.Clear();
-        foreach (var c in filtered)
-            Concerts.Add(c);
-    }
-
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
-    {
-        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
-        _ = ApplySortFromPreferenceAsync(savedSort);
+        await LoadMoreConcertsAsync();
     }
 
     private void OnSortPickerChanged(object sender, EventArgs e)
@@ -286,5 +254,4 @@ public partial class ConcertListPage : ContentPage
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
     }
-
 }
