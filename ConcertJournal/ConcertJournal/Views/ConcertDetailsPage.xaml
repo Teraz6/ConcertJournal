@@ -58,14 +58,15 @@
                             HorizontalOptions="Center"
                             Clicked="OnBackClicked" />
 
-                    <!-- Update Button -->
-                    <Button Text="Update"
-                            FontSize="18"
-                            TextColor="{DynamicResource ButtonUpdateDeleteText}"
-                            BackgroundColor="{DynamicResource ButtonGreen}"
-                            BorderWidth="0"
-                            Clicked="OnUpdateClicked"
-                            HorizontalOptions="Center"/>
+                    <!-- Edit Button -->
+                    <ImageButton Source="{DynamicResource EditIcon}"
+                                 BackgroundColor="Transparent"
+                                 BorderWidth="1"
+                                 CornerRadius="10"
+                                 BorderColor="{DynamicResource ButtonBorderColor}"
+                                 Padding="0"
+                                 Clicked="OnUpdateClicked"
+                                 HorizontalOptions="Center"/>
                 </HorizontalStackLayout>
                 
 
@@ -173,16 +174,16 @@
                     </VerticalStackLayout>
                     
                 </Border>
-                
-                <!-- Update Button -->
-                <Button Text="Update"
-                        FontSize="18"
-                        TextColor="{DynamicResource TextColor}"
-                        BackgroundColor="{DynamicResource ButtonGreen}"
-                        BorderWidth="0"
-                        Clicked="OnUpdateClicked"
-                        HorizontalOptions="Center"
-                        Padding="20,10"/>
+
+                <!-- Edit Button -->
+                <ImageButton Source="{DynamicResource EditIcon}"
+                             BackgroundColor="Transparent"
+                             BorderWidth="1"
+                             CornerRadius="10"
+                             BorderColor="{DynamicResource ButtonBorderColor}"
+                             Padding="0"
+                             Clicked="OnUpdateClicked"
+                             HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </ScrollView>
 
