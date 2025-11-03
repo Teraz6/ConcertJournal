@@ -6,28 +6,32 @@
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{DynamicResource Background}">
+             Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*,Auto">
+        <Image Source="details_background.jpg"
+               Aspect="Fill"
+               Opacity="1"
+               AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"/>
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Header Section -->
-                <Border BackgroundColor="{DynamicResource CardBackground}"
+                <Border BackgroundColor="Transparent"
                         Padding="16"
                         StrokeShape="10">
                     <VerticalStackLayout Spacing="8">
                         <Label Text="{Binding EventTitle}"
                                FontSize="28"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}"
+                               TextColor="White"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"/>
 
                         <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontSize="16"
-                               TextColor="{DynamicResource MutedText}"
+                               TextColor="Grey"
                                HorizontalOptions="Center" />
 
                         <toolkit:RatingView Rating="{Binding Rating}"
@@ -73,51 +77,55 @@
                 <!-- Performers Section -->
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16">
-                    <VerticalStackLayout Spacing="6">
+                        BackgroundColor="Transparent"
+                        Padding="16"
+                        HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                         <Label Text="Performers"
-                               FontSize="20"
+                               FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="White" 
+                               HorizontalOptions="Center"/>
                         <Label Text="{Binding Performers}"
-                               FontSize="16"
-                               TextColor="{DynamicResource TextColor}" />
+                               FontSize="20"
+                               TextColor="White" />
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Venue & Location Section -->
                 <Border StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16">
-                    <VerticalStackLayout Spacing="6">
+                        BackgroundColor="Transparent"
+                        Padding="16"
+                        HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="6" >
                         <Label Text="Location"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="White"
+                               HorizontalOptions="Center"/>
 
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="Venue:"
                                    FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                             <Label Text="{Binding Venue}"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                         </HorizontalStackLayout>
 
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="City:"
                                    FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                             <Label Text="{Binding City}"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                         </HorizontalStackLayout>
 
                         <HorizontalStackLayout Spacing="5">
                             <Label Text="Country:"
                                    FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                             <Label Text="{Binding Country}"
-                                   TextColor="{DynamicResource TextColor}" />
+                                   TextColor="White" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Border>
@@ -125,16 +133,16 @@
                 <!-- Notes Section -->
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
+                        BackgroundColor="Transparent"
                         Padding="16">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                         <Label Text="Notes"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="White" />
                         <Label Text="{Binding Notes}"
                                FontSize="16"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="White" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -146,7 +154,8 @@
                         <Label Text="Images" 
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="White" 
+                               HorizontalOptions="Center"/>
                         <CollectionView x:Name="MediaCollectionView"
                                         ItemsSource="{Binding MediaFiles}"
                                         ItemsLayout="VerticalGrid, 2"
