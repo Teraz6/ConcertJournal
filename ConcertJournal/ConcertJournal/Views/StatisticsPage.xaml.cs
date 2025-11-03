@@ -142,11 +142,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (MostFrequentPerformerContent.IsVisible)
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count ↓";
+            MostFrequentPerformerHeader.Text = "Performers By Count ↓";
         }
         else
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count →";
+            MostFrequentPerformerHeader.Text = "Performers By Count →";
         }
     }
 
