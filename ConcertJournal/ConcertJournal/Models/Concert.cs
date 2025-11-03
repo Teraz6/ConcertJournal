@@ -16,4 +16,9 @@ namespace ConcertJournal.Models
         public string? Notes { get; set; }
         public string? MediaPaths { get; set; }
     }
+    public class PerformerCount
+    {
+        public string? Name { get; set; } = "";
+        public int? Occurrences { get; set; }
+    }
 }

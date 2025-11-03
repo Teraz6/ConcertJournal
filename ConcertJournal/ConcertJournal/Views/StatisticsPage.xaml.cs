@@ -6,4 +6,9 @@ public partial class StatisticsPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+	private async void OnPerformersClicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync($"//Performers");
+    }
 }
