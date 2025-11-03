@@ -6,16 +6,90 @@
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
+        
         <!--Main content-->
         <ScrollView>
-            <VerticalStackLayout Padding="20" Spacing="15">
-                <Label Text="Statistics" FontSize="24" HorizontalOptions="Center"/>
+            <VerticalStackLayout Padding="20" Spacing="10">
 
-                <Label x:Name="TotalConcertsLabel" FontSize="18"/>
-                <Label x:Name="AverageRatingLabel" FontSize="18"/>
-                <Label x:Name="MostFrequentPerformerLabel" FontSize="18"/>
-                <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
-                <Label x:Name="LatestConcertLabel" FontSize="18"/>
+                <!-- Latest Concert -->
+                    <Label x:Name="LatestConcertHeader"
+                           Text="Latest Concert ➤ Closed"
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           HorizontalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLatestConcertTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}">
+                    <StackLayout x:Name="LatestConcertContent" IsVisible="False" Padding="10">
+                        <Label TextColor="{DynamicResource TextColor}" x:Name="LatestConcertLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+                
+                <!-- Total Concert -->
+                <Label x:Name="TotalConcertsHeader"
+                       Text="Total Concerts ➤ Closed" 
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTotalConcertsTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}">
+                    <StackLayout x:Name="TotalConcertsContent" IsVisible="False" Padding="10">
+                        <Label x:Name="TotalConcertsLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+
+                <!-- Most Frequent Perfomrmer -->
+                <Label x:Name="MostFrequentPerformerHeader" 
+                       Text="Most Frequent Performer ➤ Closed" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPerformerTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}">
+                    <StackLayout x:Name="MostFrequentPerformerContent" IsVisible="False" Padding="10">
+                        <Label x:Name="MostFrequentPerformerLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+
+                <!-- Concerts by Country -->
+                <Label x:Name="ConcertsByCountryHeader" 
+                       Text="Concerts by Country ➤ Closed"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConcertsByCountryTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}">
+                    <StackLayout x:Name="ConcertsByCountryContent" IsVisible="False" Padding="10">
+                        <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+
+                <!-- Average Rating -->
+                <Label x:Name="AverageRatingHeader" 
+                       Text="Average Rating ➤ Closed" 
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnAverageRatingTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}">
+                    <StackLayout x:Name="AverageRatingContent" IsVisible="False" Padding="10">
+                        <Label x:Name="AverageRatingLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
 

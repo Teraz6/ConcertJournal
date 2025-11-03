@@ -1,5 +1,8 @@
-﻿using ConcertJournal.Data;
+﻿using CommunityToolkit.Maui.Extensions;
+using CommunityToolkit.Maui.Views;
+using ConcertJournal.Data;
 using ConcertJournal.Models;
+using Microsoft.Maui.Controls.Shapes;
 
 namespace ConcertJournal.Views;
 
@@ -39,17 +42,26 @@ public partial class StatisticsPage : ContentPage
         AverageRatingLabel.Text = $"Average rating: {avgRating:F2}";
 
 
-        // Most frequent performer
-        var performer = concerts
+        // Performers by Count
+        var performerCounts = concerts
             .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
             .SelectMany(c => c.Performers.Split(',', StringSplitOptions.RemoveEmptyEntries))
             .Select(p => p.Trim())
             .Where(p => !string.IsNullOrEmpty(p))
             .GroupBy(p => p)
-            .OrderByDescending(g => g.Count())
-            .FirstOrDefault()?.Key ?? "N/A";
+            .Select(g => new { Name = g.Key, Count = g.Count() })
+            .OrderByDescending(g => g.Count)
+            .ToList();
 
-        MostFrequentPerformerLabel.Text = $"Most frequent performer: {performer}";
+        if (performerCounts.Any())
+        {
+            MostFrequentPerformerLabel.Text = "Performers by concert count:\n" +
+                string.Join("\n", performerCounts.Select(p => $"{p.Name}: {p.Count}"));
+        }
+        else
+        {
+            MostFrequentPerformerLabel.Text = "No performer data available.";
+        }
 
         // Concerts by country
         var concertsByCountry = concerts
@@ -71,5 +83,90 @@ public partial class StatisticsPage : ContentPage
         LatestConcertLabel.Text = latestConcert != null
             ? $"Latest concert: {latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
             : "Latest concert: N/A";
+    }
+
+    // Toggle section visibility methods
+    private void OnTotalConcertsTapped(object sender, EventArgs e)
+    {
+        //Toogle visibility
+        TotalConcertsContent.IsVisible = !TotalConcertsContent.IsVisible;
+
+        //Update header text based on state
+        if (TotalConcertsContent.IsVisible)
+        {
+            TotalConcertsHeader.Text = "Total Concerts ⬇ Open";
+        }
+        else
+        {
+            TotalConcertsHeader.Text = "Total Concerts ➤ Closed";
+        }
+    }
+
+    // Average Rating Toggle
+    private void OnAverageRatingTapped(object sender, EventArgs e)
+    {
+        //Toggle visibility
+        AverageRatingContent.IsVisible = !AverageRatingContent.IsVisible;
+
+        //Update header text based on state
+        if (AverageRatingContent.IsVisible)
+        {
+            AverageRatingHeader.Text = "Average Rating ⬇ Open";
+        }
+        else
+        {
+            AverageRatingHeader.Text = "Average Rating ➤ Closed";
+        }
+    }
+
+    // Most Frequent Performer Toggle
+    private void OnPerformerTapped(object sender, EventArgs e)
+    {
+        //Toggle visibility
+        MostFrequentPerformerContent.IsVisible = !MostFrequentPerformerContent.IsVisible;
+
+        //Update header text based on state
+        if (MostFrequentPerformerContent.IsVisible)
+        {
+            MostFrequentPerformerHeader.Text = "Performers by Count ⬇ Open";
+        }
+        else
+        {
+            MostFrequentPerformerHeader.Text = "Performers by Count ➤ Closed";
+        }
+    }
+
+    // Concerts By Country Toggle
+    private void OnConcertsByCountryTapped(object sender, EventArgs e)
+    {
+        //Toogle visibility
+        ConcertsByCountryContent.IsVisible = !ConcertsByCountryContent.IsVisible;
+
+        //Update header text based on state
+        if (ConcertsByCountryContent.IsVisible)
+        {
+            ConcertsByCountryHeader.Text = "Concerts By Country ⬇ Open";
+        }
+        else
+        {
+            ConcertsByCountryHeader.Text = "Concerts By Country ➤ Closed";
+        }
+    }
+
+    // Latest Concert Toggle
+    private void OnLatestConcertTapped(object sender, EventArgs e)
+    {
+        // Toggle visibility
+        LatestConcertContent.IsVisible = !LatestConcertContent.IsVisible;
+
+        // Update header text based on state
+        if (LatestConcertContent.IsVisible)
+        {
+            LatestConcertHeader.Text = "Latest Concert ⬇ Open";
+        }
+        else
+        {
+            LatestConcertHeader.Text = "Latest Concert ➤ Closed";
+        }
     }
 }
