@@ -7,24 +7,18 @@
 
     <Grid RowDefinitions="*,Auto">
         <!--Main content-->
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout VerticalOptions="Center">
-                <Label Text="Statistics Page is under construction"
-                   FontSize="30"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   HorizontalTextAlignment="Center"/>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="15">
+                <Label Text="Statistics" FontSize="24" HorizontalOptions="Center"/>
 
-                <Image Source="maintenance.gif"
-                       IsAnimationPlaying="True"
-                       HorizontalOptions="Center"
-                       MaximumWidthRequest="400"
-                       Aspect="AspectFit"
-                       Margin="10"/>
+                <Label x:Name="TotalConcertsLabel" FontSize="18"/>
+                <Label x:Name="AverageRatingLabel" FontSize="18"/>
+                <Label x:Name="MostFrequentPerformerLabel" FontSize="18"/>
+                <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
+                <Label x:Name="LatestConcertLabel" FontSize="18"/>
             </VerticalStackLayout>
         </ScrollView>
-        
+
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
     </Grid>

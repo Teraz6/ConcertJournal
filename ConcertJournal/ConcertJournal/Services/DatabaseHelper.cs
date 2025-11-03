@@ -4,7 +4,7 @@
     {
         public static string GetDatabasePath()
         {
-            return Path.Combine(FileSystem.AppDataDirectory, "ConcertJournal.db3");
+            return Path.Combine(FileSystem.AppDataDirectory, "concerts.db3");
         }
     }
 }
