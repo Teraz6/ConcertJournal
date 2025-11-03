@@ -100,4 +100,6 @@
     <FileImageSource x:Key="EditIcon" File="edit_greenwhite.png"/>
     <FileImageSource x:Key="DeleteIcon" File="delete_redwhite.png"/>
 
+    <FileImageSource x:Key="Logo" File="eventjournallogo_white.png"/>
+
 </ResourceDictionary>
