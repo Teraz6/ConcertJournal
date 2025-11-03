@@ -94,11 +94,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (TotalConcertsContent.IsVisible)
         {
-            TotalConcertsHeader.Text = "Total Concerts ⬇ Open";
+            TotalConcertsHeader.Text = "Total Concerts 🢃";
         }
         else
         {
-            TotalConcertsHeader.Text = "Total Concerts ➤ Closed";
+            TotalConcertsHeader.Text = "Total Concerts 🢂";
         }
     }
 
@@ -111,11 +111,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (AverageRatingContent.IsVisible)
         {
-            AverageRatingHeader.Text = "Average Rating ⬇ Open";
+            AverageRatingHeader.Text = "Average Rating 🢃";
         }
         else
         {
-            AverageRatingHeader.Text = "Average Rating ➤ Closed";
+            AverageRatingHeader.Text = "Average Rating 🢂";
         }
     }
 
@@ -128,11 +128,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (MostFrequentPerformerContent.IsVisible)
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count ⬇ Open";
+            MostFrequentPerformerHeader.Text = "Performers by Count 🢃";
         }
         else
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count ➤ Closed";
+            MostFrequentPerformerHeader.Text = "Performers by Count 🢂";
         }
     }
 
@@ -145,11 +145,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (ConcertsByCountryContent.IsVisible)
         {
-            ConcertsByCountryHeader.Text = "Concerts By Country ⬇ Open";
+            ConcertsByCountryHeader.Text = "Concerts By Country 🢃";
         }
         else
         {
-            ConcertsByCountryHeader.Text = "Concerts By Country ➤ Closed";
+            ConcertsByCountryHeader.Text = "Concerts By Country 🢂";
         }
     }
 
@@ -162,11 +162,11 @@ public partial class StatisticsPage : ContentPage
         // Update header text based on state
         if (LatestConcertContent.IsVisible)
         {
-            LatestConcertHeader.Text = "Latest Concert ⬇ Open";
+            LatestConcertHeader.Text = "Latest Concert 🢃";
         }
         else
         {
-            LatestConcertHeader.Text = "Latest Concert ➤ Closed";
+            LatestConcertHeader.Text = "Latest Concert 🢂";
         }
     }
 }
