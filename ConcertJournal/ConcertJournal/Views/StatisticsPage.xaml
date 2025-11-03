@@ -110,6 +110,29 @@
                     </StackLayout>
                 </Border>
 
+                <!-- Concerts by Year -->
+                <Label x:Name="ConcertsByYearHeader"
+                       Text="Concerts By Year →"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConcertsByYearTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        x:Name="ConcertsByYearContent" 
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout  Padding="10">
+                        <Label x:Name="ConcertsByYearLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+
                 <!-- Average Rating -->
                 <Label x:Name="AverageRatingHeader" 
                        Text="Average Rating →" 

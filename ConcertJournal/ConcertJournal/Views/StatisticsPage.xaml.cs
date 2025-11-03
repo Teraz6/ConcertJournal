@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Views;
 using ConcertJournal.Data;
 using ConcertJournal.Models;
 using Microsoft.Maui.Controls.Shapes;
+using System;
 
 namespace ConcertJournal.Views;
 
@@ -83,7 +84,20 @@ public partial class StatisticsPage : ContentPage
         LatestConcertLabel.Text = latestConcert != null
             ? $"Latest concert: {latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
             : "Latest concert: N/A";
+        
+        // Concerts per year
+        var concertsByYear = concerts
+            .Where(c => c.Date.HasValue)
+            .GroupBy(c => c.Date.Value.Year)
+            .OrderByDescending(g => g.Key)
+            .Select(g => $"{g.Key}: {g.Count()} concerts")
+            .ToList();
+
+        ConcertsByYearLabel.Text = concertsByYear.Any()
+            ? "Concerts per year:\n" + string.Join("\n", concertsByYear)
+            : "No concert date data available.";
     }
+
 
     // Toggle section visibility methods
     private void OnTotalConcertsTapped(object sender, EventArgs e)
@@ -167,6 +181,22 @@ public partial class StatisticsPage : ContentPage
         else
         {
             LatestConcertHeader.Text = "Latest Concert →";
+        }
+    }
+
+    // Concerts Per Year Toggle
+    private void OnConcertsByYearTapped(object sender, EventArgs e)
+    {
+        // Toggle visibility
+        ConcertsByYearContent.IsVisible = !ConcertsByYearContent.IsVisible;
+        // Update header text based on state
+        if (ConcertsByYearContent.IsVisible)
+        {
+            ConcertsByYearHeader.Text = "Concerts Per Year ↓";
+        }
+        else
+        {
+            ConcertsByYearHeader.Text = "Concerts Per Year →";
         }
     }
 }
