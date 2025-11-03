@@ -112,7 +112,7 @@
 
                 <!-- Concerts by Year -->
                 <Label x:Name="ConcertsByYearHeader"
-                       Text="Concerts By Year →"
+                       Text="Concerts Per Year →"
                        FontSize="20"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"
