@@ -98,5 +98,7 @@
 
     <FileImageSource x:Key="Logo" File="eventjournallogo_black.png"/>
 
-   <FileImageSource x:Key="DetailsIcon" File="details_black.png"/>
+    <FileImageSource x:Key="DetailsIcon" File="details_black.png"/>
+    <FileImageSource x:Key="EditIcon" File="edit_greenblack.png"/>
+    <FileImageSource x:Key="DeleteIcon" File="delete_red.png"/>
 </ResourceDictionary>
