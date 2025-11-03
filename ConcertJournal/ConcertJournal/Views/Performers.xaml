@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:ConcertJournal.Models"
+             x:Class="ConcertJournal.Views.Performers"
+             BackgroundColor="{DynamicResource Background}">
+    
+    <Grid RowDefinitions="*,Auto">
+        <!--Performers-->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Label 
+                   Text="Performers"
+                   FontSize="30"
+                   FontAttributes="Bold"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="Center"
+                   TextColor="{DynamicResource TextColor}"
+                   Margin="0,10"/>
+
+                <Grid ColumnDefinitions="*,*">
+                    <Label
+                       Grid.Column="0"
+                       Text="Performers"
+                       TextColor="{DynamicResource TextColor}"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                    <Label
+                       Grid.Column="1"
+                       Text="Occurences"
+                       TextColor="{DynamicResource TextColor}"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                </Grid>
+                
+                <!--Data Rows-->
+                <CollectionView ItemsSource="{Binding PerformerStats}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,*" Padding="0,6">
+                                <Label Text="{Binding Name}" 
+                                       TextColor="{DynamicResource TextColor}"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Grid.Column="1"
+                                 Text="{Binding Occurrences}"
+                                 TextColor="{DynamicResource TextColor}"
+                                 HorizontalTextAlignment="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+         <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="1" />
+    </Grid>
+</ContentPage>

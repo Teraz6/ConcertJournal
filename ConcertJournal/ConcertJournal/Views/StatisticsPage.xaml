@@ -9,6 +9,12 @@
         <!--Main content-->
         <ScrollView Grid.Row="0">
             <VerticalStackLayout VerticalOptions="Center">
+                
+                <Button Text="Performers"
+                       Clicked="OnPerformersClicked"
+                       FontSize="24"
+                       HorizontalOptions="Center"
+                       Margin="0,20"/>
                 <Label Text="Statistics Page is under construction"
                    FontSize="30"
                    FontAttributes="Bold"

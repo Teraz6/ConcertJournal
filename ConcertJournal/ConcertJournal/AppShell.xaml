@@ -30,4 +30,10 @@
     <ShellContent
         Route="StatisticsPage"
         ContentTemplate="{DataTemplate views:StatisticsPage}" />
+    
+    
+    <ShellContent
+        Route="Performers"
+        ContentTemplate="{DataTemplate views:Performers}" />
+    
 </Shell>
