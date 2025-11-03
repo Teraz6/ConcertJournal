@@ -9,7 +9,7 @@
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*,Auto">
-        <Image Source="details_background.jpg"
+        <Image Source="{DynamicResource DetailsBackground}"
                Aspect="Fill"
                Opacity="1"
                AbsoluteLayout.LayoutBounds="0,0,1,1"
@@ -25,13 +25,13 @@
                         <Label Text="{Binding EventTitle}"
                                FontSize="28"
                                FontAttributes="Bold"
-                               TextColor="White"
+                               TextColor="{DynamicResource TextColor}"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"/>
 
                         <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontSize="16"
-                               TextColor="Grey"
+                               TextColor="{DynamicResource MutedText}"
                                HorizontalOptions="Center" />
 
                         <toolkit:RatingView Rating="{Binding Rating}"
@@ -84,11 +84,11 @@
                         <Label Text="Performers"
                                FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="White" 
+                               TextColor="{DynamicResource TextColor}" 
                                HorizontalOptions="Center"/>
                         <Label Text="{Binding Performers}"
                                FontSize="20"
-                               TextColor="White" />
+                               TextColor="{DynamicResource TextColor}" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -101,31 +101,19 @@
                         <Label Text="Location"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White"
+                               TextColor="{DynamicResource TextColor}"
                                HorizontalOptions="Center"/>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="Venue:"
-                                   FontAttributes="Bold"
-                                   TextColor="White" />
+                        <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
                             <Label Text="{Binding Venue}"
-                                   TextColor="White" />
+                                   TextColor="{DynamicResource TextColor}" />
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="City:"
-                                   FontAttributes="Bold"
-                                   TextColor="White" />
+                        <HorizontalStackLayout Spacing="15">
                             <Label Text="{Binding City}"
-                                   TextColor="White" />
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="Country:"
-                                   FontAttributes="Bold"
-                                   TextColor="White" />
+                                   TextColor="{DynamicResource TextColor}" />
                             <Label Text="{Binding Country}"
-                                   TextColor="White" />
+                                   TextColor="{DynamicResource TextColor}" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Border>
@@ -139,10 +127,12 @@
                         <Label Text="Notes"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White" />
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalOptions="Center"/>
                         <Label Text="{Binding Notes}"
                                FontSize="16"
-                               TextColor="White" />
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -154,7 +144,7 @@
                         <Label Text="Images" 
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="White" 
+                               TextColor="{DynamicResource TextColor}" 
                                HorizontalOptions="Center"/>
                         <CollectionView x:Name="MediaCollectionView"
                                         ItemsSource="{Binding MediaFiles}"

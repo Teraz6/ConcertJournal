@@ -101,4 +101,5 @@
     <FileImageSource x:Key="DetailsIcon" File="details_black.png"/>
     <FileImageSource x:Key="EditIcon" File="edit_greenblack.png"/>
     <FileImageSource x:Key="DeleteIcon" File="delete_red.png"/>
+    <FileImageSource x:Key="DetailsBackground" File="details_backgroundwhite.png"/>
 </ResourceDictionary>
