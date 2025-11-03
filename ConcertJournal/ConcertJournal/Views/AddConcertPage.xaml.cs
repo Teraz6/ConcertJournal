@@ -9,6 +9,8 @@ public partial class AddConcertPage : ContentPage
     private Concert _existingConcert;
     private ObservableCollection<string> Performers = new ObservableCollection<string>();
     private ObservableCollection<string> MediaFiles = new ObservableCollection<string>();
+    private const string DefaultCountryKey = "DefaultCountry";
+    private const string DefaultCityKey = "DefaultCity";
 
     public AddConcertPage(Concert existingConcert = null)
     {
@@ -19,6 +21,10 @@ public partial class AddConcertPage : ContentPage
         //Performer and media list
         PerformersList.ItemsSource = Performers;
         MediaCollectionView.ItemsSource = MediaFiles;
+
+        // Load default country/city from settings
+        string defaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
+        string defaultCityy = Preferences.Get(DefaultCityKey, string.Empty);
 
         if (_existingConcert != null)
         {
@@ -61,6 +67,8 @@ public partial class AddConcertPage : ContentPage
             // New concert
             SaveButton.Text = "Create";
             DatePicker.Date = DateTime.Today;
+            CountryEntry.Text = Preferences.Get(DefaultCountryKey, string.Empty);
+            CityEntry.Text = Preferences.Get(DefaultCityKey, string.Empty);
         }
     }
 
@@ -180,14 +188,14 @@ public partial class AddConcertPage : ContentPage
             // Clear all fields for next entry
             if (EventTitleEntry != null) EventTitleEntry.Text = string.Empty;
             if (VenueEntry != null) VenueEntry.Text = string.Empty;
-            if (CountryEntry != null) CountryEntry.Text = string.Empty;
-            if (CityEntry != null) CityEntry.Text = string.Empty;
+            if (CountryEntry != null) CountryEntry.Text = Preferences.Get(DefaultCountryKey, string.Empty);
+            if (CityEntry != null) CityEntry.Text = Preferences.Get(DefaultCityKey, string.Empty);
             if (NotesEditor != null) NotesEditor.Text = string.Empty;
             PerformerEntry.Text = string.Empty;
             Performers.Clear();
             MediaFiles.Clear();
             if (DatePicker != null) DatePicker.Date = DateTime.Today;
-            if (ConcertRating != null) ConcertRating.Rating = 3;
+            if (ConcertRating != null) ConcertRating.Rating = 0;
 
             EventBus.OnConcertCreated();
         }
