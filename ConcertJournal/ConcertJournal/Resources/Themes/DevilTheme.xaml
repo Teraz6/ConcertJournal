@@ -96,11 +96,10 @@
     <FileImageSource x:Key="ListIcon" File="list_white.png"/>
     <FileImageSource x:Key="SettingsIcon" File="settings_white.png"/>
     <FileImageSource x:Key="StatsIcon" File="stats_white.png"/>
-
-    <FileImageSource x:Key="Logo" File="eventjournallogo_white.png"/>
-
     <FileImageSource x:Key="DetailsIcon" File="details_white.png"/>
     <FileImageSource x:Key="EditIcon" File="edit_greenwhite.png"/>
     <FileImageSource x:Key="DeleteIcon" File="delete_redwhite.png"/>
+
+    <FileImageSource x:Key="Logo" File="eventjournallogo_white.png"/>
 
 </ResourceDictionary>
