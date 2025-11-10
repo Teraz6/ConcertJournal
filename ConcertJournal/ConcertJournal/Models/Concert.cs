@@ -15,5 +15,8 @@ namespace ConcertJournal.Models
         public double Rating { get; set; }
         public string? Notes { get; set; }
         public string? MediaPaths { get; set; }
+
+        public string Location => $"{City}, {Country}";
+
     }
 }
