@@ -6,31 +6,63 @@
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="{DynamicResource Background}">
+             Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*,Auto">
+        <Image Source="{DynamicResource DetailsBackground}"
+               Aspect="Fill"
+               Opacity="1"
+               AbsoluteLayout.LayoutBounds="0,0,1,1"
+               AbsoluteLayout.LayoutFlags="All"/>
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Header Section -->
-                <Border BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16"
-                        StrokeShape="10">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="{Binding EventTitle}"
-                               FontSize="28"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalOptions="Center"
-                               HorizontalTextAlignment="Center"/>
+                <Grid ColumnDefinitions="*,*">
+                    <!-- Back button -->
+                    <Button Grid.Column="0"
+                            Text="← Back"
+                            FontSize="18"
+                            TextColor="{DynamicResource ButtonTextColor}"
+                            BackgroundColor="{DynamicResource ButtonBackground}"
+                            CornerRadius="10"
+                            HorizontalOptions="Start"
+                            Clicked="OnBackClicked" />
 
-                        <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                    <HorizontalStackLayout Grid.Column="1"
+                                           Spacing="20"
+                                           HorizontalOptions="End">
+                        <!--Edit button-->
+                        <ImageButton Source="{DynamicResource EditIcon}"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"
+                            CornerRadius="10"
+                            Clicked="OnUpdateClicked"
+                            HorizontalOptions="End"/>
+                    
+                        <!-- Delete button-->
+                        <ImageButton Source="{DynamicResource DeleteIcon}"
+                                BackgroundColor="Transparent"
+                                CornerRadius="10"
+                                BorderColor="{DynamicResource ButtonBorderColor}"
+                                Clicked="OnDeleteClicked"
+                                HorizontalOptions="End"/>
+                    </HorizontalStackLayout>
+                </Grid>
+                
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding EventTitle}"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource TextColor}"
+                           HorizontalTextAlignment="Center"/>
+
+                    <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontSize="16"
                                TextColor="{DynamicResource MutedText}"
-                               HorizontalOptions="Center" />
+                               HorizontalOptions="Center"/>
 
-                        <toolkit:RatingView Rating="{Binding Rating}"
+                    <toolkit:RatingView Rating="{Binding Rating}"
                                             x:Name="ConcertRating"
                                             HorizontalOptions="Center"
                                             EmptyShapeColor="Transparent"
@@ -44,97 +76,79 @@
                                             ShapeBorderColor="{DynamicResource ButtonBorderColor}"
                                             ShapeBorderThickness="1"
                                             Spacing="7"/>
-                    </VerticalStackLayout>
-                </Border>
-
-                <HorizontalStackLayout HorizontalOptions="Center"
-                                       Spacing="20">
-                    <!-- Back button -->
-                    <Button Text="← Back"
-                            FontSize="18"
-                            TextColor="{DynamicResource ButtonTextColor}"
-                            BackgroundColor="{DynamicResource ButtonBackground}"
-                            CornerRadius="10"
-                            HorizontalOptions="Center"
-                            Clicked="OnBackClicked" />
-
-                    <!-- Edit Button -->
-                    <ImageButton Source="{DynamicResource EditIcon}"
-                                 BackgroundColor="Transparent"
-                                 BorderWidth="1"
-                                 CornerRadius="10"
-                                 BorderColor="{DynamicResource ButtonBorderColor}"
-                                 Padding="0"
-                                 Clicked="OnUpdateClicked"
-                                 HorizontalOptions="Center"/>
-                </HorizontalStackLayout>
-                
+                </VerticalStackLayout>
 
                 <!-- Performers Section -->
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16">
-                    <VerticalStackLayout Spacing="6">
+                        BackgroundColor="Transparent"
+                        Padding="16"
+                        HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                         <Label Text="Performers"
-                               FontSize="20"
+                               FontSize="24"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="{DynamicResource TextColor}" 
+                               HorizontalOptions="Center"/>
                         <Label Text="{Binding Performers}"
-                               FontSize="16"
-                               TextColor="{DynamicResource TextColor}" />
+                               FontSize="20"
+                               TextTransform="Uppercase"
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Venue & Location Section -->
                 <Border StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Padding="16">
+                        BackgroundColor="Transparent"
+                        Padding="16"
+                        HorizontalOptions="Center">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Location"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalTextAlignment="Center"/>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="Venue:"
-                                   FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
-                            <Label Text="{Binding Venue}"
-                                   TextColor="{DynamicResource TextColor}" />
-                        </HorizontalStackLayout>
+                        <Label Text="{Binding Venue}"
+                               TextColor="{DynamicResource TextColor}" 
+                               HorizontalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Venue}"
+                                             Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Venue}"
+                                             Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="City:"
-                                   FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
-                            <Label Text="{Binding City}"
-                                   TextColor="{DynamicResource TextColor}" />
-                        </HorizontalStackLayout>
+                        <Label Text="{Binding Location}"
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalTextAlignment="Center"/>
 
-                        <HorizontalStackLayout Spacing="5">
-                            <Label Text="Country:"
-                                   FontAttributes="Bold"
-                                   TextColor="{DynamicResource TextColor}" />
-                            <Label Text="{Binding Country}"
-                                   TextColor="{DynamicResource TextColor}" />
-                        </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Notes Section -->
                 <Border StrokeThickness="0"
                         StrokeShape="RoundRectangle 12"
-                        BackgroundColor="{DynamicResource CardBackground}"
+                        BackgroundColor="Transparent"
                         Padding="16">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
                         <Label Text="Notes"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalOptions="Center"/>
                         <Label Text="{Binding Notes}"
                                FontSize="16"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="{DynamicResource TextColor}"
+                               HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -146,7 +160,8 @@
                         <Label Text="Images" 
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" />
+                               TextColor="{DynamicResource TextColor}" 
+                               HorizontalOptions="Center"/>
                         <CollectionView x:Name="MediaCollectionView"
                                         ItemsSource="{Binding MediaFiles}"
                                         ItemsLayout="VerticalGrid, 2"
