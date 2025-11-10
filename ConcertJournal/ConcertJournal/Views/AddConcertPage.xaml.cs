@@ -150,11 +150,11 @@ public partial class AddConcertPage : ContentPage
         // Update existing concert
         if (_existingConcert != null)
         {
-            _existingConcert.EventTitle = EventTitleEntry?.Text.Trim();
-            _existingConcert.Venue = VenueEntry?.Text.Trim();
-            _existingConcert.Country = CountryEntry?.Text.Trim();
-            _existingConcert.City = CityEntry?.Text.Trim();
-            _existingConcert.Notes = NotesEditor?.Text.Trim();
+            _existingConcert.EventTitle = EventTitleEntry?.Text?.Trim();
+            _existingConcert.Venue = VenueEntry?.Text?.Trim();
+            _existingConcert.Country = CountryEntry?.Text?.Trim();
+            _existingConcert.City = CityEntry?.Text?.Trim();
+            _existingConcert.Notes = NotesEditor?.Text?.Trim();
             _existingConcert.Date = DatePicker?.Date ?? DateTime.Today;
             _existingConcert.Rating = ConcertRating.Rating;
             _existingConcert.Performers = string.Join(", ", Performers);
@@ -171,13 +171,13 @@ public partial class AddConcertPage : ContentPage
             // Create new concert
             var newConcert = new Concert
             {
-                EventTitle = EventTitleEntry?.Text.Trim(),
-                Venue = VenueEntry?.Text.Trim(),
-                Country = CountryEntry?.Text.Trim(),
-                City = CityEntry?.Text.Trim(),
-                Notes = NotesEditor?.Text.Trim(),
+                EventTitle = EventTitleEntry?.Text?.Trim(),
+                Venue = VenueEntry?.Text?.Trim(),
+                Country = CountryEntry?.Text?.Trim(),
+                City = CityEntry?.Text?.Trim(),
+                Notes = NotesEditor?.Text?.Trim(),
                 Date = DatePicker?.Date ?? DateTime.Today,
-                Rating = ConcertRating.Rating,
+                Rating = ConcertRating?.Rating?? 0,
                 Performers = string.Join(", ", Performers),
                 MediaPaths = string.Join(";", MediaFiles)
             };
