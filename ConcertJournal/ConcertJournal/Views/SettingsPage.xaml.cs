@@ -78,7 +78,7 @@ public partial class SettingsPage : ContentPage
                 FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
             {
                 { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
-                { DevicePlatform.WinUI, new[] { ".xlsx" } },
+                { DevicePlatform.WinUI, new[] { ".xlsx", ".xlsm" } },
                 { DevicePlatform.iOS, new[] { "public.xlsx" } }
             })
             });

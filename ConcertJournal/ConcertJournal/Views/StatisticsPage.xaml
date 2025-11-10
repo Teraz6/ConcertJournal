@@ -20,80 +20,138 @@
 
                 <!-- Latest Concert -->
                 <Label x:Name="LatestConcertHeader"
-                        Text="Latest Concert 🢂 "
+                        Text="Latest Concert →"
                         FontSize="20" 
                         FontAttributes="Bold"
-                        HorizontalTextAlignment="Center">
+                        HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnLatestConcertTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Border BackgroundColor="{DynamicResource CardBackground}">
-                    <StackLayout x:Name="LatestConcertContent" IsVisible="False" Padding="10">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        x:Name="LatestConcertContent"
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout Padding="10">
                         <Label TextColor="{DynamicResource TextColor}" x:Name="LatestConcertLabel" FontSize="18"/>
                     </StackLayout>
                 </Border>
                 
                 <!-- Total Concert -->
                 <Label x:Name="TotalConcertsHeader"
-                       Text="Total Concerts 🢂" 
+                       Text="Total Concerts →" 
                        FontSize="20"
                        FontAttributes="Bold"
-                       HorizontalTextAlignment="Center">
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTotalConcertsTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Border BackgroundColor="{DynamicResource CardBackground}">
-                    <StackLayout x:Name="TotalConcertsContent" IsVisible="False" Padding="10">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        x:Name="TotalConcertsContent"
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout Padding="10">
                         <Label x:Name="TotalConcertsLabel" FontSize="18"/>
                     </StackLayout>
                 </Border>
 
                 <!-- Most Frequent Perfomrmer -->
                 <Label x:Name="MostFrequentPerformerHeader" 
-                       Text="Most Frequent Performer 🢂" 
+                       Text="Performers By Count →" 
                        FontSize="20" 
                        FontAttributes="Bold"
-                       HorizontalTextAlignment="Center">
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPerformerTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Border BackgroundColor="{DynamicResource CardBackground}">
-                    <StackLayout x:Name="MostFrequentPerformerContent" IsVisible="False" Padding="10">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12" 
+                        x:Name="MostFrequentPerformerContent"
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout Padding="10">
                         <Label x:Name="MostFrequentPerformerLabel" FontSize="18"/>
                     </StackLayout>
                 </Border>
 
                 <!-- Concerts by Country -->
                 <Label x:Name="ConcertsByCountryHeader" 
-                       Text="Concerts by Country 🢂"
+                       Text="Concerts By Country →"
                        FontSize="20"
                        FontAttributes="Bold"
-                       HorizontalTextAlignment="Center">
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnConcertsByCountryTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Border BackgroundColor="{DynamicResource CardBackground}">
-                    <StackLayout x:Name="ConcertsByCountryContent" IsVisible="False" Padding="10">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12" 
+                        x:Name="ConcertsByCountryContent" 
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout Padding="10">
                         <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
+                    </StackLayout>
+                </Border>
+
+                <!-- Concerts by Year -->
+                <Label x:Name="ConcertsByYearHeader"
+                       Text="Concerts Per Year →"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnConcertsByYearTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12"
+                        x:Name="ConcertsByYearContent" 
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout  Padding="10">
+                        <Label x:Name="ConcertsByYearLabel" FontSize="18"/>
                     </StackLayout>
                 </Border>
 
                 <!-- Average Rating -->
                 <Label x:Name="AverageRatingHeader" 
-                       Text="Average Rating 🢂" 
+                       Text="Average Rating →" 
                        FontSize="20"
                        FontAttributes="Bold"
-                       HorizontalTextAlignment="Center">
+                       HorizontalTextAlignment="Center"
+                       Margin="0,0,0,10">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnAverageRatingTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Border BackgroundColor="{DynamicResource CardBackground}">
-                    <StackLayout x:Name="AverageRatingContent" IsVisible="False" Padding="10">
+                <Border BackgroundColor="{DynamicResource CardBackground}"
+                        Stroke="{DynamicResource CardBorder}"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 12" 
+                        x:Name="AverageRatingContent" 
+                        IsVisible="False"
+                        Margin="0,0,0,10">
+                    <StackLayout Padding="10">
                         <Label x:Name="AverageRatingLabel" FontSize="18"/>
                     </StackLayout>
                 </Border>

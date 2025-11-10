@@ -3,6 +3,7 @@ using CommunityToolkit.Maui.Views;
 using ConcertJournal.Data;
 using ConcertJournal.Models;
 using Microsoft.Maui.Controls.Shapes;
+using System;
 
 namespace ConcertJournal.Views;
 
@@ -83,7 +84,20 @@ public partial class StatisticsPage : ContentPage
         LatestConcertLabel.Text = latestConcert != null
             ? $"Latest concert: {latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
             : "Latest concert: N/A";
+        
+        // Concerts per year
+        var concertsByYear = concerts
+            .Where(c => c.Date.HasValue)
+            .GroupBy(c => c.Date.Value.Year)
+            .OrderByDescending(g => g.Key)
+            .Select(g => $"{g.Key}: {g.Count()} concerts")
+            .ToList();
+
+        ConcertsByYearLabel.Text = concertsByYear.Any()
+            ? "Concerts per year:\n" + string.Join("\n", concertsByYear)
+            : "No concert date data available.";
     }
+
 
     // Toggle section visibility methods
     private void OnTotalConcertsTapped(object sender, EventArgs e)
@@ -94,11 +108,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (TotalConcertsContent.IsVisible)
         {
-            TotalConcertsHeader.Text = "Total Concerts 🢃";
+            TotalConcertsHeader.Text = "Total Concerts ↓";
         }
         else
         {
-            TotalConcertsHeader.Text = "Total Concerts 🢂";
+            TotalConcertsHeader.Text = "Total Concerts →";
         }
     }
 
@@ -111,11 +125,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (AverageRatingContent.IsVisible)
         {
-            AverageRatingHeader.Text = "Average Rating 🢃";
+            AverageRatingHeader.Text = "Average Rating ↓";
         }
         else
         {
-            AverageRatingHeader.Text = "Average Rating 🢂";
+            AverageRatingHeader.Text = "Average Rating →";
         }
     }
 
@@ -128,11 +142,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (MostFrequentPerformerContent.IsVisible)
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count 🢃";
+            MostFrequentPerformerHeader.Text = "Performers By Count ↓";
         }
         else
         {
-            MostFrequentPerformerHeader.Text = "Performers by Count 🢂";
+            MostFrequentPerformerHeader.Text = "Performers By Count →";
         }
     }
 
@@ -145,11 +159,11 @@ public partial class StatisticsPage : ContentPage
         //Update header text based on state
         if (ConcertsByCountryContent.IsVisible)
         {
-            ConcertsByCountryHeader.Text = "Concerts By Country 🢃";
+            ConcertsByCountryHeader.Text = "Concerts By Country ↓";
         }
         else
         {
-            ConcertsByCountryHeader.Text = "Concerts By Country 🢂";
+            ConcertsByCountryHeader.Text = "Concerts By Country →";
         }
     }
 
@@ -162,11 +176,27 @@ public partial class StatisticsPage : ContentPage
         // Update header text based on state
         if (LatestConcertContent.IsVisible)
         {
-            LatestConcertHeader.Text = "Latest Concert 🢃";
+            LatestConcertHeader.Text = "Latest Concert ↓";
         }
         else
         {
-            LatestConcertHeader.Text = "Latest Concert 🢂";
+            LatestConcertHeader.Text = "Latest Concert →";
+        }
+    }
+
+    // Concerts Per Year Toggle
+    private void OnConcertsByYearTapped(object sender, EventArgs e)
+    {
+        // Toggle visibility
+        ConcertsByYearContent.IsVisible = !ConcertsByYearContent.IsVisible;
+        // Update header text based on state
+        if (ConcertsByYearContent.IsVisible)
+        {
+            ConcertsByYearHeader.Text = "Concerts Per Year ↓";
+        }
+        else
+        {
+            ConcertsByYearHeader.Text = "Concerts Per Year →";
         }
     }
 }
