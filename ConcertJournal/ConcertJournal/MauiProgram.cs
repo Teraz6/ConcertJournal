@@ -3,6 +3,7 @@ using ConcertJournal.Data;
 using ConcertJournal.Services;
 using CustomShellMaui;
 using Microsoft.Extensions.Logging;
+using UraniumUI;
 
 namespace ConcertJournal;
 
@@ -14,6 +15,8 @@ public static class MauiProgram
 
         builder
             .UseMauiApp<App>()
+            .UseUraniumUI()
+            .UseUraniumUIMaterial()
             .UseMauiCommunityToolkit()
             .UseCustomShellMaui()
             .ConfigureFonts(fonts =>
