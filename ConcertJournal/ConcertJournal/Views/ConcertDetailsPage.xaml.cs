@@ -61,4 +61,22 @@ public partial class ConcertDetailsPage : ContentPage
     {
         await Shell.Current.GoToAsync($"//ConcertListPage", animate: true);
     }
+
+    private async void OnDeleteClicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is Concert concert)
+        {
+            bool confirm = await DisplayAlert(
+                "Delete Concert",
+                $"Are you sure you want to delete '{concert.EventTitle}'?",
+                "Yes",
+                "No");
+
+            if (confirm)
+            {
+                await App.Database.DeleteConcertAsync(concert);
+                await Shell.Current.GoToAsync($"//ConcertListPage", animate: true);
+            }
+        }
+    }
 }

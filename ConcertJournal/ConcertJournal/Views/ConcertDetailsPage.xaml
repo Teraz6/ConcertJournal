@@ -18,9 +18,10 @@
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Header Section -->
-                <Grid>
+                <Grid ColumnDefinitions="*,*">
                     <!-- Back button -->
-                    <Button Text="← Back"
+                    <Button Grid.Column="0"
+                            Text="← Back"
                             FontSize="18"
                             TextColor="{DynamicResource ButtonTextColor}"
                             BackgroundColor="{DynamicResource ButtonBackground}"
@@ -28,29 +29,38 @@
                             HorizontalOptions="Start"
                             Clicked="OnBackClicked" />
 
-                    <!-- Edit Button -->
-                    <Button Text="Update"
-                            FontSize="18"
-                            BackgroundColor="{DynamicResource ButtonBackground}"
-                            TextColor="{DynamicResource ButtonTextColor}"
-                            BorderWidth="1"
+                    <HorizontalStackLayout Grid.Column="1"
+                                           Spacing="20"
+                                           HorizontalOptions="End">
+                        <!--Edit button-->
+                        <ImageButton Source="{DynamicResource EditIcon}"
+                            BackgroundColor="Transparent"
+                            BorderWidth="0"
                             CornerRadius="10"
-                            BorderColor="{DynamicResource ButtonBorderColor}"
                             Clicked="OnUpdateClicked"
                             HorizontalOptions="End"/>
+                    
+                        <!-- Delete button-->
+                        <ImageButton Source="{DynamicResource DeleteIcon}"
+                                BackgroundColor="Transparent"
+                                CornerRadius="10"
+                                BorderColor="{DynamicResource ButtonBorderColor}"
+                                Clicked="OnDeleteClicked"
+                                HorizontalOptions="End"/>
+                    </HorizontalStackLayout>
                 </Grid>
                 
                 <VerticalStackLayout Spacing="8">
                     <Label Text="{Binding EventTitle}"
-                               FontSize="28"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalTextAlignment="Center"/>
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource TextColor}"
+                           HorizontalTextAlignment="Center"/>
 
                     <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
                                FontSize="16"
                                TextColor="{DynamicResource MutedText}"
-                               HorizontalOptions="Center" />
+                               HorizontalOptions="Center"/>
 
                     <toolkit:RatingView Rating="{Binding Rating}"
                                             x:Name="ConcertRating"
@@ -99,11 +109,24 @@
                                FontAttributes="Bold"
                                TextColor="{DynamicResource TextColor}"
                                HorizontalTextAlignment="Center"/>
-                        
+
                         <Label Text="{Binding Venue}"
                                TextColor="{DynamicResource TextColor}" 
-                               HorizontalTextAlignment="Center"/>
-                        
+                               HorizontalTextAlignment="Center">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Venue}"
+                                             Value="">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label"
+                                             Binding="{Binding Venue}"
+                                             Value="{x:Null}">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+
                         <Label Text="{Binding Location}"
                                TextColor="{DynamicResource TextColor}"
                                HorizontalTextAlignment="Center"/>
