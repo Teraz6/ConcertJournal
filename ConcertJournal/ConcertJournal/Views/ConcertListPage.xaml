@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertListPage"
-             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
+             xmlns:local="clr-namespace:ConcertJournal"
              BackgroundColor="{DynamicResource Background}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="input:RadioButton">
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="CircleColor" Value="{DynamicResource White}" />
+                <Setter Property="Color" Value="{DynamicResource SecondaryDark}" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
         <!--MainContent-->
@@ -20,44 +33,6 @@
                     FontAttributes="Bold"
                     Padding="10"
                     HorizontalOptions="Center"/>
-
-                <!-- Search and Sort Controls -->
-                <Grid ColumnDefinitions=".60*,.40*"
-                    ColumnSpacing="10"
-                    Padding="10">
-                    <!-- Search Bar -->
-                    <Border 
-                        Grid.Column="0"
-                        Stroke="Transparent"
-                        StrokeThickness="0"
-                        BackgroundColor="{DynamicResource Surface}"
-                        StrokeShape="RoundRectangle 10">
-
-                        <SearchBar 
-                            x:Name="SearchBar"
-                            Placeholder="Search by title, performer or location"
-                            TextChanged="OnSearchTextChanged"
-                            CancelButtonColor="{DynamicResource ButtonRed}"/>
-                    </Border>
-
-                    <Border 
-                        Grid.Column="1"
-                        Stroke="Transparent"
-                        StrokeThickness="0"
-                        StrokeShape="RoundRectangle 11">
-                        <Picker 
-                            x:Name="SortPicker"
-                            SelectedIndexChanged="OnSortPickerChanged"
-                            SelectedIndex="0">
-                            <Picker.Items>
-                                <x:String>Default</x:String>
-                                <x:String>Oldest By Date</x:String>
-                                <x:String>Newest By Date</x:String>
-                            </Picker.Items>
-                        </Picker>
-                    </Border>
-                </Grid>
-
 
             </VerticalStackLayout>
 
@@ -205,8 +180,38 @@
             IsVisible="False"
             HorizontalOptions="Start"
             VerticalOptions="Start"/>
+        
+        
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
     </Grid>
-</ContentPage>
+    
+    <!--Back drop-->
+    <uranium:UraniumContentPage.Attachments>
+        <material:BackdropView Title="Filter" IconImageSource="filter.png" BackgroundColor="{DynamicResource PrimaryDark}">
+            <VerticalStackLayout Spacing="10" Padding="10">
+                <!-- Search Bar -->
+                <Border 
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    BackgroundColor="{DynamicResource Surface}"
+                    StrokeShape="RoundRectangle 10">
+
+                    <SearchBar 
+                        x:Name="SearchBar"
+                        Placeholder="Search by title, performer or location"
+                        TextChanged="OnSearchTextChanged"
+                        CancelButtonColor="{DynamicResource ButtonRed}"/>
+                </Border>
+                
+                <!--Radio button for sorting-->
+                <input:RadioButtonGroupView x:Name="SortRadioGroup">
+                    <input:RadioButton Text="Default" Value="Default" IsChecked="True"/>
+                    <input:RadioButton Text="Newest By Date" Value="NewestByDate" />
+                    <input:RadioButton Text="Oldest By Date" Value="OldestByDate" />
+                </input:RadioButtonGroupView>
+            </VerticalStackLayout>
+        </material:BackdropView>
+    </uranium:UraniumContentPage.Attachments>
+</uranium:UraniumContentPage>

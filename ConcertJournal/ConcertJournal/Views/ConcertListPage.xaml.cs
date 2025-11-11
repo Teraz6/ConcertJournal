@@ -1,11 +1,13 @@
 ﻿using ConcertJournal.Models;
 using ConcertJournal.Services;
+using InputKit.Shared.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using RadioButton = InputKit.Shared.Controls.RadioButton;
 
 namespace ConcertJournal.Views;
 
-public partial class ConcertListPage : ContentPage
+public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
 {
 
     private List<Concert> allConcerts = new();
@@ -16,7 +18,7 @@ public partial class ConcertListPage : ContentPage
 
     //Sorting
     private bool sortAscending = true;
-    private const string SortPreferenceKey = "SortPickerSelection";
+    private const string SortPreferenceKey = "SortRadioGroup";
 
     //For optimizing loading
     private const int PageSize = 10;
@@ -32,6 +34,16 @@ public partial class ConcertListPage : ContentPage
         EventBus.ConcertCreated += async () => await RefreshAllAsync();
         EventBus.ConcertUpdated += async () => await RefreshAllAsync();
         ImportServices.ConcertsImported += async () => await RefreshAllAsync();
+
+        // Subscribe to SelectedItemChanged
+        SortRadioGroup.SelectedItemChanged += OnSortRadioSelectedChanged;
+
+        // Restore previously saved selection
+        string savedSort = Preferences.Get(SortPreferenceKey, "Default");
+        foreach (var rb in SortRadioGroup.Children.OfType<RadioButton>())
+        {
+            rb.IsChecked = rb.Value?.ToString() == savedSort;
+        }
     }
 
     protected override async void OnAppearing()
@@ -53,14 +65,11 @@ public partial class ConcertListPage : ContentPage
 
         string savedSort = Preferences.Get(SortPreferenceKey, "Default");
 
-        if (SortPicker.Items.Contains(savedSort))
+        foreach (var rb in SortRadioGroup.Children.OfType<RadioButton>())
         {
-            SortPicker.SelectedItem = savedSort;
+            rb.IsChecked = rb.Text == savedSort;
         }
-        else
-        {
-            SortPicker.SelectedItem = "Default";
-        }
+
         await ApplySortFromPreferenceAsync(savedSort);
     }
 
@@ -93,12 +102,14 @@ public partial class ConcertListPage : ContentPage
             bool ascending = true;
             string searchText = SearchBar?.Text ?? string.Empty;
 
-            if (SortPicker.SelectedItem?.ToString() == "Oldest By Date")
+            string selectedValue = SortRadioGroup.SelectedItem?.ToString() ?? "Default";
+
+            if (selectedValue == "OldestByDate")
             {
                 sortBy = "OldestByDate";
                 ascending = true;
             }
-            else if (SortPicker.SelectedItem?.ToString() == "Newest By Date")
+            else if (selectedValue == "NewestByDate")
             {
                 sortBy = "NewestByDate";
                 ascending = false;
@@ -183,16 +194,16 @@ public partial class ConcertListPage : ContentPage
         await LoadMoreConcertsAsync();
     }
 
-    private void OnSortPickerChanged(object sender, EventArgs e)
+    // This will fire whenever a radio button is selected
+    private void OnSortRadioSelectedChanged(object sender, EventArgs e)
     {
-        if (sender is not Picker picker || picker.SelectedItem is null)
-            return;
+        string selectedValue = SortRadioGroup.SelectedItem?.ToString() ?? "Default";
 
-        string selected = picker.SelectedItem.ToString();
-        Preferences.Set(SortPreferenceKey, selected);
+        // Save preference
+        Preferences.Set(SortPreferenceKey, selectedValue);
 
-        // Refresh with new sort
-        _ = ApplySortFromPreferenceAsync(selected);
+        // Apply sorting
+        _ = ApplySortFromPreferenceAsync(selectedValue);
     }
 
     private async void OnConcertSelected(object sender, SelectionChangedEventArgs e)

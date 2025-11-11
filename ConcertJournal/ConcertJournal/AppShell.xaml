@@ -6,7 +6,8 @@
     xmlns:local="clr-namespace:ConcertJournal"
     xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
     xmlns:views="clr-namespace:ConcertJournal.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="{DynamicResource PrimaryDark}">
 
     <ShellContent 
         ContentTemplate="{DataTemplate local:MainPage}"
