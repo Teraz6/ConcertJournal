@@ -88,8 +88,6 @@
                         Completed="AddNewPerformer">
                         <material:TextField.Attachments>
                             <Button 
-                                Grid.Row="0"
-                                Grid.Column="1"
                                 Text="+ADD"
                                 VerticalOptions="Center"
                                 StyleClass="TextButton"
