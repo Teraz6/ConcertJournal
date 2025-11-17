@@ -28,6 +28,36 @@
                         FontAttributes="Italic"
                         FontSize="24"
                         HorizontalTextAlignment="Center"/>
+
+                    <Border 
+                        x:Name="UpdateCard"
+                        BackgroundColor="Transparent"
+                        StrokeThickness="2"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="10"
+                        HorizontalOptions="Center">
+                        <VerticalStackLayout Spacing="5">
+                            <Label 
+                                x:Name="VersionLabel"
+                                Text="Checking version..."
+                                HorizontalTextAlignment="Center"
+                                FontSize="16"
+                                FontAttributes="Bold"/>
+
+                            <Label 
+                                x:Name="UpdateMessageLabel"
+                                Text=""
+                                FontSize="14"
+                                HorizontalTextAlignment="Center"/>
+
+                            <Button 
+                                x:Name="UpdateButton"
+                                Text="Update"
+                                IsVisible="False"
+                                Clicked="UpdateButton_Clicked"
+                                HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
             </Grid>
         </ScrollView>
