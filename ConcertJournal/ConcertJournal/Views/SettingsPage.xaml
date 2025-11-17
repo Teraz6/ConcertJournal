@@ -32,10 +32,13 @@
                             TextColor="{DynamicResource TextColor}"
                             BackgroundColor="Transparent"
                             FontSize="20"
-                            Margin="5,10,5,40">
+                            BorderWidth="2"
+                            CornerRadius="0"
+                            Margin="0,0,0,40"
+                            Padding="0,10,0,10">
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Secondary}" />
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
                                 </DataTrigger>
                             </Button.Triggers>
                         </Button>
