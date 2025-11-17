@@ -38,7 +38,7 @@
     <Color x:Key="ButtonTextColor">#FF0000</Color>
     <Color x:Key="ButtonBorderColor">#FF0000</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
-    <Color x:Key="ButtonRed">#B30000</Color>
+    <Color x:Key="ButtonRed">#D90000</Color>
     <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
     
     <!--Rating-->

@@ -224,6 +224,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
             bool hasSelection = _selectedConcerts.Count > 0;
             DeleteSelectedButton.IsVisible = hasSelection;
             UnselectAllButton.IsVisible = hasSelection;
+            SelectionButtonBackground.IsVisible = hasSelection;
         }
     }
 
@@ -250,6 +251,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         _selectedConcerts.Clear();
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
+        SelectionButtonBackground.IsVisible = false;
 
         await RefreshAllAsync(); // refresh list
     }
@@ -264,5 +266,6 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         // Hide both buttons when no selection
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
+        SelectionButtonBackground.IsVisible = false;
     }
 }
