@@ -25,6 +25,9 @@ namespace ConcertJournal
         {
             InitializeComponent();
 
+            // Check for updates
+            var updateService = new UpdateServices();
+            Task.Run(() => updateService.CheckForUpdateAsync());
 
             // 🔹 Load saved theme preference (default: Angel)
             string savedTheme = Preferences.Get("AppTheme", "Angel");
@@ -82,6 +85,8 @@ namespace ConcertJournal
             var window = new Window(new AppShell());
             return window;
         }
+
+
 
         //protected override Window CreateWindow(IActivationState? activationState)
         //{
