@@ -1,4 +1,3 @@
-using ConcertJournal.Services;
 using System.Windows.Input;
 
 namespace ConcertJournal.Views.Controls;
@@ -20,57 +19,26 @@ public partial class BottomNavBar : ContentView
 
     private async void OnHomeClicked(object sender, EventArgs e)
     {
-        await NavigateWithAnimation("//MainPage",
-            NavigationHelper.PageOrder["//MainPage"]);
+        await Shell.Current.GoToAsync($"//MainPage");
     }
 
     private async void OnListClicked(object sender, EventArgs e)
     {
-        await NavigateWithAnimation("//ConcertListPage",
-            NavigationHelper.PageOrder["//ConcertListPage"]);
+        await Shell.Current.GoToAsync($"//ConcertListPage");
     }
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        await NavigateWithAnimation("//AddConcertPage",
-            NavigationHelper.PageOrder["//AddConcertPage"]);
+        await Shell.Current.GoToAsync($"//AddConcertPage");
     }
 
     private async void OnSettingsClicked(object sender, EventArgs e)
     {
-        await NavigateWithAnimation("//SettingsPage",
-            NavigationHelper.PageOrder["//SettingsPage"]);
+        await Shell.Current.GoToAsync($"//SettingsPage");
     }
 
     private async void OnStatisticsClicked(object sender, EventArgs e)
     {
-        await NavigateWithAnimation("//StatisticsPage",
-            NavigationHelper.PageOrder["//StatisticsPage"]);
-    }
-
-    private async Task NavigateWithAnimation(string route, int newIndex)
-    {
-        int oldIndex = NavigationHelper.CurrentIndex;
-
-        bool goingRight = newIndex > oldIndex;
-
-        // Apply direction-based animation
-        Shell.Current.CustomShellMaui(new CustomShellMaui.Models.Transitions
-        {
-            Push = new CustomShellMaui.Models.Transition
-            {
-                CurrentPage = goingRight
-                    ? CustomShellMaui.Enum.TransitionType.LeftOut
-                    : CustomShellMaui.Enum.TransitionType.RightOut,
-
-                NextPage = goingRight
-                    ? CustomShellMaui.Enum.TransitionType.RightIn
-                    : CustomShellMaui.Enum.TransitionType.LeftIn
-            }
-        });
-
-        NavigationHelper.CurrentIndex = newIndex;
-
-        await Shell.Current.GoToAsync(route);
+        await Shell.Current.GoToAsync($"//StatisticsPage");
     }
 }
