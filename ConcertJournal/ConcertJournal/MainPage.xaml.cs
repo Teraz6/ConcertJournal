@@ -19,9 +19,7 @@ public partial class MainPage : ContentPage
         try
         {
             using var client = new HttpClient();
-            //client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
-            //TODO: Change to main branch when feature is merged
-            string json = await client.GetStringAsync("https://raw.githubusercontent.com/Teraz6/ConcertJournal/feature-update-notification/update.json");
+            string json = await client.GetStringAsync("https://raw.githubusercontent.com/Teraz6/ConcertJournal/main/update.json");
 
             var info = JsonSerializer.Deserialize<UpdateInfo>(json) ?? throw new Exception("Invalid update.json format");
             _downloadUrl = info.downloadUrl;
