@@ -45,7 +45,7 @@
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\eventjournallogo.png" />
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splashlogo.png" Color="#000000"/>
+		<MauiSplashScreen Include="Resources\Splash\splashlogo.png" Color="#000000" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 
@@ -57,17 +57,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="C:\Users\reten\.nuget\packages\inputkit.maui\4.5.1\contentFiles\any\net9.0-android35.0\icon512.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.2.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CustomShellMaui" Version="1.0.6" />
+		<PackageReference Include="InputKit.Maui" Version="4.5.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.120" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="System.ObjectModel" Version="4.3.0" />
+		<PackageReference Include="UraniumUI" Version="2.13.0" />
+		<PackageReference Include="UraniumUI.Material" Version="2.13.0" />
 	</ItemGroup>
 
 	<ItemGroup>

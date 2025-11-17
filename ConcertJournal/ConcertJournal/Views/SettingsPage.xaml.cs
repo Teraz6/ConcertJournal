@@ -8,39 +8,70 @@ public partial class SettingsPage : ContentPage
 
     private const string DefaultCountryKey = "DefaultCountry";
     private const string DefaultCityKey = "DefaultCity";
+
+    // Bindable property for theme
+    private bool _isDevilTheme;
+    public bool IsDevilTheme
+    {
+        get => _isDevilTheme;
+        set
+        {
+            if (_isDevilTheme != value)
+            {
+                _isDevilTheme = value;
+                OnPropertyChanged(nameof(IsDevilTheme));
+                ApplyTheme(_isDevilTheme);
+                Preferences.Set("AppTheme", _isDevilTheme ? "Devil" : "Angel");
+            }
+        }
+    }
+
+    private string _defaultCountry;
+    public string DefaultCountry
+    {
+        get => _defaultCountry;
+        set
+        {
+            if (_defaultCountry != value)
+            {
+                _defaultCountry = value;
+                OnPropertyChanged(nameof(DefaultCountry));
+            }
+        }
+    }
+
+    private string _defaultCity;
+    public string DefaultCity
+    {
+        get => _defaultCity;
+        set
+        {
+            if (_defaultCity != value)
+            {
+                _defaultCity = value;
+                OnPropertyChanged(nameof(DefaultCity));
+            }
+        }
+    }
+
     public SettingsPage()
     {
         InitializeComponent();
 
+        BindingContext = this;
         // Load last theme state from Preferences
-        bool isDevil = Preferences.Get("AppTheme", "Angel") == "Devil";
-        ThemeSwitch.IsToggled = isDevil;
-        ApplyTheme(isDevil);
+        IsDevilTheme = Preferences.Get("AppTheme", "Angel") == "Devil";
 
         string savedCountry = Preferences.Get(DefaultCountryKey, string.Empty);
-        CountryEntry.Text = savedCountry;
-
         string savedCity = Preferences.Get(DefaultCityKey, string.Empty);
-        CityEntry.Text = savedCity;
     }
 
     private void OnSaveClicked(object sender, EventArgs e)
     {
-        string country = CountryEntry.Text?.Trim() ?? string.Empty;
-        string city = CityEntry.Text?.Trim() ?? string.Empty;
+        Preferences.Set(DefaultCountryKey, DefaultCountry?.Trim() ?? string.Empty);
+        Preferences.Set(DefaultCityKey, DefaultCity?.Trim() ?? string.Empty);
 
-        // Save to preferences
-        Preferences.Set(DefaultCountryKey, country);
-        Preferences.Set(DefaultCityKey, city);
-
-        DisplayAlert("Values set", $"Country: {country}\nCity: {city}", "OK");
-    }
-
-    private void OnThemeToggled(object sender, ToggledEventArgs e)
-    {
-        bool isDevil = e.Value;
-        ApplyTheme(isDevil);
-        Preferences.Set("AppTheme", isDevil ? "Devil" : "Angel");
+        DisplayAlert("Values set", $"Country: {DefaultCountry}\nCity: {DefaultCity}", "OK");
     }
 
     private void ApplyTheme(bool isDevil)

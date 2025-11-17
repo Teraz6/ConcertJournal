@@ -3,37 +3,45 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              x:DataType="models:Concert"
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*,Auto">
-        <Image Source="{DynamicResource DetailsBackground}"
-               Aspect="Fill"
-               Opacity="1"
-               AbsoluteLayout.LayoutBounds="0,0,1,1"
-               AbsoluteLayout.LayoutFlags="All"/>
+        <!--BackgroundImage-->
+        <Image 
+            Source="{DynamicResource DetailsBackground}"
+            Aspect="Fill"
+            Opacity="1"
+            AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="All"/>
+        
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="20" Spacing="20">
                 
                 <!-- Header Section -->
                 <Grid ColumnDefinitions="*,*">
                     <!-- Back button -->
-                    <Button Grid.Column="0"
-                            Text="← Back"
-                            FontSize="18"
-                            TextColor="{DynamicResource ButtonTextColor}"
-                            BackgroundColor="{DynamicResource ButtonBackground}"
-                            CornerRadius="10"
-                            HorizontalOptions="Start"
-                            Clicked="OnBackClicked" />
+                    <Button 
+                        Grid.Column="0"
+                        Text="← Back"
+                        FontSize="18"
+                        TextColor="{DynamicResource ButtonTextColor}"
+                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        CornerRadius="10"
+                        HorizontalOptions="Start"
+                        Clicked="OnBackClicked" />
 
-                    <HorizontalStackLayout Grid.Column="1"
-                                           Spacing="20"
-                                           HorizontalOptions="End">
+                    <HorizontalStackLayout 
+                        Grid.Column="1"
+                        Spacing="20"
+                        HorizontalOptions="End">
+                        
                         <!--Edit button-->
-                        <ImageButton Source="{DynamicResource EditIcon}"
+                        <ImageButton 
+                            Source="{DynamicResource EditIcon}"
                             BackgroundColor="Transparent"
                             BorderWidth="0"
                             CornerRadius="10"
@@ -41,141 +49,163 @@
                             HorizontalOptions="End"/>
                     
                         <!-- Delete button-->
-                        <ImageButton Source="{DynamicResource DeleteIcon}"
-                                BackgroundColor="Transparent"
-                                CornerRadius="10"
-                                BorderColor="{DynamicResource ButtonBorderColor}"
-                                Clicked="OnDeleteClicked"
-                                HorizontalOptions="End"/>
+                        <ImageButton 
+                            Source="{DynamicResource DeleteIcon}"
+                            BackgroundColor="Transparent"
+                            CornerRadius="10"
+                            BorderColor="{DynamicResource ButtonBorderColor}"
+                            Clicked="OnDeleteClicked"
+                            HorizontalOptions="End"/>
                     </HorizontalStackLayout>
                 </Grid>
                 
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding EventTitle}"
-                           FontSize="28"
-                           FontAttributes="Bold"
-                           TextColor="{DynamicResource TextColor}"
-                           HorizontalTextAlignment="Center"/>
+                    <Label 
+                        Text="{Binding EventTitle}"
+                        FontSize="28"
+                        FontAttributes="Bold"
+                        TextColor="{DynamicResource TextColor}"
+                        HorizontalTextAlignment="Center"/>
 
-                    <Label Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
-                               FontSize="16"
-                               TextColor="{DynamicResource MutedText}"
-                               HorizontalOptions="Center"/>
+                    <Label 
+                        Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                        FontSize="16"
+                        TextColor="{DynamicResource MutedText}"
+                        HorizontalOptions="Center"/>
 
-                    <toolkit:RatingView Rating="{Binding Rating}"
-                                            x:Name="ConcertRating"
-                                            HorizontalOptions="Center"
-                                            EmptyShapeColor="Transparent"
-                                            FillColor="{DynamicResource RatingFill}"
-                                            FillOption ="Shape"
-                                            IsReadOnly="True"
-                                            ShapePadding="0"
-                                            ShapeDiameter="30"
-                                            MaximumRating="5"
-                                            Shape="Star"
-                                            ShapeBorderColor="{DynamicResource ButtonBorderColor}"
-                                            ShapeBorderThickness="1"
-                                            Spacing="7"/>
+                    <toolkit:RatingView 
+                        Rating="{Binding Rating}"
+                        x:Name="ConcertRating"
+                        HorizontalOptions="Center"
+                        EmptyShapeColor="Transparent"
+                        FillColor="{DynamicResource RatingFill}"
+                        FillOption ="Shape"
+                        IsReadOnly="True"
+                        ShapePadding="0"
+                        ShapeDiameter="30"
+                        MaximumRating="5"
+                        Shape="Star"
+                        ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+                        ShapeBorderThickness="1"
+                        Spacing="7"/>
                 </VerticalStackLayout>
 
                 <!-- Performers Section -->
-                <Border StrokeThickness="0"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="Transparent"
-                        Padding="16"
-                        HorizontalOptions="Center">
+                <Border 
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="Transparent"
+                    Padding="16"
+                    HorizontalOptions="Center">
+                    
                     <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
-                        <Label Text="Performers"
-                               FontSize="24"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" 
-                               HorizontalOptions="Center"/>
-                        <Label Text="{Binding Performers}"
-                               FontSize="20"
-                               TextTransform="Uppercase"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalTextAlignment="Center"/>
+                        <Label 
+                            Text="Performers"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource TextColor}" 
+                            HorizontalOptions="Center"/>
+                        <Label 
+                            Text="{Binding Performers}"
+                            FontSize="20"
+                            TextTransform="Uppercase"
+                            TextColor="{DynamicResource TextColor}"
+                            HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Venue & Location Section -->
-                <Border StrokeShape="RoundRectangle 12"
-                        BackgroundColor="Transparent"
-                        Padding="16"
-                        HorizontalOptions="Center">
+                <Border 
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="Transparent"
+                    Padding="16"
+                    HorizontalOptions="Center">
                     <VerticalStackLayout Spacing="6">
-                        <Label Text="Location"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalTextAlignment="Center"/>
+                        <Label 
+                            Text="Location"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource TextColor}"
+                            HorizontalTextAlignment="Center"/>
 
-                        <Label Text="{Binding Venue}"
-                               TextColor="{DynamicResource TextColor}" 
-                               HorizontalTextAlignment="Center">
+                        <Label 
+                            Text="{Binding Venue}"
+                            TextColor="{DynamicResource TextColor}" 
+                            HorizontalTextAlignment="Center">
                             <Label.Triggers>
-                                <DataTrigger TargetType="Label"
-                                             Binding="{Binding Venue}"
-                                             Value="">
+                                <DataTrigger 
+                                    TargetType="Label"
+                                    Binding="{Binding Venue}"
+                                    Value="">
                                     <Setter Property="IsVisible" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger TargetType="Label"
-                                             Binding="{Binding Venue}"
-                                             Value="{x:Null}">
+                                <DataTrigger 
+                                    TargetType="Label"
+                                    Binding="{Binding Venue}"
+                                    Value="{x:Null}">
                                     <Setter Property="IsVisible" Value="False" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
 
-                        <Label Text="{Binding Location}"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalTextAlignment="Center"/>
+                        <Label 
+                            Text="{Binding Location}"
+                            TextColor="{DynamicResource TextColor}"
+                            HorizontalTextAlignment="Center"/>
 
                     </VerticalStackLayout>
                 </Border>
 
                 <!-- Notes Section -->
-                <Border StrokeThickness="0"
-                        StrokeShape="RoundRectangle 12"
-                        BackgroundColor="Transparent"
-                        Padding="16">
+                <Border 
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="Transparent"
+                    Padding="16">
                     <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
-                        <Label Text="Notes"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalOptions="Center"/>
-                        <Label Text="{Binding Notes}"
-                               FontSize="16"
-                               TextColor="{DynamicResource TextColor}"
-                               HorizontalTextAlignment="Center"/>
+                        <Label 
+                            Text="Notes"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource TextColor}"
+                            HorizontalOptions="Center"/>
+                        <Label 
+                            Text="{Binding Notes}"
+                            FontSize="16"
+                            TextColor="{DynamicResource TextColor}"
+                            HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
-                <Border StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        Stroke="Transparent"
-                        Padding="16">
+                <Border 
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Stroke="Transparent"
+                    Padding="16">
                     <VerticalStackLayout Spacing="16">
-                        <Label Text="Images" 
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="{DynamicResource TextColor}" 
-                               HorizontalOptions="Center"/>
-                        <CollectionView x:Name="MediaCollectionView"
-                                        ItemsSource="{Binding MediaFiles}"
-                                        ItemsLayout="VerticalGrid, 2"
-                                        SelectionMode="None">
+                        <Label 
+                            Text="Images" 
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            TextColor="{DynamicResource TextColor}" 
+                            HorizontalOptions="Center"/>
+                        <CollectionView 
+                            x:Name="MediaCollectionView"
+                                    ItemsSource="{Binding MediaFiles}"
+                                    ItemsLayout="VerticalGrid, 2"
+                                    SelectionMode="None">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <Border Stroke="{DynamicResource CardBackground}"
-                                            StrokeShape="RoundRectangle 12"
-                                            Margin="5"
-                                            Padding="3">
-                                        <Image Source="{Binding .}"
-                                                   Aspect="AspectFill"
-                                                   HeightRequest="140"
-                                                   WidthRequest="140">
+                                    <Border 
+                                        Stroke="{DynamicResource CardBackground}"
+                                        StrokeShape="RoundRectangle 12"
+                                        Margin="5"
+                                        Padding="3">
+                                        <Image 
+                                            Source="{Binding .}"
+                                            Aspect="AspectFill"
+                                            HeightRequest="140"
+                                            WidthRequest="140">
                                             <Image.GestureRecognizers>
                                                 <TapGestureRecognizer 
                                                         NumberOfTapsRequired="1"
@@ -191,45 +221,50 @@
                 </Border>
 
                 <!-- Edit Button -->
-                <ImageButton Source="{DynamicResource EditIcon}"
-                             BackgroundColor="Transparent"
-                             BorderWidth="1"
-                             CornerRadius="10"
-                             BorderColor="{DynamicResource ButtonBorderColor}"
-                             Padding="0"
-                             Clicked="OnUpdateClicked"
-                             HorizontalOptions="Center"/>
+                <ImageButton 
+                    Source="{DynamicResource EditIcon}"
+                    BackgroundColor="Transparent"
+                    BorderWidth="1"
+                    CornerRadius="10"
+                    BorderColor="{DynamicResource ButtonBorderColor}"
+                    Padding="0"
+                    Clicked="OnUpdateClicked"
+                    HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </ScrollView>
 
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
 
-        <Grid x:Name="ImageOverlay"
-              BackgroundColor="#AA000000"
-              IsVisible="False"
-              VerticalOptions="Fill"
-              HorizontalOptions="Fill"
-              ZIndex="100">
+        <Grid 
+            x:Name="ImageOverlay"
+            BackgroundColor="#AA000000"
+            IsVisible="False"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            ZIndex="100">
 
-            <Border BackgroundColor="{DynamicResource CardBackground}"
-                    StrokeShape="RoundRectangle 10"
-                    Padding="5"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
+            <Border 
+                BackgroundColor="{DynamicResource CardBackground}"
+                StrokeShape="RoundRectangle 10"
+                Padding="5"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
 
                 <Grid>
-                    <Image x:Name="PopupImage"
-                           Aspect="AspectFit"
-                           MinimumHeightRequest="350"
-                           MinimumWidthRequest="350"/>
+                    <Image 
+                        x:Name="PopupImage"
+                        Aspect="AspectFit"
+                        MinimumHeightRequest="350"
+                        MinimumWidthRequest="350"/>
 
-                    <Image Source="close.png"
-                           HeightRequest="30"
-                           WidthRequest="30"
-                           VerticalOptions="Start"
-                           HorizontalOptions="End"
-                           Margin="0">
+                    <Image 
+                        Source="close.png"
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        VerticalOptions="Start"
+                        HorizontalOptions="End"
+                        Margin="0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCloseImageTapped"/>
                         </Image.GestureRecognizers>
