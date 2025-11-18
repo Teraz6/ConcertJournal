@@ -52,7 +52,6 @@
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Concert">
-                        <!--Use strokeThickness as margin-->
                         <Border 
                             Padding="10"
                             Stroke="{DynamicResource CardBorder}"

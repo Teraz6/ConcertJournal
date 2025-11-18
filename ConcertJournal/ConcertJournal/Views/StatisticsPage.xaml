@@ -2,239 +2,254 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.StatisticsPage"
+             
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">
+        <StackLayout Grid.Row="0" Padding="10">
         
         <!--Main content-->
-        <ScrollView>
-            <VerticalStackLayout Padding="20" Spacing="10">
+            <Label 
+                Text="Statistics"
+                FontSize="30"
+                FontAttributes="Bold"
+                Padding="10"
+                HorizontalOptions="Center"
+                Margin="0,0,0,20"/>
 
-                <Label 
-                    Text="Statistics"
-                    FontSize="30"
-                    FontAttributes="Bold"
-                    Padding="10"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,20"/>
+            <!-- UraniumUI Material TabView -->
+            <material:TabView x:Name="StatisticsTabView">
+                <material:TabView.TabHeaderItemTemplate>
+                    <DataTemplate>
+                        <Button 
+                                Text="{Binding Title}"
+                                Command="{Binding Command}"
+                                TextColor="{DynamicResource TextColor}"
+                                BackgroundColor="Transparent"
+                                FontSize="20"
+                                BorderWidth="1"
+                                CornerRadius="15"
+                                Margin="10,0,10,40"
+                                Padding="0,10,0,10">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </DataTemplate>
+                </material:TabView.TabHeaderItemTemplate>
 
-                <CollectionView x:Name="FilterControl"
-                    SelectionMode="Single"
-                    SelectionChanged="OnFilterChanged"
-                    HorizontalOptions="Center"
-                    Margin="0,0,0,10">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
-                    </CollectionView.ItemsLayout>
+                <!-- Overview Tab -->
+                <material:TabItem Title="Overview">
+                    <VerticalStackLayout Padding="0" Spacing="10">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Border StrokeShape="RoundRectangle 20"
-                                Padding="10"
+                        <!-- Latest Concert -->
+                        <Border 
+                            BackgroundColor="{DynamicResource CardBackground}"
+                            Stroke="{DynamicResource CardBorder}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="10"
+                            Margin="0,0,0,10">
+
+                            <VerticalStackLayout>
+                                <Label Text="Latest Concert" 
+                                        FontSize="18" 
+                                        FontAttributes="Bold"
+                                        TextColor="{DynamicResource TextColor}"
+                                        HorizontalTextAlignment="Center"/>
+
+                                <Label x:Name="LatestConcertLabel" 
+                                        FontSize="16" 
+                                        TextColor="{DynamicResource TextColor}"
+                                        HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Total Concerts -->
+                        <Border 
+                            BackgroundColor="{DynamicResource CardBackground}"
+                            Stroke="{DynamicResource CardBorder}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12"
+                            x:Name="TotalConcertsContent"
+                            IsVisible="True"
+                            Margin="0,0,0,10">
+                            <StackLayout Padding="10">
+                                <Label 
+                                    x:Name="TotalConcertsHeader"
+                                    Text="Total Concerts" 
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    HorizontalTextAlignment="Center"
+                                    Margin="0,0,0,10"/>
+                                <Label 
+                                    x:Name="TotalConcertsLabel"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"/>
+                            </StackLayout>
+                        </Border>
+
+                        <!-- Average Rating -->
+                        <Border 
+                            BackgroundColor="{DynamicResource CardBackground}"
+                            Stroke="{DynamicResource CardBorder}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 12" 
+                            x:Name="AverageRatingContent" 
+                            IsVisible="True"
+                            Margin="0,0,0,10">
+                            <StackLayout Padding="10">
+                                <Label 
+                                    x:Name="AverageRatingHeader" 
+                                    Text="Average Rating" 
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    HorizontalTextAlignment="Center"
+                                    Margin="0,0,0,10"/>
+                                <toolkit:RatingView
+                                    x:Name="AverageRatingStars"
+                                    Rating="0"
+                                    MaximumRating="5"
+                                    IsReadOnly="True"
+                                    EmptyShapeColor="Transparent"
+                                    FillColor="{DynamicResource RatingFill}"
+                                    FillOption ="Shape"
+                                    ShapePadding="0"
+                                    ShapeDiameter="40"
+                                    Shape="Star"
+                                    ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+                                    ShapeBorderThickness="2"
+                                    Spacing="7"
+                                    HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </material:TabItem>
+
+                <!-- Performers Tab -->
+                <material:TabItem Title="Performers">
+                    <Grid RowDefinitions="Auto,Auto,*"
+                        RowSpacing="10"
+                        Padding="10">
+
+                        <!-- Search Bar -->
+                        <Border 
+                            Grid.Row="0"
+                            Stroke="Transparent"
+                            StrokeThickness="0"
+                            BackgroundColor="{DynamicResource Surface}"
+                            StrokeShape="RoundRectangle 10">
+                            <SearchBar x:Name="PerformerSearchBar"
+                                Placeholder="Search performer..."
+                                TextChanged="OnPerformerSearchChanged"
+                                HeightRequest="40"
+                                TextColor="{DynamicResource TextColor}"
+                                CancelButtonColor="{DynamicResource ButtonRed}"
+                                Margin="0,0,0,10"/>
+                        </Border>
+
+                        <!-- Sort Buttons -->
+                        <HorizontalStackLayout Grid.Row="1" Spacing="10" HorizontalOptions="Center">
+                            <Button Text="Most Concerts" Clicked="OnSortMostClicked" />
+                            <Button Text="Least Concerts" Clicked="OnSortLeastClicked" />
+                        </HorizontalStackLayout>
+
+                        <!-- Performer List -->
+                        <CollectionView 
+                            Grid.Row="2"
+                            x:Name="PerformersCollection"
+                            SelectionMode="None"
+                            ItemsSource="{Binding Performers}"
+                            RemainingItemsThreshold="5"
+                            RemainingItemsThresholdReached="OnRemainingItemsThresholdReached">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BackgroundColor="{DynamicResource CardBackground}"
+                                        Stroke="{DynamicResource CardBorder}"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 12"
+                                        Padding="10"
+                                        Margin="0,0,0,10">
+                                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                            <Image Source="eventjournallogo_black.png" WidthRequest="30" HeightRequest="30"/>
+                                            <VerticalStackLayout>
+                                                <Label Text="{Binding Name}" FontSize="16" FontAttributes="Bold"/>
+                                                <Label Text="{Binding CountText}" FontSize="14" TextColor="Gray"/>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </Grid>
+                </material:TabItem>
+
+                <!-- Countries Tab -->
+                <material:TabItem Title="Countries">
+                    <VerticalStackLayout Padding="0" Spacing="10">
+                        <Label 
+                                x:Name="ConcertsByCountryHeader" 
+                                Text="Concerts By Country →"
+                                FontSize="20"
+                                FontAttributes="Bold"
+                                HorizontalTextAlignment="Center"
+                                Margin="0,0,0,10">
+
+                        </Label>
+
+                        <Border 
+                                BackgroundColor="{DynamicResource CardBackground}"
                                 Stroke="{DynamicResource CardBorder}"
-                                BackgroundColor="Transparent">
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup Name="SelectionStates">
-                                        <VisualState Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="{DynamicResource CardBackgroundSelected}"/>
-                                                <Setter Property="Stroke" Value="{DynamicResource ButtonBorderColor}"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                        <VisualState Name="Normal">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="{DynamicResource ButtonBackground}"/>
-                                                <Setter Property="Stroke" Value="{DynamicResource ButtonBorderColor}"/>
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12" 
+                                x:Name="ConcertsByCountryContent" 
+                                IsVisible="True"
+                                Margin="0,0,0,10">
+                            <StackLayout Padding="10">
+                                <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
+                            </StackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </material:TabItem>
 
-                                <Label Text="{Binding .}"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center" />
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                <!-- Years Tab -->
+                <material:TabItem Title="Years">
+                    <VerticalStackLayout Padding="0" Spacing="10">
+                        <Label 
+                                x:Name="ConcertsByYearHeader"
+                                Text="Concerts Per Year →"
+                                FontSize="20"
+                                FontAttributes="Bold"
+                                HorizontalTextAlignment="Center"
+                                Margin="0,0,0,10">
 
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type x:String}">
-                            <x:String>Overview</x:String>
-                            <x:String>Performers</x:String>
-                            <x:String>Countries</x:String>
-                            <x:String>Years</x:String>
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                </CollectionView>
+                        </Label>
 
-                <VerticalStackLayout x:Name="OverviewSection">
-
-                    <!-- Latest Concert -->
-                    <Label 
-                        x:Name="LatestConcertHeader"
-                        Text="Latest Concert →"
-                        FontSize="20" 
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnLatestConcertTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        x:Name="LatestConcertContent"
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout Padding="10">
-                            <Label TextColor="{DynamicResource TextColor}" x:Name="LatestConcertLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-
-                    <!-- Total Concert -->
-                    <Label 
-                        x:Name="TotalConcertsHeader"
-                        Text="Total Concerts →" 
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnTotalConcertsTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        x:Name="TotalConcertsContent"
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout Padding="10">
-                            <Label x:Name="TotalConcertsLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-
-                    <!-- Average Rating -->
-                    <Label 
-                        x:Name="AverageRatingHeader" 
-                        Text="Average Rating →" 
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnAverageRatingTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12" 
-                        x:Name="AverageRatingContent" 
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout Padding="10">
-                            <Label x:Name="AverageRatingLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="PerformersSection" IsVisible="False">
-                    <!-- Performers By Count -->
-                    <Label 
-                        x:Name="MostFrequentPerformerHeader" 
-                        Text="Performers By Count →" 
-                        FontSize="20" 
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnPerformerTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12" 
-                        x:Name="MostFrequentPerformerContent"
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout Padding="10">
-                            <Label x:Name="MostFrequentPerformerLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="CountriesSection" IsVisible="False">
-                    <!-- Concerts by Country -->
-                    <Label 
-                        x:Name="ConcertsByCountryHeader" 
-                        Text="Concerts By Country →"
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnConcertsByCountryTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12" 
-                        x:Name="ConcertsByCountryContent" 
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout Padding="10">
-                            <Label x:Name="ConcertsByCountryLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout x:Name="YearsSection" IsVisible="False">
-                    <!-- Concerts by Year -->
-                    <Label 
-                        x:Name="ConcertsByYearHeader"
-                        Text="Concerts Per Year →"
-                        FontSize="20"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        Margin="0,0,0,10">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnConcertsByYearTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-
-                    <Border 
-                        BackgroundColor="{DynamicResource CardBackground}"
-                        Stroke="{DynamicResource CardBorder}"
-                        StrokeThickness="1"
-                        StrokeShape="RoundRectangle 12"
-                        x:Name="ConcertsByYearContent" 
-                        IsVisible="False"
-                        Margin="0,0,0,10">
-                        <StackLayout  Padding="10">
-                            <Label x:Name="ConcertsByYearLabel" FontSize="18"/>
-                        </StackLayout>
-                    </Border>
-                </VerticalStackLayout>
-            </VerticalStackLayout>
-        </ScrollView>
-
+                        <Border 
+                                BackgroundColor="{DynamicResource CardBackground}"
+                                Stroke="{DynamicResource CardBorder}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 12"
+                                x:Name="ConcertsByYearContent" 
+                                IsVisible="True"
+                                Margin="0,0,0,10">
+                            <StackLayout  Padding="10">
+                                <Label x:Name="ConcertsByYearLabel" FontSize="18"/>
+                            </StackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </material:TabItem>
+            </material:TabView>
+        </StackLayout>
         <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
     </Grid>

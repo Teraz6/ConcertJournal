@@ -4,30 +4,47 @@ using ConcertJournal.Data;
 using ConcertJournal.Models;
 using Microsoft.Maui.Controls.Shapes;
 using System;
+using System.Collections.ObjectModel;
 
 namespace ConcertJournal.Views;
 
 public partial class StatisticsPage : ContentPage
 {
+    //For performer listing
+    public class PerformerViewModel
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
+        public string CountText => $"{Count} concerts";
+    }
+
     private readonly DatabaseContext _database;
+    
+
+    //Optimized performers loading
+    private const int PageSize = 15;
+    private int currentPage = 0;
+    private ObservableCollection<PerformerViewModel> displayedPerformers = new();
+    private List<PerformerViewModel> allPerformers;
+    private List<PerformerViewModel> currentPerformers;
 
     public StatisticsPage(DatabaseContext database)
     {
         InitializeComponent();
         _database = database;
+
+        PerformersCollection.ItemsSource = displayedPerformers;
     }
 
     // This method runs every time the page appears
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
 
         LoadStatistics();
-
-        if (FilterControl.SelectedItem == null)
-            FilterControl.SelectedItem = "Overview";
+        await LoadPerformers();
     }
-
+    
     private async void LoadStatistics()
     {
         var concerts = await App.Database.GetConcertsAsync();
@@ -44,29 +61,9 @@ public partial class StatisticsPage : ContentPage
         // Average rating
         var ratedConcerts = concerts.Where(c => c.Rating > 0).ToList();
         var avgRating = ratedConcerts.Any() ? ratedConcerts.Average(c => c.Rating) : 0;
-        AverageRatingLabel.Text = $"Average rating: {avgRating:F2}";
 
-
-        // Performers by Count
-        var performerCounts = concerts
-            .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-            .SelectMany(c => c.Performers.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            .Select(p => p.Trim())
-            .Where(p => !string.IsNullOrEmpty(p))
-            .GroupBy(p => p)
-            .Select(g => new { Name = g.Key, Count = g.Count() })
-            .OrderByDescending(g => g.Count)
-            .ToList();
-
-        if (performerCounts.Any())
-        {
-            MostFrequentPerformerLabel.Text = "Performers by concert count:\n" +
-                string.Join("\n", performerCounts.Select(p => $"{p.Name}: {p.Count}"));
-        }
-        else
-        {
-            MostFrequentPerformerLabel.Text = "No performer data available.";
-        }
+        // Set stars
+        AverageRatingStars.Rating = avgRating;
 
         // Concerts by country
         var concertsByCountry = concerts
@@ -103,120 +100,92 @@ public partial class StatisticsPage : ContentPage
     }
 
 
-    // Toggle section visibility methods
-    private void OnTotalConcertsTapped(object sender, EventArgs e)
+    // Initialize or reset the performers collection for pagination
+    private void InitializePerformersCollection()
     {
-        //Toogle visibility
-        TotalConcertsContent.IsVisible = !TotalConcertsContent.IsVisible;
+        currentPage = 0;
+        displayedPerformers.Clear();
 
-        //Update header text based on state
-        if (TotalConcertsContent.IsVisible)
-        {
-            TotalConcertsHeader.Text = "Total Concerts ↓";
-        }
-        else
-        {
-            TotalConcertsHeader.Text = "Total Concerts →";
-        }
+        currentPerformers ??= allPerformers;
+        LoadNextPage();
     }
 
-    // Average Rating Toggle
-    private void OnAverageRatingTapped(object sender, EventArgs e)
+    // Load performers for performers tab
+    private async Task LoadPerformers()
     {
-        //Toggle visibility
-        AverageRatingContent.IsVisible = !AverageRatingContent.IsVisible;
+        var concerts = await App.Database.GetConcertsAsync();
 
-        //Update header text based on state
-        if (AverageRatingContent.IsVisible)
-        {
-            AverageRatingHeader.Text = "Average Rating ↓";
-        }
-        else
-        {
-            AverageRatingHeader.Text = "Average Rating →";
-        }
+        allPerformers = concerts
+            .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
+            .SelectMany(c => c.Performers.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            .Select(p => p.Trim())
+            .GroupBy(p => p)
+            .Select(g => new PerformerViewModel { Name = g.Key, Count = g.Count() })
+            .OrderByDescending(p => p.Count)
+            .ToList();
+
+        InitializePerformersCollection();
     }
 
-    // Most Frequent Performer Toggle
-    private void OnPerformerTapped(object sender, EventArgs e)
+    private void LoadNextPage()
     {
-        //Toggle visibility
-        MostFrequentPerformerContent.IsVisible = !MostFrequentPerformerContent.IsVisible;
-
-        //Update header text based on state
-        if (MostFrequentPerformerContent.IsVisible)
-        {
-            MostFrequentPerformerHeader.Text = "Performers By Count ↓";
-        }
-        else
-        {
-            MostFrequentPerformerHeader.Text = "Performers By Count →";
-        }
-    }
-
-    // Concerts By Country Toggle
-    private void OnConcertsByCountryTapped(object sender, EventArgs e)
-    {
-        //Toogle visibility
-        ConcertsByCountryContent.IsVisible = !ConcertsByCountryContent.IsVisible;
-
-        //Update header text based on state
-        if (ConcertsByCountryContent.IsVisible)
-        {
-            ConcertsByCountryHeader.Text = "Concerts By Country ↓";
-        }
-        else
-        {
-            ConcertsByCountryHeader.Text = "Concerts By Country →";
-        }
-    }
-
-    // Latest Concert Toggle
-    private void OnLatestConcertTapped(object sender, EventArgs e)
-    {
-        // Toggle visibility
-        LatestConcertContent.IsVisible = !LatestConcertContent.IsVisible;
-
-        // Update header text based on state
-        if (LatestConcertContent.IsVisible)
-        {
-            LatestConcertHeader.Text = "Latest Concert ↓";
-        }
-        else
-        {
-            LatestConcertHeader.Text = "Latest Concert →";
-        }
-    }
-
-    // Concerts Per Year Toggle
-    private void OnConcertsByYearTapped(object sender, EventArgs e)
-    {
-        // Toggle visibility
-        ConcertsByYearContent.IsVisible = !ConcertsByYearContent.IsVisible;
-        // Update header text based on state
-        if (ConcertsByYearContent.IsVisible)
-        {
-            ConcertsByYearHeader.Text = "Concerts Per Year ↓";
-        }
-        else
-        {
-            ConcertsByYearHeader.Text = "Concerts Per Year →";
-        }
-    }
-
-    private void OnFilterChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+        if (currentPerformers == null || currentPerformers.Count == 0)
             return;
 
-        string selected = e.CurrentSelection[0] as string;
-        if (selected == null)
-            return;
+        var nextBatch = currentPerformers
+            .Skip(currentPage * PageSize)
+            .Take(PageSize)
+            .ToList();
 
-        // Show only the selected section
-        OverviewSection.IsVisible = selected == "Overview";
-        PerformersSection.IsVisible = selected == "Performers";
-        CountriesSection.IsVisible = selected == "Countries";
-        YearsSection.IsVisible = selected == "Years";
+        if (!nextBatch.Any())
+            return; // nothing left to load
+
+        foreach (var performer in nextBatch)
+            displayedPerformers.Add(performer);
+
+        currentPage++;
+    }
+
+    private void OnRemainingItemsThresholdReached(object sender, EventArgs e)
+    {
+        LoadNextPage();
+    }
+
+    // Search filter for performers tab
+    private void OnPerformerSearchChanged(object sender, TextChangedEventArgs e)
+    {
+        string query = e.NewTextValue?.Trim() ?? "";
+
+        currentPerformers = string.IsNullOrWhiteSpace(query)
+            ? allPerformers
+            : allPerformers
+                .Where(p => p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+        // Reset paging and reload
+        currentPage = 0;
+        displayedPerformers.Clear();
+        LoadNextPage();
+    }
+
+    // Sort buttons
+    private void OnSortMostClicked(object sender, EventArgs e)
+    {
+        if (currentPerformers == null) return;
+
+        currentPerformers = currentPerformers.OrderByDescending(p => p.Count).ToList();
+        currentPage = 0;
+        displayedPerformers.Clear();
+        LoadNextPage();
+    }
+
+    private void OnSortLeastClicked(object sender, EventArgs e)
+    {
+        if (currentPerformers == null) return;
+
+        currentPerformers = currentPerformers.OrderBy(p => p.Count).ToList();
+        currentPage = 0;
+        displayedPerformers.Clear();
+        LoadNextPage();
     }
 }
