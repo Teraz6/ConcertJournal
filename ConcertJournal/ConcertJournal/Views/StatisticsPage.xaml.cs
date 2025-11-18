@@ -2,9 +2,12 @@
 using SkiaSharp;
 using ConcertJournal.Models;
 using System.Collections.ObjectModel;
-using Microcharts.Maui;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.Measure;
 using SkiaSharp;
-using Microcharts;
+using ConcertJournal.Models.ViewModels;
+
 
 namespace ConcertJournal.Views;
 
@@ -193,31 +196,15 @@ public partial class StatisticsPage : ContentPage
     private void LoadCountryChart(List<Concert> concerts)
     {
         var countryGroups = concerts
-            .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
-            .Select(g => new
-            {
-                Country = g.Key,
-                Count = g.Count()
-            })
-            .OrderByDescending(x => x.Count)
-            .ToList();
+        .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
+        .Select(g => (Country: g.Key, Count: g.Count()))
+        .OrderByDescending(x => x.Count)
+        .ToList();
 
-        var entries = countryGroups.Select(c =>
-            new ChartEntry(c.Count)
-            {
-                Label = c.Country,
-                ValueLabel = c.Count.ToString(),
-                Color = SKColor.Parse("#3F51B5")
-            })
-            .ToList();
-
-        CountriesChart.Chart = new BarChart
-        {
-            Entries = entries,
-            LabelTextSize = 22,
-            ValueLabelTextSize = 22,
-            Margin = 20,
-            BackgroundColor = SKColors.Transparent
-        };
+        var vm = new CountryChartViewModel(countryGroups);
+        CountriesChart.BindingContext = vm;
+        CountriesChart.Series = vm.CountrySeries;
+        CountriesChart.XAxes = vm.XAxes;
+        CountriesChart.YAxes = vm.YAxes;
     }
 }
