@@ -21,7 +21,11 @@ public partial class StatisticsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
         LoadStatistics();
+
+        if (FilterControl.SelectedItem == null)
+            FilterControl.SelectedItem = "Overview";
     }
 
     private async void LoadStatistics()
@@ -198,5 +202,21 @@ public partial class StatisticsPage : ContentPage
         {
             ConcertsByYearHeader.Text = "Concerts Per Year →";
         }
+    }
+
+    private void OnFilterChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection == null || e.CurrentSelection.Count == 0)
+            return;
+
+        string selected = e.CurrentSelection[0] as string;
+        if (selected == null)
+            return;
+
+        // Show only the selected section
+        OverviewSection.IsVisible = selected == "Overview";
+        PerformersSection.IsVisible = selected == "Performers";
+        CountriesSection.IsVisible = selected == "Countries";
+        YearsSection.IsVisible = selected == "Years";
     }
 }
