@@ -1,10 +1,10 @@
-﻿using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Maui.Views;
-using ConcertJournal.Data;
+﻿using ConcertJournal.Data;
+using SkiaSharp;
 using ConcertJournal.Models;
-using Microsoft.Maui.Controls.Shapes;
-using System;
 using System.Collections.ObjectModel;
+using Microcharts.Maui;
+using SkiaSharp;
+using Microcharts;
 
 namespace ConcertJournal.Views;
 
@@ -54,6 +54,7 @@ public partial class StatisticsPage : ContentPage
             TotalConcertsLabel.Text = "No concert data available.";
             return;
         }
+        
 
         // Total concerts
         TotalConcertsLabel.Text = $"Total concerts: {concerts.Count}";
@@ -71,10 +72,6 @@ public partial class StatisticsPage : ContentPage
             .GroupBy(c => c.Country.Trim())
             .Select(g => $"{g.Key}: {g.Count()}")
             .ToList();
-
-        ConcertsByCountryLabel.Text = concertsByCountry.Any()
-            ? "Concerts by country:\n" + string.Join("\n", concertsByCountry)
-            : "No country data available.";
 
         // Latest concert date
         var latestConcert = concerts
@@ -97,6 +94,9 @@ public partial class StatisticsPage : ContentPage
         ConcertsByYearLabel.Text = concertsByYear.Any()
             ? "Concerts per year:\n" + string.Join("\n", concertsByYear)
             : "No concert date data available.";
+
+        //For country chart, dont delete
+        LoadCountryChart(concerts);
     }
 
 
@@ -187,5 +187,37 @@ public partial class StatisticsPage : ContentPage
         currentPage = 0;
         displayedPerformers.Clear();
         LoadNextPage();
+    }
+
+    //Countries Tab
+    private void LoadCountryChart(List<Concert> concerts)
+    {
+        var countryGroups = concerts
+            .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
+            .Select(g => new
+            {
+                Country = g.Key,
+                Count = g.Count()
+            })
+            .OrderByDescending(x => x.Count)
+            .ToList();
+
+        var entries = countryGroups.Select(c =>
+            new ChartEntry(c.Count)
+            {
+                Label = c.Country,
+                ValueLabel = c.Count.ToString(),
+                Color = SKColor.Parse("#3F51B5")
+            })
+            .ToList();
+
+        CountriesChart.Chart = new BarChart
+        {
+            Entries = entries,
+            LabelTextSize = 22,
+            ValueLabelTextSize = 22,
+            Margin = 20,
+            BackgroundColor = SKColors.Transparent
+        };
     }
 }
