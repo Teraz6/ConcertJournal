@@ -46,6 +46,8 @@ public class CountryChartViewModel
                 Labels = labels,
                 TextSize = 14,
                 LabelsRotation = 0,
+                MinStep = 1,
+                ShowSeparatorLines = false
             }
         };
 
@@ -60,8 +62,9 @@ public class CountryChartViewModel
                 MinStep = 1,
             }
         };
+
         // Dynamically calculate height for the chart
-        var rowHeight = 40; // pixels per country
+        var rowHeight = 50; // pixels per country
         var padding = 20;   // top+bottom
         ChartHeight = sortedData.Count * rowHeight + padding;
     }
