@@ -2,7 +2,7 @@
 using ConcertJournal.Data;
 using ConcertJournal.Services;
 using CustomShellMaui;
-using Microcharts.Maui;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using UraniumUI;
@@ -21,7 +21,7 @@ public static class MauiProgram
             .UseUraniumUIMaterial()
             .UseMauiCommunityToolkit()
             .UseCustomShellMaui()
-            .UseMicrocharts()
+            .UseLiveCharts()
             .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
