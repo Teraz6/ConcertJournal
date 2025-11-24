@@ -12,6 +12,9 @@ public class CountryChartViewModel
     public Axis[] YAxes { get; set; }
 
     public double ChartHeight { get; set; }
+
+    private readonly int maxLabelLength = 12;
+    private string[] originalLabels;
     public CountryChartViewModel(IEnumerable<(string Country, int Count)> data)
     {
 
@@ -21,7 +24,13 @@ public class CountryChartViewModel
 
         // reverse values and labels for top-to-bottom
         var values = sortedData.Select(d => d.Count).ToArray();
-        var labels = sortedData.Select(d => d.Country).ToArray();
+        originalLabels = sortedData.Select(d => d.Country).ToArray();
+
+        // create trimmed labels for display
+        var trimmedLabels = originalLabels
+            .Select(l => TrimLabel(l))
+            .ToArray();
+
         var textColor = (Color)Application.Current.Resources["TextColor"];
         var skTextColor = textColor.ToSKColor();
 
@@ -45,13 +54,13 @@ public class CountryChartViewModel
         {
             new Axis
             {
-                Labels = labels,
+                Labels = trimmedLabels,
                 LabelsPaint = new SolidColorPaint(skTextColor),
                 TextSize = 16,
-                LabelsRotation = 0,
                 MinStep = 1,
-                ShowSeparatorLines = false
+                ShowSeparatorLines = false,
             }
+
         };
 
         // X-axis: concert counts
@@ -71,4 +80,13 @@ public class CountryChartViewModel
         var padding = 20;   // top+bottom
         ChartHeight = sortedData.Count * rowHeight + padding;
     }
+
+    private string TrimLabel(string text)
+    {
+        if (text.Length <= maxLabelLength)
+            return text;
+
+        return text.Substring(0, maxLabelLength) + "…";
+    }
 }
+

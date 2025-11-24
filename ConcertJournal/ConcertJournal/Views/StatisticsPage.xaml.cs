@@ -25,7 +25,7 @@ public partial class StatisticsPage : ContentPage
     
 
     //Optimized performers loading
-    private const int PageSize = 15;
+    private const int PageSize = 17;
     private int currentPage = 0;
     private ObservableCollection<PerformerViewModel> displayedPerformers = new();
     private List<PerformerViewModel> allPerformers;
