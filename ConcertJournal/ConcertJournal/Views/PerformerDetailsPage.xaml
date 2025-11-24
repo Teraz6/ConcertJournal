@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ConcertJournal.Views.PerformerDetailsPage"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             BackgroundColor="{DynamicResource Background}">
+    
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!--Main content-->
+        <Label 
+            Grid.Row="0"
+            Text="{Binding PerformerName}" 
+            FontAttributes="Bold"
+            FontSize="24" 
+            HorizontalOptions="Center" 
+            Margin="0,20,0,10"/>
+
+        <Grid 
+            Grid.Row="1"
+            ColumnDefinitions="*,*">
+            <!--CollectionView isnt scrolling, TODO: fix that-->
+            <CollectionView
+                ItemsSource="{Binding Concerts}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="12">
+                            <Label Text="{Binding EventTitle}" FontAttributes="Bold" FontSize="18"/>
+                            <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" FontSize="14"/>
+                            <Label Text="{Binding Location}" FontSize="14"/>
+                            <!--TODO: Add button for navigation to selected concert-->
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <VerticalStackLayout 
+                    Grid.Column="1"
+                    HorizontalOptions="Center">
+
+                <!-- How many times seen -->
+                <Border
+                    Margin="0,0,0,20">
+                    <VerticalStackLayout>
+                        <Label 
+                        Text="How many times seen"
+                        HorizontalTextAlignment="Center"/>
+                    <Label 
+                        x:Name="TimesSeenLabel"
+                        Text="-" 
+                        HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- How many countries -->
+                <Border
+                    Margin="0,0,0,20">
+                    <VerticalStackLayout>
+                        <Label 
+                            Text="Different countries"
+                            HorizontalTextAlignment="Center"/>
+                        <Label 
+                            x:Name="CountriesSeenLabel" 
+                            Text="-" 
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- First seen -->
+                <Border
+                     Margin="0,0,0,20">
+                    <VerticalStackLayout>
+                        <Label 
+                            Text="First time seen:"
+                            HorizontalTextAlignment="Center"/>
+                        <Label 
+                            x:Name="FirstSeenLabel" 
+                            Text="-" 
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- Most recent -->
+                <Border
+                    Margin="0,0,0,20">
+                    <VerticalStackLayout>
+                        <Label 
+                            Text="Most recent time seen"
+                            HorizontalTextAlignment="Center"/>
+                        <Label 
+                            x:Name="RecentSeenLabel" 
+                            Text="-" 
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!--Navigation bar-->
+        <controls:BottomNavBar Grid.Row="2" />
+    </Grid>
+</ContentPage>
