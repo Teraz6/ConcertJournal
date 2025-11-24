@@ -63,4 +63,12 @@ public partial class PerformerDetailsPage : ContentPage
         var recentSeenConcert = filtered.OrderByDescending(c => c.Date).FirstOrDefault();
         RecentSeenLabel.Text = recentSeenConcert?.Date?.ToString("dd MMM yyyy") ?? "-";  // Handle nullable DateTime
     }
+
+    private async void OnDetailsClicked(object sender, EventArgs e)
+    {
+        if (sender is ImageButton button && button.BindingContext is Concert concert)
+        {
+            await Navigation.PushAsync(new ConcertDetailsPage(concert));
+        }
+    }
 }

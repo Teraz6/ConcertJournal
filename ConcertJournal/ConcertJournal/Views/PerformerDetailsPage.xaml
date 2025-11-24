@@ -12,38 +12,79 @@
             Grid.Row="0"
             Text="{Binding PerformerName}" 
             FontAttributes="Bold"
-            FontSize="24" 
+            FontSize="28" 
             HorizontalOptions="Center" 
-            Margin="0,20,0,10"/>
+            Margin="0,20,0,20"/>
 
         <Grid 
             Grid.Row="1"
-            ColumnDefinitions="*,*">
-            <!--CollectionView isnt scrolling, TODO: fix that-->
+            ColumnDefinitions="*,*"
+            RowDefinitions="Auto,*"
+            Padding="5">
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Concerts Attended"
+                FontAttributes="Bold"
+                FontSize="20" 
+                HorizontalOptions="Center"/>
             <CollectionView
+                Grid.Row="1"
                 ItemsSource="{Binding Concerts}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="12">
-                            <Label Text="{Binding EventTitle}" FontAttributes="Bold" FontSize="18"/>
-                            <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" FontSize="14"/>
-                            <Label Text="{Binding Location}" FontSize="14"/>
-                            <!--TODO: Add button for navigation to selected concert-->
-                        </StackLayout>
+                        <Border
+                            Stroke="{DynamicResource CardBorder}">
+                            <Grid ColumnDefinitions=".8*,.2*"
+                                  RowDefinitions="*,*,*"
+                                  Padding="5">
+                                <Label 
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Text="{Binding EventTitle}" 
+                                    FontAttributes="Bold" 
+                                    FontSize="18"/>
+                                <Label 
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
+                                    FontSize="14"/>
+                                <Label 
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Text="{Binding Location}" 
+                                    FontSize="14"/>
+                                <ImageButton 
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    Source="{DynamicResource DetailsIcon}"
+                                    Clicked="OnDetailsClicked"
+                                    BindingContext="{Binding .}"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    HeightRequest="35"
+                                    WidthRequest="35"
+                                    Padding="5"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
             <VerticalStackLayout 
-                    Grid.Column="1"
-                    HorizontalOptions="Center">
+                Grid.Column="1"
+                Grid.Row="1"
+                HorizontalOptions="Center">
 
-                <!-- How many times seen -->
+                <!-- Total Shows Seen -->
                 <Border
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
-                        Text="How many times seen"
+                        Text="Total Shows Seen:"
                         HorizontalTextAlignment="Center"/>
                     <Label 
                         x:Name="TimesSeenLabel"
@@ -51,13 +92,13 @@
                         HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
-                
-                <!-- How many countries -->
+
+                <!-- Countries Seen In -->
                 <Border
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
-                            Text="Different countries"
+                            Text="Countries Seen In:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
                             x:Name="CountriesSeenLabel" 
@@ -66,12 +107,12 @@
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- First seen -->
+                <!-- First Show Attended -->
                 <Border
                      Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
-                            Text="First time seen:"
+                            Text="First Show Attended:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
                             x:Name="FirstSeenLabel" 
@@ -79,13 +120,13 @@
                             HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
-                
-                <!-- Most recent -->
+
+                <!-- Last Show Attended -->
                 <Border
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
-                            Text="Most recent time seen"
+                            Text="Last Show Attended:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
                             x:Name="RecentSeenLabel" 
