@@ -208,6 +208,7 @@
                         <!-- Livecharts2 Chart -->
                         <lvc:CartesianChart
                             x:Name="CountriesChart"
+                            BackgroundColor="{DynamicResource Background}"
                             Series="{Binding CountrySeries}"
                             XAxes="{Binding XAxes}"
                             YAxes="{Binding YAxes}" 

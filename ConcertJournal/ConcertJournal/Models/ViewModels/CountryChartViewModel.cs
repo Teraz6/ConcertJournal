@@ -2,6 +2,7 @@
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
+using SkiaSharp.Views.Maui;
 
 namespace ConcertJournal.Models.ViewModels;
 public class CountryChartViewModel
@@ -11,7 +12,6 @@ public class CountryChartViewModel
     public Axis[] YAxes { get; set; }
 
     public double ChartHeight { get; set; }
-
     public CountryChartViewModel(IEnumerable<(string Country, int Count)> data)
     {
 
@@ -22,6 +22,8 @@ public class CountryChartViewModel
         // reverse values and labels for top-to-bottom
         var values = sortedData.Select(d => d.Count).ToArray();
         var labels = sortedData.Select(d => d.Country).ToArray();
+        var textColor = (Color)Application.Current.Resources["TextColor"];
+        var skTextColor = textColor.ToSKColor();
 
         // Horizontal bars
         CountrySeries = new ISeries[]
@@ -30,7 +32,7 @@ public class CountryChartViewModel
             {
                 Values = values,
                 Fill = new SolidColorPaint(SKColor.Parse("#3F51B5")),
-                DataLabelsPaint = new SolidColorPaint(SKColors.White), // contrast text
+                DataLabelsPaint = new SolidColorPaint(SKColor.Parse("#F8F8F8")), // contrast text
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
@@ -44,6 +46,7 @@ public class CountryChartViewModel
             new Axis
             {
                 Labels = labels,
+                LabelsPaint = new SolidColorPaint(skTextColor),
                 TextSize = 14,
                 LabelsRotation = 0,
                 MinStep = 1,
@@ -57,6 +60,7 @@ public class CountryChartViewModel
             new Axis
             {
                 Labeler = value => value.ToString(),
+                LabelsPaint = new SolidColorPaint(skTextColor),
                 Name = "Concerts",
                 TextSize = 14,
                 MinStep = 1,
