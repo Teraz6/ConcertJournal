@@ -304,9 +304,6 @@ public partial class StatisticsPage : ContentPage
         if (btn.BindingContext is not PerformerViewModel performer)
             return;
 
-        // Debugging step to ensure name is being passed
-        Debug.WriteLine($"Navigating to PerformerDetailsPage for: {performer.Name}");
-
         await Navigation.PushAsync(new PerformerDetailsPage(performer.Name, _database));
     }
 }

@@ -84,12 +84,16 @@
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
-                        Text="Total Shows Seen:"
-                        HorizontalTextAlignment="Center"/>
-                    <Label 
-                        x:Name="TimesSeenLabel"
-                        Text="-" 
-                        HorizontalTextAlignment="Center"/>
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            Text="Total Shows Seen:"
+                            HorizontalTextAlignment="Center"/>
+                        <Label 
+                            FontSize="30"
+                            FontAttributes="Bold"
+                            x:Name="TimesSeenLabel"
+                            Text="-" 
+                            HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -97,10 +101,14 @@
                 <Border
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
-                        <Label 
+                        <Label
+                            FontSize="20"
+                            FontAttributes="Bold"
                             Text="Countries Seen In:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
+                            FontSize="30"
+                            FontAttributes="Bold"
                             x:Name="CountriesSeenLabel" 
                             Text="-" 
                             HorizontalTextAlignment="Center"/>
@@ -112,9 +120,13 @@
                      Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
+                            FontSize="20"
+                            FontAttributes="Bold"
                             Text="First Show Attended:"
                             HorizontalTextAlignment="Center"/>
-                        <Label 
+                        <Label
+                            FontSize="20"
+                            FontAttributes="Bold"
                             x:Name="FirstSeenLabel" 
                             Text="-" 
                             HorizontalTextAlignment="Center"/>
@@ -126,9 +138,13 @@
                     Margin="0,0,0,20">
                     <VerticalStackLayout>
                         <Label 
+                            FontSize="20"
+                            FontAttributes="Bold"
                             Text="Last Show Attended:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
+                            FontSize="20"
+                            FontAttributes="Bold"
                             x:Name="RecentSeenLabel" 
                             Text="-" 
                             HorizontalTextAlignment="Center"/>
