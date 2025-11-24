@@ -31,9 +31,9 @@ public class CountryChartViewModel
             new RowSeries<int>
             {
                 Values = values,
-                Fill = new SolidColorPaint(SKColor.Parse("#3F51B5")),
-                DataLabelsPaint = new SolidColorPaint(SKColor.Parse("#F8F8F8")), // contrast text
-                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
+                Fill = new SolidColorPaint(SKColor.Parse("#00BCF5")),
+                DataLabelsPaint = new SolidColorPaint(skTextColor), // contrast text
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Left,
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
                 Stroke = null
@@ -47,7 +47,7 @@ public class CountryChartViewModel
             {
                 Labels = labels,
                 LabelsPaint = new SolidColorPaint(skTextColor),
-                TextSize = 14,
+                TextSize = 16,
                 LabelsRotation = 0,
                 MinStep = 1,
                 ShowSeparatorLines = false
@@ -61,7 +61,6 @@ public class CountryChartViewModel
             {
                 Labeler = value => value.ToString(),
                 LabelsPaint = new SolidColorPaint(skTextColor),
-                Name = "Concerts",
                 TextSize = 14,
                 MinStep = 1,
             }
