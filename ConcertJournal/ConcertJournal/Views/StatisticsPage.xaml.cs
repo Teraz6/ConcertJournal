@@ -85,18 +85,102 @@ public partial class StatisticsPage : ContentPage
         LatestConcertLabel.Text = latestConcert != null
             ? $"Latest concert: {latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
             : "Latest concert: N/A";
-        
-        // Concerts per year
+
+        // Concerts per year WITH performer count
         var concertsByYear = concerts
             .Where(c => c.Date.HasValue)
             .GroupBy(c => c.Date.Value.Year)
             .OrderByDescending(g => g.Key)
-            .Select(g => $"{g.Key}: {g.Count()} concerts")
+            .Select(g =>
+            {
+                int year = g.Key;
+                int concertCount = g.Count();
+
+                // Collect performers in that year (split by comma)
+                var performers = g
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
+                    .SelectMany(c => c.Performers
+                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => p.Trim()))
+                    .Distinct()
+                    .Count();
+
+                return new
+                {
+                    Year = year,
+                    Concerts = concertCount,
+                    Performers = performers
+                };
+            })
             .ToList();
 
-        ConcertsByYearLabel.Text = concertsByYear.Any()
-            ? "Concerts per year:\n" + string.Join("\n", concertsByYear)
-            : "No concert date data available.";
+        var formatted = new FormattedString();
+
+        foreach (var item in concertsByYear)
+        {
+            formatted.Spans.Add(new Span
+            {
+                Text = item.Year.ToString(),
+                FontAttributes = FontAttributes.Bold
+            });
+
+            formatted.Spans.Add(new Span
+            {
+                Text = $": {item.Concerts} concerts  ||  {item.Performers} performers\n"
+            });
+        }
+
+        ConcertsByYearLabel.FormattedText = formatted;
+
+        // Find the year with most concerts
+        var yearWithMostConcerts = concerts
+            .Where(c => c.Date.HasValue)
+            .GroupBy(c => c.Date.Value.Year)
+            .Select(g => new
+            {
+                Year = g.Key,
+                ConcertCount = g.Count(),
+                PerformerCount = g
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
+                    .SelectMany(c => c.Performers
+                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => p.Trim()))
+                    .Distinct()
+                    .Count()
+            })
+            .OrderByDescending(x => x.ConcertCount)
+            .FirstOrDefault();
+
+        // Find the year with most performers
+        var yearWithMostPerformers = concerts
+            .Where(c => c.Date.HasValue)
+            .GroupBy(c => c.Date.Value.Year)
+            .Select(g => new
+            {
+                Year = g.Key,
+                ConcertCount = g.Count(),
+                PerformerCount = g
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
+                    .SelectMany(c => c.Performers
+                        .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => p.Trim()))
+                    .Distinct()
+                    .Count()
+            })
+            .OrderByDescending(x => x.PerformerCount)
+            .FirstOrDefault();
+
+        if (yearWithMostConcerts != null)
+        {
+            MostConcertsByYearLabel.Text =
+                $"Most concerts in a year: {yearWithMostConcerts.Year} ({yearWithMostConcerts.ConcertCount} concerts)";
+        }
+
+        if (yearWithMostPerformers != null)
+        {
+            MostPerformersByYearLabel.Text =
+                $"Most performers in a year: {yearWithMostPerformers.Year} ({yearWithMostPerformers.PerformerCount} performers)";
+        }
 
         //For country chart, dont delete
         LoadCountryChart(concerts);
@@ -104,10 +188,13 @@ public partial class StatisticsPage : ContentPage
 
 
     // Initialize or reset the performers collection for pagination
-    private void InitializePerformersCollection()
+    private void InitializePerformersCollection(bool resetList = false)
     {
         currentPage = 0;
-        displayedPerformers.Clear();
+
+        // Only clear if explicitly resetting (like first load)
+        if (resetList)
+            displayedPerformers.Clear();
 
         currentPerformers ??= allPerformers;
         LoadNextPage();
@@ -127,7 +214,8 @@ public partial class StatisticsPage : ContentPage
             .OrderByDescending(p => p.Count)
             .ToList();
 
-        InitializePerformersCollection();
+        // Initialize the collection only for the first load
+        InitializePerformersCollection(resetList: true);
     }
 
     private void LoadNextPage()
