@@ -193,11 +193,14 @@
                                             HorizontalOptions="Start"/>
 
                                         <!--Performer name-->
-                                        <Label 
+                                        <Button 
                                             Text="{Binding Name}" 
                                             FontAttributes="Bold"
                                             FontSize="22"
-                                            HorizontalOptions="Center"/>
+                                            HorizontalOptions="Center"
+                                            BackgroundColor="Transparent"
+                                            BorderWidth="0"
+                                            Clicked="OnPerformerButtonClicked"/>
 
                                         <!--Concert count-->
                                         <Label 

@@ -1,13 +1,13 @@
 ﻿using ConcertJournal.Data;
-using SkiaSharp;
 using ConcertJournal.Models;
-using System.Collections.ObjectModel;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.Measure;
-using SkiaSharp;
 using ConcertJournal.Models.ViewModels;
-
+using LiveChartsCore;
+using LiveChartsCore.Measure;
+using LiveChartsCore.SkiaSharpView;
+using SkiaSharp;
+using SkiaSharp;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ConcertJournal.Views;
 
@@ -294,5 +294,19 @@ public partial class StatisticsPage : ContentPage
         CountriesChart.Series = vm.CountrySeries;
         CountriesChart.XAxes = vm.XAxes;
         CountriesChart.YAxes = vm.YAxes;
+    }
+
+    private async void OnPerformerButtonClicked(object sender, EventArgs e)
+    {
+        if (sender is not Button btn)
+            return;
+
+        if (btn.BindingContext is not PerformerViewModel performer)
+            return;
+
+        // Debugging step to ensure name is being passed
+        Debug.WriteLine($"Navigating to PerformerDetailsPage for: {performer.Name}");
+
+        await Navigation.PushAsync(new PerformerDetailsPage(performer.Name, _database));
     }
 }
