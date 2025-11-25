@@ -42,7 +42,7 @@
                 x:Name="ConcertListView" 
                 Margin="5"
                 ItemsSource="{Binding Concerts}"
-                RemainingItemsThreshold="5"
+                RemainingItemsThreshold="7"
                 RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
                 SelectionMode="Multiple"
                 SelectionChanged="OnSelectionChanged"

@@ -21,7 +21,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     private const string SortPreferenceKey = "SortRadioGroup";
 
     //For optimizing loading
-    private const int PageSize = 10;
+    private const int PageSize = 15;
     private int _currentPage = 0;
     private bool _isLoadingMore = false;
     private bool _hasMoreItems = true;
