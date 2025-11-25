@@ -58,7 +58,8 @@
             <CollectionView
                 Grid.Row="1"
                 Grid.Column="0"
-                ItemsSource="{Binding Concerts}">
+                ItemsSource="{Binding Concerts}"
+                VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
                 </CollectionView.ItemsLayout>

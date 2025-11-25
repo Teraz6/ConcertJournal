@@ -170,8 +170,9 @@
                         VerticalOptions="Fill"
                         HorizontalOptions="Fill"
                         ItemsSource="{Binding Performers}"
-                        RemainingItemsThreshold="7"
-                        RemainingItemsThresholdReached="OnRemainingItemsThresholdReached">
+                        RemainingItemsThreshold="8"
+                        RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                        VerticalScrollBarVisibility="Never">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
