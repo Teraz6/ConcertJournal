@@ -100,6 +100,7 @@
     <FileImageSource x:Key="EditIcon" File="edit_greenblack.png"/>
     <FileImageSource x:Key="DeleteIcon" File="delete_red.png"/>
     <FileImageSource x:Key="DetailsBackground" File="details_backgroundwhite.png"/>
+    <FileImageSource x:Key="BandIcon" File="band_black.png"/>
     
     <FileImageSource x:Key="Logo" File="eventjournallogo_black.png"/>
     

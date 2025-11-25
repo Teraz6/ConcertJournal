@@ -2,7 +2,9 @@
 using ConcertJournal.Data;
 using ConcertJournal.Services;
 using CustomShellMaui;
+using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using UraniumUI;
 
 namespace ConcertJournal;
@@ -19,6 +21,8 @@ public static class MauiProgram
             .UseUraniumUIMaterial()
             .UseMauiCommunityToolkit()
             .UseCustomShellMaui()
+            .UseLiveCharts()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -26,7 +30,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Italic.ttf", "OpenSansItalic");
             });
 
-        builder.ConfigureMauiHandlers(handlers => { });
+        builder.ConfigureMauiHandlers(handlers => {});
 
 #if DEBUG
         builder.Logging.AddDebug();
