@@ -71,4 +71,9 @@ public partial class PerformerDetailsPage : ContentPage
             await Navigation.PushAsync(new ConcertDetailsPage(concert));
         }
     }
+
+    private async void OnBackClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..", animate: true);
+    }
 }

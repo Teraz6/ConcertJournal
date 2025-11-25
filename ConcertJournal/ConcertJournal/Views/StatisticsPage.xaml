@@ -138,7 +138,7 @@
                 <Grid
                     RowDefinitions="Auto,Auto,*"
                     RowSpacing="10"
-                    Padding="10">
+                    Padding="10,0,10,10">
 
                     <!-- Search Bar -->
                     <Border 
@@ -218,7 +218,7 @@
 
             <!-- Countries Tab -->
             <material:TabItem Title="Countries">
-                <VerticalStackLayout Padding="10" Spacing="10">
+                <VerticalStackLayout Padding="0" Spacing="10">
                     <Label 
                         Text="Concerts by Country"
                         FontSize="22"
