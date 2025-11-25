@@ -52,7 +52,7 @@ public class CountryChartViewModel
             },
             new RowSeries<int>
             {
-                Name = "Performers Seen",
+                Name = "Unique Performers Seen",
                 Values = performerValues,
                 Fill = new SolidColorPaint(SKColor.Parse("#FFB400")),
                 DataLabelsPaint = new SolidColorPaint(skTextColor),

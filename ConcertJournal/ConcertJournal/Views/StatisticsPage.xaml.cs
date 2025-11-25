@@ -291,7 +291,15 @@ public partial class StatisticsPage : ContentPage
             .Select(g =>
             {
                 var concertCount = g.Count();
-                var performerCount = g.Select(c => c.Performers).Distinct().Count();
+
+                // Split each Performer string into individual performers and get distinct count
+                var performerCount = g
+                    .SelectMany(c => (c.Performers ?? "")
+                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => p.Trim())) // remove extra spaces
+                    .Distinct()
+                    .Count();
+
                 return (Country: g.Key, ConcertCount: concertCount, PerformerCount: performerCount);
             })
             .OrderByDescending(x => x.ConcertCount)
