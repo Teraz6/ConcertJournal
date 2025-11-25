@@ -235,7 +235,8 @@
                         XAxes="{Binding XAxes}"
                         YAxes="{Binding YAxes}" 
                         HeightRequest="{Binding ChartHeight}"
-                        TooltipPosition="Hidden"/>
+                        TooltipPosition="Hidden"
+                        LegendPosition="Bottom"/>
                 </VerticalStackLayout>
             </material:TabItem>
 
@@ -273,8 +274,7 @@
                         Stroke="{DynamicResource CardBorder}"
                         StrokeThickness="1"
                         StrokeShape="RoundRectangle 12"
-                        x:Name="ConcertsByYearContent" 
-                        IsVisible="True"
+                        x:Name="ConcertsByYearContent"
                         Margin="0,0,0,10">
                         <StackLayout  Padding="10">
                             <Label 
@@ -283,7 +283,10 @@
                                 FontAttributes="Bold"
                                 HorizontalTextAlignment="Center"
                                 Margin="0,0,0,10"/>
-                            <Label x:Name="ConcertsByYearLabel" FontSize="18"/>
+                            <Label 
+                                x:Name="ConcertsByYearLabel" 
+                                FontSize="18"
+                                HorizontalOptions="Center"/>
                         </StackLayout>
                     </Border>
                 </VerticalStackLayout>

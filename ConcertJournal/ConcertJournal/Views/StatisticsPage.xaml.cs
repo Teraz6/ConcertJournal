@@ -1,11 +1,14 @@
 ﻿using ConcertJournal.Data;
 using ConcertJournal.Models;
 using ConcertJournal.Models.ViewModels;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using LiveChartsCore;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using SkiaSharp;
+using SkiaSharp.Views.Maui;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -126,7 +129,7 @@ public partial class StatisticsPage : ContentPage
 
             formatted.Spans.Add(new Span
             {
-                Text = $": {item.Concerts} concerts  ||  {item.Performers} performers\n"
+                Text = $": {item.Concerts} concerts  |  {item.Performers} performers\n"
             });
         }
 
@@ -284,16 +287,25 @@ public partial class StatisticsPage : ContentPage
     private void LoadCountryChart(List<Concert> concerts)
     {
         var countryGroups = concerts
-        .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
-        .Select(g => (Country: g.Key, Count: g.Count()))
-        .OrderByDescending(x => x.Count)
-        .ToList();
+            .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
+            .Select(g =>
+            {
+                var concertCount = g.Count();
+                var performerCount = g.Select(c => c.Performers).Distinct().Count();
+                return (Country: g.Key, ConcertCount: concertCount, PerformerCount: performerCount);
+            })
+            .OrderByDescending(x => x.ConcertCount)
+            .ToList();
 
         var vm = new CountryChartViewModel(countryGroups);
         CountriesChart.BindingContext = vm;
         CountriesChart.Series = vm.CountrySeries;
         CountriesChart.XAxes = vm.XAxes;
         CountriesChart.YAxes = vm.YAxes;
+
+        // Dynamic legend color
+        var legendTextColor = (Color)Application.Current.Resources["TextColor"];
+        CountriesChart.LegendTextPaint = new SolidColorPaint(legendTextColor.ToSKColor());
     }
 
     private async void OnPerformerButtonClicked(object sender, EventArgs e)

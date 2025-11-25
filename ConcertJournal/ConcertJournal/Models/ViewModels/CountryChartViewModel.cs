@@ -15,15 +15,16 @@ public class CountryChartViewModel
 
     private readonly int maxLabelLength = 12;
     private string[] originalLabels;
-    public CountryChartViewModel(IEnumerable<(string Country, int Count)> data)
+
+    public CountryChartViewModel(
+        IEnumerable<(string Country, int ConcertCount, int PerformerCount)> data)
     {
-
-
-        // Sort descending by Count
-        var sortedData = data.OrderBy(d => d.Count).ToList();
+        // Sort descending by ConcertCount
+        var sortedData = data.OrderBy(d => d.ConcertCount).ToList();
 
         // reverse values and labels for top-to-bottom
-        var values = sortedData.Select(d => d.Count).ToArray();
+        var concertValues = sortedData.Select(d => d.ConcertCount).ToArray();
+        var performerValues = sortedData.Select(d => d.PerformerCount).ToArray();
         originalLabels = sortedData.Select(d => d.Country).ToArray();
 
         // create trimmed labels for display
@@ -34,18 +35,32 @@ public class CountryChartViewModel
         var textColor = (Color)Application.Current.Resources["TextColor"];
         var skTextColor = textColor.ToSKColor();
 
-        // Horizontal bars
+        // Horizontal bars with two series
         CountrySeries = new ISeries[]
         {
             new RowSeries<int>
             {
-                Values = values,
+                Name = "Concerts",
+                Values = concertValues,
                 Fill = new SolidColorPaint(SKColor.Parse("#00BCF5")),
-                DataLabelsPaint = new SolidColorPaint(skTextColor), // contrast text
+                DataLabelsPaint = new SolidColorPaint(skTextColor),
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Left,
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
-                Stroke = null
+                Stroke = null,
+                Padding = 5,
+            },
+            new RowSeries<int>
+            {
+                Name = "Performers Seen",
+                Values = performerValues,
+                Fill = new SolidColorPaint(SKColor.Parse("#FFB400")),
+                DataLabelsPaint = new SolidColorPaint(skTextColor),
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Left,
+                DataLabelsSize = 14,
+                MaxBarWidth = 40,
+                Stroke = null,
+                Padding = 5,
             }
         };
 
@@ -56,11 +71,10 @@ public class CountryChartViewModel
             {
                 Labels = trimmedLabels,
                 LabelsPaint = new SolidColorPaint(skTextColor),
-                TextSize = 16,
+                TextSize = 20,
                 MinStep = 1,
                 ShowSeparatorLines = false,
             }
-
         };
 
         // X-axis: concert counts
@@ -76,7 +90,7 @@ public class CountryChartViewModel
         };
 
         // Dynamically calculate height for the chart
-        var rowHeight = 50; // pixels per country
+        var rowHeight = 60; // pixels per country
         var padding = 20;   // top+bottom
         ChartHeight = sortedData.Count * rowHeight + padding;
     }
