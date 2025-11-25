@@ -199,7 +199,7 @@ public partial class StatisticsPage : ContentPage
         if (resetList)
             displayedPerformers.Clear();
 
-        currentPerformers ??= allPerformers;
+        currentPerformers = allPerformers;
         LoadNextPage();
     }
 
