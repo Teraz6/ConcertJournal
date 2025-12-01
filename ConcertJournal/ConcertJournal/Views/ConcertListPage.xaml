@@ -8,7 +8,8 @@
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
              xmlns:local="clr-namespace:ConcertJournal"
-             BackgroundColor="{DynamicResource Background}">
+             BackgroundColor="{DynamicResource Background}"
+             Shell.NavBarIsVisible="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -20,13 +21,17 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+
     <Grid RowDefinitions="*,Auto">
         <!--MainContent-->
         <Grid RowDefinitions="Auto,*">
 
-            <VerticalStackLayout Grid.Row="0">
+            <Grid 
+                ColumnDefinitions="*,*,*"
+                Grid.Row="0">
 
                 <Label 
+                    Grid.Column="1"
                     x:Name="AddConcertPageTitle"
                     Text="Event List"
                     FontSize="30"
@@ -34,7 +39,15 @@
                     Padding="10"
                     HorizontalOptions="Center"/>
 
-            </VerticalStackLayout>
+                <ImageButton 
+                    Grid.Column="2"
+                    x:Name="FilterButton"
+                    Source="{DynamicResource FilterIcon}"
+                    Clicked="OnBackdropClicked"
+                    HorizontalOptions="End"
+                    Margin="0,0,10,0"/>
+
+            </Grid>
 
             <!--Event display-->
             <CollectionView 
@@ -191,8 +204,16 @@
     
     <!--Back drop-->
     <uranium:UraniumContentPage.Attachments>
-        <material:BackdropView Title="Filter" IconImageSource="filter.png" BackgroundColor="{DynamicResource PrimaryDark}">
+        <material:BackdropView x:Name="FilterBackdrop" BackgroundColor="{DynamicResource PrimaryDark}">
             <VerticalStackLayout Spacing="10" Padding="10">
+
+                <!--Backdrop close button-->
+                <ImageButton 
+                    x:Name="CloseBackdropButton"
+                    Source="{DynamicResource UpIcon}"
+                    Clicked="OnCloseFilterClicked"
+                    HorizontalOptions="Center"/>
+                
                 <!-- Search Bar -->
                 <Border 
                     Stroke="Transparent"
