@@ -34,8 +34,8 @@
                             FontSize="20"
                             BorderWidth="2"
                             CornerRadius="0"
-                            Margin="0,0,0,40"
-                            Padding="0,10,0,10">
+                            Margin="0,0,0,48"
+                            Padding="0,12,0,16">
                             <Button.Triggers>
                                 <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
                                     <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
@@ -77,7 +77,7 @@
                 <material:TabItem Title="Import/Export">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <VerticalStackLayout Spacing="40">
+                            <VerticalStackLayout Spacing="48">
                                 <!--Import-->
                                 <Grid ColumnDefinitions="*,*">
                                     <Label 
@@ -91,11 +91,8 @@
                                         Grid.Column="1"
                                         Text="Import Excel"
                                         FontSize="16"
-                                        BackgroundColor="{DynamicResource ButtonBackground}"
-                                        BorderColor="{DynamicResource ButtonBorderColor}"
-                                        CornerRadius="8"
                                         Clicked="OnImportFromExcelClicked"
-                                        Margin="40,0"/>
+                                        Margin="48,0"/>
                                 </Grid>
                                 
                                 <!--Export-->
@@ -111,11 +108,8 @@
                                         Grid.Column="1"
                                         Text="Export Excel"
                                         FontSize="16"
-                                        BackgroundColor="{DynamicResource ButtonBackground}"
-                                        BorderColor="{DynamicResource ButtonBorderColor}"
-                                        CornerRadius="8"
                                         Clicked="OnExportClicked"
-                                        Margin="40,0"/>
+                                        Margin="48,0"/>
                                 </Grid>
                             </VerticalStackLayout>
                             
@@ -126,7 +120,7 @@
                 <material:TabItem Title="Default values">
                     <material:TabItem.ContentTemplate>
                         <DataTemplate>
-                            <VerticalStackLayout Spacing="40">
+                            <VerticalStackLayout Spacing="48">
                                 <!--Default country-->
                                 <Grid ColumnDefinitions="*,*">
                                     <Label 
@@ -142,7 +136,7 @@
                                         x:Name="CountryEntry" 
                                         Title="Enter default country"
                                         Text="{Binding DefaultCountry, Mode=TwoWay}"
-                                        Margin="20,0"/>
+                                        Margin="24,0"/>
                                 </Grid>
                                 
                                 <!--Default city-->
@@ -160,26 +154,24 @@
                                         x:Name="CityEntry" 
                                         Title="Enter default city" 
                                         Text="{Binding DefaultCity, Mode=TwoWay}"
-                                        Margin="20,0"/>
+                                        Margin="24,0"/>
                                     
                                 </Grid>
                                 
                                 <Button 
                                     Text="Save values"
-                                    FontSize="18"
+                                    FontSize="16"
                                     Clicked="OnSaveClicked"
                                     BorderWidth="0"
                                     BackgroundColor="{DynamicResource ButtonGreen}"
                                     TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                     HorizontalOptions="Center"
-                                    Padding="10"/>
+                                    Padding="12"/>
                             </VerticalStackLayout>
                         </DataTemplate>
                     </material:TabItem.ContentTemplate>
                 </material:TabItem>
             </material:TabView>
-
-            
 
         </ScrollView>
         <!--Navigation bar-->

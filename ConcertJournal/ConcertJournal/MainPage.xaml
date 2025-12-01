@@ -10,17 +10,18 @@
     <Grid RowDefinitions="*,Auto">
         <ScrollView Grid.Row="0">
             <Grid RowDefinitions="*,*"
-                  Padding="10">
+                  Padding="12">
                 <!--MainContent-->
-                <VerticalStackLayout Grid.Row="0"
-                                     Spacing="20"
-                                     Margin="0,100,0,0">
+                <VerticalStackLayout 
+                    Grid.Row="0"
+                    Spacing="16"
+                    Margin="0,128,0,0">
                     <Image 
                         Source="{DynamicResource Logo}"
                         MaximumHeightRequest="400"
                         MaximumWidthRequest="400"
                         HorizontalOptions="Center"
-                        Margin="10"/>
+                        Margin="12"/>
                     <Label 
                         Text="From small stages to massive festivals &#x0a; log every epic moment right here!" 
                         HorizontalOptions="Center"
@@ -33,10 +34,10 @@
                         x:Name="UpdateCard"
                         BackgroundColor="Transparent"
                         StrokeThickness="2"
-                        StrokeShape="RoundRectangle 12"
-                        Padding="10"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="12"
                         HorizontalOptions="Center">
-                        <VerticalStackLayout Spacing="5">
+                        <VerticalStackLayout Spacing="4">
                             <Label 
                                 x:Name="VersionLabel"
                                 Text="Checking version..."

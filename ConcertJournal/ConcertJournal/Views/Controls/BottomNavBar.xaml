@@ -5,11 +5,11 @@
              x:Name="NavBarView">
     
     <Grid BackgroundColor="{DynamicResource NavBarBackground}"
-          Padding="10,5"
+          Padding="8,4"
           ColumnDefinitions="*,*,*,*,*"
           VerticalOptions="End"
           HorizontalOptions="Fill"
-          HeightRequest="70">
+          HeightRequest="68">
         
         <ImageButton
             Source="{DynamicResource HomeIcon}"
@@ -17,8 +17,8 @@
             Command="{Binding NavigateHomeCommand, Source={x:Reference NavBarView}}"
             Clicked="OnHomeClicked"
             HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+            WidthRequest="76"
+            Padding="8"/>
         
         <ImageButton
             Source="{DynamicResource ListIcon}"
@@ -26,8 +26,8 @@
             Command="{Binding NavigateListCommand, Source={x:Reference NavBarView}}"
             Clicked="OnListClicked"
             HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+            WidthRequest="76"
+            Padding="8"/>
         
         <ImageButton
             Source="{DynamicResource PlusIcon}"
@@ -35,8 +35,8 @@
             Command="{Binding NavigateAddCommand, Source={x:Reference NavBarView}}"
             Clicked="OnAddClicked"
             HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+            WidthRequest="76"
+            Padding="8"/>
         
         <ImageButton
             Source="{DynamicResource StatsIcon}"
@@ -44,8 +44,8 @@
             Command="{Binding NavigateStatisticsCommand, Source={x:Reference NavBarView}}"
             Clicked="OnStatisticsClicked"
             HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+            WidthRequest="76"
+            Padding="8"/>
         
         <ImageButton
             Source="{DynamicResource SettingsIcon}"
@@ -53,8 +53,8 @@
             Command="{Binding NavigateSettingsCommand, Source={x:Reference NavBarView}}"
             Clicked="OnSettingsClicked"
             HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+            WidthRequest="76"
+            Padding="8"/>
 
     </Grid>
 </ContentView>

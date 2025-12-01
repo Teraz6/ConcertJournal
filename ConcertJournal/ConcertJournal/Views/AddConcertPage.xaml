@@ -29,7 +29,7 @@
         <ScrollView>
 
             <!--MainContent-->
-            <Grid ColumnDefinitions="*,*,*" Padding="10">
+            <Grid ColumnDefinitions="*,*,*" Padding="8">
                 <VerticalStackLayout Grid.ColumnSpan="3">
                     
                     <!--PageTitle and Create button-->
@@ -38,16 +38,15 @@
                             Grid.Column="1"
                             x:Name="AddConcertPageTitle"
                             Text="Create Event"
-                            FontSize="30"
+                            FontSize="32"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"/>
                         <Button 
                             Grid.Column="1"
                             x:Name="SaveButton"
-                            StyleClass="FilledButton"
                             Text="Create"
-                            FontSize="18"
-                            Padding="10"
+                            FontSize="22"
+                            Padding="8"
                             TextColor="{DynamicResource ButtonUpdateDeleteText}"
                             BackgroundColor="{DynamicResource ButtonGreen}"
                             HorizontalOptions="End"
@@ -58,29 +57,28 @@
                     <!--Event Title-->
                     <Label 
                         Text="Event Title"
-                        Margin="0,10,0,10"
-                        FontSize="18"
+                        Margin="0,12,0,12"
+                        FontSize="22"
                         FontAttributes="Bold"/>
 
                     <material:TextField 
                         x:Name="EventTitleEntry"
                         Title="Event Title"
+                        CornerRadius="12"
                         Text="{Binding EventTitle}"/>
 
-                    <!--Performer name-->
-                    <HorizontalStackLayout Spacing="20">
-                        <Label 
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Text="Performer name" 
-                            Margin="0,15,0,10"
-                            FontSize="18"
-                            FontAttributes="Bold"/>
-                        
-                    </HorizontalStackLayout>
+                    <!--Performer name--> 
+                    <Label 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Performer name" 
+                        Margin="0,16,0,12"
+                        FontSize="22"
+                        FontAttributes="Bold"/>
 
                     <material:TextField 
                         Margin="0,0"
+                        CornerRadius="12"
                         x:Name="PerformerEntry"
                         Title="Performer"
                         Text="{Binding Performer}"
@@ -95,7 +93,7 @@
                                 BorderWidth="0"
                                 TextColor="{DynamicResource ButtonGreen}"
                                 Padding="5"
-                                Margin="0,0,15,0"
+                                Margin="0,0,16,0"
                                 FontSize="18"
                                 Clicked="AddNewPerformer"/>
                         </material:TextField.Attachments>
@@ -105,12 +103,12 @@
                     <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
-                                <StackLayout Orientation="Horizontal" Spacing="5">
+                                <StackLayout Orientation="Horizontal" Spacing="4">
                                     <Label 
                                         Text="{Binding .}" 
                                         FontSize="16" 
                                         VerticalOptions="Center"
-                                        Padding="5"/>
+                                        Padding="8"/>
 
                                     <Button 
                                         Text="X"
@@ -130,28 +128,30 @@
                     <!--Venue-->
                     <Label 
                         Text="Venue" 
-                        Margin="0,10,0,10"
+                        Margin="0,12,0,12"
                         FontSize="18"
                         FontAttributes="Bold"/>
                  
                     <material:TextField 
                         x:Name="VenueEntry"
                         Title="Venue" 
+                        CornerRadius="12"
                         Text="{Binding Venue}"/>
                     
                     <!--Country & City-->
                     <Grid ColumnDefinitions="*,*"
                           RowDefinitions="*,*,*,*"
-                          ColumnSpacing="5">
+                          ColumnSpacing="8">
                         <Label Grid.Row="0"
                                Grid.Column="0"
                                Text="Country" 
-                               Margin="0,10,0,10"
+                               Margin="0,12,0,12"
                                FontSize="18"
                                FontAttributes="Bold"/>
                         <material:TextField 
                             Grid.Row="1"
                             Grid.Column="0"
+                            CornerRadius="12"
                             Title="Country"
                             x:Name="CountryEntry"
                             Text="{Binding Country}"/>
@@ -160,23 +160,23 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Text="City" 
-                            Margin="0,10,0,10"
+                            Margin="0,12,0,12"
                             FontSize="18"
                             FontAttributes="Bold"/>
                         <material:TextField 
                             Grid.Row="1"
                             Grid.Column="1"
                             Title="City"
+                            CornerRadius="12"
                             x:Name="CityEntry"
                             Text="{Binding City}"/>
-
                         
                         <!--Date-->
                         <Label 
                             Grid.Row="2"
                             Grid.Column="0"
                             Text="Date" 
-                            Margin="0,10,0,10"
+                            Margin="0,12,0,12"
                             FontSize="18"
                             FontAttributes="Bold"/>
                         <Border 
@@ -184,7 +184,7 @@
                             Grid.Column="0"
                             HorizontalOptions="Start"
                             Stroke="{DynamicResource SurfaceDark}"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 16"
                             StrokeThickness="1">
                             <DatePicker x:Name="DatePicker"/>
                         </Border>
@@ -193,7 +193,7 @@
                         <Label 
                             Grid.Row="2"
                             Grid.Column="1"
-                            Margin="0,10,0,10"
+                            Margin="0,12,0,12"
                             Text="Rate event"
                             FontSize="18"
                             FontAttributes="Bold"/>
@@ -206,25 +206,26 @@
 			                FillOption ="Shape"
 			                IsReadOnly="False"
 			                ShapePadding="0"
-			                ShapeDiameter="30"
+			                ShapeDiameter="32"
 			                MaximumRating="5"
 			                Shape="Star"
 			                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
 			                ShapeBorderThickness="1"
                             Rating="0"
-			                Spacing="7"/>
+			                Spacing="8"/>
                     </Grid> 
                     
                     <!--Notes-->
                     <Label 
                         Text="Notes" 
-                        Margin="0,10,0,10"
+                        Margin="0,12,0,12"
                         FontSize="18"
                         FontAttributes="Bold"/>
                     
                     <material:EditorField
                         x:Name="NotesEditor"
                         Title="Add Notes"
+                        CornerRadius="12"
                         Text="{Binding Notes}"
                         TextColor="{DynamicResource TextColor}"
                         AccentColor="{DynamicResource CardBorder}"/>
@@ -232,7 +233,7 @@
                     <!--Media-->
                     <Label 
                         Text="Images/Videos"
-                        Margin="0,10,0,10"
+                        Margin="0,12,0,12"
                         FontSize="18"
                         FontAttributes="Bold"/>
                     <!-- Upload Button -->
@@ -241,7 +242,7 @@
                         Clicked="OnAddImageClicked"
                         HorizontalOptions="Start"
                         StyleClass="FilledButton"
-                        Margin="0,0,0,10"
+                        Margin="0,0,0,12"
                         BackgroundColor="{DynamicResource ButtonBackground}"
                         TextColor="{DynamicResource ButtonTextColor}"/>
 
@@ -253,7 +254,7 @@
                             <DataTemplate x:DataType="x:String">
                                 <Grid RowDefinitions="Auto,*">
                                     <Border Grid.Row="0"
-                                            Padding="5"
+                                            Padding="4"
                                             StrokeThickness="0"
                                             MaximumHeightRequest="500"
                                             MaximumWidthRequest="500">
@@ -268,7 +269,7 @@
                                             FontSize="14"
                                             StyleClass="FilledButton"
                                             FontAttributes="Bold"
-                                            Padding="5"
+                                            Padding="4"
                                             Margin="0,0,0,20"
                                             MaximumWidthRequest="150"
                                             Clicked="OnRemoveMediaClicked"

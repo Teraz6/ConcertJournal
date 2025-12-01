@@ -48,7 +48,7 @@ public class CountryChartViewModel
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
                 Stroke = null,
-                Padding = 5,
+                Padding = 4,
             },
             new RowSeries<int>
             {
@@ -60,7 +60,7 @@ public class CountryChartViewModel
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
                 Stroke = null,
-                Padding = 5,
+                Padding = 4,
             }
         };
 

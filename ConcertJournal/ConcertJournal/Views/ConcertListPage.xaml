@@ -34,9 +34,9 @@
                     Grid.Column="1"
                     x:Name="AddConcertPageTitle"
                     Text="Event List"
-                    FontSize="30"
+                    FontSize="32"
                     FontAttributes="Bold"
-                    Padding="10"
+                    Padding="12"
                     HorizontalOptions="Center"/>
 
                 <ImageButton 
@@ -45,7 +45,7 @@
                     Source="{DynamicResource FilterIcon}"
                     Clicked="OnBackdropClicked"
                     HorizontalOptions="End"
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,12,0"/>
 
             </Grid>
 
@@ -53,7 +53,7 @@
             <CollectionView 
                 Grid.Row="1"
                 x:Name="ConcertListView" 
-                Margin="5"
+                Margin="8"
                 ItemsSource="{Binding Concerts}"
                 RemainingItemsThreshold="7"
                 RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
@@ -61,15 +61,15 @@
                 SelectionChanged="OnSelectionChanged"
                 SelectionChangedCommand="{Binding SelectionChangedCommand}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Concert">
                         <Border 
-                            Padding="10"
+                            Padding="12"
                             Stroke="{DynamicResource CardBorder}"
                             StrokeThickness="1"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 16"
                             BackgroundColor="{DynamicResource CardBackground}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
@@ -88,7 +88,7 @@
                                 <VerticalStackLayout Grid.Column="0">
                                     <Label 
                                         Text="{Binding EventTitle}" 
-                                        FontSize="18" 
+                                        FontSize="24" 
                                         FontAttributes="Bold"/>
                                     <Label 
                                         Text="{Binding Performers}" 
@@ -96,32 +96,32 @@
                                     <Label 
                                         Text="{Binding Venue}" 
                                         FontSize="14" />
-                                    <HorizontalStackLayout Spacing="10">
+                                    <HorizontalStackLayout Spacing="8">
                                         <Label 
                                             Text="{Binding Country}" 
-                                            FontSize="14" />
+                                            FontSize="12" />
                                         <Label 
                                             Text="{Binding City}" 
-                                            FontSize="14" />
+                                            FontSize="12" />
                                     </HorizontalStackLayout>
 
                                     <Label 
                                         Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                         FontSize="12"
-                                        Margin="0,10,0,0"
+                                        Margin="0,8,0,0"
                                         TextColor="{DynamicResource MutedText}"/>
                                 </VerticalStackLayout>
 
                                 <!--Button Layout-->
-                                <HorizontalStackLayout Grid.Column="1" Spacing="10">
+                                <HorizontalStackLayout Grid.Column="1" Spacing="12">
                                     
                                     <!--Details button-->
                                     <ImageButton 
                                         Source="{DynamicResource DetailsIcon}"
                                         BackgroundColor="Transparent"
-                                        WidthRequest="60"
-                                        HeightRequest="60"
-                                        Padding="10"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        Padding="0"
                                         VerticalOptions="Center"
                                         Clicked="OnDetailsClicked"
                                         BindingContext="{Binding .}" 
@@ -133,8 +133,8 @@
                                         <ImageButton 
                                             Source="{DynamicResource EditIcon}"
                                             BackgroundColor="Transparent"
-                                            HeightRequest="45"
-                                            WidthRequest="45"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
                                             Padding="0"
                                             Clicked="OnUpdateClicked"
                                             CommandParameter="{Binding .}" 
@@ -144,15 +144,14 @@
                                         <ImageButton 
                                             Source="{DynamicResource DeleteIcon}"
                                             BackgroundColor="Transparent"
-                                            HeightRequest="45"
-                                            WidthRequest="45"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
                                             Padding="0"
                                             Clicked="OnDeleteClicked"
                                             BindingContext="{Binding .}" 
                                             BorderWidth="0"/>
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
-
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -168,7 +167,7 @@
               BackgroundColor="{DynamicResource Background}"
               IsVisible="False"
               VerticalOptions="End"
-              HeightRequest="60">
+              HeightRequest="64">
             <Button 
                 x:Name="DeleteSelectedButton"
                 Grid.Column="1"
@@ -177,9 +176,9 @@
                 BackgroundColor="Transparent"
                 BorderColor="{DynamicResource ButtonRed}"
                 BorderWidth="2"
-                CornerRadius="25"
+                CornerRadius="24"
                 FontSize="18"
-                Margin="10,5"
+                Margin="8,4"
                 Clicked="OnDeleteSelectedClicked" 
                 IsVisible="False"/>
 
@@ -191,9 +190,9 @@
                 BackgroundColor="Transparent"
                 BorderColor="{DynamicResource ButtonGreen}"
                 BorderWidth="2"
-                CornerRadius="25"
+                CornerRadius="24"
                 FontSize="18"
-                Margin="10,5"
+                Margin="8,4"
                 Clicked="OnUnselectAllClicked" 
                 IsVisible="False"/>
         </Grid>
@@ -205,7 +204,7 @@
     <!--Back drop-->
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView x:Name="FilterBackdrop" BackgroundColor="{DynamicResource PrimaryDark}">
-            <VerticalStackLayout Spacing="10" Padding="10">
+            <VerticalStackLayout Spacing="12" Padding="8">
 
                 <!--Backdrop close button-->
                 <ImageButton 
@@ -219,10 +218,11 @@
                     Stroke="Transparent"
                     StrokeThickness="0"
                     BackgroundColor="{DynamicResource Surface}"
-                    StrokeShape="RoundRectangle 10">
+                    StrokeShape="RoundRectangle 16">
 
                     <SearchBar 
                         x:Name="SearchBar"
+                        HeightRequest="48"
                         Placeholder="Search by title, performer or location"
                         TextChanged="OnSearchTextChanged"
                         CancelButtonColor="{DynamicResource ButtonRed}"/>

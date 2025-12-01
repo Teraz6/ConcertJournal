@@ -19,7 +19,7 @@
             AbsoluteLayout.LayoutFlags="All"/>
         
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Padding="20" Spacing="20">
+            <VerticalStackLayout Padding="16" Spacing="24">
                 
                 <!-- Header Section -->
                 <Grid ColumnDefinitions="*,*">
@@ -30,13 +30,12 @@
                         FontSize="18"
                         TextColor="{DynamicResource ButtonTextColor}"
                         BackgroundColor="{DynamicResource ButtonBackground}"
-                        CornerRadius="10"
                         HorizontalOptions="Start"
                         Clicked="OnBackClicked" />
 
                     <HorizontalStackLayout 
                         Grid.Column="1"
-                        Spacing="20"
+                        Spacing="24"
                         HorizontalOptions="End">
                         
                         <!--Edit button-->
@@ -44,7 +43,6 @@
                             Source="{DynamicResource EditIcon}"
                             BackgroundColor="Transparent"
                             BorderWidth="0"
-                            CornerRadius="10"
                             Clicked="OnUpdateClicked"
                             HorizontalOptions="End"/>
                     
@@ -52,7 +50,6 @@
                         <ImageButton 
                             Source="{DynamicResource DeleteIcon}"
                             BackgroundColor="Transparent"
-                            CornerRadius="10"
                             BorderColor="{DynamicResource ButtonBorderColor}"
                             Clicked="OnDeleteClicked"
                             HorizontalOptions="End"/>
@@ -62,7 +59,7 @@
                 <VerticalStackLayout Spacing="8">
                     <Label 
                         Text="{Binding EventTitle}"
-                        FontSize="28"
+                        FontSize="32"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource TextColor}"
                         HorizontalTextAlignment="Center"/>
@@ -82,23 +79,23 @@
                         FillOption ="Shape"
                         IsReadOnly="True"
                         ShapePadding="0"
-                        ShapeDiameter="30"
+                        ShapeDiameter="32"
                         MaximumRating="5"
                         Shape="Star"
                         ShapeBorderColor="{DynamicResource ButtonBorderColor}"
                         ShapeBorderThickness="1"
-                        Spacing="7"/>
+                        Spacing="8"/>
                 </VerticalStackLayout>
 
                 <!-- Performers Section -->
                 <Border 
                     StrokeThickness="0"
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 16"
                     BackgroundColor="Transparent"
                     Padding="16"
                     HorizontalOptions="Center">
                     
-                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
                         <Label 
                             Text="Performers"
                             FontSize="24"
@@ -107,7 +104,7 @@
                             HorizontalOptions="Center"/>
                         <Label 
                             Text="{Binding Performers}"
-                            FontSize="20"
+                            FontSize="22"
                             TextTransform="Uppercase"
                             TextColor="{DynamicResource TextColor}"
                             HorizontalTextAlignment="Center"/>
@@ -116,14 +113,14 @@
 
                 <!-- Venue & Location Section -->
                 <Border 
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 16"
                     BackgroundColor="Transparent"
                     Padding="16"
                     HorizontalOptions="Center">
-                    <VerticalStackLayout Spacing="6">
+                    <VerticalStackLayout Spacing="8">
                         <Label 
                             Text="Location"
-                            FontSize="20"
+                            FontSize="22"
                             FontAttributes="Bold"
                             TextColor="{DynamicResource TextColor}"
                             HorizontalTextAlignment="Center"/>
@@ -159,13 +156,13 @@
                 <!-- Notes Section -->
                 <Border 
                     StrokeThickness="0"
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 16"
                     BackgroundColor="Transparent"
                     Padding="16">
-                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
                         <Label 
                             Text="Notes"
-                            FontSize="20"
+                            FontSize="22"
                             FontAttributes="Bold"
                             TextColor="{DynamicResource TextColor}"
                             HorizontalOptions="Center"/>
@@ -179,7 +176,7 @@
 
                 <Border 
                     StrokeThickness="1"
-                    StrokeShape="RoundRectangle 12"
+                    StrokeShape="RoundRectangle 16"
                     Stroke="Transparent"
                     Padding="16">
                     <VerticalStackLayout Spacing="16">
@@ -198,9 +195,9 @@
                                 <DataTemplate x:DataType="x:String">
                                     <Border 
                                         Stroke="{DynamicResource CardBackground}"
-                                        StrokeShape="RoundRectangle 12"
-                                        Margin="5"
-                                        Padding="3">
+                                        StrokeShape="RoundRectangle 16"
+                                        Margin="4"
+                                        Padding="4">
                                         <Image 
                                             Source="{Binding .}"
                                             Aspect="AspectFill"
@@ -225,7 +222,7 @@
                     Source="{DynamicResource EditIcon}"
                     BackgroundColor="Transparent"
                     BorderWidth="1"
-                    CornerRadius="10"
+                    CornerRadius="12"
                     BorderColor="{DynamicResource ButtonBorderColor}"
                     Padding="0"
                     Clicked="OnUpdateClicked"
@@ -246,8 +243,8 @@
 
             <Border 
                 BackgroundColor="{DynamicResource CardBackground}"
-                StrokeShape="RoundRectangle 10"
-                Padding="5"
+                StrokeShape="RoundRectangle 16"
+                Padding="4"
                 VerticalOptions="Center"
                 HorizontalOptions="Center">
 
@@ -260,8 +257,8 @@
 
                     <Image 
                         Source="close.png"
-                        HeightRequest="30"
-                        WidthRequest="30"
+                        HeightRequest="48"
+                        WidthRequest="48"
                         VerticalOptions="Start"
                         HorizontalOptions="End"
                         Margin="0">

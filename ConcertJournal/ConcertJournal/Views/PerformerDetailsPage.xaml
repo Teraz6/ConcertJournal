@@ -15,11 +15,11 @@
             FontSize="18"
             TextColor="{DynamicResource ButtonTextColor}"
             BackgroundColor="{DynamicResource ButtonBackground}"
-            CornerRadius="10"
+            CornerRadius="12"
             VerticalOptions="Center"
             HorizontalOptions="Start"
             Clicked="OnBackClicked"
-            Margin="5"/>
+            Margin="4"/>
         
         <Label 
             Grid.Row="0"
@@ -27,13 +27,13 @@
             FontAttributes="Bold"
             FontSize="28" 
             HorizontalOptions="Center" 
-            Margin="0,20,0,20"/>
+            Margin="0,24,0,24"/>
 
         <Grid 
             Grid.Row="1"
             ColumnDefinitions="*,*"
             RowDefinitions="Auto,*"
-            Padding="5">
+            Padding="4">
             
             <Label 
                 Grid.Row="0"
@@ -43,7 +43,7 @@
                 TextDecorations="Underline"
                 FontSize="20" 
                 HorizontalOptions="Center"
-                Margin="5"/>
+                Margin="4"/>
             
             <Label 
                 Grid.Row="0"
@@ -53,7 +53,7 @@
                 TextDecorations="Underline"
                 FontSize="20" 
                 HorizontalOptions="Center"
-                Margin="5"/>
+                Margin="4"/>
             
             <CollectionView
                 Grid.Row="1"
@@ -61,16 +61,16 @@
                 ItemsSource="{Binding Concerts}"
                 VerticalScrollBarVisibility="Never">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 16"
                             Stroke="{DynamicResource CardBorder}">
                             <Grid ColumnDefinitions=".8*,.2*"
                                   RowDefinitions="*,*,*"
-                                  Padding="5">
+                                  Padding="8">
                                 <Label 
                                     Grid.Row="0"
                                     Grid.Column="0"
@@ -81,7 +81,7 @@
                                     Grid.Row="1"
                                     Grid.Column="0"
                                     Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                    FontSize="14"/>
+                                    FontSize="12"/>
                                 <Label 
                                     Grid.Row="2"
                                     Grid.Column="0"
@@ -95,9 +95,9 @@
                                     BindingContext="{Binding .}"
                                     HorizontalOptions="End"
                                     VerticalOptions="Center"
-                                    HeightRequest="35"
-                                    WidthRequest="35"
-                                    Padding="5"/>
+                                    HeightRequest="48"
+                                    WidthRequest="48"
+                                    Padding="8"/>
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -111,7 +111,7 @@
 
                 <!-- Total Shows Seen -->
                 <Border
-                    Margin="0,0,0,20">
+                    Margin="0,0,0,24">
                     <VerticalStackLayout>
                         <Label 
                             FontSize="20"
@@ -119,7 +119,7 @@
                             Text="Total Shows Seen:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
-                            FontSize="30"
+                            FontSize="32"
                             FontAttributes="Bold"
                             x:Name="TimesSeenLabel"
                             Text="-" 
@@ -129,7 +129,7 @@
 
                 <!-- Countries Seen In -->
                 <Border
-                    Margin="0,0,0,20">
+                    Margin="0,0,0,24">
                     <VerticalStackLayout>
                         <Label
                             FontSize="20"
@@ -137,7 +137,7 @@
                             Text="Countries Seen In:"
                             HorizontalTextAlignment="Center"/>
                         <Label 
-                            FontSize="30"
+                            FontSize="32"
                             FontAttributes="Bold"
                             x:Name="CountriesSeenLabel" 
                             Text="-" 
@@ -147,7 +147,7 @@
 
                 <!-- First Show Attended -->
                 <Border
-                     Margin="0,0,0,20">
+                     Margin="0,0,0,24">
                     <VerticalStackLayout>
                         <Label 
                             FontSize="20"
@@ -165,7 +165,7 @@
 
                 <!-- Last Show Attended -->
                 <Border
-                    Margin="0,0,0,20">
+                    Margin="0,0,0,24">
                     <VerticalStackLayout>
                         <Label 
                             FontSize="20"
