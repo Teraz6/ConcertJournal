@@ -3,6 +3,7 @@ using ConcertJournal.Services;
 using InputKit.Shared.Controls;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using UraniumUI.ViewExtensions;
 using RadioButton = InputKit.Shared.Controls.RadioButton;
 
 namespace ConcertJournal.Views;
@@ -21,7 +22,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     private const string SortPreferenceKey = "SortRadioGroup";
 
     //For optimizing loading
-    private const int PageSize = 10;
+    private const int PageSize = 15;
     private int _currentPage = 0;
     private bool _isLoadingMore = false;
     private bool _hasMoreItems = true;
@@ -267,5 +268,25 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
         SelectionButtonBackground.IsVisible = false;
+    }
+
+    //Filter icon open/close button
+    private void OnBackdropClicked(object sender, EventArgs e)
+    {
+        FilterBackdrop.IsPresented = !FilterBackdrop.IsPresented;
+        if (FilterBackdrop.IsPresented)
+        {
+            FilterButton.SetDynamicResource(Image.SourceProperty, "UpIcon");
+        }
+        else
+        {
+            FilterButton.SetDynamicResource(Image.SourceProperty, "FilterIcon");
+        }
+    }
+
+    //Filter close button
+    private void OnCloseFilterClicked(object sender, EventArgs e)
+    {
+        FilterBackdrop.IsPresented = false;
     }
 }
