@@ -34,6 +34,18 @@
                     
                     <!--PageTitle and Create button-->
                     <Grid>
+                        <Button
+                            x:Name="CancelButton"
+                            Text="Cancel"
+                            FontSize="18"
+                            StyleClass="OutlinedButton"
+                            BackgroundColor="Transparent"
+                            BorderColor="{DynamicResource ButtonRed}"
+                            TextColor="{DynamicResource ButtonRed}"
+                            HorizontalOptions="Start"
+                            Clicked="OnCancelButtonClicked"
+                            IsVisible="false"/>
+                        
                         <Label 
                             Grid.Column="1"
                             x:Name="AddConcertPageTitle"
@@ -41,6 +53,7 @@
                             FontSize="30"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"/>
+                        
                         <Button 
                             Grid.Column="1"
                             x:Name="SaveButton"

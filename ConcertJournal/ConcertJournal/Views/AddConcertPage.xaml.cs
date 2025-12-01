@@ -1,5 +1,6 @@
 using ConcertJournal.Models;
 using ConcertJournal.Services;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using System.Collections.ObjectModel;
 
 namespace ConcertJournal.Views;
@@ -60,7 +61,7 @@ public partial class AddConcertPage : ContentPage
             // Change button and Title text
             SaveButton.Text = "Save";
             AddConcertPageTitle.Text = "Edit Event";
-
+            CancelButton.IsVisible = true;
         }
         else
         {
@@ -100,6 +101,12 @@ public partial class AddConcertPage : ContentPage
         {
             Performers.Remove(performer);
         }
+    }
+
+    //Cancel editing and go back
+    private async void OnCancelButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//ConcertListPage");
     }
 
     private async void OnAddImageClicked(object sender, EventArgs e)

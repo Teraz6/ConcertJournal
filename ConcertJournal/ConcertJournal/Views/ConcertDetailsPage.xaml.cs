@@ -48,6 +48,7 @@ public partial class ConcertDetailsPage : ContentPage
         ImageOverlay.IsVisible = false;
     }
 
+    //Update button 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
         if (BindingContext is Concert concert)
