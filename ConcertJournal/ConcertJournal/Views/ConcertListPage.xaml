@@ -28,11 +28,13 @@
 
             <Grid 
                 ColumnDefinitions=".1*,.8*,.1*"
+                RowDefinitions="*,*"
                 Grid.Row="0"
                 BackgroundColor="{DynamicResource CardBackground}">
 
                 <Label 
                     Grid.Column="1"
+                    Grid.Row="0"
                     x:Name="AddConcertPageTitle"
                     Text="Event List"
                     FontSize="32"
@@ -40,7 +42,14 @@
                     Padding="12"
                     HorizontalOptions="Center"/>
 
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    x:Name="TotalConcertsLabel"
+                    FontSize="14"/>
+
                 <ImageButton 
+                    Grid.RowSpan="2"
                     Grid.Column="2"
                     x:Name="FilterButton"
                     Source="{DynamicResource FilterIcon}"
@@ -228,7 +237,7 @@
     <!--Back drop-->
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView x:Name="FilterBackdrop" BackgroundColor="{DynamicResource PrimaryDark}">
-            <VerticalStackLayout Spacing="24" Padding="8" Margin="0,16,0,0">
+            <VerticalStackLayout Spacing="32" Padding="8,16">
 
                 <!-- Search Bar -->
                 <Border 
@@ -241,8 +250,7 @@
                         x:Name="SearchBar"
                         HeightRequest="48"
                         Placeholder="Search by title, performer or location"
-                        TextChanged="OnSearchTextChanged"
-                        CancelButtonColor="{DynamicResource ButtonRed}"/>
+                        TextChanged="OnSearchTextChanged"/>
                 </Border>
                 
                 <!--Radio button for sorting-->
