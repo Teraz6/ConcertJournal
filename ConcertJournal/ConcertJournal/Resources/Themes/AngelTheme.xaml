@@ -102,8 +102,8 @@
     <FileImageSource x:Key="StatsIcon" File="stats_black.png"/>
     <FileImageSource x:Key="DetailsIcon" File="details_black.png"/>
     <FileImageSource x:Key="InfoIcon" File="info_black.png"/>
-    <FileImageSource x:Key="EditIcon" File="edit_greenblack.png"/>
-    <FileImageSource x:Key="DeleteIcon" File="delete_red.png"/>
+    <FileImageSource x:Key="EditIcon" File="edit_black.png"/>
+    <FileImageSource x:Key="DeleteIcon" File="delete_black.png"/>
     <FileImageSource x:Key="DetailsBackground" File="details_backgroundwhite.png"/>
     <FileImageSource x:Key="BandIcon" File="band_black.png"/>
     <FileImageSource x:Key="FilterIcon" File="filter_black.png"/>
