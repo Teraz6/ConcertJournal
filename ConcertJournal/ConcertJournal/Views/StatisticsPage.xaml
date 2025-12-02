@@ -180,9 +180,12 @@
                                     StrokeShape="RoundRectangle 16"
                                     Padding="12"
                                     Margin="0,0,0,12">
-                                    <Grid VerticalOptions="Center">
+                                    <Grid 
+                                        ColumnDefinitions=".2*,.6*,.2*"
+                                        VerticalOptions="Center">
                                         <!--Icon image-->
                                         <Image 
+                                            Grid.Column="0"
                                             Source="{DynamicResource BandIcon}" 
                                             WidthRequest="32" 
                                             HeightRequest="32"
@@ -190,16 +193,19 @@
 
                                         <!--Performer name-->
                                         <Button 
+                                            Grid.Column="1"
                                             Text="{Binding Name}" 
                                             FontAttributes="Bold"
                                             FontSize="22"
                                             HorizontalOptions="Center"
+                                            LineBreakMode="WordWrap"
                                             BackgroundColor="Transparent"
                                             BorderWidth="0"
                                             Clicked="OnPerformerButtonClicked"/>
 
                                         <!--Concert count-->
                                         <Label 
+                                            Grid.Column="2"
                                             Text="{Binding CountText}" 
                                             HorizontalOptions="End"
                                             TextColor="{DynamicResource TextColor}"
