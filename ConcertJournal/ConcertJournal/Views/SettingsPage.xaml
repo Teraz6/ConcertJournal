@@ -135,6 +135,7 @@
                                         Grid.Column="1"
                                         x:Name="CountryEntry" 
                                         Title="Enter default country"
+                                        CornerRadius="12"
                                         Text="{Binding DefaultCountry, Mode=TwoWay}"
                                         Margin="24,0"/>
                                 </Grid>
@@ -153,6 +154,7 @@
                                         Grid.Column="1"
                                         x:Name="CityEntry" 
                                         Title="Enter default city" 
+                                        CornerRadius="12"
                                         Text="{Binding DefaultCity, Mode=TwoWay}"
                                         Margin="24,0"/>
                                     
