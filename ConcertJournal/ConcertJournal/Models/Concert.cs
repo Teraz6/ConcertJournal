@@ -18,5 +18,28 @@ namespace ConcertJournal.Models
 
         public string Location => $"{City}, {Country}";
 
+
+        // Display performers with truncation if more than 3
+        public string DisplayPerformers
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Performers))
+                    return string.Empty;
+
+                var list = Performers
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(p => p.Trim())
+                    .ToList();
+
+                if (list.Count <= 3)
+                    return string.Join(", ", list);
+
+                string firstThree = string.Join(", ", list.Take(3));
+                int remaining = list.Count - 3;
+
+                return $"{firstThree} + {remaining} more";
+            }
+        }
     }
 }
