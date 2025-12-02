@@ -14,8 +14,8 @@
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Hellfire Red -->
-    <Color x:Key="Secondary">#FF5252</Color>
-    <Color x:Key="SecondaryDark">#D32F2F</Color>
+    <Color x:Key="Secondary">#D32F2F</Color>
+    <Color x:Key="SecondaryDark">#C22323</Color>
     <Color x:Key="SecondaryText">#FFEBEE</Color>
 
 
@@ -41,6 +41,9 @@
     <Color x:Key="ButtonRed">#D90000</Color>
     <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
     
+    <!--Input-->
+    <Color x:Key="InputAccent">#FF0505</Color>
+
     <!--Rating-->
     <Color x:Key="RatingFill">#B00020</Color>
 

@@ -9,13 +9,13 @@
     
     <!-- Angel Theme Colors -->
     <!-- Sky Blue -->
-    <Color x:Key="Primary">#87F1FF</Color>
-    <Color x:Key="PrimaryDark">#42A5F5</Color>
+    <Color x:Key="Primary">#03A9F4</Color>
+    <Color x:Key="PrimaryDark">#0288D1</Color>
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Golden Halo -->
-    <Color x:Key="Secondary">#FFF8E1</Color>
-    <Color x:Key="SecondaryDark">#FFE082</Color>
+    <Color x:Key="Secondary">#4DD0E1</Color>
+    <Color x:Key="SecondaryDark">#00BCD4</Color>
     <Color x:Key="SecondaryText">#212121</Color>
 
     <!-- Backgrounds -->
@@ -23,23 +23,26 @@
     <Color x:Key="Surface">#F5F5F5</Color>
     <Color x:Key="SurfaceDark">#D9D9D9</Color>
     <Color x:Key="Overlay">#E3F2FD</Color>
-    <Color x:Key="CardBackground">#E0FFFF</Color>
+    <Color x:Key="CardBackground">#E1F5FE</Color>
     <Color x:Key="CardBorder">#212121</Color>
     <Color x:Key="CardBackgroundSelected">#87F1FF</Color>
 
     <!--Button-->
-    <Color x:Key="ButtonBackground">#F5F5F5</Color>
-    <Color x:Key="ButtonTextColor">#212121</Color>
-    <Color x:Key="ButtonBorderColor">#212121</Color>
+    <Color x:Key="ButtonBackground">#E1F5FE</Color>
+    <Color x:Key="ButtonTextColor">#000000</Color>
+    <Color x:Key="ButtonBorderColor">#000000</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
     <Color x:Key="ButtonRed">#D90000</Color>
     <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
+    
+    <!--Input-->
+    <Color x:Key="InputAccent">#2BC5F0</Color>
 
     <!--Rating-->
     <Color x:Key="RatingFill">#F2DD13</Color>
 
     <!-- Text -->
-    <Color x:Key="TextColor">#212121</Color>
+    <Color x:Key="TextColor">#000000</Color>
     <Color x:Key="MutedText">#757575</Color>
     
     <!--NavBar-->
@@ -80,6 +83,8 @@
     <SolidColorBrush x:Key="ButtonGreenBrush" Color="{DynamicResource ButtonGreen}" />
     <SolidColorBrush x:Key="ButtonRedBrush" Color="{DynamicResource ButtonRed}" />
     <SolidColorBrush x:Key="ButtonUpdateDeleteTextBrush" Color="{DynamicResource ButtonUpdateDeleteText}"/>
+
+    <SolidColorBrush x:Key="InputAccentBrush" Color="{DynamicResource InputAccent}" />
 
     <SolidColorBrush x:Key="RatingFillBrush" Color="{DynamicResource RatingFill}" />
 

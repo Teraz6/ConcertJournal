@@ -18,9 +18,10 @@
             <Style TargetType="material:TextField">
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
-                <Setter Property="AccentColor" Value="{DynamicResource CardBorder}" />
+                <Setter Property="AccentColor" Value="{DynamicResource InputAccent}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="AllowClear" Value="True" />
+                <Setter Property="BorderColor" Value="{DynamicResource CardBorder}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -169,7 +170,8 @@
                             Title="City"
                             CornerRadius="12"
                             x:Name="CityEntry"
-                            Text="{Binding City}"/>
+                            Text="{Binding City}"
+                            InputBackgroundColor="{DynamicResource ButtonBackground}"/>
                         
                         <!--Date-->
                         <Label 
@@ -228,7 +230,8 @@
                         CornerRadius="12"
                         Text="{Binding Notes}"
                         TextColor="{DynamicResource TextColor}"
-                        AccentColor="{DynamicResource CardBorder}"/>
+                        BorderColor="{DynamicResource CardBorder}"
+                        AccentColor="{DynamicResource InputAccent}"/>
 
                     <!--Media-->
                     <Label 
