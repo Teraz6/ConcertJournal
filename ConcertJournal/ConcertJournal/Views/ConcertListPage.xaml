@@ -27,8 +27,9 @@
         <Grid RowDefinitions="Auto,*">
 
             <Grid 
-                ColumnDefinitions="*,*,*"
-                Grid.Row="0">
+                ColumnDefinitions=".1*,.8*,.1*"
+                Grid.Row="0"
+                BackgroundColor="{DynamicResource CardBackground}">
 
                 <Label 
                     Grid.Column="1"
@@ -45,14 +46,14 @@
                     Source="{DynamicResource FilterIcon}"
                     Clicked="OnBackdropClicked"
                     HorizontalOptions="End"
-                    Margin="0,0,12,0"/>
-
+                    Margin="0,0,12,0"
+                    Padding="4"/>
             </Grid>
 
             <!--Event display-->
             <CollectionView 
                 Grid.Row="1"
-                x:Name="ConcertListView" 
+                x:Name="ConcertListView"
                 Margin="8"
                 ItemsSource="{Binding Concerts}"
                 RemainingItemsThreshold="7"
@@ -83,23 +84,45 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
 
-                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
-                                <!-- Concert details -->
-                                <VerticalStackLayout Grid.Column="0">
+                            <!-- Concert details -->
+                            <Grid 
+                                RowDefinitions="*,*"
+                                ColumnDefinitions="*, Auto" 
+                                VerticalOptions="Center">
+
+                                <!--Title and performers-->
+                                <VerticalStackLayout 
+                                    Grid.Row="0" 
+                                    Grid.ColumnSpan="2"
+                                    HorizontalOptions="Center">
+
                                     <Label 
                                         Text="{Binding EventTitle}" 
                                         FontSize="24" 
-                                        FontAttributes="Bold"/>
+                                        FontAttributes="Bold"
+                                        HorizontalTextAlignment="Center"/>
+                                </VerticalStackLayout>
+
+                                <!--Location-->
+                                <VerticalStackLayout 
+                                    Grid.Column="0"
+                                    Grid.Row="1">
+
                                     <Label 
-                                        Text="{Binding Performers}" 
-                                        FontSize="16" />
+                                        Text="{Binding DisplayPerformers}" 
+                                        FontSize="16"
+                                        LineBreakMode="TailTruncation"
+                                        MaxLines="1"/>
+
                                     <Label 
                                         Text="{Binding Venue}" 
                                         FontSize="14" />
+                                    
                                     <HorizontalStackLayout Spacing="8">
                                         <Label 
                                             Text="{Binding Country}" 
                                             FontSize="12" />
+                                        
                                         <Label 
                                             Text="{Binding City}" 
                                             FontSize="12" />
@@ -108,49 +131,50 @@
                                     <Label 
                                         Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
                                         FontSize="12"
-                                        Margin="0,8,0,0"
                                         TextColor="{DynamicResource MutedText}"/>
                                 </VerticalStackLayout>
 
                                 <!--Button Layout-->
-                                <HorizontalStackLayout Grid.Column="1" Spacing="12">
-                                    
+                                <HorizontalStackLayout 
+                                    Grid.Row="1"
+                                    Grid.Column="1" 
+                                    Spacing="12"
+                                    VerticalOptions="End">
+
                                     <!--Details button-->
                                     <ImageButton 
                                         Source="{DynamicResource DetailsIcon}"
                                         BackgroundColor="Transparent"
                                         WidthRequest="48"
                                         HeightRequest="48"
-                                        Padding="0"
+                                        Padding="4"
                                         VerticalOptions="Center"
                                         Clicked="OnDetailsClicked"
                                         BindingContext="{Binding .}" 
                                         BorderWidth="0"
                                         IsEnabled="True"/>
 
-                                    <VerticalStackLayout VerticalOptions="Center" Spacing="10">
-                                        <!--Edit button-->
-                                        <ImageButton 
-                                            Source="{DynamicResource EditIcon}"
-                                            BackgroundColor="Transparent"
-                                            HeightRequest="48"
-                                            WidthRequest="48"
-                                            Padding="0"
-                                            Clicked="OnUpdateClicked"
-                                            CommandParameter="{Binding .}" 
-                                            BorderWidth="0"/>
+                                    <!--Edit button-->
+                                    <ImageButton 
+                                        Source="{DynamicResource EditIcon}"
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="48"
+                                        WidthRequest="48"
+                                        Padding="4"
+                                        Clicked="OnUpdateClicked"
+                                        CommandParameter="{Binding .}" 
+                                        BorderWidth="0"/>
 
-                                        <!-- Delete button -->
-                                        <ImageButton 
+                                    <!-- Delete button -->
+                                    <ImageButton 
                                             Source="{DynamicResource DeleteIcon}"
                                             BackgroundColor="Transparent"
                                             HeightRequest="48"
                                             WidthRequest="48"
-                                            Padding="0"
+                                            Padding="4"
                                             Clicked="OnDeleteClicked"
                                             BindingContext="{Binding .}" 
                                             BorderWidth="0"/>
-                                    </VerticalStackLayout>
                                 </HorizontalStackLayout>
                             </Grid>
                         </Border>
@@ -204,15 +228,8 @@
     <!--Back drop-->
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView x:Name="FilterBackdrop" BackgroundColor="{DynamicResource PrimaryDark}">
-            <VerticalStackLayout Spacing="12" Padding="8">
+            <VerticalStackLayout Spacing="24" Padding="8" Margin="0,16,0,0">
 
-                <!--Backdrop close button-->
-                <ImageButton 
-                    x:Name="CloseBackdropButton"
-                    Source="{DynamicResource UpIcon}"
-                    Clicked="OnCloseFilterClicked"
-                    HorizontalOptions="Center"/>
-                
                 <!-- Search Bar -->
                 <Border 
                     Stroke="Transparent"
