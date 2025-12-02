@@ -7,180 +7,210 @@
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
     
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="*,Auto">
         <!--Main content-->
-        <Button 
+        <Grid
             Grid.Row="0"
-            Text="← Back"
-            FontSize="18"
-            TextColor="{DynamicResource ButtonTextColor}"
-            BackgroundColor="{DynamicResource ButtonBackground}"
-            CornerRadius="12"
-            VerticalOptions="Center"
-            HorizontalOptions="Start"
-            Clicked="OnBackClicked"
-            Margin="4"/>
+            RowDefinitions="Auto,*">
+            <Grid Grid.Row="0"
+                  ColumnDefinitions=".15*,.7*,.15*"
+                  BackgroundColor="{DynamicResource CardBackground}"
+                  Padding="4">
+                <Button 
+                    Grid.Column="0"
+                    Text="← Back"
+                    FontSize="18"
+                    TextColor="{DynamicResource ButtonTextColor}"
+                    BackgroundColor="{DynamicResource ButtonBackground}"
+                    CornerRadius="12"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start"
+                    Clicked="OnBackClicked"/>
         
-        <Label 
-            Grid.Row="0"
-            Text="{Binding PerformerName}" 
-            FontAttributes="Bold"
-            FontSize="28" 
-            HorizontalOptions="Center" 
-            Margin="0,24,0,24"/>
+                <Label 
+                    Grid.Column="1"
+                    Text="{Binding PerformerName}" 
+                    FontAttributes="Bold"
+                    FontSize="24" 
+                    TextTransform="Uppercase"
+                    HorizontalTextAlignment="Center" 
+                    LineBreakMode="WordWrap"
+                    Padding="0,8"/>
+            </Grid>
 
-        <Grid 
-            Grid.Row="1"
-            ColumnDefinitions="*,*"
-            RowDefinitions="Auto,*"
-            Padding="4">
-            
-            <Label 
-                Grid.Row="0"
-                Grid.Column="0"
-                Text="Concerts Attended"
-                FontAttributes="Bold"
-                TextDecorations="Underline"
-                FontSize="20" 
-                HorizontalOptions="Center"
-                Margin="4"/>
-            
-            <Label 
-                Grid.Row="0"
-                Grid.Column="1"
-                Text="Statistics"
-                FontAttributes="Bold"
-                TextDecorations="Underline"
-                FontSize="20" 
-                HorizontalOptions="Center"
-                Margin="4"/>
-            
-            <CollectionView
+            <Grid 
                 Grid.Row="1"
-                Grid.Column="0"
-                ItemsSource="{Binding Concerts}"
-                VerticalScrollBarVisibility="Never">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="4"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                RowDefinitions=".3*,.7*"
+                Padding="4">
+
+                <!--Stats labels-->
+                <VerticalStackLayout 
+                    Grid.Row="0"
+                    HorizontalOptions="Center">
+
+                    <!--Stats title-->
+                    <Label 
+                        Grid.Row="0"
+                        Text="Statistics"
+                        FontAttributes="Bold"
+                        TextDecorations="Underline"
+                        FontSize="20" 
+                        HorizontalOptions="Center"
+                        Margin="4"/>
+
+                    <Grid
+                        RowDefinitions="*,*"
+                        ColumnDefinitions="*,*">
+
+                        <!-- Total Shows Seen -->
                         <Border
-                            StrokeShape="RoundRectangle 16"
-                            Stroke="{DynamicResource CardBorder}">
-                            <Grid ColumnDefinitions=".8*,.2*"
-                                  RowDefinitions="*,*,*"
-                                  Padding="8">
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,24">
+                            <VerticalStackLayout>
                                 <Label 
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Text="{Binding EventTitle}" 
-                                    FontAttributes="Bold" 
-                                    FontSize="18"/>
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="Total Shows Seen:"
+                                    HorizontalTextAlignment="Center"/>
                                 <Label 
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                    FontSize="12"/>
-                                <Label 
-                                    Grid.Row="2"
-                                    Grid.Column="0"
-                                    Text="{Binding Location}" 
-                                    FontSize="14"/>
-                                <ImageButton 
-                                    Grid.RowSpan="3"
-                                    Grid.Column="1"
-                                    Source="{DynamicResource DetailsIcon}"
-                                    Clicked="OnDetailsClicked"
-                                    BindingContext="{Binding .}"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center"
-                                    HeightRequest="48"
-                                    WidthRequest="48"
-                                    Padding="8"/>
-                            </Grid>
+                                    FontSize="32"
+                                    FontAttributes="Bold"
+                                    x:Name="TimesSeenLabel"
+                                    Text="-" 
+                                    HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
                         </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
 
-            <VerticalStackLayout 
-                Grid.Column="1"
-                Grid.Row="1"
-                HorizontalOptions="Center">
+                        <!-- Countries Seen In -->
+                        <Border
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,0,24">
+                            <VerticalStackLayout>
+                                <Label
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="Countries Seen In:"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label 
+                                    FontSize="32"
+                                    FontAttributes="Bold"
+                                    x:Name="CountriesSeenLabel" 
+                                    Text="-" 
+                                    HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <!-- Total Shows Seen -->
-                <Border
-                    Margin="0,0,0,24">
-                    <VerticalStackLayout>
-                        <Label 
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            Text="Total Shows Seen:"
-                            HorizontalTextAlignment="Center"/>
-                        <Label 
-                            FontSize="32"
-                            FontAttributes="Bold"
-                            x:Name="TimesSeenLabel"
-                            Text="-" 
-                            HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- First Show Attended -->
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,0,0,24">
+                            <VerticalStackLayout>
+                                <Label 
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="First Show Attended:"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    x:Name="FirstSeenLabel" 
+                                    Text="-" 
+                                    HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-                <!-- Countries Seen In -->
-                <Border
-                    Margin="0,0,0,24">
-                    <VerticalStackLayout>
-                        <Label
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            Text="Countries Seen In:"
-                            HorizontalTextAlignment="Center"/>
-                        <Label 
-                            FontSize="32"
-                            FontAttributes="Bold"
-                            x:Name="CountriesSeenLabel" 
-                            Text="-" 
-                            HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Border>
+                        <!-- Last Show Attended -->
+                        <Border
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="0,0,0,24">
+                            <VerticalStackLayout>
+                                <Label 
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    Text="Last Show Attended:"
+                                    HorizontalTextAlignment="Center"/>
+                                <Label 
+                                    FontSize="20"
+                                    FontAttributes="Bold"
+                                    x:Name="RecentSeenLabel" 
+                                    Text="-" 
+                                    HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
 
-                <!-- First Show Attended -->
-                <Border
-                     Margin="0,0,0,24">
-                    <VerticalStackLayout>
-                        <Label 
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            Text="First Show Attended:"
-                            HorizontalTextAlignment="Center"/>
-                        <Label
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            x:Name="FirstSeenLabel" 
-                            Text="-" 
-                            HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Border>
+                <Grid 
+                    Grid.Row="1"
+                    RowDefinitions="Auto,*">
+                    
+                    <!--Concerts list-->
+                    <Label 
+                        Grid.Row="0"
+                        Text="Concerts Attended"
+                        FontAttributes="Bold"
+                        TextDecorations="Underline"
+                        FontSize="20" 
+                        HorizontalOptions="Center"
+                        Margin="4"/>
+                    
+                    <CollectionView
+                        Grid.Row="1"
+                        ItemsSource="{Binding Concerts}"
+                        ItemsLayout="VerticalGrid, 2"
+                        VerticalScrollBarVisibility="Never">
+                        <!--TODO: Add spacing between items but keep them on verticalgrid-->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    StrokeShape="RoundRectangle 16"
+                                    Stroke="{DynamicResource CardBorder}">
+                                    <Grid 
+                                        ColumnDefinitions=".8*,.2*"
+                                        RowDefinitions="*,*,*"
+                                        Padding="8">
 
-                <!-- Last Show Attended -->
-                <Border
-                    Margin="0,0,0,24">
-                    <VerticalStackLayout>
-                        <Label 
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            Text="Last Show Attended:"
-                            HorizontalTextAlignment="Center"/>
-                        <Label 
-                            FontSize="20"
-                            FontAttributes="Bold"
-                            x:Name="RecentSeenLabel" 
-                            Text="-" 
-                            HorizontalTextAlignment="Center"/>
-                    </VerticalStackLayout>
-                </Border>
-            </VerticalStackLayout>
+                                        <Label 
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            Text="{Binding EventTitle}" 
+                                            FontAttributes="Bold" 
+                                            FontSize="16"/>
+
+                                        <Label 
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Text="{Binding Location}" 
+                                            FontSize="14"/>
+
+                                        <Label 
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
+                                            FontSize="12"/>
+
+                                        <ImageButton 
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            Source="{DynamicResource DetailsIcon}"
+                                            Clicked="OnDetailsClicked"
+                                            BindingContext="{Binding .}"
+                                            HorizontalOptions="End"
+                                            VerticalOptions="Center"
+                                            HeightRequest="48"
+                                            WidthRequest="48"
+                                            Padding="8"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Grid>
         </Grid>
 
         <!--Navigation bar-->

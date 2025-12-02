@@ -220,11 +220,6 @@
                 <!-- Edit Button -->
                 <ImageButton 
                     Source="{DynamicResource EditIcon}"
-                    BackgroundColor="Transparent"
-                    BorderWidth="1"
-                    CornerRadius="12"
-                    BorderColor="{DynamicResource ButtonBorderColor}"
-                    Padding="0"
                     Clicked="OnUpdateClicked"
                     HorizontalOptions="Center"/>
             </VerticalStackLayout>
