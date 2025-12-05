@@ -201,6 +201,7 @@
                                             LineBreakMode="WordWrap"
                                             BackgroundColor="Transparent"
                                             BorderWidth="0"
+                                            TextColor="{DynamicResource TextColor}"
                                             Clicked="OnPerformerButtonClicked"/>
 
                                         <!--Concert count-->
