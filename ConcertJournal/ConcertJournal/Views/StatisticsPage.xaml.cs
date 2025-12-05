@@ -86,7 +86,7 @@ public partial class StatisticsPage : ContentPage
             .FirstOrDefault();
 
         LatestConcertLabel.Text = latestConcert != null
-            ? $"Latest concert: {latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
+            ? $"{latestConcert.EventTitle} on {latestConcert.Date:dd MMM yyyy}"
             : "Latest concert: N/A";
 
         // Concerts per year WITH performer count
@@ -176,13 +176,13 @@ public partial class StatisticsPage : ContentPage
         if (yearWithMostConcerts != null)
         {
             MostConcertsByYearLabel.Text =
-                $"Most concerts in a year: {yearWithMostConcerts.Year} ({yearWithMostConcerts.ConcertCount} concerts)";
+                $"{yearWithMostConcerts.Year} ({yearWithMostConcerts.ConcertCount} concerts)";
         }
 
         if (yearWithMostPerformers != null)
         {
             MostPerformersByYearLabel.Text =
-                $"Most performers in a year: {yearWithMostPerformers.Year} ({yearWithMostPerformers.PerformerCount} performers)";
+                $"{yearWithMostPerformers.Year} ({yearWithMostPerformers.PerformerCount} performers)";
         }
 
         //For country chart, dont delete

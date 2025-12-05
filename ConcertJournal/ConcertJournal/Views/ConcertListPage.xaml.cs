@@ -51,6 +51,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     {
         base.OnAppearing();
         BindingContext = this;
+        LoadTotalConcerts();
 
         try
         {
@@ -289,4 +290,19 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     {
         FilterBackdrop.IsPresented = false;
     }
+
+    private async void LoadTotalConcerts()
+    {
+         var concerts = await App.Database.GetConcertsAsync();
+
+        if (concerts == null || concerts.Count == 0)
+        {
+            TotalConcertsLabel.Text = "No concert data available.";
+            return;
+        }
+
+        // Total concerts
+        TotalConcertsLabel.Text = $"Total concerts: {concerts.Count}";
+    }
+   
 }
