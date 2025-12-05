@@ -16,7 +16,7 @@
             <Style TargetType="input:RadioButton">
                 <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
                 <Setter Property="CircleColor" Value="{DynamicResource White}" />
-                <Setter Property="Color" Value="{DynamicResource SecondaryDark}" />
+                <Setter Property="Color" Value="{DynamicResource Secondary}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
