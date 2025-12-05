@@ -13,16 +13,13 @@
             Grid.Row="0"
             RowDefinitions="Auto,*">
             <Grid Grid.Row="0"
-                  ColumnDefinitions=".15*,.7*,.15*"
+                  ColumnDefinitions=".2*,.6*,.2*"
                   BackgroundColor="{DynamicResource CardBackground}"
                   Padding="4">
-                <Button 
+                <ImageButton 
+                    Source="{DynamicResource DoubleLeftArrowIcon}"
                     Grid.Column="0"
-                    Text="← Back"
-                    FontSize="18"
-                    TextColor="{DynamicResource ButtonTextColor}"
-                    BackgroundColor="{DynamicResource ButtonBackground}"
-                    CornerRadius="12"
+                    Grid.ColumnSpan="2"
                     VerticalOptions="Center"
                     HorizontalOptions="Start"
                     Clicked="OnBackClicked"/>
@@ -31,7 +28,7 @@
                     Grid.Column="1"
                     Text="{Binding PerformerName}" 
                     FontAttributes="Bold"
-                    FontSize="24" 
+                    FontSize="32" 
                     TextTransform="Uppercase"
                     HorizontalTextAlignment="Center" 
                     LineBreakMode="WordWrap"
@@ -54,7 +51,7 @@
                         Text="Statistics"
                         FontAttributes="Bold"
                         TextDecorations="Underline"
-                        FontSize="20" 
+                        FontSize="24" 
                         HorizontalOptions="Center"
                         Margin="4"/>
 
@@ -66,12 +63,12 @@
                         <Border
                             Grid.Row="0"
                             Grid.Column="0"
-                            Margin="0,0,0,24">
+                            Padding="8">
                             <VerticalStackLayout>
                                 <Label 
                                     FontSize="20"
                                     FontAttributes="Bold"
-                                    Text="Total Shows Seen:"
+                                    Text="Total Shows Seen"
                                     HorizontalTextAlignment="Center"/>
                                 <Label 
                                     FontSize="32"
@@ -86,12 +83,12 @@
                         <Border
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="0,0,0,24">
+                            Padding="8">
                             <VerticalStackLayout>
                                 <Label
                                     FontSize="20"
                                     FontAttributes="Bold"
-                                    Text="Countries Seen In:"
+                                    Text="Countries Seen In"
                                     HorizontalTextAlignment="Center"/>
                                 <Label 
                                     FontSize="32"
@@ -106,12 +103,12 @@
                         <Border
                             Grid.Row="1"
                             Grid.Column="0"
-                            Margin="0,0,0,24">
+                            Padding="8">
                             <VerticalStackLayout>
                                 <Label 
                                     FontSize="20"
                                     FontAttributes="Bold"
-                                    Text="First Show Attended:"
+                                    Text="First Show Attended"
                                     HorizontalTextAlignment="Center"/>
                                 <Label
                                     FontSize="20"
@@ -126,12 +123,12 @@
                         <Border
                             Grid.Row="1"
                             Grid.Column="1"
-                            Margin="0,0,0,24">
+                            Padding="8">
                             <VerticalStackLayout>
                                 <Label 
                                     FontSize="20"
                                     FontAttributes="Bold"
-                                    Text="Last Show Attended:"
+                                    Text="Last Show Attended"
                                     HorizontalTextAlignment="Center"/>
                                 <Label 
                                     FontSize="20"
@@ -154,15 +151,20 @@
                         Text="Concerts Attended"
                         FontAttributes="Bold"
                         TextDecorations="Underline"
-                        FontSize="20" 
+                        FontSize="24" 
                         HorizontalOptions="Center"
                         Margin="4"/>
                     
                     <CollectionView
                         Grid.Row="1"
                         ItemsSource="{Binding Concerts}"
-                        ItemsLayout="VerticalGrid, 2"
                         VerticalScrollBarVisibility="Never">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical"
+                                             Span="2"
+                                             HorizontalItemSpacing="8"
+                                             VerticalItemSpacing="8"/>
+                        </CollectionView.ItemsLayout>
                         <!--TODO: Add spacing between items but keep them on verticalgrid-->
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -176,31 +178,36 @@
 
                                         <Label 
                                             Grid.Row="0"
-                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
                                             Text="{Binding EventTitle}" 
                                             FontAttributes="Bold" 
-                                            FontSize="16"/>
+                                            FontSize="16"
+                                            LineBreakMode="TailTruncation"/>
 
                                         <Label 
                                             Grid.Row="1"
                                             Grid.Column="0"
                                             Text="{Binding Location}" 
-                                            FontSize="14"/>
+                                            FontSize="14"
+                                            LineBreakMode="TailTruncation"
+                                            VerticalTextAlignment="Center"/>
 
                                         <Label 
                                             Grid.Row="2"
                                             Grid.Column="0"
                                             Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                            FontSize="12"/>
+                                            FontSize="12"
+                                            VerticalTextAlignment="End"/>
 
                                         <ImageButton 
-                                            Grid.RowSpan="3"
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
                                             Grid.Column="1"
                                             Source="{DynamicResource DetailsIcon}"
                                             Clicked="OnDetailsClicked"
                                             BindingContext="{Binding .}"
                                             HorizontalOptions="End"
-                                            VerticalOptions="Center"
+                                            VerticalOptions="End"
                                             HeightRequest="48"
                                             WidthRequest="48"
                                             Padding="8"/>

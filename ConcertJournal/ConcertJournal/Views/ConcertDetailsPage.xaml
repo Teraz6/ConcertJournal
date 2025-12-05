@@ -24,12 +24,9 @@
                 <!-- Header Section -->
                 <Grid ColumnDefinitions="*,*">
                     <!-- Back button -->
-                    <Button 
+                    <ImageButton 
                         Grid.Column="0"
-                        Text="← Back"
-                        FontSize="18"
-                        TextColor="{DynamicResource ButtonTextColor}"
-                        BackgroundColor="{DynamicResource ButtonBackground}"
+                        Source="{DynamicResource DoubleLeftArrowIcon}"
                         HorizontalOptions="Start"
                         Clicked="OnBackClicked" />
 

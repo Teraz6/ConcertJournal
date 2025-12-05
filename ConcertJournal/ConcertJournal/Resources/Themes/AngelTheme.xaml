@@ -108,6 +108,7 @@
     <FileImageSource x:Key="BandIcon" File="band_black.png"/>
     <FileImageSource x:Key="FilterIcon" File="filter_black.png"/>
     <FileImageSource x:Key="UpIcon" File="up_black.png"/>
+    <FileImageSource x:Key="DoubleLeftArrowIcon" File="double_left_arrow_black.png"/>
     
     <FileImageSource x:Key="Logo" File="eventjournallogo_black.png"/>
     
