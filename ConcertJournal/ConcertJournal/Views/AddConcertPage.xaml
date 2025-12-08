@@ -299,6 +299,6 @@
         </ScrollView>
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1"/>
+        <controls:BottomNavBar Grid.Row="1" ActiveRoute="AddConcertPage"/>
     </Grid>
 </ContentPage>

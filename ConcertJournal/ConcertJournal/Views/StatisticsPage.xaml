@@ -312,6 +312,6 @@
         </material:TabView>
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="2" />
+        <controls:BottomNavBar Grid.Row="2" ActiveRoute="StatisticsPage"/>
     </Grid>
 </ContentPage>
