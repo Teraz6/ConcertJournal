@@ -13,12 +13,13 @@
 
         <!--Main content-->
         <Label Grid.Row="0"
-                Text="Statistics"
-                FontSize="32"
-                FontAttributes="Bold"
-                Padding="12"
-                HorizontalOptions="Center"
-                Margin="0,0,0,24"/>
+               Text="Statistics"
+               FontSize="32"
+               FontAttributes="Bold"
+               Padding="12"
+               HorizontalTextAlignment="Center"
+               Margin="0,0,0,24"
+               BackgroundColor="{DynamicResource CardBackground}"/>
 
         <!-- UraniumUI Material TabView -->
         <material:TabView x:Name="StatisticsTabView" Grid.Row="1">
@@ -29,12 +30,14 @@
                         Command="{Binding Command}"
                         TextColor="{DynamicResource TextColor}"
                         BackgroundColor="Transparent"
-                        FontSize="20"
+                        FontSize="16"
                         Margin="4,0,4,46"
                         Padding="0,12,0,12">
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="{DynamicResource Secondary}" />
+                                <Setter Property="BorderColor" Value="{DynamicResource Secondary}" />
+                                <Setter Property="BorderWidth" Value="2" />
+                                <Setter Property="FontAttributes" Value="Bold"/>
                             </DataTrigger>
                         </Button.Triggers>
                     </Button>
@@ -208,7 +211,7 @@
                                         <Label 
                                             Grid.Column="2"
                                             Text="{Binding CountText}" 
-                                            HorizontalOptions="End"
+                                            HorizontalTextAlignment="Center"
                                             TextColor="{DynamicResource TextColor}"
                                             VerticalOptions="Center"/>
                                     </Grid>
