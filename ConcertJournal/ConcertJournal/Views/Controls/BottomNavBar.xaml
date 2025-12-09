@@ -10,7 +10,7 @@
                 <Setter Property="HeightRequest" Value="48" />
                 <Setter Property="WidthRequest" Value="48" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="Opacity" Value="0.5" />
+                <Setter Property="Opacity" Value="0.6" />
                 <Setter Property="Scale" Value="0.8" />
 
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -19,7 +19,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Pressed">
                                 <VisualState.Setters>
-                                    <Setter Property="Scale" Value="0.7" />
+                                    <Setter Property="Scale" Value="0.75" />
                                     <Setter Property="Opacity" Value="1.0" />
                                 </VisualState.Setters>
                             </VisualState>
@@ -38,7 +38,7 @@
                             <VisualState x:Name="Normal" />
                             <VisualState x:Name="Pressed">
                                 <VisualState.Setters>
-                                    <Setter Property="Scale" Value="0.9" />
+                                    <Setter Property="Scale" Value="1" />
                                     <Setter Property="Opacity" Value="1.0" />
                                 </VisualState.Setters>
                             </VisualState>
