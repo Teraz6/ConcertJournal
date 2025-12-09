@@ -24,7 +24,7 @@
 
         <!--Main content-->
             <Label Grid.Row="0"
-               Text="Statistics"
+               Text="Settings"
                FontSize="32"
                FontAttributes="Bold"
                Padding="12"
