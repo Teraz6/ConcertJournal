@@ -46,7 +46,7 @@
                             HorizontalOptions="Start"
                             Clicked="OnCancelButtonClicked"
                             IsVisible="false"/>
-                        
+
                         <Label 
                             Grid.Column="1"
                             x:Name="AddConcertPageTitle"
