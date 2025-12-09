@@ -35,6 +35,18 @@
                     
                     <!--PageTitle and Create button-->
                     <Grid>
+                        <Button
+                            x:Name="CancelButton"
+                            Text="Cancel"
+                            FontSize="18"
+                            StyleClass="OutlinedButton"
+                            BackgroundColor="Transparent"
+                            BorderColor="{DynamicResource ButtonRed}"
+                            TextColor="{DynamicResource ButtonRed}"
+                            HorizontalOptions="Start"
+                            Clicked="OnCancelButtonClicked"
+                            IsVisible="false"/>
+                        
                         <Label 
                             Grid.Column="1"
                             x:Name="AddConcertPageTitle"
@@ -42,6 +54,7 @@
                             FontSize="32"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"/>
+                        
                         <Button 
                             Grid.Column="1"
                             x:Name="SaveButton"
@@ -286,6 +299,6 @@
         </ScrollView>
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1"/>
+        <controls:BottomNavBar Grid.Row="1" ActiveRoute="AddConcertPage"/>
     </Grid>
 </ContentPage>

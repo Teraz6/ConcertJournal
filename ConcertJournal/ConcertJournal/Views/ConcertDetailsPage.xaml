@@ -99,12 +99,21 @@
                             FontAttributes="Bold"
                             TextColor="{DynamicResource TextColor}" 
                             HorizontalOptions="Center"/>
-                        <Label 
-                            Text="{Binding Performers}"
-                            FontSize="22"
-                            TextTransform="Uppercase"
-                            TextColor="{DynamicResource TextColor}"
-                            HorizontalTextAlignment="Center"/>
+
+                         <!--Wrap Label in a TapGestureRecognizer container--> 
+                        <VerticalStackLayout HorizontalOptions="Center">
+                            <VerticalStackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPerformerTapped"/>
+                            </VerticalStackLayout.GestureRecognizers>
+
+                            <Label 
+                                x:Name="PerformersLabel"
+                                Text="{Binding Performers}"
+                                FontSize="22"
+                                TextColor="{DynamicResource TextColor}"
+                                HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+
                     </VerticalStackLayout>
                 </Border>
 

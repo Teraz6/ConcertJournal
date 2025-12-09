@@ -20,37 +20,48 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*,Auto">
-        <ScrollView Grid.Row="0">
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!--Main content-->
+            <Label Grid.Row="0"
+               Text="Statistics"
+               FontSize="32"
+               FontAttributes="Bold"
+               Padding="12"
+               HorizontalTextAlignment="Center"
+               Margin="0,0,0,24"
+               BackgroundColor="{DynamicResource CardBackground}"/>
         
-            <!--MainContent/TabView-->
-            <material:TabView TabPlacement="Top">
-                <material:TabView.TabHeaderItemTemplate>
-                    <DataTemplate>
-                        <Button 
+        <!--TabView-->
+        <material:TabView 
+            TabPlacement="Top"
+            Grid.Row="1">
+            <material:TabView.TabHeaderItemTemplate>
+                <DataTemplate>
+                    <Button 
                             Text="{Binding Title}"
                             Command="{Binding Command}"
                             TextColor="{DynamicResource TextColor}"
                             BackgroundColor="Transparent"
-                            FontSize="20"
-                            BorderWidth="2"
-                            CornerRadius="0"
-                            Margin="0,0,0,48"
-                            Padding="0,12,0,16">
-                            <Button.Triggers>
-                                <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                    <Setter Property="BackgroundColor" Value="{DynamicResource Secondary}" />
-                                </DataTrigger>
-                            </Button.Triggers>
-                        </Button>
-                    </DataTemplate>
-                </material:TabView.TabHeaderItemTemplate>
-                <material:TabItem Title="Theme">
-                    <material:TabItem.ContentTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout>
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label 
+                            FontSize="16"
+                            Margin="4,0,4,46"
+                            Padding="0,12,0,12">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BorderColor" Value="{DynamicResource Secondary}" />
+                                <Setter Property="BorderWidth" Value="2" />
+                                <Setter Property="FontAttributes" Value="Bold"/>
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </DataTemplate>
+            </material:TabView.TabHeaderItemTemplate>
+            <material:TabItem Title="Theme">
+                <material:TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label 
                                         Grid.Column="0"
                                         Text="Dark theme"
                                         TextColor="{DynamicResource TextColor}"
@@ -58,7 +69,7 @@
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"/>
 
-                                    <Switch 
+                                <Switch 
                                         Grid.Column="1"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
@@ -67,64 +78,64 @@
                                         ThumbColor="{DynamicResource Primary}"
                                         OnColor="{DynamicResource Surface}"
                                         Scale="1.5">
-                                    </Switch>
-                                </Grid>
-                            </VerticalStackLayout>
-                            
-                        </DataTemplate>
-                    </material:TabItem.ContentTemplate>
-                </material:TabItem>
+                                </Switch>
+                            </Grid>
+                        </VerticalStackLayout>
 
-                <material:TabItem Title="Import/Export">
-                    <material:TabItem.ContentTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Spacing="48">
-                                <!--Import-->
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label 
+                    </DataTemplate>
+                </material:TabItem.ContentTemplate>
+            </material:TabItem>
+
+            <material:TabItem Title="Import/Export">
+                <material:TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="48">
+                            <!--Import-->
+                            <Grid ColumnDefinitions="*,*">
+                                <Label 
                                         Grid.Column="0"
                                         Text="Import Excel"
                                         FontSize="24"
                                         HorizontalTextAlignment="Center"
                                         TextColor="{DynamicResource TextColor}"/>
 
-                                    <Button 
+                                <Button 
                                         Grid.Column="1"
                                         Text="Import Excel"
                                         FontSize="16"
                                         Clicked="OnImportFromExcelClicked"
                                         Margin="48,0"/>
-                                </Grid>
-                                
-                                <!--Export-->
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label 
+                            </Grid>
+
+                            <!--Export-->
+                            <Grid ColumnDefinitions="*,*">
+                                <Label 
                                         Grid.Column="0"
                                         Text="Export Events"
                                         FontSize="24"
                                         HorizontalOptions="Center"
                                         TextColor="{DynamicResource TextColor}"/>
 
-                                    <Button 
+                                <Button 
                                         Grid.Column="1"
                                         Text="Export Excel"
                                         FontSize="16"
                                         Clicked="OnExportClicked"
                                         Margin="48,0"/>
-                                </Grid>
-                            </VerticalStackLayout>
-                            
-                        </DataTemplate>
-                    </material:TabItem.ContentTemplate>
-                </material:TabItem>
+                            </Grid>
+                        </VerticalStackLayout>
 
-                <material:TabItem Title="Default values">
-                    <material:TabItem.ContentTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Spacing="48">
-                                <!--Default country-->
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label 
+                    </DataTemplate>
+                </material:TabItem.ContentTemplate>
+            </material:TabItem>
+
+            <material:TabItem Title="Default values">
+                <material:TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="48">
+                            <!--Default country-->
+                            <Grid ColumnDefinitions="*,*">
+                                <Label 
                                          Grid.Column="0"
                                          FontSize="24"
                                          Text="Default Country" 
@@ -132,18 +143,18 @@
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"/>
 
-                                    <material:TextField
+                                <material:TextField
                                         Grid.Column="1"
                                         x:Name="CountryEntry" 
                                         Title="Enter default country"
                                         CornerRadius="12"
                                         Text="{Binding DefaultCountry, Mode=TwoWay}"
                                         Margin="24,0"/>
-                                </Grid>
-                                
-                                <!--Default city-->
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label 
+                            </Grid>
+
+                            <!--Default city-->
+                            <Grid ColumnDefinitions="*,*">
+                                <Label 
                                          Grid.Column="0"
                                          FontSize="24"
                                          Text="Default City" 
@@ -151,17 +162,17 @@
                                          HorizontalOptions="Center"
                                          VerticalOptions="Center"/>
 
-                                    <material:TextField
+                                <material:TextField
                                         Grid.Column="1"
                                         x:Name="CityEntry" 
                                         Title="Enter default city" 
                                         CornerRadius="12"
                                         Text="{Binding DefaultCity, Mode=TwoWay}"
                                         Margin="24,0"/>
-                                    
-                                </Grid>
-                                
-                                <Button 
+
+                            </Grid>
+
+                            <Button 
                                     Text="Save values"
                                     FontSize="16"
                                     Clicked="OnSaveClicked"
@@ -170,15 +181,13 @@
                                     TextColor="{DynamicResource ButtonUpdateDeleteText}"
                                     HorizontalOptions="Center"
                                     Padding="12"/>
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </material:TabItem.ContentTemplate>
-                </material:TabItem>
-            </material:TabView>
-
-        </ScrollView>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </material:TabItem.ContentTemplate>
+            </material:TabItem>
+        </material:TabView>
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:BottomNavBar Grid.Row="2" ActiveRoute="SettingsPage"/>
     </Grid>
     
 </ContentPage>

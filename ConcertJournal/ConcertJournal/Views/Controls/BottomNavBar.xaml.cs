@@ -10,11 +10,40 @@ public partial class BottomNavBar : ContentView
     public ICommand NavigateSettingsCommand { get; }
     public ICommand NavigateStatisticsCommand { get; }
 
+    // 1. Create a BindableProperty so we can set which page is active in XAML
+    public static readonly BindableProperty ActiveRouteProperty =
+        BindableProperty.Create(nameof(ActiveRoute), typeof(string), typeof(BottomNavBar), "Home");
+
+    public string ActiveRoute
+    {
+        get => (string)GetValue(ActiveRouteProperty);
+        set => SetValue(ActiveRouteProperty, value);
+    }
+
+    public ICommand NavigateCommand { get; }
+
     public BottomNavBar()
     {
         InitializeComponent();
 
-        BindingContext = this;
+        // 2. Centralize navigation logic
+        NavigateCommand = new Command<string>(async (route) =>
+        {
+            // Prevent navigating to the page we are already on
+            if (CurrentRouteMatches(route)) return;
+
+            await Shell.Current.GoToAsync($"//{route}");
+        });
+
+        // Set the BindingContext to this control so XAML can access Commands and Properties
+        Content.BindingContext = this;
+    }
+
+    private bool CurrentRouteMatches(string route)
+    {
+        // Simple check to see if the requested route matches the active one
+        // Note: You might need to adjust logic depending on your Shell route naming
+        return ActiveRoute == route;
     }
 
     private async void OnHomeClicked(object sender, EventArgs e)
