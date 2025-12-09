@@ -234,7 +234,7 @@
         </Grid>
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="1" />
+        <controls:BottomNavBar Grid.Row="1" ActiveRoute="ConcertListPage"/>
     </Grid>
     
     <!--Back drop-->
