@@ -48,6 +48,7 @@ public partial class ConcertDetailsPage : ContentPage
         ImageOverlay.IsVisible = false;
     }
 
+    //Update button 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
         if (BindingContext is Concert concert)
@@ -77,6 +78,44 @@ public partial class ConcertDetailsPage : ContentPage
                 await App.Database.DeleteConcertAsync(concert);
                 await Shell.Current.GoToAsync($"//ConcertListPage", animate: true);
             }
+        }
+    }
+
+    private async void OnPerformerTapped(object sender, TappedEventArgs e)
+    {
+        if (_concert != null && !string.IsNullOrWhiteSpace(_concert.Performers))
+        {
+            // If there are multiple performers, show an action sheet to choose
+            var performers = _concert.Performers
+                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(p => p.Trim())
+                .Where(p => !string.IsNullOrWhiteSpace(p))
+                .ToArray();
+
+            if (performers.Length == 0)
+                return;
+
+            string selectedPerformer;
+        
+            if (performers.Length == 1)
+            {
+                selectedPerformer = performers[0];
+            }
+            else
+            {
+                // Show action sheet if multiple performers
+                selectedPerformer = await DisplayActionSheet(
+                    "Select Performer", 
+                    "Cancel", 
+                    null, 
+                    performers);
+            
+                if (selectedPerformer == "Cancel" || string.IsNullOrWhiteSpace(selectedPerformer))
+                    return;
+            }
+
+            // Navigate to PerformerDetailsPage with database context
+            await Navigation.PushAsync(new PerformerDetailsPage(selectedPerformer, App.Database));
         }
     }
 }

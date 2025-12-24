@@ -14,8 +14,8 @@
     <Color x:Key="PrimaryText">#FFFFFF</Color>
 
     <!-- Hellfire Red -->
-    <Color x:Key="Secondary">#FF5252</Color>
-    <Color x:Key="SecondaryDark">#D32F2F</Color>
+    <Color x:Key="Secondary">#D32F2F</Color>
+    <Color x:Key="SecondaryDark">#C22323</Color>
     <Color x:Key="SecondaryText">#FFEBEE</Color>
 
 
@@ -35,12 +35,15 @@
 
     <!--Button-->
     <Color x:Key="ButtonBackground">#0B0B0B</Color>
-    <Color x:Key="ButtonTextColor">#FF0000</Color>
-    <Color x:Key="ButtonBorderColor">#FF0000</Color>
+    <Color x:Key="ButtonTextColor">#F8F8F8</Color>
+    <Color x:Key="ButtonBorderColor">#FFEBEE</Color>
     <Color x:Key="ButtonGreen">#09BF00</Color>
     <Color x:Key="ButtonRed">#D90000</Color>
     <Color x:Key="ButtonUpdateDeleteText">#F5F5F5</Color>
     
+    <!--Input-->
+    <Color x:Key="InputAccent">#FF0505</Color>
+
     <!--Rating-->
     <Color x:Key="RatingFill">#B00020</Color>
 
@@ -97,11 +100,14 @@
     <FileImageSource x:Key="SettingsIcon" File="settings_white.png"/>
     <FileImageSource x:Key="StatsIcon" File="stats_white.png"/>
     <FileImageSource x:Key="DetailsIcon" File="details_white.png"/>
-    <FileImageSource x:Key="EditIcon" File="edit_greenwhite.png"/>
-    <FileImageSource x:Key="DeleteIcon" File="delete_redwhite.png"/>
+    <FileImageSource x:Key="EditIcon" File="edit_white.png"/>
+    <FileImageSource x:Key="DeleteIcon" File="delete_white.png"/>
     <FileImageSource x:Key="DetailsBackground" File="details_backgroundblack.png"/>
     <FileImageSource x:Key="BandIcon" File="band_white.png"/>
-
+    <FileImageSource x:Key="FilterIcon" File="filter_white.png"/>
+    <FileImageSource x:Key="UpIcon" File="up_white.png"/>
+    <FileImageSource x:Key="DoubleLeftArrowIcon" File="double_left_arrow_white.png"/>
+    <FileImageSource x:Key="ThreeDotsIcon" File="three_dots_white.png"/>
 
     <FileImageSource x:Key="Logo" File="eventjournallogo_white.png"/>
 

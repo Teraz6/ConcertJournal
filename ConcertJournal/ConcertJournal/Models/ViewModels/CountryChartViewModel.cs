@@ -32,7 +32,7 @@ public class CountryChartViewModel
             .Select(l => TrimLabel(l))
             .ToArray();
 
-        var textColor = (Color)Application.Current.Resources["TextColor"];
+        var textColor = (Color)Application.Current!.Resources["TextColor"];
         var skTextColor = textColor.ToSKColor();
 
         // Horizontal bars with two series
@@ -48,7 +48,7 @@ public class CountryChartViewModel
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
                 Stroke = null,
-                Padding = 5,
+                Padding = 4,
             },
             new RowSeries<int>
             {
@@ -60,7 +60,7 @@ public class CountryChartViewModel
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
                 Stroke = null,
-                Padding = 5,
+                Padding = 4,
             }
         };
 

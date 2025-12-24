@@ -74,6 +74,23 @@ public partial class PerformerDetailsPage : ContentPage
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("..", animate: true);
+        try
+        {
+            // Try standard navigation pop first
+            if (Navigation.NavigationStack.Count > 1)
+            {
+                await Navigation.PopAsync(true);
+            }
+            else
+            {
+                // Fallback to Shell navigation to root
+                await Shell.Current.GoToAsync("//ConcertListPage");
+            }
+        }
+        catch (Exception)
+        {
+            // Last resort - go to root
+            await Shell.Current.GoToAsync("//ConcertListPage");
+        }
     }
 }

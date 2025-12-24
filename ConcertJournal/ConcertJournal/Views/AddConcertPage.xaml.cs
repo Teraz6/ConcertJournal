@@ -1,23 +1,35 @@
 using ConcertJournal.Models;
 using ConcertJournal.Services;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using System.Collections.ObjectModel;
 
 namespace ConcertJournal.Views;
 
 public partial class AddConcertPage : ContentPage
 {
-    private Concert _existingConcert;
-    private ObservableCollection<string> Performers = new ObservableCollection<string>();
-    private ObservableCollection<string> MediaFiles = new ObservableCollection<string>();
+    private string _performer = string.Empty;
+    public string Performer
+    {
+        get => _performer;
+        set { _performer = value; OnPropertyChanged(); }
+    }
+
+    private readonly Concert? _existingConcert;
+
+    public ObservableCollection<string> Performers = [];
+    public ObservableCollection<string> MediaFiles = [];
+
     private const string DefaultCountryKey = "DefaultCountry";
     private const string DefaultCityKey = "DefaultCity";
 
-    public AddConcertPage(Concert existingConcert = null)
+    public AddConcertPage(Concert? existingConcert = null)
     {
         InitializeComponent();
 
         _existingConcert = existingConcert;
         BindingContext = this;
+
+        // ItemsSource is set here, but ensure your XAML has x:DataType="local:AddConcertPage"
         //Performer and media list
         PerformersList.ItemsSource = Performers;
         MediaCollectionView.ItemsSource = MediaFiles;
@@ -60,7 +72,7 @@ public partial class AddConcertPage : ContentPage
             // Change button and Title text
             SaveButton.Text = "Save";
             AddConcertPageTitle.Text = "Edit Event";
-
+            CancelButton.IsVisible = true;
         }
         else
         {
@@ -72,25 +84,25 @@ public partial class AddConcertPage : ContentPage
         }
     }
 
-    private void AddNewPerformer(object sender, EventArgs e)
+    private async void AddNewPerformer(object sender, EventArgs e)
     {
-        var performerName = PerformerEntry?.Text?.Trim();
+        var performerName = Performer?.Trim();
 
         if (!string.IsNullOrEmpty(performerName))
         {
             if (!Performers.Contains(performerName))
             {
                 Performers.Add(performerName);
-                PerformerEntry.Text = string.Empty;
+                Performer = string.Empty;
             }
             else
             {
-                DisplayAlert("Duplicate", "Performer already added.", "OK");
+                await DisplayAlert("Duplicate", "Performer already added.", "OK");
             }
         }
         else
         {
-            DisplayAlert("Missing Name", "Please enter a performer's name", "OK");
+            await DisplayAlert("Missing Name", "Please enter a performer's name", "OK");
         }
     }
 
@@ -100,6 +112,12 @@ public partial class AddConcertPage : ContentPage
         {
             Performers.Remove(performer);
         }
+    }
+
+    //Cancel editing and go back
+    private async void OnCancelButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//ConcertListPage");
     }
 
     private async void OnAddImageClicked(object sender, EventArgs e)

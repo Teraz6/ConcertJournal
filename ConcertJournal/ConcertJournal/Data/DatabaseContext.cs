@@ -42,10 +42,10 @@ namespace ConcertJournal.Data
             {
                 string lower = searchText.ToLower();
                 query = query.Where(c =>
-                    c.EventTitle.ToLower().Contains(lower) ||
-                    c.Performers.ToLower().Contains(lower) ||
-                    c.Country.ToLower().Contains(lower) ||
-                    c.City.ToLower().Contains(lower));
+                    c.EventTitle!.ToLower().Contains(lower) ||
+                    c.Performers!.ToLower().Contains(lower) ||
+                    c.Country!.ToLower().Contains(lower) ||
+                    c.City!.ToLower().Contains(lower));
             }
 
             // Sorting

@@ -18,9 +18,9 @@ namespace ConcertJournal.Services
                 var info = JsonSerializer.Deserialize<UpdateInfo>(json);
                 var current = AppInfo.VersionString;
 
-                if (Version.Parse(info.Version) > Version.Parse(current))
+                if (Version.Parse(info!.Version) > Version.Parse(current))
                 {
-                    await ShowUpdateNotification(info.DownloadUrl);
+                    await UpdateServices.ShowUpdateNotification(info.DownloadUrl);
                 }
             }
             catch
@@ -29,7 +29,7 @@ namespace ConcertJournal.Services
             }
         }
 
-        private async Task ShowUpdateNotification(string url)
+        private static async Task ShowUpdateNotification(string url)
         {
             var toast = Toast.Make("A new version is available! Tap to download.", ToastDuration.Long, 14);
             await toast.Show();
@@ -40,8 +40,8 @@ namespace ConcertJournal.Services
 
     public class UpdateInfo
     {
-        public string? Version { get; set; }
-        public string? DownloadUrl { get; set; }
+        public required string Version { get; set; }
+        public required string DownloadUrl { get; set; }
     }
 }
 

@@ -2,59 +2,183 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.Controls.BottomNavBar"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             x:DataType="controls:BottomNavBar"
              x:Name="NavBarView">
-    
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Style x:Key="NavButtonStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="Opacity" Value="0.6" />
+
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            
+            <Style x:Key="NavLabelStyle" TargetType="Label">
+                <Setter Property="Scale" Value="1" />
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
     <Grid BackgroundColor="{DynamicResource NavBarBackground}"
-          Padding="10,5"
+          Padding="8,4"
           ColumnDefinitions="*,*,*,*,*"
           VerticalOptions="End"
           HorizontalOptions="Fill"
-          HeightRequest="70">
-        
-        <ImageButton
-            Source="{DynamicResource HomeIcon}"
-            Grid.Column="0"
-            Command="{Binding NavigateHomeCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnHomeClicked"
-            HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
-        
-        <ImageButton
-            Source="{DynamicResource ListIcon}"
-            Grid.Column="1"
-            Command="{Binding NavigateListCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnListClicked"
-            HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
-        
-        <ImageButton
-            Source="{DynamicResource PlusIcon}"
-            Grid.Column="2"
-            Command="{Binding NavigateAddCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnAddClicked"
-            HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
-        
-        <ImageButton
-            Source="{DynamicResource StatsIcon}"
-            Grid.Column="3"
-            Command="{Binding NavigateStatisticsCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnStatisticsClicked"
-            HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
-        
-        <ImageButton
-            Source="{DynamicResource SettingsIcon}"
-            Grid.Column="4"
-            Command="{Binding NavigateSettingsCommand, Source={x:Reference NavBarView}}"
-            Clicked="OnSettingsClicked"
-            HeightRequest="60"
-            WidthRequest="75"
-            Padding="10"/>
+          HeightRequest="68">
 
+        <!--Home icon-->
+        <Grid Grid.Column="0"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="MainPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="HomeBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource HomeIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label x:Name="HomeLbl" 
+                   Grid.Row="1"
+                   Text="Home" 
+                   Style="{StaticResource NavLabelStyle}" 
+                   InputTransparent="True"/>
+        </Grid>
+
+        <!--Concert list icon-->
+        <Grid Grid.Column="1"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="ConcertListPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="ListBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource ListIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label 
+                x:Name="ListLbl" 
+                Grid.Row="1"
+                Text="List" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
+        </Grid>
+
+        <!--Add concert icon-->
+        <Grid Grid.Column="2"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="AddConcertPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="AddBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource PlusIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label 
+                x:Name="AddLbl" 
+                Grid.Row="1"
+                Text="Add" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
+        </Grid>
+
+        <!--Stats icon-->
+        <Grid Grid.Column="3"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="StatisticsPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="StatsBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource StatsIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label 
+                x:Name="StatsLbl" 
+                Grid.Row="1"
+                Text="Stats" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
+        </Grid>
+
+        <!--Settings icon-->
+        <Grid Grid.Column="4"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="SettingsBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource SettingsIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label 
+                x:Name="SettingsLbl" 
+                Grid.Row="1"
+                Text="Settings" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
+        </Grid>
     </Grid>
 </ContentView>

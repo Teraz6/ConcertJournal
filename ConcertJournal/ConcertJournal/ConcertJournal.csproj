@@ -66,7 +66,8 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CustomShellMaui" Version="1.0.6" />
 		<PackageReference Include="InputKit.Maui" Version="4.5.1" />
-		<PackageReference Include="LiveCharts" Version="0.9.7" />
+		<PackageReference Include="LiveChartsCore" Version="2.0.0-rc6.1" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc6.1" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc6.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
@@ -75,6 +76,7 @@
 		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.120" />
 		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.120" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.1" />
+		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="System.ObjectModel" Version="4.3.0" />
 		<PackageReference Include="UraniumUI" Version="2.13.0" />

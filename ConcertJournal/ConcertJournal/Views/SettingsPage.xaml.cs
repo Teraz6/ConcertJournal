@@ -26,8 +26,8 @@ public partial class SettingsPage : ContentPage
         }
     }
 
-    private string _defaultCountry;
-    public string DefaultCountry
+    private string? _defaultCountry;
+    public string? DefaultCountry
     {
         get => _defaultCountry;
         set
@@ -40,8 +40,8 @@ public partial class SettingsPage : ContentPage
         }
     }
 
-    private string _defaultCity;
-    public string DefaultCity
+    private string? _defaultCity;
+    public string? DefaultCity
     {
         get => _defaultCity;
         set
@@ -76,12 +76,12 @@ public partial class SettingsPage : ContentPage
 
     private void ApplyTheme(bool isDevil)
     {
-        App.Current.Resources.MergedDictionaries.Clear();
+        App.Current?.Resources.MergedDictionaries.Clear();
 
         if (isDevil)
-            App.Current.Resources.MergedDictionaries.Add(new DevilTheme());
+            App.Current?.Resources.MergedDictionaries.Add(new DevilTheme());
         else
-            App.Current.Resources.MergedDictionaries.Add(new AngelTheme());
+            App.Current?.Resources.MergedDictionaries.Add(new AngelTheme());
     }
 
     private async void OnExportClicked(object sender, EventArgs e)
