@@ -87,7 +87,7 @@ public partial class PerformerDetailsPage : ContentPage
                 await Shell.Current.GoToAsync("//ConcertListPage");
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             // Last resort - go to root
             await Shell.Current.GoToAsync("//ConcertListPage");

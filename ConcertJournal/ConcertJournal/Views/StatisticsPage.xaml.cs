@@ -1,16 +1,9 @@
 ﻿using ConcertJournal.Data;
 using ConcertJournal.Models;
 using ConcertJournal.Models.ViewModels;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using LiveChartsCore;
-using LiveChartsCore.Measure;
-using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
-using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace ConcertJournal.Views;
 
@@ -19,7 +12,7 @@ public partial class StatisticsPage : ContentPage
     //For performer listing
     public class PerformerViewModel
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int Count { get; set; }
         public string CountText => $"{Count} concerts";
     }
@@ -30,9 +23,9 @@ public partial class StatisticsPage : ContentPage
     //Optimized performers loading
     private const int PageSize = 20;
     private int currentPage = 0;
-    private ObservableCollection<PerformerViewModel> displayedPerformers = new();
-    private List<PerformerViewModel> allPerformers;
-    private List<PerformerViewModel> currentPerformers;
+    private readonly ObservableCollection<PerformerViewModel> displayedPerformers = [];
+    private List<PerformerViewModel> allPerformers = default!;
+    private List<PerformerViewModel>? currentPerformers;
 
     public StatisticsPage(DatabaseContext database)
     {
@@ -67,7 +60,7 @@ public partial class StatisticsPage : ContentPage
 
         // Average rating
         var ratedConcerts = concerts.Where(c => c.Rating > 0).ToList();
-        var avgRating = ratedConcerts.Any() ? ratedConcerts.Average(c => c.Rating) : 0;
+        var avgRating = ratedConcerts.Count != 0 ? ratedConcerts.Average(c => c.Rating) : 0;
 
         // Set stars
         AverageRatingStars.Rating = avgRating;
@@ -75,13 +68,13 @@ public partial class StatisticsPage : ContentPage
         // Concerts by country
         var concertsByCountry = concerts
             .Where(c => !string.IsNullOrWhiteSpace(c.Country))
-            .GroupBy(c => c.Country.Trim())
+            .GroupBy(c => c.Country!.Trim())
             .Select(g => $"{g.Key}: {g.Count()}")
             .ToList();
 
         // Latest concert date
         var latestConcert = concerts
-            .Where(c => c.Date.HasValue)
+            .Where(c => c.Date!.HasValue)
             .OrderByDescending(c => c.Date)
             .FirstOrDefault();
 
@@ -92,7 +85,7 @@ public partial class StatisticsPage : ContentPage
         // Concerts per year WITH performer count
         var concertsByYear = concerts
             .Where(c => c.Date.HasValue)
-            .GroupBy(c => c.Date.Value.Year)
+            .GroupBy(c => c.Date!.Value.Year)
             .OrderByDescending(g => g.Key)
             .Select(g =>
             {
@@ -102,7 +95,7 @@ public partial class StatisticsPage : ContentPage
                 // Collect performers in that year (split by comma)
                 var performers = g
                     .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-                    .SelectMany(c => c.Performers
+                    .SelectMany(c => c.Performers!
                         .Split(',', StringSplitOptions.RemoveEmptyEntries)
                         .Select(p => p.Trim()))
                     .Distinct()
@@ -138,14 +131,14 @@ public partial class StatisticsPage : ContentPage
         // Find the year with most concerts
         var yearWithMostConcerts = concerts
             .Where(c => c.Date.HasValue)
-            .GroupBy(c => c.Date.Value.Year)
+            .GroupBy(c => c.Date!.Value.Year)
             .Select(g => new
             {
                 Year = g.Key,
                 ConcertCount = g.Count(),
                 PerformerCount = g
                     .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-                    .SelectMany(c => c.Performers
+                    .SelectMany(c => c.Performers!
                         .Split(',', StringSplitOptions.RemoveEmptyEntries)
                         .Select(p => p.Trim()))
                     .Distinct()
@@ -157,14 +150,14 @@ public partial class StatisticsPage : ContentPage
         // Find the year with most performers
         var yearWithMostPerformers = concerts
             .Where(c => c.Date.HasValue)
-            .GroupBy(c => c.Date.Value.Year)
+            .GroupBy(c => c.Date!.Value.Year)
             .Select(g => new
             {
                 Year = g.Key,
                 ConcertCount = g.Count(),
                 PerformerCount = g
                     .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-                    .SelectMany(c => c.Performers
+                    .SelectMany(c => c.Performers!
                         .Split(',', StringSplitOptions.RemoveEmptyEntries)
                         .Select(p => p.Trim()))
                     .Distinct()
@@ -208,14 +201,13 @@ public partial class StatisticsPage : ContentPage
     {
         var concerts = await App.Database.GetConcertsAsync();
 
-        allPerformers = concerts
+        allPerformers = [.. concerts
             .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-            .SelectMany(c => c.Performers.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            .SelectMany(c => c.Performers!.Split(',', StringSplitOptions.RemoveEmptyEntries))
             .Select(p => p.Trim())
             .GroupBy(p => p)
             .Select(g => new PerformerViewModel { Name = g.Key, Count = g.Count() })
-            .OrderByDescending(p => p.Count)
-            .ToList();
+            .OrderByDescending(p => p.Count)];
 
         // Initialize the collection only for the first load
         InitializePerformersCollection(resetList: true);
@@ -231,7 +223,7 @@ public partial class StatisticsPage : ContentPage
             .Take(PageSize)
             .ToList();
 
-        if (!nextBatch.Any())
+        if (nextBatch.Count == 0)
             return; // nothing left to load
 
         foreach (var performer in nextBatch)
@@ -252,9 +244,7 @@ public partial class StatisticsPage : ContentPage
 
         currentPerformers = string.IsNullOrWhiteSpace(query)
             ? allPerformers
-            : allPerformers
-                .Where(p => p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+            : [.. allPerformers.Where(p => p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))];
 
         // Reset paging and reload
         currentPage = 0;
@@ -295,7 +285,7 @@ public partial class StatisticsPage : ContentPage
                 // Split each Performer string into individual performers and get distinct count
                 var performerCount = g
                     .SelectMany(c => (c.Performers ?? "")
-                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Split([','], StringSplitOptions.RemoveEmptyEntries)
                         .Select(p => p.Trim())) // remove extra spaces
                     .Distinct()
                     .Count();
@@ -312,7 +302,7 @@ public partial class StatisticsPage : ContentPage
         CountriesChart.YAxes = vm.YAxes;
 
         // Dynamic legend color
-        var legendTextColor = (Color)Application.Current.Resources["TextColor"];
+        var legendTextColor = (Color)Application.Current!.Resources["TextColor"];
         CountriesChart.LegendTextPaint = new SolidColorPaint(legendTextColor.ToSKColor());
     }
 

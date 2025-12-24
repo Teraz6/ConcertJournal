@@ -18,7 +18,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     private List<Concert> allConcertsLoaded = new();  // raw paged items from DB
 
     //Sorting
-    private bool sortAscending = true;
+    //private readonly bool sortAscending = true;
     private const string SortPreferenceKey = "SortRadioGroup";
 
     //For optimizing loading
@@ -74,10 +74,17 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
 
         foreach (var rb in SortRadioGroup.Children.OfType<RadioButton>())
         {
-            rb.IsChecked = rb.Text == savedSort;
+            rb.IsChecked = rb.Value?.ToString() == savedSort;
         }
 
         await ApplySortFromPreferenceAsync(savedSort);
+
+        // ⭐ NEW FIX: Explicitly update button visibility based on the CollectionView's current state.
+        // The SelectedItems collection is often reset by MAUI upon returning, but checking ensures correctness.
+        bool hasSelection = ConcertListView.SelectedItems.Count > 0;
+        DeleteSelectedButton.IsVisible = hasSelection;
+        UnselectAllButton.IsVisible = hasSelection;
+        SelectionButtonBackground.IsVisible = hasSelection;
     }
 
     protected override void OnDisappearing()
@@ -168,7 +175,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     }
 
     // This will fire whenever a radio button is selected
-    private void OnSortRadioSelectedChanged(object sender, EventArgs e)
+    private void OnSortRadioSelectedChanged(object? sender, EventArgs e)
     {
         string selectedValue = SortRadioGroup.SelectedItem?.ToString() ?? "Default";
 
@@ -183,9 +190,11 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     {
         if (sender is CollectionView cv)
         {
-            _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList();
+            // Update the local list of selected concerts
+            _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList(); // This is good
 
             bool hasSelection = _selectedConcerts.Count > 0;
+            // The Visibility properties are updated here
             DeleteSelectedButton.IsVisible = hasSelection;
             UnselectAllButton.IsVisible = hasSelection;
             SelectionButtonBackground.IsVisible = hasSelection;
@@ -194,25 +203,36 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
 
     private async void OnDeleteSelectedClicked(object sender, EventArgs e)
     {
-        if (_selectedConcerts.Count == 0)
+        // ⭐ FIX: Get the currently selected items directly from the CollectionView
+        var itemsToDelete = ConcertListView.SelectedItems.Cast<Concert>().ToList();
+
+        if (itemsToDelete.Count == 0)
         {
             await DisplayAlert("No selection", "Please select at least one concert.", "OK");
+
+            // Ensure buttons are hidden if the list is empty (in case they were stale)
+            DeleteSelectedButton.IsVisible = false;
+            UnselectAllButton.IsVisible = false;
+            SelectionButtonBackground.IsVisible = false;
+
             return;
         }
 
         bool confirm = await DisplayAlert(
-            "Delete",
-            $"Are you sure you want to delete {_selectedConcerts.Count} selected concerts?",
-            "Yes", "No");
+        "Delete",
+        $"Are you sure you want to delete {itemsToDelete.Count} selected concerts?", // Use itemsToDelete.Count
+        "Yes", "No");
 
         if (!confirm)
             return;
 
         // Delete all selected concerts in parallel
-        var deleteTasks = _selectedConcerts.Select(concert => App.Database.DeleteConcertAsync(concert));
+        var deleteTasks = itemsToDelete.Select(concert => App.Database.DeleteConcertAsync(concert));
         await Task.WhenAll(deleteTasks);
 
-        _selectedConcerts.Clear();
+        // Clear the CollectionView selection state (This will trigger OnSelectionChanged)
+        ConcertListView.SelectedItems.Clear();
+
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
         SelectionButtonBackground.IsVisible = false;

@@ -27,7 +27,7 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
-        <ScrollView>
+        <ScrollView VerticalScrollBarVisibility="Never">
 
             <!--MainContent-->
             <Grid ColumnDefinitions="*,*,*" Padding="8">

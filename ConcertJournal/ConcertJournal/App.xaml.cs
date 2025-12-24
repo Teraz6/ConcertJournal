@@ -20,7 +20,7 @@ namespace ConcertJournal
         const int WindowWidth = 540;
         const int WindowHeight = 1000;
 
-        public static DatabaseContext Database { get; private set; }
+        public static DatabaseContext Database { get; private set; } = null!;
         public App()
         {
             InitializeComponent();
