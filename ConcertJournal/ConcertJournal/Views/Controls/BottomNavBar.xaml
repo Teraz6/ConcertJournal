@@ -2,24 +2,35 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.Controls.BottomNavBar"
+             xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             x:DataType="controls:BottomNavBar"
              x:Name="NavBarView">
 
     <ContentView.Resources>
         <ResourceDictionary>
-            <Style x:Key="NavButtonStyle" TargetType="ImageButton">
-                <Setter Property="HeightRequest" Value="48" />
-                <Setter Property="WidthRequest" Value="48" />
+            <Style x:Key="NavButtonStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="Opacity" Value="0.5" />
-                <Setter Property="Scale" Value="0.8" />
+                <Setter Property="Opacity" Value="0.6" />
 
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="0.6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="Opacity" Value="1.0" />
+                                </VisualState.Setters>
+                            </VisualState>
                             <VisualState x:Name="Pressed">
                                 <VisualState.Setters>
-                                    <Setter Property="Scale" Value="0.7" />
                                     <Setter Property="Opacity" Value="1.0" />
                                 </VisualState.Setters>
                             </VisualState>
@@ -27,18 +38,23 @@
                     </VisualStateGroupList>
                 </Setter>
             </Style>
+            
             <Style x:Key="NavLabelStyle" TargetType="Label">
                 <Setter Property="Scale" Value="1" />
-                <Setter Property="Opacity" Value="0.5" />
                 <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
 
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
                         <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Pressed">
+                            <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="Scale" Value="0.9" />
+                                    <Setter Property="Opacity" Value="0.6" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
                                     <Setter Property="Opacity" Value="1.0" />
                                 </VisualState.Setters>
                             </VisualState>
@@ -57,201 +73,112 @@
           HeightRequest="68">
 
         <!--Home icon-->
-        <Grid Grid.Column="0">
-            <ImageButton 
-                Source="{DynamicResource HomeIcon}"
-                Style="{StaticResource NavButtonStyle}"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="MainPage"
-                VerticalOptions="Fill"
-                HorizontalOptions="Fill"
-                Aspect="AspectFit"
-                Padding="0,0,0,8">
-                <ImageButton.Triggers>
-                    <DataTrigger 
-                        TargetType="ImageButton" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="MainPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+        <Grid Grid.Column="0"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="MainPage"/>
+            </Grid.GestureRecognizers>
 
-            <Label 
-                Text="Home"
-                Style="{StaticResource NavLabelStyle}"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="End"
-                Margin="0,0,0,0"
-                InputTransparent="True">
-                <Label.Triggers>
-                    <DataTrigger 
-                        TargetType="Label" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="MainPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+            <Image 
+                x:Name="HomeBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource HomeIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
+            <Label x:Name="HomeLbl" 
+                   Grid.Row="1"
+                   Text="Home" 
+                   Style="{StaticResource NavLabelStyle}" 
+                   InputTransparent="True"/>
         </Grid>
 
-        <Grid Grid.Column="1">
-            <ImageButton 
-                Source="{DynamicResource ListIcon}"
-                Style="{StaticResource NavButtonStyle}"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="ConcertListPage"
-                VerticalOptions="Fill"
-                HorizontalOptions="Fill"
-                Aspect="AspectFit"
-                Padding="0,0,0,8">
-                <ImageButton.Triggers>
-                    <DataTrigger 
-                        TargetType="ImageButton" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="ConcertListPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+        <!--Concert list icon-->
+        <Grid Grid.Column="1"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="ConcertListPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="ListBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource ListIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
 
             <Label 
-                Text="List"
-                Style="{StaticResource NavLabelStyle}"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="End"
-                Margin="0,0,0,0"
-                InputTransparent="True">
-                <Label.Triggers>
-                    <DataTrigger 
-                        TargetType="Label" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="ConcertListPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+                x:Name="ListLbl" 
+                Grid.Row="1"
+                Text="List" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
         </Grid>
 
+        <!--Add concert icon-->
+        <Grid Grid.Column="2"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="AddConcertPage"/>
+            </Grid.GestureRecognizers>
 
-        <Grid Grid.Column="2">
-            <ImageButton 
-                Source="{DynamicResource PlusIcon}"
-                Style="{StaticResource NavButtonStyle}"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="AddConcertPage"
-                VerticalOptions="Fill"
-                HorizontalOptions="Fill"
-                Aspect="AspectFit"
-                Padding="0,0,0,8">
-                <ImageButton.Triggers>
-                    <DataTrigger TargetType="ImageButton" 
-                                 Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                                 Value="AddConcertPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+            <Image 
+                x:Name="AddBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource PlusIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
 
             <Label 
-                Text="Add"
-                Style="{StaticResource NavLabelStyle}"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="End"
-                Margin="0,0,0,0"
-                InputTransparent="True">
-                <Label.Triggers>
-                    <DataTrigger 
-                        TargetType="Label" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="AddConcertPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+                x:Name="AddLbl" 
+                Grid.Row="1"
+                Text="Add" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
         </Grid>
 
-        <Grid Grid.Column="3">
-            <ImageButton 
-                Source="{DynamicResource StatsIcon}"
-                Style="{StaticResource NavButtonStyle}"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="StatisticsPage"
-                VerticalOptions="Fill"
-                HorizontalOptions="Fill"
-                Aspect="AspectFit"
-                Padding="0,0,0,8">
-                <ImageButton.Triggers>
-                    <DataTrigger TargetType="ImageButton" 
-                                 Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                                 Value="StatisticsPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+        <!--Stats icon-->
+        <Grid Grid.Column="3"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="StatisticsPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="StatsBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource StatsIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
+
             <Label 
-                Text="Stats"
-                Style="{StaticResource NavLabelStyle}"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="End"
-                Margin="0,0,0,0"
-                InputTransparent="True">
-                <Label.Triggers>
-                    <DataTrigger 
-                        TargetType="Label" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="StatisticsPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+                x:Name="StatsLbl" 
+                Grid.Row="1"
+                Text="Stats" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
         </Grid>
 
-        <Grid Grid.Column="4">
-            <ImageButton 
-                Source="{DynamicResource SettingsIcon}"
-                Style="{StaticResource NavButtonStyle}"
-                Command="{Binding NavigateCommand}"
-                CommandParameter="SettingsPage"
-                VerticalOptions="Fill"
-                HorizontalOptions="Fill"
-                Aspect="AspectFit"
-                Padding="0,0,0,8">
-                <ImageButton.Triggers>
-                    <DataTrigger TargetType="ImageButton" 
-                                 Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                                 Value="SettingsPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </ImageButton.Triggers>
-            </ImageButton>
+        <!--Settings icon-->
+        <Grid Grid.Column="4"
+              RowDefinitions="*,*">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>
+            </Grid.GestureRecognizers>
+
+            <Image 
+                x:Name="SettingsBtn" 
+                Grid.Row="0"
+                Source="{DynamicResource SettingsIcon}" 
+                Style="{StaticResource NavButtonStyle}" 
+                InputTransparent="True"/>
 
             <Label 
-                Text="Settings"
-                Style="{StaticResource NavLabelStyle}"
-                HorizontalTextAlignment="Center"
-                VerticalOptions="End"
-                Margin="0,0,0,0"
-                InputTransparent="True">
-                <Label.Triggers>
-                    <DataTrigger 
-                        TargetType="Label" 
-                        Binding="{Binding ActiveRoute, Source={x:Reference NavBarView}}" 
-                        Value="SettingsPage">
-                        <Setter Property="Opacity" Value="1.0" />
-                        <Setter Property="Scale" Value="1.0" />
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+                x:Name="SettingsLbl" 
+                Grid.Row="1"
+                Text="Settings" 
+                Style="{StaticResource NavLabelStyle}" 
+                InputTransparent="True"/>
         </Grid>
     </Grid>
 </ContentView>

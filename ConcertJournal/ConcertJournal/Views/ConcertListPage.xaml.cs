@@ -18,7 +18,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     private List<Concert> allConcertsLoaded = new();  // raw paged items from DB
 
     //Sorting
-    private bool sortAscending = true;
+    //private readonly bool sortAscending = true;
     private const string SortPreferenceKey = "SortRadioGroup";
 
     //For optimizing loading
@@ -26,6 +26,11 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     private int _currentPage = 0;
     private bool _isLoadingMore = false;
     private bool _hasMoreItems = true;
+
+    //Hold timer for selection. Hold duration 0.75s
+    private bool _isPressing;
+    private bool _selectionTriggered;
+    private const int HoldDuration = 750;
 
     public ConcertListPage()
 	{
@@ -69,10 +74,17 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
 
         foreach (var rb in SortRadioGroup.Children.OfType<RadioButton>())
         {
-            rb.IsChecked = rb.Text == savedSort;
+            rb.IsChecked = rb.Value?.ToString() == savedSort;
         }
 
         await ApplySortFromPreferenceAsync(savedSort);
+
+        // ⭐ NEW FIX: Explicitly update button visibility based on the CollectionView's current state.
+        // The SelectedItems collection is often reset by MAUI upon returning, but checking ensures correctness.
+        bool hasSelection = ConcertListView.SelectedItems.Count > 0;
+        DeleteSelectedButton.IsVisible = hasSelection;
+        UnselectAllButton.IsVisible = hasSelection;
+        SelectionButtonBackground.IsVisible = hasSelection;
     }
 
     protected override void OnDisappearing()
@@ -144,42 +156,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         await LoadMoreConcertsAsync();
     }
 
-    private async void OnUpdateClicked(object sender, EventArgs e)
-    {
-        if (sender is ImageButton button && button.CommandParameter is Concert selectedConcert)
-        {
-            // Navigate to AddConcertPage with the existing concert
-            await Navigation.PushAsync(new AddConcertPage(selectedConcert));
-        }
-    }
-
-    private async void OnDeleteClicked(object sender, EventArgs e)
-    {
-        if (sender is ImageButton button && button.BindingContext is Concert concert)
-        {
-            bool confirm = await DisplayAlert(
-                "Delete Concert",
-                $"Are you sure you want to delete '{concert.EventTitle}'?",
-                "Yes",
-                "No");
-
-            if (confirm)
-            {
-                await App.Database.DeleteConcertAsync(concert);
-                await RefreshAllAsync(); // Refresh the list
-            }
-        }
-    }
-
-    //When clicked on Details button it will take you to Details page
-    private async void OnDetailsClicked(object sender, EventArgs e)
-    {
-        if (sender is ImageButton button && button.BindingContext is Concert concert)
-        {
-            await Navigation.PushAsync(new ConcertDetailsPage(concert));
-        }
-    }
-
+    //List sorting
     private async Task ApplySortFromPreferenceAsync(string selected)
     {
         _currentPage = 0;
@@ -188,6 +165,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         await LoadMoreConcertsAsync();
     }
 
+    //Searchbar result loading
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
         _currentPage = 0;
@@ -197,7 +175,7 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     }
 
     // This will fire whenever a radio button is selected
-    private void OnSortRadioSelectedChanged(object sender, EventArgs e)
+    private void OnSortRadioSelectedChanged(object? sender, EventArgs e)
     {
         string selectedValue = SortRadioGroup.SelectedItem?.ToString() ?? "Default";
 
@@ -208,22 +186,15 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         _ = ApplySortFromPreferenceAsync(selectedValue);
     }
 
-    private async void OnConcertSelected(object sender, SelectionChangedEventArgs e)
-    {
-        if (e.CurrentSelection.FirstOrDefault() is Concert selected)
-        {
-            await Navigation.PushAsync(new ConcertDetailsPage(selected));
-            ((CollectionView)sender).SelectedItem = null;
-        }
-    }
-
     private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (sender is CollectionView cv)
         {
-            _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList();
+            // Update the local list of selected concerts
+            _selectedConcerts = cv.SelectedItems.Cast<Concert>().ToList(); // This is good
 
             bool hasSelection = _selectedConcerts.Count > 0;
+            // The Visibility properties are updated here
             DeleteSelectedButton.IsVisible = hasSelection;
             UnselectAllButton.IsVisible = hasSelection;
             SelectionButtonBackground.IsVisible = hasSelection;
@@ -232,25 +203,36 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
 
     private async void OnDeleteSelectedClicked(object sender, EventArgs e)
     {
-        if (_selectedConcerts.Count == 0)
+        // ⭐ FIX: Get the currently selected items directly from the CollectionView
+        var itemsToDelete = ConcertListView.SelectedItems.Cast<Concert>().ToList();
+
+        if (itemsToDelete.Count == 0)
         {
             await DisplayAlert("No selection", "Please select at least one concert.", "OK");
+
+            // Ensure buttons are hidden if the list is empty (in case they were stale)
+            DeleteSelectedButton.IsVisible = false;
+            UnselectAllButton.IsVisible = false;
+            SelectionButtonBackground.IsVisible = false;
+
             return;
         }
 
         bool confirm = await DisplayAlert(
-            "Delete",
-            $"Are you sure you want to delete {_selectedConcerts.Count} selected concerts?",
-            "Yes", "No");
+        "Delete",
+        $"Are you sure you want to delete {itemsToDelete.Count} selected concerts?", // Use itemsToDelete.Count
+        "Yes", "No");
 
         if (!confirm)
             return;
 
         // Delete all selected concerts in parallel
-        var deleteTasks = _selectedConcerts.Select(concert => App.Database.DeleteConcertAsync(concert));
+        var deleteTasks = itemsToDelete.Select(concert => App.Database.DeleteConcertAsync(concert));
         await Task.WhenAll(deleteTasks);
 
-        _selectedConcerts.Clear();
+        // Clear the CollectionView selection state (This will trigger OnSelectionChanged)
+        ConcertListView.SelectedItems.Clear();
+
         DeleteSelectedButton.IsVisible = false;
         UnselectAllButton.IsVisible = false;
         SelectionButtonBackground.IsVisible = false;
@@ -304,5 +286,101 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
         // Total concerts
         TotalConcertsLabel.Text = $"Total concerts: {concerts.Count}";
     }
-   
+
+    //Options icon
+    private async void OnOptionsClicked(object sender, EventArgs e)
+    {
+        string editOption = "Edit";
+        string deleteOption = "Delete";
+
+        var options = new string[] { editOption, deleteOption } ;
+
+        if (sender is ImageButton button && button.BindingContext is Concert concert)
+        {
+            //Use event title as sheet title
+            string selectedOption = await DisplayActionSheet(concert.EventTitle, "Cancel", null, options);
+
+            if (selectedOption == editOption)
+            {
+                await Navigation.PushAsync(new AddConcertPage(concert));
+            }
+       
+            else if (selectedOption == deleteOption)
+            {
+                bool confirm = await DisplayAlert(
+                "Delete Concert",
+                $"Are you sure you want to delete '{concert.EventTitle}'?",
+                "Yes",
+                "No");
+
+                if (confirm)
+                {
+                    await App.Database.DeleteConcertAsync(concert);
+                    await RefreshAllAsync(); // Refresh the list
+                }
+            }
+        }
+    }
+
+    // 1. PRESSED: Start the timer
+    private async void OnCardPressed(object sender, EventArgs e)
+    {
+        _isPressing = true;
+        _selectionTriggered = false;
+
+        if (sender is Button btn && btn.BindingContext is Concert concert)
+        {
+            // Wait for 500ms
+            await Task.Delay(HoldDuration);
+
+            // If still pressing after 500ms, trigger SELECTION
+            if (_isPressing)
+            {
+                _selectionTriggered = true;
+
+                // Vibrate for feedback (optional, requires permissions, wrap in try-catch)
+                try { HapticFeedback.Perform(HapticFeedbackType.LongPress); } catch { }
+
+                // Perform Selection Logic
+                if (ConcertListView.SelectedItems.Contains(concert))
+                {
+                    ConcertListView.SelectedItems.Remove(concert);
+                }
+                else
+                {
+                    ConcertListView.SelectedItems.Add(concert);
+                }
+            }
+        }
+    }
+
+    // 2. RELEASED: Stop the timer state
+    private void OnCardReleased(object sender, EventArgs e)
+    {
+        _isPressing = false;
+    }
+
+    // 3. CLICKED: Navigate ONLY if it wasn't a long press
+    private async void OnCardClicked(object sender, EventArgs e)
+    {
+        if (_selectionTriggered)
+        {
+            // If we just finished a long press, do nothing (don't navigate)
+            return;
+        }
+
+        if (sender is Button btn && btn.BindingContext is Concert concert)
+        {
+            // Standard Navigation
+            await Navigation.PushAsync(new ConcertDetailsPage(concert));
+
+            // Clear visual selection if it happened accidentally
+            if (ConcertListView.SelectedItems.Contains(concert))
+            {
+                ConcertListView.SelectedItems.Remove(concert);
+            }
+        }
+    }
+
+    //TODO: make selection buttons that appear for unselecting all reset when going to details page. Happens on android not windows.
 }

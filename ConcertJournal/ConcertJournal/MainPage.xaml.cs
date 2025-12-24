@@ -4,7 +4,7 @@ namespace ConcertJournal;
 
 public partial class MainPage : ContentPage
 {
-    private string _downloadUrl;
+    private string? _downloadUrl;
 
     public MainPage()
     {
@@ -22,10 +22,10 @@ public partial class MainPage : ContentPage
             string json = await client.GetStringAsync("https://raw.githubusercontent.com/Teraz6/ConcertJournal/main/update.json");
 
             var info = JsonSerializer.Deserialize<UpdateInfo>(json) ?? throw new Exception("Invalid update.json format");
-            _downloadUrl = info.downloadUrl;
+            _downloadUrl = info.DownloadUrl;
 
             var currentVersion = Version.Parse(AppInfo.VersionString);
-            var latestVersion = Version.Parse(info.version);
+            var latestVersion = Version.Parse(info.Version);
 
             if (currentVersion >= latestVersion)
             {
@@ -66,8 +66,8 @@ public partial class MainPage : ContentPage
     //Json data structure
     private class UpdateInfo
     {
-        public string version { get; set; }
-        public string downloadUrl { get; set; }
+        public required string Version { get; set; }
+        public required string DownloadUrl { get; set; }
     }
 }
 

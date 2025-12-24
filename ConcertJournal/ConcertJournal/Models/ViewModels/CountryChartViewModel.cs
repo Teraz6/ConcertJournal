@@ -32,7 +32,7 @@ public class CountryChartViewModel
             .Select(l => TrimLabel(l))
             .ToArray();
 
-        var textColor = (Color)Application.Current.Resources["TextColor"];
+        var textColor = (Color)Application.Current!.Resources["TextColor"];
         var skTextColor = textColor.ToSKColor();
 
         // Horizontal bars with two series
