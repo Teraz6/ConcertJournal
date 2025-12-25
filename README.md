@@ -1,25 +1,34 @@
-🎵 Event Journal
+# 🎵 Event Journal
+Event Journal is a streamlined Android mobile application built with .NET MAUI designed for music enthusiasts to document their live event experiences. Whether it's a stadium concert or an intimate club set, Event Journal ensures your musical memories are preserved, organized, and portable.
 
-Event Journal on cross-platform mobiilirakendus, mis on loodud .NET MAUI abil ja aitab muusikasõpradel järge pidada külastatud kontsertide ja ürituste üle.
-See võimaldab kasutajatel salvestada ürituste üksikasju, lisada meediat, hinnata elamusi ning eksportida või importida oma andmeid.
+## ✨ Key Features
+#### 📝 Comprehensive Event Logging
+Capture every detail of your concert experience with ease:
+* **Event Metadata:** Track titles, performers, venues, and dates.
+* **Geographic Tagging:** Organize by city and country.
+* **Personal Touch:** Add custom notes, star ratings, and photo galleries to every entry.
 
-✨ Funktsioonid
+### 📅 Advanced Management & Overview
+Navigate your history effortlessly:
+* **Smart Lists:** View all events in a searchable, sortable interface.
+* **Batch Operations:** Select multiple entries for bulk deletion with intuitive visual highlighting.
+* **High Performance:** Built to handle extensive event histories without lag.
 
-📝 Loo ja halda üritusi
+### 🎨 Personalized UI/UX
+* **Adaptive Themes:** Seamlessly switch between Light and Dark modes.
 
-Lisa kontserdi üksikasju, nagu ürituse pealkiri, esinejad, toimumiskoht, linn, riik, kuupäev, märkmed, hinnang ja pildid.
+* **Persistent Settings:** Your theme preferences are saved automatically for your next session.
 
-📅 Ürituste üldvaade
+### 📦 Data Portability
+* **Cloud & Local Backup:** Export and import your entire database as a .xlsx file.
 
-Vaata kõiki oma kontserte sorditavas ja otsitavas nimekirjas.
-Vali mitu kontserti korraga ja kustuta need ühise toiminguga.
-Valitud üksused on visuaalselt esile tõstetud.
+* **Cross-Device Sync:** Move your data easily between devices via local storage or cloud services like Google Drive.
 
-🎨 Hele ja tume teema
+## 🛠 Tech Stack
+* **Framework:** .NET MAUI 9
 
-Vaheta heleda ja tumeda teemade vahel — eelistused salvestatakse.
+* **Language:** C#
 
-📦 Andmehaldus
+* **Database:** SQLite (Local storage)
 
-Ekspordi ja impordi kogu oma kontsertide andmebaas (.xlsx fail) andmete ülekandmiseks seadmete vahel.
-Toetab kohalikke ja pilveteenuseid, nagu Google Drive
+* **Platform:** Android
