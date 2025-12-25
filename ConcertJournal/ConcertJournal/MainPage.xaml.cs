@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ConcertJournal;
 
@@ -42,11 +43,12 @@ public partial class MainPage : ContentPage
                 UpdateButton.IsVisible = true;
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             UpdateCard.Stroke = Colors.Gray;
             UpdateMessageLabel.Text = "Unable to check for updates.";
             UpdateButton.IsVisible = false;
+            Console.WriteLine(ex);
         }
     }
 
@@ -66,7 +68,9 @@ public partial class MainPage : ContentPage
     //Json data structure
     private class UpdateInfo
     {
+        [JsonPropertyName("version")]
         public required string Version { get; set; }
+        [JsonPropertyName("downloadUrl")]
         public required string DownloadUrl { get; set; }
     }
 }
