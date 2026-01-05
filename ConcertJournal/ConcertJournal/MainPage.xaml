@@ -30,32 +30,30 @@
                         FontSize="24"
                         HorizontalTextAlignment="Center"/>
 
-                    <Border 
-                        x:Name="UpdateCard"
-                        BackgroundColor="Transparent"
+                    <Border BackgroundColor="Transparent"
                         StrokeThickness="2"
+                        Stroke="{Binding StatusColor}"
                         StrokeShape="RoundRectangle 16"
                         Padding="12"
                         HorizontalOptions="Center">
                         <VerticalStackLayout Spacing="4">
-                            <Label 
-                                x:Name="VersionLabel"
-                                Text="Checking version..."
-                                HorizontalTextAlignment="Center"
-                                FontSize="16"
-                                FontAttributes="Bold"/>
+                            <Label Text="{Binding VersionText}"
+                               HorizontalTextAlignment="Center"
+                               FontSize="16" FontAttributes="Bold"/>
 
-                            <Label 
-                                x:Name="UpdateMessageLabel"
-                                Text=""
-                                FontSize="14"
-                                HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding UpdateMessage}"
+                               IsVisible="{Binding IsNotBusy}" 
+                               FontSize="14" 
+                               HorizontalTextAlignment="Center"/>
 
-                            <Button 
-                                x:Name="UpdateButton"
-                                Text="Update"
-                                IsVisible="False"
-                                Clicked="UpdateButton_Clicked"
+                            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                   IsVisible="{Binding IsBusy}" 
+                                   HeightRequest="20" WidthRequest="20"
+                                   Color="{StaticResource Primary}"/>
+
+                            <Button Text="Update"
+                                Command="{Binding DownloadUpdateCommand}"
+                                IsVisible="{Binding CanUpdate}"
                                 HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Border>

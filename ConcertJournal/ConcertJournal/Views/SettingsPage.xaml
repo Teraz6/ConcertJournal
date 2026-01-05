@@ -4,6 +4,8 @@
              x:Class="ConcertJournal.Views.SettingsPage"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:SettingsViewModel"
              BackgroundColor="{DynamicResource Background}">
 
     <!--For UraniumUI Material styles-->
@@ -58,7 +60,7 @@
             </material:TabView.TabHeaderItemTemplate>
             <material:TabItem Title="Theme">
                 <material:TabItem.ContentTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="vm:SettingsViewModel">
                         <VerticalStackLayout>
                             <Grid ColumnDefinitions="*,*">
                                 <Label 
@@ -74,7 +76,7 @@
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center"
                                         x:Name="ThemeSwitch"
-                                        IsToggled="{Binding IsDevilTheme, Mode=TwoWay}"
+                                        IsToggled="{Binding IsDevilTheme}"
                                         ThumbColor="{DynamicResource Primary}"
                                         OnColor="{DynamicResource Surface}"
                                         Scale="1.5">
@@ -88,7 +90,7 @@
 
             <material:TabItem Title="Import/Export">
                 <material:TabItem.ContentTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="vm:SettingsViewModel">
                         <VerticalStackLayout Spacing="48">
                             <!--Import-->
                             <Grid ColumnDefinitions="*,*">
@@ -103,7 +105,7 @@
                                         Grid.Column="1"
                                         Text="Import Excel"
                                         FontSize="16"
-                                        Clicked="OnImportFromExcelClicked"
+                                        Command="{Binding ImportDataCommand}"
                                         Margin="48,0"/>
                             </Grid>
 
@@ -120,7 +122,7 @@
                                         Grid.Column="1"
                                         Text="Export Excel"
                                         FontSize="16"
-                                        Clicked="OnExportClicked"
+                                        Command="{Binding ExportDataCommand}"
                                         Margin="48,0"/>
                             </Grid>
                         </VerticalStackLayout>
@@ -131,7 +133,7 @@
 
             <material:TabItem Title="Default values">
                 <material:TabItem.ContentTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="vm:SettingsViewModel">
                         <VerticalStackLayout Spacing="48">
                             <!--Default country-->
                             <Grid ColumnDefinitions="*,*">
@@ -146,9 +148,9 @@
                                 <material:TextField
                                         Grid.Column="1"
                                         x:Name="CountryEntry" 
-                                        Title="Enter default country"
+                                        Title="Default country"
                                         CornerRadius="12"
-                                        Text="{Binding DefaultCountry, Mode=TwoWay}"
+                                        Text="{Binding DefaultCountry}"
                                         Margin="24,0"/>
                             </Grid>
 
@@ -165,9 +167,9 @@
                                 <material:TextField
                                         Grid.Column="1"
                                         x:Name="CityEntry" 
-                                        Title="Enter default city" 
+                                        Title="Default city" 
                                         CornerRadius="12"
-                                        Text="{Binding DefaultCity, Mode=TwoWay}"
+                                        Text="{Binding DefaultCity}"
                                         Margin="24,0"/>
 
                             </Grid>
@@ -175,7 +177,7 @@
                             <Button 
                                     Text="Save values"
                                     FontSize="16"
-                                    Clicked="OnSaveClicked"
+                                    Command="{Binding SaveDefaultsCommand}"
                                     BorderWidth="0"
                                     BackgroundColor="{DynamicResource ButtonGreen}"
                                     TextColor="{DynamicResource ButtonUpdateDeleteText}"

@@ -2,17 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.AddConcertPage"
-             
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
-             xmlns:models="clr-namespace:ConcertJournal.Models"
-             
-             x:DataType="models:Concert"
+             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:AddConcertViewModel"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{DynamicResource Background}">
 
-    <!--For UraniumUI Material styles-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="material:TextField">
@@ -28,15 +25,11 @@
 
     <Grid RowDefinitions="*,Auto">
         <ScrollView VerticalScrollBarVisibility="Never">
-
-            <!--MainContent-->
             <Grid ColumnDefinitions="*,*,*" Padding="8">
                 <VerticalStackLayout Grid.ColumnSpan="3">
-                    
-                    <!--PageTitle and Create button-->
+
                     <Grid>
                         <Button
-                            x:Name="CancelButton"
                             Text="Cancel"
                             FontSize="18"
                             StyleClass="OutlinedButton"
@@ -44,252 +37,122 @@
                             BorderColor="{DynamicResource ButtonRed}"
                             TextColor="{DynamicResource ButtonRed}"
                             HorizontalOptions="Start"
-                            Clicked="OnCancelButtonClicked"
-                            IsVisible="false"/>
+                            Command="{Binding CancelCommand}"
+                            IsVisible="{Binding IsCancelVisible}"/>
 
                         <Label 
                             Grid.Column="1"
-                            x:Name="AddConcertPageTitle"
-                            Text="Create Event"
+                            Text="{Binding PageTitle}"
                             FontSize="32"
                             FontAttributes="Bold"
                             HorizontalOptions="Center"/>
-                        
+
                         <Button 
                             Grid.Column="1"
-                            x:Name="SaveButton"
-                            Text="Create"
+                            Text="{Binding SaveButtonText}"
                             FontSize="22"
                             Padding="8"
                             TextColor="{DynamicResource ButtonUpdateDeleteText}"
                             BackgroundColor="{DynamicResource ButtonGreen}"
                             HorizontalOptions="End"
-                            Clicked="SaveButton_Clicked"
+                            Command="{Binding SaveCommand}"
                             BorderWidth="0"/>
                     </Grid>
 
-                    <!--Event Title-->
-                    <Label 
-                        Text="Event Title"
-                        Margin="0,12,0,12"
-                        FontSize="22"
-                        FontAttributes="Bold"/>
-
+                    <Label Text="Event Title" Margin="0,12,0,12" FontSize="22" FontAttributes="Bold"/>
                     <material:TextField 
-                        x:Name="EventTitleEntry"
                         Title="Event Title"
                         CornerRadius="12"
-                        Text="{Binding EventTitle}"/>
+                        Text="{Binding EventTitle, Mode=TwoWay}"/>
 
-                    <!--Performer name--> 
-                    <Label 
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Text="Performer name" 
-                        Margin="0,16,0,12"
-                        FontSize="22"
-                        FontAttributes="Bold"/>
-
+                    <Label Text="Performer name" Margin="0,16,0,12" FontSize="22" FontAttributes="Bold"/>
                     <material:TextField 
-                        Margin="0,0"
                         CornerRadius="12"
-                        x:Name="PerformerEntry"
                         Title="Performer"
-                        Text="{Binding Performer}"
-                        ReturnType="Default"
-                        Completed="AddNewPerformer">
+                        Text="{Binding PerformerInput, Mode=TwoWay}"
+                        ReturnType="Default">
                         <material:TextField.Attachments>
                             <Button 
                                 Text="+ADD"
+                                Command="{Binding AddPerformerCommand}"
                                 VerticalOptions="Center"
                                 StyleClass="TextButton"
                                 BackgroundColor="Transparent"
-                                BorderWidth="0"
                                 TextColor="{DynamicResource ButtonGreen}"
-                                Padding="5"
-                                Margin="0,0,16,0"
-                                FontSize="18"
-                                Clicked="AddNewPerformer"/>
+                                Padding="5" Margin="0,0,16,0" FontSize="18"/>
                         </material:TextField.Attachments>
                     </material:TextField>
 
-                    <!--CollectionView to show added performers-->
-                    <CollectionView x:Name="PerformersList" ItemsSource="{Binding Performers}">
+                    <CollectionView ItemsSource="{Binding Performers}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <StackLayout Orientation="Horizontal" Spacing="4">
-                                    <Label 
-                                        Text="{Binding .}" 
-                                        FontSize="16" 
-                                        VerticalOptions="Center"
-                                        Padding="8"/>
-
+                                    <Label Text="{Binding .}" FontSize="16" VerticalOptions="Center" Padding="8"/>
                                     <Button 
                                         Text="X"
                                         TextColor="{DynamicResource ButtonRed}"
-                                        StyleClass="TextButton"
-                                        FontSize="16"
-                                        FontAttributes="Bold"
-                                        BackgroundColor="Transparent"
-                                        BorderWidth="0"
-                                        Clicked="RemovePerformer"
-                                        BindingContext="{Binding .}"/>
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemovePerformerCommand}"
+                                        CommandParameter="{Binding .}"
+                                        StyleClass="TextButton" FontSize="16" FontAttributes="Bold"
+                                        BackgroundColor="Transparent" BorderWidth="0"/>
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                    
-                    <!--Venue-->
-                    <Label 
-                        Text="Venue" 
-                        Margin="0,12,0,12"
-                        FontSize="18"
-                        FontAttributes="Bold"/>
-                 
+
+                    <Label Text="Venue" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
                     <material:TextField 
-                        x:Name="VenueEntry"
                         Title="Venue" 
                         CornerRadius="12"
-                        Text="{Binding Venue}"/>
-                    
-                    <!--Country & City-->
-                    <Grid ColumnDefinitions="*,*"
-                          RowDefinitions="*,*,*,*"
-                          ColumnSpacing="8">
-                        <Label Grid.Row="0"
-                               Grid.Column="0"
-                               Text="Country" 
-                               Margin="0,12,0,12"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
-                        <material:TextField 
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            CornerRadius="12"
-                            Title="Country"
-                            x:Name="CountryEntry"
-                            Text="{Binding Country}"/>
+                        Text="{Binding Venue, Mode=TwoWay}"/>
 
-                        <Label 
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Text="City" 
-                            Margin="0,12,0,12"
-                            FontSize="18"
-                            FontAttributes="Bold"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*,*" ColumnSpacing="8">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Country" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
                         <material:TextField 
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Title="City"
-                            CornerRadius="12"
-                            x:Name="CityEntry"
-                            Text="{Binding City}"
-                            InputBackgroundColor="{DynamicResource ButtonBackground}"/>
-                        
-                        <!--Date-->
-                        <Label 
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Text="Date" 
-                            Margin="0,12,0,12"
-                            FontSize="18"
-                            FontAttributes="Bold"/>
-                        <Border 
-                            Grid.Row="3"
-                            Grid.Column="0"
-                            HorizontalOptions="Start"
-                            Stroke="{DynamicResource SurfaceDark}"
-                            StrokeShape="RoundRectangle 16"
-                            StrokeThickness="1">
-                            <DatePicker x:Name="DatePicker"/>
+                            Grid.Row="1" Grid.Column="0" CornerRadius="12" Title="Country"
+                            Text="{Binding Country, Mode=TwoWay}"/>
+
+                        <Label Grid.Row="0" Grid.Column="1" Text="City" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
+                        <material:TextField 
+                            Grid.Row="1" Grid.Column="1" Title="City" CornerRadius="12"
+                            Text="{Binding City, Mode=TwoWay}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Date" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
+                        <Border Grid.Row="3" Grid.Column="0" HorizontalOptions="Start" StrokeShape="RoundRectangle 16">
+                            <DatePicker Date="{Binding Date, Mode=TwoWay}"/>
                         </Border>
 
-                        <!--Rating-->
-                        <Label 
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Margin="0,12,0,12"
-                            Text="Rate event"
-                            FontSize="18"
-                            FontAttributes="Bold"/>
+                        <Label Grid.Row="2" Grid.Column="1" Text="Rate event" FontSize="18" FontAttributes="Bold"/>
                         <toolkit:RatingView 
-                            Grid.Row="3"
-                            Grid.Column="1"
-                            x:Name="ConcertRating"
-                            EmptyShapeColor="Transparent"
-			                FillColor="{DynamicResource RatingFill}"
-			                FillOption ="Shape"
-			                IsReadOnly="False"
-			                ShapePadding="0"
-			                ShapeDiameter="32"
-			                MaximumRating="5"
-			                Shape="Star"
-			                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
-			                ShapeBorderThickness="1"
-                            Rating="0"
-			                Spacing="8"/>
-                    </Grid> 
-                    
-                    <!--Notes-->
-                    <Label 
-                        Text="Notes" 
-                        Margin="0,12,0,12"
-                        FontSize="18"
-                        FontAttributes="Bold"/>
-                    
-                    <material:EditorField
-                        x:Name="NotesEditor"
-                        Title="Add Notes"
-                        CornerRadius="12"
-                        Text="{Binding Notes}"
-                        TextColor="{DynamicResource TextColor}"
-                        BorderColor="{DynamicResource CardBorder}"
-                        AccentColor="{DynamicResource InputAccent}"/>
+                            Grid.Row="3" Grid.Column="1"
+                            Rating="{Binding Rating, Mode=TwoWay}"
+                            MaximumRating="5" Shape="Star" Spacing="8"/>
+                    </Grid>
 
-                    <!--Media-->
-                    <Label 
-                        Text="Images/Videos"
-                        Margin="0,12,0,12"
-                        FontSize="18"
-                        FontAttributes="Bold"/>
-                    <!-- Upload Button -->
+                    <Label Text="Notes" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
+                    <material:EditorField
+                        Title="Add Notes" CornerRadius="12"
+                        Text="{Binding Notes, Mode=TwoWay}"/>
+
+                    <Label Text="Images/Videos" Margin="0,12,0,12" FontSize="18" FontAttributes="Bold"/>
                     <Button 
                         Text="Upload Image(s)"
-                        Clicked="OnAddImageClicked"
-                        HorizontalOptions="Start"
-                        StyleClass="FilledButton"
-                        Margin="0,0,0,12"
-                        BackgroundColor="{DynamicResource ButtonBackground}"
-                        TextColor="{DynamicResource ButtonTextColor}"/>
+                        Command="{Binding AddImageCommand}"
+                        HorizontalOptions="Start" StyleClass="FilledButton" Margin="0,0,0,12"/>
 
-                    <!-- Image Preview -->
-                    <CollectionView x:Name="MediaCollectionView"
-                                    ItemsSource="{Binding MediaFiles}"
-                                    SelectionMode="None">
+                    <CollectionView ItemsSource="{Binding MediaFiles}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <Grid RowDefinitions="Auto,*">
-                                    <Border Grid.Row="0"
-                                            Padding="4"
-                                            StrokeThickness="0"
-                                            MaximumHeightRequest="500"
-                                            MaximumWidthRequest="500">
-                                        <Image Source="{Binding .}" 
-                                               Aspect="AspectFit"/>
+                                    <Border Grid.Row="0" Padding="4">
+                                        <Image Source="{Binding .}" Aspect="AspectFit"/>
                                     </Border>
-
                                     <Button Grid.Row="1"
                                             Text="Remove image"
-                                            TextColor="{DynamicResource White}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemoveMediaCommand}"
+                                            CommandParameter="{Binding .}"
                                             BackgroundColor="{DynamicResource ButtonRed}"
-                                            FontSize="14"
-                                            StyleClass="FilledButton"
-                                            FontAttributes="Bold"
-                                            Padding="4"
-                                            Margin="0,0,0,20"
-                                            MaximumWidthRequest="150"
-                                            Clicked="OnRemoveMediaClicked"
-                                            BindingContext="{Binding .}"/>
+                                            MaximumWidthRequest="150" Margin="0,0,0,20"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -298,7 +161,6 @@
             </Grid>
         </ScrollView>
 
-        <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" ActiveRoute="AddConcertPage"/>
     </Grid>
 </ContentPage>

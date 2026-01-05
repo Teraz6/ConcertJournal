@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using ConcertJournal.Data;
+using ConcertJournal.ServiceInterface;
 using ConcertJournal.Services;
+using ConcertJournal.ViewModels;
+using ConcertJournal.Views;
 using CustomShellMaui;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Microsoft.Extensions.Logging;
@@ -37,7 +40,33 @@ public static class MauiProgram
 #endif
 
         builder.Services.AddSingleton<DatabaseContext>(s =>
-            new DatabaseContext(DatabaseHelper.GetDatabasePath()));
+            new DatabaseContext(DatabaseServices.GetDatabasePath()));
+
+        //Register Services
+        builder.Services.AddSingleton<IConcertService, ConcertServices>();
+        builder.Services.AddSingleton<IImageService, ImageServices>();
+        builder.Services.AddSingleton<UpdateServices>();
+
+        //Register viewmodels
+        // Transient = Create a fresh new one every time the page is opened
+        builder.Services.AddTransient<AddConcertViewModel>();
+        builder.Services.AddTransient<ConcertListViewModel>();
+        builder.Services.AddTransient<ConcertDetailsViewModel>();
+        builder.Services.AddTransient<PerformerDetailsViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>();
+        builder.Services.AddTransient<StatisticsViewModel>();
+        builder.Services.AddTransient<MainViewModel>();
+        builder.Services.AddTransient<PerformerViewModel>();
+
+        //Register pages
+        builder.Services.AddTransient<AddConcertPage>();
+        builder.Services.AddTransient<ConcertListPage>();
+        builder.Services.AddTransient<ConcertDetailsPage>();
+        builder.Services.AddTransient<PerformerDetailsPage>();
+        builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<StatisticsPage>();
+        builder.Services.AddTransient<MainPage>();
+
         return builder.Build();
 	}
 }

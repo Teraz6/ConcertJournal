@@ -4,7 +4,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace ConcertJournal.Models.ViewModels;
+namespace ConcertJournal.ViewModels;
 public class CountryChartViewModel
 {
     public ISeries[] CountrySeries { get; set; }

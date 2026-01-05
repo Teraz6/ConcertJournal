@@ -11,6 +11,20 @@
 
     <Grid RowDefinitions="Auto,*,Auto">
 
+        <!--Loading indicator-->
+        <Grid>
+            <ScrollView IsVisible="{Binding IsNotBusy}">
+            </ScrollView>
+
+            <VerticalStackLayout VerticalOptions="Center" 
+                             HorizontalOptions="Center"
+                             IsVisible="{Binding IsBusy}">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               Color="{StaticResource Primary}"/>
+                <Label Text="Calculating Stats..." HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+        
         <!--Main content-->
         <Label Grid.Row="0"
                Text="Statistics"
@@ -147,9 +161,8 @@
                         BackgroundColor="{DynamicResource Surface}"
                         StrokeShape="RoundRectangle 16">
                         <SearchBar 
-                            x:Name="PerformerSearchBar"
                             Placeholder="Search performer..."
-                            TextChanged="OnPerformerSearchChanged"
+                            Text="{Binding SearchQuery}"
                             HeightRequest="48"
                             TextColor="{DynamicResource TextColor}"
                             CancelButtonColor="{DynamicResource ButtonRed}"/>
@@ -157,8 +170,8 @@
 
                     <!-- Sort Buttons -->
                     <HorizontalStackLayout Grid.Row="1" Spacing="12" HorizontalOptions="Center">
-                        <Button Text="Most Concerts" Clicked="OnSortMostClicked" />
-                        <Button Text="Least Concerts" Clicked="OnSortLeastClicked" />
+                        <Button Text="Most Concerts" Command="{Binding SortMostCommand}" />
+                        <Button Text="Least Concerts" Command="{Binding SortLeastCommand}" />
                     </HorizontalStackLayout>
 
                     <!-- Performer List -->
@@ -236,7 +249,7 @@
                     <!-- Livecharts2 Chart -->
                     <lvc:CartesianChart
                         x:Name="CountriesChart"
-                        BackgroundColor="{DynamicResource Background}"
+                        BindingContext="{Binding ChartVM}"
                         Series="{Binding CountrySeries}"
                         XAxes="{Binding XAxes}"
                         YAxes="{Binding YAxes}" 

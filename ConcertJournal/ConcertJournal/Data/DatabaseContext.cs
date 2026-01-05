@@ -5,16 +5,30 @@ namespace ConcertJournal.Data
 {
     public class DatabaseContext
     {
-        readonly SQLiteAsyncConnection _database;
+        private readonly SQLiteAsyncConnection _database;
+
         public DatabaseContext(string dbPath)
         {
-            _database = new SQLiteAsyncConnection(dbPath);
+            // Professional practice: Use 'ReadWrite' and 'Create' flags to ensure the DB file behaves correctly
+            var options = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache;
+
+            _database = new SQLiteAsyncConnection(dbPath, options);
+
+            // We use .Wait() here in the constructor just to ensure the table exists before any calls happen.
+            // In a very large app, we would move this to an 'InitializeAsync' method.
             _database.CreateTableAsync<Concert>().Wait();
         }
 
-        public Task<List<Concert>> GetConcertsAsync()
+        // --- CRUD OPERATIONS ---
+
+        public Task<List<Concert>> GetAllConcertsAsync()
         {
             return _database.Table<Concert>().ToListAsync();
+        }
+
+        public Task<Concert> GetConcertByIdAsync(int id)
+        {
+            return _database.Table<Concert>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
         public Task<int> SaveConcertAsync(Concert concert)
@@ -28,43 +42,44 @@ namespace ConcertJournal.Data
                 return _database.InsertAsync(concert);
             }
         }
+
         public Task<int> DeleteConcertAsync(Concert concert)
         {
             return _database.DeleteAsync(concert);
         }
 
+        // --- ADVANCED FILTERING & PAGING ---
+
         public Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true, string searchText = "")
         {
             AsyncTableQuery<Concert> query = _database.Table<Concert>();
 
-            // Apply search filter
+            // 1. Apply search filter (Case-insensitive)
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                string lower = searchText.ToLower();
+                // Note: SQLite's 'Contains' is already case-insensitive for standard characters
                 query = query.Where(c =>
-                    c.EventTitle!.ToLower().Contains(lower) ||
-                    c.Performers!.ToLower().Contains(lower) ||
-                    c.Country!.ToLower().Contains(lower) ||
-                    c.City!.ToLower().Contains(lower));
+                    c.EventTitle.Contains(searchText) ||
+                    c.Performers.Contains(searchText) ||
+                    c.Country.Contains(searchText) ||
+                    c.City.Contains(searchText));
             }
 
-            // Sorting
-            switch (sortBy)
+            // 2. Sorting Logic (Fixed the logic here)
+            query = sortBy switch
             {
-                case "NewestByDate":
-                    query = ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date);
-                    break;
+                "Date" => ascending
+                    ? query.OrderBy(c => c.Date)
+                    : query.OrderByDescending(c => c.Date),
 
-                case "OldestByDate":
-                    query = ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date);
-                    break;
+                "Title" => ascending
+                    ? query.OrderBy(c => c.EventTitle)
+                    : query.OrderByDescending(c => c.EventTitle),
 
-                default:
-                    query = query.OrderByDescending(c => c.Id); // Default: newest inserted first
-                    break;
-            }
+                _ => query.OrderByDescending(c => c.Id) // Default: Most recently added
+            };
 
-            // Apply paging
+            // 3. Apply paging
             return query.Skip(skip).Take(take).ToListAsync();
         }
     }

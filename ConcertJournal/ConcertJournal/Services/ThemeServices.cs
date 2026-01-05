@@ -1,9 +1,9 @@
 ﻿namespace ConcertJournal.Services
 {
-    public static class ThemeManager
+    public static class ThemeServices
     {
         private const string DevilThemePath = "Resources/Themes/DevilTheme.xaml";
-        private const string AngelThemePath = "Resources/ThemesAngelTheme.xaml";
+        private const string AngelThemePath = "Resources/Themes/AngelTheme.xaml";
 
         public static void ApplyTheme(string themePath)
         {
