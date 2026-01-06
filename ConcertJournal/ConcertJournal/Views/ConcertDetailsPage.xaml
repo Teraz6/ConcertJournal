@@ -26,7 +26,7 @@
                         Grid.Column="0"
                         Source="{DynamicResource DoubleLeftArrowIcon}"
                         HorizontalOptions="Start"
-                        Command="{Binding BackCommand}" />
+                        Command="{Binding GoBackCommand}" />
 
                     <HorizontalStackLayout 
                         Grid.Column="1"
@@ -37,14 +37,14 @@
                             Source="{DynamicResource EditIcon}"
                             BackgroundColor="Transparent"
                             BorderWidth="0"
-                            Command="{Binding UpdateCommand}"
+                            Command="{Binding EditConcertCommand}"
                             HorizontalOptions="End"/>
 
                         <ImageButton 
                             Source="{DynamicResource DeleteIcon}"
                             BackgroundColor="Transparent"
                             BorderColor="{DynamicResource ButtonBorderColor}"
-                            Command="{Binding DeleteCommand}"
+                            Command="{Binding DeleteConcertCommand}"
                             HorizontalOptions="End"/>
                     </HorizontalStackLayout>
                 </Grid>
@@ -102,6 +102,12 @@
                                 Text="{Binding Concert.Performers}"
                                 FontSize="22"
                                 TextColor="{DynamicResource TextColor}"
+                                HorizontalTextAlignment="Center"/>
+
+                            <Label 
+                                Text="(Tap to view details)"
+                                FontSize="10"
+                                TextColor="Gray"
                                 HorizontalTextAlignment="Center"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
@@ -175,29 +181,38 @@
                             HorizontalOptions="Center"/>
                         <VerticalStackLayout Spacing="10" Padding="10">
 
-                            <CarouselView ItemsSource="{Binding MediaFiles}"
-                                          IndicatorView="indicatorView"
-                                          HeightRequest="300"
-                                          PeekAreaInsets="20"
-                                          EmptyView="No photos attached to this memory">
+                            <CarouselView 
+                                ItemsSource="{Binding MediaFiles}"
+                                IndicatorView="indicatorView"
+                                HeightRequest="300"
+                                PeekAreaInsets="0"
+                                EmptyView="No photos attached">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate x:DataType="sys:String">
-                                        <Border Margin="5" 
-                                           Padding="0"
+                                        <Border
+                                           Padding="16"
                                            StrokeShape="RoundRectangle 16">
-                                            <Image Source="{Binding .}" 
-                                               Aspect="AspectFill"
-                                               HorizontalOptions="Fill"
-                                               VerticalOptions="Fill" />
+                                            <Image 
+                                                Source="{Binding .}" 
+                                                Aspect="AspectFit"
+                                                HorizontalOptions="Center">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertDetailsViewModel}}, Path=OpenImageZoomCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
                                         </Border>
                                     </DataTemplate>
                                 </CarouselView.ItemTemplate>
                             </CarouselView>
 
-                            <IndicatorView x:Name="indicatorView"
-                               IndicatorColor="LightGray"
-                               SelectedIndicatorColor="DarkSlateBlue"
-                               HorizontalOptions="Center" />
+                            <IndicatorView 
+                                x:Name="indicatorView"
+                                IndicatorColor="LightGray"
+                                SelectedIndicatorColor="DarkSlateBlue"
+                                HorizontalOptions="Center"
+                                IndicatorSize="8"/>
 
                         </VerticalStackLayout>
                     </VerticalStackLayout>

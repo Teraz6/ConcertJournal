@@ -38,8 +38,7 @@
                             BorderColor="{DynamicResource ButtonRed}"
                             TextColor="{DynamicResource ButtonRed}"
                             HorizontalOptions="Start"
-                            Command="{Binding CancelCommand}"
-                            IsVisible="{Binding IsCancelVisible}"/>
+                            Command="{Binding CancelCommand}"/>
 
                         <Label 
                             Grid.Column="1"

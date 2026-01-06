@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using ConcertJournal.Messages;
 using ConcertJournal.Models;
 using ConcertJournal.ServiceInterface;
 using System.Collections.ObjectModel;
@@ -19,7 +21,6 @@ public partial class AddConcertViewModel : ObservableObject
     // --- UI State Properties ---
     [ObservableProperty] private string _pageTitle = "New Event";
     [ObservableProperty] private string _saveButtonText = "Create";
-    [ObservableProperty] private bool _isCancelVisible;
 
     // --- Form Properties ---
     [ObservableProperty] private string _eventTitle = string.Empty;
@@ -52,7 +53,6 @@ public partial class AddConcertViewModel : ObservableObject
 
         PageTitle = "Edit Event";
         SaveButtonText = "Save";
-        IsCancelVisible = true;
 
         // Map values from the model to the VM properties
         EventTitle = value.EventTitle ?? "";
@@ -100,6 +100,8 @@ public partial class AddConcertViewModel : ObservableObject
 
         await _concertServices.SaveConcertAsync(concertToSave);
 
+        WeakReferenceMessenger.Default.Send(new ConcertUpdatedMessage());
+
         bool isNew = Concert == null;
 
         //Reset the form for new entry
@@ -117,9 +119,13 @@ public partial class AddConcertViewModel : ObservableObject
         }
 
         await Shell.Current.DisplayAlert("Success", isNew ? "Concert created!" : "Concert updated!", "OK");
-
+  
         // Go back to the previous page
-        await Shell.Current.GoToAsync("..");
+        if (!isNew)
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+            
     }
 
     [RelayCommand]
@@ -132,7 +138,7 @@ public partial class AddConcertViewModel : ObservableObject
         if (string.IsNullOrEmpty(name))
         { 
             await Shell.Current.DisplayAlert("Empty", "Please enter a performer name.", "OK");
-            return; 
+            return;
         }
 
         if (Performers.Contains(name))
