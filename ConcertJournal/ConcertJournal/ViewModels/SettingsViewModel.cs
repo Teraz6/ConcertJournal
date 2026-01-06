@@ -9,6 +9,8 @@ namespace ConcertJournal.ViewModels;
 public partial class SettingsViewModel : ObservableObject
 {
     private readonly IConcertService _concertService;
+    private readonly ImportServices _importService; // The "instance" of the service
+
     private const string DefaultCountryKey = "DefaultCountry";
     private const string DefaultCityKey = "DefaultCity";
     private const string AppThemeKey = "AppTheme";
@@ -17,7 +19,7 @@ public partial class SettingsViewModel : ObservableObject
     [ObservableProperty] private string _defaultCountry;
     [ObservableProperty] private string _defaultCity;
 
-    public SettingsViewModel(IConcertService concertService)
+    public SettingsViewModel(IConcertService concertService, ImportServices importService)
     {
         _concertService = concertService;
 
@@ -25,6 +27,7 @@ public partial class SettingsViewModel : ObservableObject
         _isDevilTheme = Preferences.Get(AppThemeKey, "Angel") == "Devil";
         _defaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
         _defaultCity = Preferences.Get(DefaultCityKey, string.Empty);
+        _importService = importService;
     }
 
     // Automatically reacts when the Switch is toggled in UI
@@ -72,7 +75,10 @@ public partial class SettingsViewModel : ObservableObject
             if (result == null) return;
 
             using var stream = await result.OpenReadAsync();
-            await ImportServices.ImportConcertsFromExcelAsync(stream);
+
+            // FIX: Use the private field (_importService) instead of the Class name (ImportServices)
+            await _importService.ImportConcertsFromExcelAsync(stream);
+
             await Shell.Current.DisplayAlert("Success", "Concerts imported!", "OK");
         }
         catch (Exception ex)
