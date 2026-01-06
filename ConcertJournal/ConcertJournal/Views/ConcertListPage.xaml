@@ -17,63 +17,168 @@
         <Grid RowDefinitions="Auto,*">
             <Grid ColumnDefinitions=".1*,.8*,.1*" RowDefinitions="*,*" BackgroundColor="{DynamicResource CardBackground}">
 
-                <Label Grid.Column="1" Text="Event List" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <Button 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Padding="8"
+                    FontAttributes="Bold"
+                    Text="+ Add Event"
+                    BorderWidth="0"
+                    BackgroundColor="Transparent"
+                    Command="{Binding GoAddConcertCommand}"/>
 
-                <Label Grid.Column="1" Grid.Row="1" 
-                       Text="{Binding TotalConcertsText}" 
-                       FontSize="14" HorizontalTextAlignment="Center" Margin="0,0,0,4"/>
+                <Label 
+                    Grid.Column="1" 
+                    Text="Event List" 
+                    FontSize="32" 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Center"/>
 
-                <ImageButton Grid.RowSpan="2" Grid.Column="2"
-                             Source="{Binding FilterIcon}"
-                             Command="{Binding ToggleFilterCommand}"
-                             HorizontalOptions="End" Margin="0,0,12,0"/>
+                <Label 
+                    Grid.Column="1" 
+                    Grid.Row="1" 
+                    Text="{Binding TotalConcertsText}" 
+                    FontSize="14" 
+                    HorizontalTextAlignment="Center" 
+                    Margin="0,0,0,4"/>
+
+                <ImageButton 
+                    Grid.RowSpan="2" 
+                    Grid.Column="2"
+                    Source="{AppThemeBinding Light=filter_black.png, Dark=filter_white.png}"
+                    Command="{Binding ToggleFilterCommand}"
+                    HorizontalOptions="End" 
+                    Margin="0,0,12,0"/>
             </Grid>
 
             <CollectionView 
-                Grid.Row="1" x:Name="ConcertListView" Margin="8"
+                Grid.Row="1" 
+                x:Name="ConcertListView" 
+                Margin="8"
                 ItemsSource="{Binding Concerts}"
-                SelectedItems="{Binding SelectedItems}"
-                SelectionMode="Multiple"
+                SelectionMode="None"
                 RemainingItemsThreshold="7"
                 RemainingItemsThresholdReachedCommand="{Binding LoadMoreConcertsCommand}">
 
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Concert">
                         <Grid Margin="0,0,0,12">
-                            <Border x:Name="CardBorder" Padding="12" StrokeShape="RoundRectangle 16" BackgroundColor="{DynamicResource CardBackground}">
-                                <Grid RowDefinitions="*,*" ColumnDefinitions="*, Auto">
-                                    <VerticalStackLayout HorizontalOptions="Center">
-                                        <Label Text="{Binding EventTitle}" FontSize="24" FontAttributes="Bold"/>
+
+                            <!--Changes background when card is selected-->
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter TargetName="CardBorder" Property="BackgroundColor" Value="{DynamicResource CardBackgroundSelected}" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Border 
+                                x:Name="CardBorder" 
+                                Padding="12" 
+                                Stroke="{DynamicResource CardBorder}"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 16" 
+                                BackgroundColor="{DynamicResource CardBackground}">
+
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource CardBackgroundSelected}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid 
+                                    RowDefinitions="*,*" 
+                                    ColumnDefinitions="*, Auto">
+
+                                    <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center">
+                                        <Label Text="{Binding EventTitle}" FontSize="24" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
+
+                                    <VerticalStackLayout Grid.Column="0" Grid.Row="1">
+                                        <Label Text="{Binding DisplayPerformers}" FontSize="16" LineBreakMode="TailTruncation" MaxLines="1"/>
+                                        <Label Text="{Binding Venue}" FontSize="14" />
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Label Text="{Binding Country}" FontSize="12" />
+                                            <Label Text="{Binding City}" FontSize="12" />
+                                        </HorizontalStackLayout>
+                                        <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" FontSize="12" TextColor="{DynamicResource MutedText}"/>
+                                    </VerticalStackLayout>
+
+                                    <BoxView Grid.Row="1" Grid.Column="1" WidthRequest="40" Color="Transparent"/>
                                 </Grid>
                             </Border>
 
-                            <Button BackgroundColor="Transparent"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=CardClickedCommand}"
-                                    CommandParameter="{Binding .}" />
+                            <Grid 
+                                BackgroundColor="Transparent"
+                                CascadeInputTransparent="False">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=CardClickedCommand}"
+                                        CommandParameter="{Binding .}" />
 
-                            <ImageButton Source="{DynamicResource ThreeDotsIcon}"
-                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=ShowOptionsCommand}"
-                                         CommandParameter="{Binding .}"
-                                         HorizontalOptions="End" VerticalOptions="End" Margin="16"/>
+                                    <PointerGestureRecognizer 
+                                        PointerPressedCommand="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=CardLongPressCommand}"
+                                        PointerPressedCommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <ImageButton 
+                                Source="{DynamicResource ThreeDotsIcon}"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=ShowOptionsCommand}"
+                                CommandParameter="{Binding .}"
+                                HorizontalOptions="End" 
+                                VerticalOptions="End" 
+                                Margin="16"
+                                Padding="4"
+                                InputTransparent="False"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
 
-        <Grid ColumnDefinitions="*,*" 
-              BackgroundColor="{DynamicResource Background}"
-              IsVisible="{Binding HasSelection}"
-              VerticalOptions="End" HeightRequest="64">
+        <Grid IsVisible="{Binding HasSelection}"
+              Grid.Row="0"
+              VerticalOptions="End"
+              ZIndex="99"
+              Margin="10,0,10,10"
+              BackgroundColor="{DynamicResource Secondary}"
+              HeightRequest="64"
+              ColumnDefinitions="*, Auto, Auto">
 
-            <Button Grid.Column="1" Text="Delete selected" 
-                    Command="{Binding DeleteSelectedAsyncCommand}"
-                    TextColor="{DynamicResource ButtonRed}" BorderColor="{DynamicResource ButtonRed}" />
+            <Label 
+               Text="{Binding SelectedItems.Count, StringFormat='{0} selected'}"
+               VerticalOptions="Center"
+               TextColor="White"
+               FontAttributes="Bold"
+               Margin="10,0"/>
 
-            <Button Grid.Column="0" Text="Unselect all" 
-                    Command="{Binding UnselectAllCommand}"
-                    TextColor="{DynamicResource ButtonGreen}" BorderColor="{DynamicResource ButtonGreen}" />
+            <Button 
+               Grid.Column="1"
+               Text="Clear"
+               Command="{Binding ClearSelectionCommand}"
+               BackgroundColor="{DynamicResource ButtonGreen}"
+               TextColor="White"
+               Margin="5"/>
+
+            <Button 
+               Grid.Column="2"
+               Text="Delete"
+               Command="{Binding DeleteSelectedCommand}"
+               BackgroundColor="{DynamicResource ButtonRed}"
+               TextColor="White"
+               CornerRadius="8"
+               Margin="5"/>
         </Grid>
 
         <controls:BottomNavBar Grid.Row="1" ActiveRoute="ConcertListPage"/>

@@ -11,9 +11,12 @@ public partial class ConcertListViewModel : ObservableObject
 {
     private readonly IConcertService _concertService;
 
+    // Use a HashSet or List to track selected IDs for performance
+    private readonly HashSet<int> _selectedConcertIds = new();
+
     // Data Collections
     public ObservableCollection<Concert> Concerts { get; } = new();
-    public ObservableCollection<object> SelectedItems { get; } = new();
+    public ObservableCollection<Concert> SelectedItems { get; } = new();
 
     // Paging & State
     private const int PageSize = 15;
@@ -24,7 +27,7 @@ public partial class ConcertListViewModel : ObservableObject
     [ObservableProperty] private string _searchText = string.Empty;
     [ObservableProperty] private string _totalConcertsText = "Loading...";
     [ObservableProperty] private bool _isFilterPresented;
-    [ObservableProperty] private string _filterIcon = "FilterIcon";
+    [ObservableProperty] private string _filterIcon;
     [ObservableProperty] private bool _hasSelection;
 
     // Sorting
@@ -36,6 +39,10 @@ public partial class ConcertListViewModel : ObservableObject
     {
         _concertService = concertService;
         _selectedSort = Preferences.Get(SortPreferenceKey, "Default");
+        UpdateFilterIcon();
+
+        //This forces the UI to refresh "HasSelection" whenever the collection changes
+        SelectedItems.CollectionChanged += (s, e) => UpdateSelection();
     }
 
     [RelayCommand]
@@ -112,15 +119,22 @@ public partial class ConcertListViewModel : ObservableObject
 
         if (!confirm) return;
 
+        // Snapshot for deletion
         var itemsToDelete = SelectedItems.Cast<Concert>().ToList();
         foreach (var concert in itemsToDelete)
         {
-            // 4. Service handles deletion
             await _concertService.DeleteConcertAsync(concert);
+            Concerts.Remove(concert);
         }
 
-        UnselectAll();
-        await RefreshAllAsync();
+        ClearSelection();
+        await UpdateTotalCountAsync();
+    }
+
+    [RelayCommand]
+    private async Task GoAddConcertAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(AddConcertPage));
     }
 
     // --- UI & Selection Logic ---
@@ -129,7 +143,17 @@ public partial class ConcertListViewModel : ObservableObject
     private void ToggleFilter()
     {
         IsFilterPresented = !IsFilterPresented;
-        FilterIcon = IsFilterPresented ? "UpIcon" : "FilterIcon";
+        UpdateFilterIcon();
+    }
+
+    private void UpdateFilterIcon()
+    {
+        bool isDark = App.Current.RequestedTheme == AppTheme.Dark;
+        string colorSuffix = isDark ? "white" : "black";
+
+        string iconName = IsFilterPresented ? "up" : "filter";
+
+        FilterIcon = $"{iconName}_{colorSuffix}.png";
     }
 
     [RelayCommand]
@@ -145,33 +169,60 @@ public partial class ConcertListViewModel : ObservableObject
     [RelayCommand]
     private async Task CardClicked(Concert concert)
     {
+        if (concert == null) return;
+
+        // 1. If we are in selection mode, just toggle the item
         if (HasSelection)
         {
             ToggleSelection(concert);
             return;
         }
 
-        // Professional Navigation using Route Names
+        // 2. Otherwise, navigate to details
+        // Tip: Use a 'IsBusy' check to prevent double-navigation crashes
         await Shell.Current.GoToAsync(nameof(ConcertDetailsPage), new Dictionary<string, object>
-        {
-            { "Concert", concert }
-        });
+    {
+        { "Concert", concert }
+    });
     }
 
     [RelayCommand]
     private void CardLongPress(Concert concert)
     {
-        try { HapticFeedback.Perform(HapticFeedbackType.LongPress); } catch { }
+        if (concert == null) return;
+
+        // Provide physical feedback
+        try { HapticFeedback.Default.Perform(HapticFeedbackType.LongPress); } catch { }
+
+        // Always toggle the selection on long press
         ToggleSelection(concert);
     }
 
     private void ToggleSelection(Concert concert)
     {
-        if (SelectedItems.Contains(concert))
-            SelectedItems.Remove(concert);
-        else
-            SelectedItems.Add(concert);
+        if (concert == null) return;
 
+        concert.IsSelected = !concert.IsSelected;
+
+        if (concert.IsSelected)
+            SelectedItems.Add(concert);
+        else
+            SelectedItems.Remove(concert);
+
+        UpdateSelection();
+    }
+
+    [RelayCommand]
+    private void ClearSelection()
+    {
+        var items = SelectedItems.Cast<Concert>().ToList();
+
+        foreach (var item in items)
+        {
+            item.IsSelected = false;
+        }
+
+        SelectedItems.Clear();
         UpdateSelection();
     }
 }
