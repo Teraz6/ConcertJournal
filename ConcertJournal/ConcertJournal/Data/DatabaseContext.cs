@@ -6,58 +6,61 @@ namespace ConcertJournal.Data
     public class DatabaseContext
     {
         private readonly SQLiteAsyncConnection _database;
+        private bool _isInitialized;
 
         public DatabaseContext(string dbPath)
         {
-            // Professional practice: Use 'ReadWrite' and 'Create' flags to ensure the DB file behaves correctly
             var options = SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.SharedCache;
-
             _database = new SQLiteAsyncConnection(dbPath, options);
-
-            // We use .Wait() here in the constructor just to ensure the table exists before any calls happen.
-            // In a very large app, we would move this to an 'InitializeAsync' method.
-            _database.CreateTableAsync<Concert>().Wait();
         }
 
-        // --- CRUD OPERATIONS ---
-
-        public Task<List<Concert>> GetAllConcertsAsync()
+        // This is the "Magic" method that ensures the table is ready
+        private async Task InitAsync()
         {
-            return _database.Table<Concert>().ToListAsync();
+            if (_isInitialized) return;
+
+            await _database.CreateTableAsync<Concert>();
+            _isInitialized = true;
         }
 
-        public Task<Concert> GetConcertByIdAsync(int id)
+        // --- CRUD OPERATIONS (Now with safety checks) ---
+
+        public async Task<List<Concert>> GetAllConcertsAsync()
         {
-            return _database.Table<Concert>().Where(i => i.Id == id).FirstOrDefaultAsync();
+            await InitAsync(); // Ensure DB is ready before querying
+            return await _database.Table<Concert>().ToListAsync();
         }
 
-        public Task<int> SaveConcertAsync(Concert concert)
+        public async Task<Concert> GetConcertByIdAsync(int id)
         {
-            if (concert.Id != 0)
-            {
-                return _database.UpdateAsync(concert);
-            }
-            else
-            {
-                return _database.InsertAsync(concert);
-            }
+            await InitAsync();
+            return await _database.Table<Concert>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<int> DeleteConcertAsync(Concert concert)
+        public async Task<int> SaveConcertAsync(Concert concert)
         {
-            return _database.DeleteAsync(concert);
+            await InitAsync();
+            return concert.Id != 0
+                ? await _database.UpdateAsync(concert)
+                : await _database.InsertAsync(concert);
         }
 
-        // --- ADVANCED FILTERING & PAGING ---
-
-        public Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true, string searchText = "")
+        public async Task<int> DeleteConcertAsync(Concert concert)
         {
+            await InitAsync();
+            return await _database.DeleteAsync(concert);
+        }
+
+        // --- PAGING (Now with safety checks) ---
+
+        public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true, string searchText = "")
+        {
+            await InitAsync();
+
             AsyncTableQuery<Concert> query = _database.Table<Concert>();
 
-            // 1. Apply search filter (Case-insensitive)
             if (!string.IsNullOrWhiteSpace(searchText))
             {
-                // Note: SQLite's 'Contains' is already case-insensitive for standard characters
                 query = query.Where(c =>
                     c.EventTitle.Contains(searchText) ||
                     c.Performers.Contains(searchText) ||
@@ -65,22 +68,14 @@ namespace ConcertJournal.Data
                     c.City.Contains(searchText));
             }
 
-            // 2. Sorting Logic (Fixed the logic here)
             query = sortBy switch
             {
-                "Date" => ascending
-                    ? query.OrderBy(c => c.Date)
-                    : query.OrderByDescending(c => c.Date),
-
-                "Title" => ascending
-                    ? query.OrderBy(c => c.EventTitle)
-                    : query.OrderByDescending(c => c.EventTitle),
-
-                _ => query.OrderByDescending(c => c.Id) // Default: Most recently added
+                "Date" => ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date),
+                "Title" => ascending ? query.OrderBy(c => c.EventTitle) : query.OrderByDescending(c => c.EventTitle),
+                _ => query.OrderByDescending(c => c.Id)
             };
 
-            // 3. Apply paging
-            return query.Skip(skip).Take(take).ToListAsync();
+            return await query.Skip(skip).Take(take).ToListAsync();
         }
     }
 }
