@@ -39,14 +39,19 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        builder.Services.AddSingleton<DatabaseContext>(s =>
-            new DatabaseContext(DatabaseServices.GetDatabasePath()));
+        // Register the Database Path
+        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "concerts.db3");
+
+        //Register DatabaseContext as a Singleton using that path
+        builder.Services.AddSingleton<DatabaseContext>(s => new DatabaseContext(dbPath));
 
         //Register Services
         builder.Services.AddSingleton<IConcertService, ConcertServices>();
         builder.Services.AddSingleton<IImageService, ImageServices>();
         builder.Services.AddSingleton<UpdateServices>();
-
+        builder.Services.AddSingleton<DatabaseServices>();
+        builder.Services.AddSingleton<ImportServices>();
+        builder.Services.AddSingleton<ExportServices>();
         //Register viewmodels
         // Transient = Create a fresh new one every time the page is opened
         builder.Services.AddTransient<AddConcertViewModel>();
