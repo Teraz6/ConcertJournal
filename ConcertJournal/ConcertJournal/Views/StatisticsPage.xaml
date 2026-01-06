@@ -12,7 +12,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!--Loading indicator-->
-        <Grid>
+        <!--<Grid>
             <ScrollView IsVisible="{Binding IsNotBusy}">
             </ScrollView>
 
@@ -21,9 +21,10 @@
                              IsVisible="{Binding IsBusy}">
                 <ActivityIndicator IsRunning="{Binding IsBusy}" 
                                Color="{StaticResource Primary}"/>
-                <Label Text="Calculating Stats..." HorizontalTextAlignment="Center"/>
+                <Label Text="Calculating Stats..." 
+                       HorizontalTextAlignment="Center"/>
             </VerticalStackLayout>
-        </Grid>
+        </Grid>-->
         
         <!--Main content-->
         <Label Grid.Row="0"

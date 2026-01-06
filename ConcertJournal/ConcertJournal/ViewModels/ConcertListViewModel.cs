@@ -41,6 +41,10 @@ public partial class ConcertListViewModel : ObservableObject
     [RelayCommand]
     public async Task RefreshAllAsync()
     {
+        //// EMERGENCY DEBUG:
+        //var rawDbPath = Path.Combine(FileSystem.AppDataDirectory, "concerts.db3");
+        //System.Diagnostics.Debug.WriteLine($"DB PATH: {rawDbPath}");
+
         _currentPage = 0;
         _hasMoreItems = true;
         Concerts.Clear();
