@@ -98,13 +98,27 @@ public partial class AddConcertViewModel : ObservableObject
         concertToSave.Performers = _concertServices.ConvertListToString(Performers, ", ");
         concertToSave.MediaPaths = _concertServices.ConvertListToString(MediaFiles, ";");
 
-        // 3. Service Call: VM doesn't know about App.Database anymore
         await _concertServices.SaveConcertAsync(concertToSave);
 
         bool isNew = Concert == null;
+
+        //Reset the form for new entry
+        if (isNew)
+        {
+            EventTitle = string.Empty;
+            Venue = string.Empty;
+            Country = Preferences.Get("DefaultCountry", string.Empty);
+            City = Preferences.Get("DefaultCity", string.Empty);
+            Notes = string.Empty;
+            Date = DateTime.Today;
+            Rating = 0;
+            Performers.Clear();
+            MediaFiles.Clear();
+        }
+
         await Shell.Current.DisplayAlert("Success", isNew ? "Concert created!" : "Concert updated!", "OK");
 
-        // 4. Professional Navigation: Go back to the previous page
+        // Go back to the previous page
         await Shell.Current.GoToAsync("..");
     }
 
@@ -115,7 +129,11 @@ public partial class AddConcertViewModel : ObservableObject
     private async Task AddPerformerAsync()
     {
         var name = PerformerInput?.Trim();
-        if (string.IsNullOrEmpty(name)) return;
+        if (string.IsNullOrEmpty(name))
+        { 
+            await Shell.Current.DisplayAlert("Empty", "Please enter a performer name.", "OK");
+            return; 
+        }
 
         if (Performers.Contains(name))
         {
