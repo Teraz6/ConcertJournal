@@ -5,7 +5,6 @@ namespace ConcertJournal.Views.Controls;
 public partial class BottomNavBar : ContentView
 {
     public ICommand? NavigateHomeCommand { get; }
-    public ICommand? NavigateAddCommand { get; }
     public ICommand? NavigateListCommand { get; }
     public ICommand? NavigateSettingsCommand { get; }
     public ICommand? NavigateStatisticsCommand { get; }
@@ -53,7 +52,6 @@ public partial class BottomNavBar : ContentView
         // Reset all to Normal, set matching to Selected
         UpdateState(HomeBtn, HomeLbl, "MainPage", activeRoute);
         UpdateState(ListBtn, ListLbl, "ConcertListPage", activeRoute);
-        UpdateState(AddBtn, AddLbl, "AddConcertPage", activeRoute);
         UpdateState(StatsBtn, StatsLbl, "StatisticsPage", activeRoute);
         UpdateState(SettingsBtn, SettingsLbl, "SettingsPage", activeRoute);
     }
@@ -71,36 +69,4 @@ public partial class BottomNavBar : ContentView
         // we force the state back to 'Selected' to override the native 'Normal'
         VisualStateManager.GoToState(btn, state);
     }
-
-    // Ensure states are correct when the control first loads
-    //protected override void OnHandlerChanged()
-    //{
-    //    base.OnHandlerChanged();
-    //    UpdateVisualStates(ActiveRoute);
-    //}
-
-    //private async void OnHomeClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"//MainPage");
-    //}
-
-    //private async void OnListClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"//ConcertListPage");
-    //}
-
-    //private async void OnAddClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"//AddConcertPage");
-    //}
-
-    //private async void OnSettingsClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"//SettingsPage");
-    //}
-
-    //private async void OnStatisticsClicked(object sender, EventArgs e)
-    //{
-    //    await Shell.Current.GoToAsync($"//StatisticsPage");
-    //}
 }
