@@ -5,7 +5,7 @@ namespace ConcertJournal.Services;
 
 public class UpdateServices
 {
-    private const string UpdateUrl = "https://raw.githubusercontent.com/Teraz6/ConcertJournal/refs/heads/feature-update-notification/update.json";
+    private const string UpdateUrl = "https://raw.githubusercontent.com/Teraz6/ConcertJournal/refs/heads/main/update.json";
 
     // Update the return type from Task to Task<UpdateInfo?>
     public async Task<UpdateInfo?> GetUpdateInfoAsync()
