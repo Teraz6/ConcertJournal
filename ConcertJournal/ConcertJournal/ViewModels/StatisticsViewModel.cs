@@ -27,6 +27,7 @@ public partial class StatisticsViewModel : ObservableObject
 
     private const int PageSize = 20;
     private int _currentPage = 0;
+    private bool _isAddingItems;
 
     // --- Chart Property ---
     [ObservableProperty] private CountryChartViewModel? chartVM;
@@ -162,11 +163,30 @@ public partial class StatisticsViewModel : ObservableObject
     [RelayCommand]
     public void LoadNextPerformersPage()
     {
-        var nextBatch = _filteredPerformers.Skip(_currentPage * PageSize).Take(PageSize).ToList();
-        if (nextBatch.Count == 0) return;
+        // Prevent adding if we are already in the middle of a reset/load
+        if (_isAddingItems) return;
 
-        foreach (var p in nextBatch) DisplayedPerformers.Add(p);
-        _currentPage++;
+        try
+        {
+            _isAddingItems = true;
+
+            var nextBatch = _filteredPerformers
+                .Skip(_currentPage * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            if (nextBatch.Count == 0) return;
+
+            foreach (var p in nextBatch)
+            {
+                DisplayedPerformers.Add(p);
+            }
+            _currentPage++;
+        }
+        finally
+        {
+            _isAddingItems = false;
+        }
     }
 
     private void ResetAndLoadFirstPage()
