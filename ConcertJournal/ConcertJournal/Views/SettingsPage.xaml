@@ -39,7 +39,7 @@
             TabPlacement="Top"
             Grid.Row="1">
             <material:TabView.TabHeaderItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="material:TabItem">
                     <Button 
                             Text="{Binding Title}"
                             Command="{Binding Command}"
@@ -58,6 +58,7 @@
                     </Button>
                 </DataTemplate>
             </material:TabView.TabHeaderItemTemplate>
+            
             <material:TabItem Title="Theme">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:SettingsViewModel">
