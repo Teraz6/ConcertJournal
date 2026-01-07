@@ -53,28 +53,37 @@ namespace ConcertJournal.Data
 
         // --- PAGING (Now with safety checks) ---
 
-        public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", bool ascending = true, string searchText = "")
+        public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", string searchText = "")
         {
             await InitAsync();
 
             AsyncTableQuery<Concert> query = _database.Table<Concert>();
 
+            // 1. Filter
             if (!string.IsNullOrWhiteSpace(searchText))
             {
+                // Convert the search term to lowercase once
+                string lowerSearch = searchText.ToLower().Trim();
+
+                // Use ToLower() on the fields to ensure a case-insensitive match
                 query = query.Where(c =>
-                    c.EventTitle.Contains(searchText) ||
-                    c.Performers.Contains(searchText) ||
-                    c.Country.Contains(searchText) ||
-                    c.City.Contains(searchText));
+                    c.EventTitle.ToLower().Contains(lowerSearch) ||
+                    c.Performers.ToLower().Contains(lowerSearch) ||
+                    c.Country.ToLower().Contains(lowerSearch) ||
+                    c.City.ToLower().Contains(lowerSearch));
             }
 
+            // 2. Sort - Map the RadioButton "Value" to the SQL Logic
             query = sortBy switch
             {
-                "Date" => ascending ? query.OrderBy(c => c.Date) : query.OrderByDescending(c => c.Date),
-                "Title" => ascending ? query.OrderBy(c => c.EventTitle) : query.OrderByDescending(c => c.EventTitle),
-                _ => query.OrderByDescending(c => c.Id)
+                "LatestAdded" => query.OrderByDescending(c => c.Id),
+                "NewestByDate" => query.OrderByDescending(c => c.Date),
+                "OldestByDate" => query.OrderBy(c => c.Date),
+                "Title" => query.OrderBy(c => c.EventTitle),
+                _ => query.OrderByDescending(c => c.Id) //fallback
             };
 
+            // 3. Paging
             return await query.Skip(skip).Take(take).ToListAsync();
         }
     }

@@ -1,4 +1,5 @@
-﻿using ConcertJournal.ViewModels;
+﻿using ConcertJournal.Models;
+using ConcertJournal.ViewModels;
 
 namespace ConcertJournal.Views;
 
@@ -16,7 +17,13 @@ public partial class ConcertListPage : UraniumUI.Pages.UraniumContentPage
     {
         base.OnAppearing();
 
-        await _viewModel.RefreshAllAsync();
+        if (BindingContext is ConcertListViewModel vm)
+        {
+            if (vm.Concerts.Count == 0)
+            {
+                await vm.RefreshAllAsync();
+            }
+        }
     }
 
     protected override bool OnBackButtonPressed()

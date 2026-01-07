@@ -35,8 +35,8 @@ namespace ConcertJournal.Services
         // READ (The "Read" part of CRUD)
         public async Task<List<Concert>> GetConcertsPagedAsync(int skip, int take, string sortBy = "Default", string searchText = "")
         {
-            string cleanSearch = (searchText ?? "").Trim();
-            return await _db.GetConcertsPagedAsync(skip, take, sortBy, true, cleanSearch);
+            // Simply pass the 4 parameters through to the DatabaseContext method above
+            return await _db.GetConcertsPagedAsync(skip, take, sortBy, searchText);
         }
 
         // READ SINGLE
