@@ -4,7 +4,9 @@
              x:Class="ConcertJournal.Views.PerformerDetailsPage"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             xmlns:models="clr-namespace:ConcertJournal.Models"
              xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:PerformerDetailsViewModel"
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
     
@@ -141,9 +143,8 @@
                                              HorizontalItemSpacing="8"
                                              VerticalItemSpacing="8"/>
                         </CollectionView.ItemsLayout>
-                        <!--TODO: Add spacing between items but keep them on verticalgrid-->
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Concert">
                                 <Border
                                     StrokeShape="RoundRectangle 16"
                                     Stroke="{DynamicResource CardBorder}">
