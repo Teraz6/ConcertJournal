@@ -10,16 +10,15 @@
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="Auto,*,Auto">
-
         <!--Main content-->
         <Label Grid.Row="0"
-               Text="Statistics"
-               FontSize="32"
-               FontAttributes="Bold"
-               Padding="12"
-               HorizontalTextAlignment="Center"
-               Margin="0,0,0,24"
-               BackgroundColor="{DynamicResource CardBackground}"/>
+            Text="Statistics"
+            FontSize="32"
+            FontAttributes="Bold"
+            Padding="12"
+            HorizontalTextAlignment="Center"
+            Margin="0,0,0,24"
+            BackgroundColor="{DynamicResource CardBackground}"/>
 
         <!-- UraniumUI Material TabView -->
         <material:TabView x:Name="StatisticsTabView" Grid.Row="1">
@@ -47,78 +46,80 @@
             <material:TabItem Title="Overview">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
-                        <VerticalStackLayout 
-                            BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                            Padding="12" 
-                            Spacing="12">
-
-                            <Border 
-                                BackgroundColor="{DynamicResource CardBackground}" 
+                        <ScrollView>
+                            <VerticalStackLayout 
+                                BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                 Padding="12" 
-                                StrokeShape="RoundRectangle 16">
-                                <VerticalStackLayout 
-                                    Spacing="8">
-                                    
-                                    <Label 
-                                        Text="Latest Concert" 
-                                        FontAttributes="Bold" 
-                                        HorizontalTextAlignment="Center"/>
-                                    
-                                    <Label 
-                                        Text="{Binding LatestConcertText}"
-                                        HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
+                                Spacing="12">
 
-                            <Border 
-                                BackgroundColor="{DynamicResource CardBackground}" 
-                                Padding="12" 
-                                StrokeShape="RoundRectangle 16">
-                                
-                                <VerticalStackLayout 
-                                    Spacing="8">
-                                    
-                                    <Label 
-                                        Text="Total Concerts" 
-                                        FontAttributes="Bold" 
-                                        HorizontalTextAlignment="Center"/>
-                                    
-                                    <Label 
-                                        Text="{Binding TotalConcertsText}" 
-                                        HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
+                                <Border 
+                                    BackgroundColor="{DynamicResource CardBackground}" 
+                                    Padding="12" 
+                                    StrokeShape="RoundRectangle 16">
+                                    <VerticalStackLayout 
+                                        Spacing="8">
 
-                            <Border 
-                                BackgroundColor="{DynamicResource CardBackground}" 
-                                Padding="12" 
-                                StrokeShape="RoundRectangle 16">
-                                
-                                <VerticalStackLayout 
-                                    Spacing="8">
-                                    
-                                    <Label 
-                                        Text="Average Rating" 
-                                        FontAttributes="Bold" 
-                                        HorizontalTextAlignment="Center"/>
-                                    
-                                    <toolkit:RatingView 
-                                        Rating="{Binding AverageRating}"
-                                        MaximumRating="5"
-                                        IsReadOnly="True"
-                                        EmptyShapeColor="Transparent"
-                                        FillColor="{DynamicResource RatingFill}"
-                                        FillOption ="Shape"
-                                        ShapePadding="0"
-                                        ShapeDiameter="42"
-                                        Shape="Star"
-                                        ShapeBorderColor="{DynamicResource ButtonBorderColor}"
-                                        ShapeBorderThickness="2"
-                                        Spacing="8"
-                                        HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-                            </Border>
-                        </VerticalStackLayout>
+                                        <Label 
+                                            Text="Latest Concert" 
+                                            FontAttributes="Bold" 
+                                            HorizontalTextAlignment="Center"/>
+
+                                        <Label 
+                                            Text="{Binding LatestConcertText}"
+                                            HorizontalTextAlignment="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border 
+                                    BackgroundColor="{DynamicResource CardBackground}" 
+                                    Padding="12" 
+                                    StrokeShape="RoundRectangle 16">
+
+                                    <VerticalStackLayout 
+                                        Spacing="8">
+
+                                        <Label 
+                                            Text="Total Concerts" 
+                                            FontAttributes="Bold" 
+                                            HorizontalTextAlignment="Center"/>
+
+                                        <Label 
+                                            Text="{Binding TotalConcertsText}" 
+                                            HorizontalTextAlignment="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+
+                                <Border 
+                                    BackgroundColor="{DynamicResource CardBackground}" 
+                                    Padding="12" 
+                                    StrokeShape="RoundRectangle 16">
+
+                                    <VerticalStackLayout 
+                                        Spacing="8">
+
+                                        <Label 
+                                            Text="Average Rating" 
+                                            FontAttributes="Bold" 
+                                            HorizontalTextAlignment="Center"/>
+
+                                        <toolkit:RatingView 
+                                            Rating="{Binding AverageRating}"
+                                            MaximumRating="5"
+                                            IsReadOnly="True"
+                                            EmptyShapeColor="Transparent"
+                                            FillColor="{DynamicResource RatingFill}"
+                                            FillOption ="Shape"
+                                            ShapePadding="0"
+                                            ShapeDiameter="42"
+                                            Shape="Star"
+                                            ShapeBorderColor="{DynamicResource ButtonBorderColor}"
+                                            ShapeBorderThickness="2"
+                                            Spacing="8"
+                                            HorizontalOptions="Center"/>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </ScrollView>
                     </DataTemplate>
                 </material:TabItem.ContentTemplate>
             </material:TabItem>
@@ -128,85 +129,85 @@
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
                         <Grid 
-                            BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                            RowDefinitions="Auto,Auto,*" 
-                            RowSpacing="15" 
-                            Padding="12">
+                        BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                        RowDefinitions="Auto,Auto,*" 
+                        RowSpacing="15" 
+                        Padding="12">
 
                             <!-- Search Bar -->
                             <SearchBar 
-                                Placeholder="Search performer..."
-                                Text="{Binding SearchQuery}"
-                                HeightRequest="48"
-                                TextColor="{DynamicResource TextColor}"
-                                CancelButtonColor="{DynamicResource ButtonRed}"/>
-                 
-                           <!-- Sort Buttons -->
+                            Placeholder="Search performer..."
+                            Text="{Binding SearchQuery}"
+                            HeightRequest="48"
+                            TextColor="{DynamicResource TextColor}"
+                            CancelButtonColor="{DynamicResource ButtonRed}"/>
+
+                            <!-- Sort Buttons -->
                             <HorizontalStackLayout 
-                                Grid.Row="1" 
-                                Spacing="12" 
-                                HorizontalOptions="Center">
-                                
+                            Grid.Row="1" 
+                            Spacing="12" 
+                            HorizontalOptions="Center">
+
                                 <Button 
-                                    Text="Most Concerts"
-                                    Command="{Binding SortMostCommand}" />
-                                
+                                Text="Most Concerts"
+                                Command="{Binding SortMostCommand}" />
+
                                 <Button 
-                                    Text="Least Concerts" 
-                                    Command="{Binding SortLeastCommand}" />
+                                Text="Least Concerts" 
+                                Command="{Binding SortLeastCommand}" />
                             </HorizontalStackLayout>
 
                             <!-- Performer List -->
                             <CollectionView 
-                                Grid.Row="2"
-                                x:Name="PerformersCollection"
-                                VerticalOptions="Fill"
-                                HorizontalOptions="Fill"
-                                ItemsSource="{Binding DisplayedPerformers}"
-                                RemainingItemsThreshold="8"
-                                RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
-                                VerticalScrollBarVisibility="Never">
+                            Grid.Row="2"
+                            x:Name="PerformersCollection"
+                            VerticalOptions="Fill"
+                            HorizontalOptions="Fill"
+                            ItemsSource="{Binding DisplayedPerformers}"
+                            RemainingItemsThreshold="8"
+                            RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                            VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="vm:PerformerViewModel">
                                         <Border 
-                                            BackgroundColor="{DynamicResource CardBackground}"
-                                            StrokeShape="RoundRectangle 16"
-                                            Padding="12"
-                                            Margin="0,0,0,12">
+                                        BackgroundColor="{DynamicResource CardBackground}"
+                                        StrokeShape="RoundRectangle 16"
+                                        Padding="12"
+                                        Margin="0,0,0,12">
                                             <Grid 
-                                                ColumnDefinitions=".2*,.6*,.2*"
-                                                VerticalOptions="Center">
+                                            ColumnDefinitions=".2*,.6*,.2*"
+                                            VerticalOptions="Center">
                                                 <!--Icon image-->
                                                 <Image 
-                                                    Grid.Column="0"
-                                                    Source="{DynamicResource BandIcon}" 
-                                                    WidthRequest="32" 
-                                                    HeightRequest="32"
-                                                    HorizontalOptions="Start"/>
+                                                Grid.Column="0"
+                                                Source="{DynamicResource BandIcon}" 
+                                                WidthRequest="32" 
+                                                HeightRequest="32"
+                                                HorizontalOptions="Start"/>
 
                                                 <!--Performer name-->
                                                 <Button 
-                                                    Grid.Column="1"
-                                                    Text="{Binding Name}" 
-                                                    FontAttributes="Bold"
-                                                    FontSize="22"
-                                                    HorizontalOptions="Center"
-                                                    LineBreakMode="WordWrap"
-                                                    BackgroundColor="Transparent"
-                                                    BorderWidth="0"
-                                                    TextColor="{DynamicResource TextColor}"
-                                                    Command="{Binding SelectPerformerCommand}"/>
+                                                Grid.Column="1"
+                                                Text="{Binding Name}" 
+                                                FontAttributes="Bold"
+                                                FontSize="22"
+                                                HorizontalOptions="Center"
+                                                LineBreakMode="WordWrap"
+                                                BackgroundColor="Transparent"
+                                                BorderWidth="0"
+                                                TextColor="{DynamicResource TextColor}"
+                                                Command="{Binding SelectPerformerCommand}"/>
 
                                                 <!--Concert count-->
                                                 <Label 
-                                                    Grid.Column="2"
-                                                    Text="{Binding CountText}" 
-                                                    HorizontalTextAlignment="Center"
-                                                    TextColor="{DynamicResource TextColor}"
-                                                    VerticalOptions="Center"/>
+                                                Grid.Column="2"
+                                                Text="{Binding CountText}" 
+                                                HorizontalTextAlignment="Center"
+                                                TextColor="{DynamicResource TextColor}"
+                                                VerticalOptions="Center"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
@@ -219,49 +220,52 @@
 
             <!-- Countries Tab -->
             <material:TabItem Title="Countries">
-                <VerticalStackLayout Padding="0" Spacing="12">
-                    <Label 
-                        Text="Concerts by Country"
-                        FontSize="22"
-                        FontAttributes="Bold"
-                        HorizontalTextAlignment="Center"
-                        TextColor="{DynamicResource TextColor}"
-                        Margin="0,12,0,0"/>
+                <ScrollView>
+                    <VerticalStackLayout Padding="0" Spacing="12">
+                        <Label 
+                            Text="Concerts by Country"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center"
+                            TextColor="{DynamicResource TextColor}"
+                            Margin="0,12,0,0"/>
 
-                    <!-- Livecharts2 Chart -->
-                    <lvc:CartesianChart
-                        x:Name="CountriesChart"
-                        BindingContext="{Binding ChartVM}"
-                        Series="{Binding CountrySeries}"
-                        XAxes="{Binding XAxes}"
-                        YAxes="{Binding YAxes}" 
-                        HeightRequest="{Binding ChartHeight}"
-                        Background="{DynamicResource Background}"
-                        TooltipPosition="Hidden"
-                        LegendPosition="Bottom"/>
-                </VerticalStackLayout>
+                        <!-- Livecharts2 Chart -->
+                        <lvc:CartesianChart
+                            x:Name="CountriesChart"
+                            BindingContext="{Binding ChartVM}"
+                            Series="{Binding CountrySeries}"
+                            XAxes="{Binding XAxes}"
+                            YAxes="{Binding YAxes}" 
+                            HeightRequest="{Binding ChartHeight}"
+                            Background="{DynamicResource Background}"
+                            TooltipPosition="Hidden"
+                            LegendPosition="Bottom"/>
+                    </VerticalStackLayout>
+                </ScrollView>
             </material:TabItem>
 
             <!-- Years Tab -->
             <material:TabItem Title="Years">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
-                        <VerticalStackLayout 
-                            BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                            Padding="12" 
-                            Spacing="20">
+                        <ScrollView>
+                            <VerticalStackLayout 
+                                BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                Padding="12" 
+                                Spacing="20">
 
                             <Border 
                                 BackgroundColor="{DynamicResource CardBackground}" 
                                 Padding="12" 
                                 StrokeShape="RoundRectangle 16">
-                                
+
                                 <VerticalStackLayout>
                                     <Label 
                                         Text="Most Concerts In a Year" 
                                         FontAttributes="Bold" 
                                         HorizontalTextAlignment="Center"/>
-                                    
+
                                     <Label 
                                         Text="{Binding MostConcertsYearText}" 
                                         HorizontalTextAlignment="Center"/>
@@ -277,13 +281,14 @@
                                         Text="Concerts Per Year" 
                                         FontAttributes="Bold"
                                         HorizontalTextAlignment="Center"/>
-                                    
+
                                     <Label 
                                         FormattedText="{Binding ConcertsByYearFormatted}" 
                                         HorizontalOptions="Center"/>
                                 </VerticalStackLayout>
                             </Border>
-                        </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </ScrollView>
                     </DataTemplate>
                 </material:TabItem.ContentTemplate>
             </material:TabItem>

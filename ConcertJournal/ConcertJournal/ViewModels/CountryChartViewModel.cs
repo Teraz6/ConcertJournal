@@ -34,6 +34,7 @@ public class CountryChartViewModel
 
         var textColor = (Color)Application.Current!.Resources["TextColor"];
         var skTextColor = textColor.ToSKColor();
+        var labelPaint = new SolidColorPaint(skTextColor);
 
         // Horizontal bars with two series
         CountrySeries = new ISeries[]
@@ -43,7 +44,7 @@ public class CountryChartViewModel
                 Name = "Concerts",
                 Values = concertValues,
                 Fill = new SolidColorPaint(SKColor.Parse("#00BCF5")),
-                DataLabelsPaint = new SolidColorPaint(skTextColor),
+                DataLabelsPaint = labelPaint,
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Left,
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,
@@ -55,7 +56,7 @@ public class CountryChartViewModel
                 Name = "Unique Performers Seen",
                 Values = performerValues,
                 Fill = new SolidColorPaint(SKColor.Parse("#FFB400")),
-                DataLabelsPaint = new SolidColorPaint(skTextColor),
+                DataLabelsPaint = labelPaint,
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Left,
                 DataLabelsSize = 14,
                 MaxBarWidth = 40,

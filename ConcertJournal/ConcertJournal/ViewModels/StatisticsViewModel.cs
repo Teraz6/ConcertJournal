@@ -3,10 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using ConcertJournal.Data;
 using ConcertJournal.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace ConcertJournal.ViewModels;
 
-public partial class StatisticsViewModel : ObservableObject
+public partial class StatisticsViewModel : BaseViewModel
 {
     public DatabaseContext Database { get; }
 
@@ -43,44 +44,64 @@ public partial class StatisticsViewModel : ObservableObject
     [RelayCommand]
     public async Task RefreshAllAsync()
     {
+        // 1. Guard against multiple simultaneous taps
+        if (IsLoading) return;
 
-        var concerts = await Database.GetAllConcertsAsync();
-
-        if (concerts == null || !concerts.Any())
+        IsLoading = true;
+        try
         {
-            TotalConcertsText = "No concert data available.";
-            ResetPerformers(new List<PerformerViewModel>());
-            ChartVM = null;
-            return;
+            var concerts = await Database.GetAllConcertsAsync();
+
+            if (concerts == null || !concerts.Any())
+            {
+                TotalConcertsText = "No concert data available.";
+                ResetPerformers(new List<PerformerViewModel>());
+                ChartVM = null;
+                return;
+            }
+
+            // 2. Data Processing (Offload heavy LINQ to a background thread if list is huge)
+            await Task.Run(() =>
+            {
+                ProcessOverview(concerts);
+                ProcessYearlyStats(concerts);
+
+                var performers = concerts
+                    .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
+                    .SelectMany(c => c.Performers!.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                    .Select(p => p.Trim())
+                    .GroupBy(p => p)
+                    .Select(g => new PerformerViewModel { Name = g.Key, Count = g.Count() })
+                    .OrderByDescending(p => p.Count)
+                    .ToList();
+
+                // Use MainThread to update the collection if ResetPerformers touches the UI
+                MainThread.BeginInvokeOnMainThread(() => ResetPerformers(performers));
+
+                var countryGroups = concerts
+                    .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
+                    .Select(g => (
+                        Country: g.Key,
+                        ConcertCount: g.Count(),
+                        PerformerCount: g.SelectMany(c => (c.Performers ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim())).Distinct().Count()
+                    ))
+                    .ToList();
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    ChartVM = new CountryChartViewModel(countryGroups);
+                });
+            });
         }
-
-        // 1. Process Overview & Years
-        ProcessOverview(concerts);
-        ProcessYearlyStats(concerts);
-
-        // 2. Process Performers
-        var performers = concerts
-            .Where(c => !string.IsNullOrWhiteSpace(c.Performers))
-            .SelectMany(c => c.Performers!.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            .Select(p => p.Trim())
-            .GroupBy(p => p)
-            .Select(g => new PerformerViewModel { Name = g.Key, Count = g.Count() })
-            .OrderByDescending(p => p.Count)
-            .ToList();
-
-        ResetPerformers(performers);
-
-        // 3. Process Chart
-        var countryGroups = concerts
-            .GroupBy(c => string.IsNullOrWhiteSpace(c.Country) ? "Undefined" : c.Country.Trim())
-            .Select(g => (
-                Country: g.Key,
-                ConcertCount: g.Count(),
-                PerformerCount: g.SelectMany(c => (c.Performers ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries).Select(p => p.Trim())).Distinct().Count()
-            ))
-            .ToList();
-
-        ChartVM = new CountryChartViewModel(countryGroups);
+        catch (Exception ex)
+        {
+            // Always good to log errors when dealing with Databases
+            Debug.WriteLine($"Error loading stats: {ex.Message}");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     private void ProcessOverview(List<Concert> concerts)
