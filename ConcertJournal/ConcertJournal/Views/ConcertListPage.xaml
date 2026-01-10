@@ -17,7 +17,7 @@
 
     <Grid RowDefinitions="*,Auto">
         <Grid RowDefinitions="Auto,*">
-            <Grid ColumnDefinitions=".1*,.8*,.1*" RowDefinitions="*,*" BackgroundColor="{DynamicResource CardBackground}">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,*" BackgroundColor="{DynamicResource CardBackground}" >
 
                 <Button 
                     Grid.RowSpan="2"
@@ -32,14 +32,15 @@
                     Command="{Binding GoAddConcertCommand}"/>
 
                 <Label 
-                    Grid.Column="1" 
+                    Grid.ColumnSpan="3"
+                    Grid.Row="0"
                     Text="Event List" 
                     FontSize="32" 
                     FontAttributes="Bold" 
-                    HorizontalOptions="Center"/>
+                    HorizontalTextAlignment="Center"/>
 
                 <Label 
-                    Grid.Column="1" 
+                    Grid.ColumnSpan="3" 
                     Grid.Row="1" 
                     Text="{Binding TotalConcertsText}" 
                     FontSize="14" 
@@ -49,7 +50,7 @@
                 <ImageButton 
                     Grid.RowSpan="2" 
                     Grid.Column="2"
-                    Source="{AppThemeBinding Light=filter_black.png, Dark=filter_white.png}"
+                    Source="{DynamicResource FilterIcon}"
                     Command="{Binding ToggleFilterCommand}"
                     HorizontalOptions="End" 
                     Margin="0,0,12,0"/>
@@ -124,29 +125,29 @@
                                     <VerticalStackLayout 
                                         Grid.Column="0" 
                                         Grid.Row="1">
-                                        
+
                                         <Label 
                                             Text="{Binding DisplayPerformers}" 
                                             FontSize="16"
                                             LineBreakMode="TailTruncation" 
                                             MaxLines="1"/>
-                                        
+
                                         <Label 
                                             Text="{Binding Venue}" 
                                             FontSize="14" />
-                                        
+
                                         <HorizontalStackLayout 
                                             Spacing="8">
-                                            
+
                                             <Label 
                                                 Text="{Binding Country}" 
                                                 FontSize="12" />
-                                            
+
                                             <Label 
                                                 Text="{Binding City}" 
                                                 FontSize="12" />
                                         </HorizontalStackLayout>
-                                        
+
                                         <Label 
                                             Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" 
                                             FontSize="12" 
@@ -156,17 +157,28 @@
                             </Border>
 
                             <ImageButton 
-                                Source="{DynamicResource ThreeDotsIcon}" 
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=ShowOptionsCommand}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="End" 
-                                VerticalOptions="End" 
-                                Margin="16"
-                                Padding="4"
-                                BackgroundColor="Transparent"/>
+                                        Source="{DynamicResource ThreeDotsIcon}" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=ShowOptionsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalOptions="End" 
+                                        VerticalOptions="End" 
+                                        Margin="16"
+                                        Padding="4"
+                                        BackgroundColor="Transparent"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,50">
+                        <Label Text="No concerts found" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="Center"/>
+                        <Label Text="Try adjusting your filters or add a new event." 
+                           HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
             </CollectionView>
         </Grid>
 
@@ -178,8 +190,7 @@
             <VerticalStackLayout Spacing="32" Padding="8,16">
 
                 <SearchBar Placeholder="Search..." 
-                           Text="{Binding SearchText}"
-                           SearchCommand="{Binding SearchCommand}">
+                           Text="{Binding SearchText}">
                     <SearchBar.Behaviors>
                         <toolkit:EventToCommandBehavior 
                             EventName="TextChanged"
