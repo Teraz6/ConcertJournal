@@ -20,47 +20,55 @@ namespace ConcertJournal
         const int WindowWidth = 540;
         const int WindowHeight = 1000;
 
-        public static DatabaseContext Database { get; private set; } = null!;
         public App()
         {
             InitializeComponent();
 
-            // Check for updates
-            var updateService = new UpdateServices();
-            Task.Run(() => updateService.CheckForUpdateAsync());
+            //Theme logic
+            ApplyTheme();
 
-            // 🔹 Load saved theme preference (default: Angel)
-            string savedTheme = Preferences.Get("AppTheme", "Angel");
-
-            // 🔹 Apply selected theme
-            App.Current?.Resources?.MergedDictionaries?.Clear();
-            if (savedTheme == "Devil")
-                App.Current?.Resources.MergedDictionaries.Add(new Resources.Themes.DevilTheme());
-            else
-                App.Current?.Resources.MergedDictionaries.Add(new Resources.Themes.AngelTheme());
-
-            // Initialize the SQLite database
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "concerts.db3");
-            Database = new DatabaseContext(dbPath);
-
-            Microsoft.Maui.Handlers.WindowHandler.Mapper.AppendToMapping(nameof(IWindow), (handler, view) =>
-            {
-            #if WINDOWS
-                var mauiWindow = handler.VirtualView;
-                var nativeWindow = handler.PlatformView;
-                nativeWindow.Activate();
-                IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
-                WindowId windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(windowHandle);
-                AppWindow appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-                appWindow.Resize(new SizeInt32(WindowWidth, WindowHeight));
-            #endif
-            });
-
+            //Window sizing configuration
+            ConfigureWindowSizing();
 
 #if ANDROID
             // Request runtime permissions on Android
             _ = RequestPermissionsOnAndroid();
 #endif
+        }
+
+        private void ApplyTheme()
+        {
+            string savedTheme = Preferences.Get("AppTheme", "Angel");
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Resources.MergedDictionaries.Clear();
+                if (savedTheme == "Devil")
+                    Resources.MergedDictionaries.Add(new Resources.Themes.DevilTheme());
+                else
+                    Resources.MergedDictionaries.Add(new Resources.Themes.AngelTheme());
+            });
+        }
+
+        private void ConfigureWindowSizing()
+        {
+            Microsoft.Maui.Handlers.WindowHandler.Mapper.AppendToMapping(nameof(IWindow), (handler, view) =>
+            {
+#if WINDOWS
+            var nativeWindow = handler.PlatformView;
+            nativeWindow.Activate();
+            IntPtr windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(nativeWindow);
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(windowHandle);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            appWindow.Resize(new Windows.Graphics.SizeInt32(WindowWidth, WindowHeight));
+#endif
+            });
+        }
+
+        //Override CreateWindow instead of using MainPage
+        protected override Window CreateWindow(IActivationState? activationState)
+        {
+            var window = new Window(new AppShell());
+            return window;
         }
 
 #if ANDROID
@@ -79,18 +87,5 @@ namespace ConcertJournal
         }
 #endif
 
-        // 🔹 NEW: Override CreateWindow instead of using MainPage
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            var window = new Window(new AppShell());
-            return window;
-        }
-
-
-
-        //protected override Window CreateWindow(IActivationState? activationState)
-        //{
-        //    return new Window(new AppShell());
-        //}
     }
 }

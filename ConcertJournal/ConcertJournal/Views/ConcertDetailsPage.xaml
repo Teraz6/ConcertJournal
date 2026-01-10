@@ -3,79 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertDetailsPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
-             xmlns:models="clr-namespace:ConcertJournal.Models"
-             x:DataType="models:Concert"
+             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:ConcertDetailsViewModel"
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*,Auto">
-        <!--BackgroundImage-->
         <Image 
             Source="{DynamicResource DetailsBackground}"
             Aspect="Fill"
             Opacity="1"
             AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="All"/>
-        
+
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="16" Spacing="24">
-                
-                <!-- Header Section -->
+
                 <Grid ColumnDefinitions="*,*">
-                    <!-- Back button -->
                     <ImageButton 
                         Grid.Column="0"
                         Source="{DynamicResource DoubleLeftArrowIcon}"
                         HorizontalOptions="Start"
-                        Clicked="OnBackClicked" />
+                        Command="{Binding GoBackCommand}" />
 
                     <HorizontalStackLayout 
                         Grid.Column="1"
                         Spacing="24"
                         HorizontalOptions="End">
-                        
-                        <!--Edit button-->
+
                         <ImageButton 
                             Source="{DynamicResource EditIcon}"
                             BackgroundColor="Transparent"
                             BorderWidth="0"
-                            Clicked="OnUpdateClicked"
+                            Command="{Binding EditConcertCommand}"
                             HorizontalOptions="End"/>
-                    
-                        <!-- Delete button-->
+
                         <ImageButton 
                             Source="{DynamicResource DeleteIcon}"
                             BackgroundColor="Transparent"
                             BorderColor="{DynamicResource ButtonBorderColor}"
-                            Clicked="OnDeleteClicked"
+                            Command="{Binding DeleteConcertCommand}"
                             HorizontalOptions="End"/>
                     </HorizontalStackLayout>
                 </Grid>
-                
+
                 <VerticalStackLayout Spacing="8">
                     <Label 
-                        Text="{Binding EventTitle}"
+                        Text="{Binding Concert.EventTitle}"
                         FontSize="32"
                         FontAttributes="Bold"
                         TextColor="{DynamicResource TextColor}"
                         HorizontalTextAlignment="Center"/>
 
                     <Label 
-                        Text="{Binding Date, StringFormat='{0:MMMM dd, yyyy}'}"
+                        Text="{Binding Concert.Date, StringFormat='{0:MMMM dd, yyyy}'}"
                         FontSize="16"
                         TextColor="{DynamicResource MutedText}"
                         HorizontalOptions="Center"/>
 
                     <toolkit:RatingView 
-                        Rating="{Binding Rating}"
-                        x:Name="ConcertRating"
+                        Rating="{Binding Concert.Rating}"
                         HorizontalOptions="Center"
                         EmptyShapeColor="Transparent"
                         FillColor="{DynamicResource RatingFill}"
                         FillOption ="Shape"
                         IsReadOnly="True"
-                        ShapePadding="0"
                         ShapeDiameter="32"
                         MaximumRating="5"
                         Shape="Star"
@@ -84,14 +78,13 @@
                         Spacing="8"/>
                 </VerticalStackLayout>
 
-                <!-- Performers Section -->
                 <Border 
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 16"
                     BackgroundColor="Transparent"
                     Padding="16"
                     HorizontalOptions="Center">
-                    
+
                     <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
                         <Label 
                             Text="Performers"
@@ -100,24 +93,26 @@
                             TextColor="{DynamicResource TextColor}" 
                             HorizontalOptions="Center"/>
 
-                         <!--Wrap Label in a TapGestureRecognizer container--> 
                         <VerticalStackLayout HorizontalOptions="Center">
                             <VerticalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnPerformerTapped"/>
+                                <TapGestureRecognizer Command="{Binding PerformerTappedCommand}"/>
                             </VerticalStackLayout.GestureRecognizers>
 
                             <Label 
-                                x:Name="PerformersLabel"
-                                Text="{Binding Performers}"
+                                Text="{Binding Concert.Performers}"
                                 FontSize="22"
                                 TextColor="{DynamicResource TextColor}"
                                 HorizontalTextAlignment="Center"/>
-                        </VerticalStackLayout>
 
+                            <Label 
+                                Text="(Tap to view details)"
+                                FontSize="10"
+                                TextColor="Gray"
+                                HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Venue & Location Section -->
                 <Border 
                     StrokeShape="RoundRectangle 16"
                     BackgroundColor="Transparent"
@@ -132,34 +127,26 @@
                             HorizontalTextAlignment="Center"/>
 
                         <Label 
-                            Text="{Binding Venue}"
+                            Text="{Binding Concert.Venue}"
                             TextColor="{DynamicResource TextColor}" 
                             HorizontalTextAlignment="Center">
                             <Label.Triggers>
-                                <DataTrigger 
-                                    TargetType="Label"
-                                    Binding="{Binding Venue}"
-                                    Value="">
+                                <DataTrigger TargetType="Label" Binding="{Binding Concert.Venue}" Value="">
                                     <Setter Property="IsVisible" Value="False" />
                                 </DataTrigger>
-                                <DataTrigger 
-                                    TargetType="Label"
-                                    Binding="{Binding Venue}"
-                                    Value="{x:Null}">
+                                <DataTrigger TargetType="Label" Binding="{Binding Concert.Venue}" Value="{x:Null}">
                                     <Setter Property="IsVisible" Value="False" />
                                 </DataTrigger>
                             </Label.Triggers>
                         </Label>
 
                         <Label 
-                            Text="{Binding Location}"
+                            Text="{Binding Concert.Location}"
                             TextColor="{DynamicResource TextColor}"
                             HorizontalTextAlignment="Center"/>
-
                     </VerticalStackLayout>
                 </Border>
 
-                <!-- Notes Section -->
                 <Border 
                     StrokeThickness="0"
                     StrokeShape="RoundRectangle 16"
@@ -173,7 +160,7 @@
                             TextColor="{DynamicResource TextColor}"
                             HorizontalOptions="Center"/>
                         <Label 
-                            Text="{Binding Notes}"
+                            Text="{Binding Concert.Notes}"
                             FontSize="16"
                             TextColor="{DynamicResource TextColor}"
                             HorizontalTextAlignment="Center"/>
@@ -192,83 +179,47 @@
                             FontAttributes="Bold"
                             TextColor="{DynamicResource TextColor}" 
                             HorizontalOptions="Center"/>
-                        <CollectionView 
-                            x:Name="MediaCollectionView"
-                                    ItemsSource="{Binding MediaFiles}"
-                                    ItemsLayout="VerticalGrid, 2"
-                                    SelectionMode="None">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <Border 
-                                        Stroke="{DynamicResource CardBackground}"
-                                        StrokeShape="RoundRectangle 16"
-                                        Margin="4"
-                                        Padding="4">
-                                        <Image 
-                                            Source="{Binding .}"
-                                            Aspect="AspectFill"
-                                            HeightRequest="140"
-                                            WidthRequest="140">
-                                            <Image.GestureRecognizers>
-                                                <TapGestureRecognizer 
-                                                        NumberOfTapsRequired="1"
-                                                        Tapped="OnImageTapped" />
-                                            </Image.GestureRecognizers>
-                                        </Image>
-                                    </Border>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </VerticalStackLayout>
-                    
-                </Border>
+                        <VerticalStackLayout Spacing="10" Padding="10">
 
-                <!-- Edit Button -->
-                <ImageButton 
-                    Source="{DynamicResource EditIcon}"
-                    Clicked="OnUpdateClicked"
-                    HorizontalOptions="Center"/>
+                            <CarouselView 
+                                ItemsSource="{Binding MediaFiles}"
+                                IndicatorView="indicatorView"
+                                HeightRequest="300"
+                                PeekAreaInsets="0"
+                                EmptyView="No photos attached">
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate x:DataType="sys:String">
+                                        <Border
+                                           Padding="16"
+                                           StrokeShape="RoundRectangle 16">
+                                            <Image 
+                                                Source="{Binding .}" 
+                                                Aspect="AspectFit"
+                                                HorizontalOptions="Center">
+                                                <Image.GestureRecognizers>
+                                                    <TapGestureRecognizer 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertDetailsViewModel}}, Path=OpenImageZoomCommand}"
+                                                        CommandParameter="{Binding .}"/>
+                                                </Image.GestureRecognizers>
+                                            </Image>
+                                        </Border>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+
+                            <IndicatorView 
+                                x:Name="indicatorView"
+                                IndicatorColor="LightGray"
+                                SelectedIndicatorColor="DarkSlateBlue"
+                                HorizontalOptions="Center"
+                                IndicatorSize="8"/>
+
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
             </VerticalStackLayout>
         </ScrollView>
 
-        <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
-
-        <Grid 
-            x:Name="ImageOverlay"
-            BackgroundColor="#AA000000"
-            IsVisible="False"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill"
-            ZIndex="100">
-
-            <Border 
-                BackgroundColor="{DynamicResource CardBackground}"
-                StrokeShape="RoundRectangle 16"
-                Padding="4"
-                VerticalOptions="Center"
-                HorizontalOptions="Center">
-
-                <Grid>
-                    <Image 
-                        x:Name="PopupImage"
-                        Aspect="AspectFit"
-                        MinimumHeightRequest="350"
-                        MinimumWidthRequest="350"/>
-
-                    <Image 
-                        Source="close.png"
-                        HeightRequest="48"
-                        WidthRequest="48"
-                        VerticalOptions="Start"
-                        HorizontalOptions="End"
-                        Margin="0">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnCloseImageTapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                </Grid>
-            </Border>
-        </Grid>
     </Grid>
 </ContentPage>

@@ -14,10 +14,6 @@
         Route="MainPage"/>
 
     <ShellContent
-        Route="AddConcertPage"
-        ContentTemplate="{DataTemplate views:AddConcertPage}" />
-
-    <ShellContent
         Route="ConcertListPage"
         ContentTemplate="{DataTemplate views:ConcertListPage}" />
     
@@ -26,14 +22,7 @@
         ContentTemplate="{DataTemplate views:SettingsPage}" />
 
     <ShellContent
-        Route="ConcertDetailsPage"
-        ContentTemplate="{DataTemplate views:ConcertDetailsPage}" />
-    
-    <ShellContent
         Route="StatisticsPage"
         ContentTemplate="{DataTemplate views:StatisticsPage}" />
 
-    <ShellContent
-        Route="PerformerDetailsPage"
-        ContentTemplate="{DataTemplate views:PerformerDetailsPage}" />
 </Shell>

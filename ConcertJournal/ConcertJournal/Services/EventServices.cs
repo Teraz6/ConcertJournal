@@ -1,6 +1,6 @@
 ﻿namespace ConcertJournal.Services
 {
-    public static class EventBus
+    public static class EventServices
     {
         public static event Action? ConcertCreated;
         public static event Action? ConcertUpdated;

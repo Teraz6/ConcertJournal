@@ -1,47 +1,32 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Core;
+﻿using ConcertJournal.Models;
 using System.Text.Json;
 
-namespace ConcertJournal.Services
+namespace ConcertJournal.Services;
+
+public class UpdateServices
 {
-    public class UpdateServices
+    private const string UpdateUrl = "https://raw.githubusercontent.com/Teraz6/ConcertJournal/refs/heads/main/update.json";
+
+    // Update the return type from Task to Task<UpdateInfo?>
+    public async Task<UpdateInfo?> GetUpdateInfoAsync()
     {
-        private const string UpdateUrl = "https://raw.githubusercontent.com/Teraz6/ConcertJournal/refs/heads/feature-update-notification/update.json";
-
-        public async Task CheckForUpdateAsync()
+        try
         {
-            try
-            {
-                using var client = new HttpClient();
-                var json = await client.GetStringAsync(UpdateUrl);
+            using var client = new HttpClient();
+            client.Timeout = TimeSpan.FromSeconds(5);
+            var json = await client.GetStringAsync(UpdateUrl);
 
-                var info = JsonSerializer.Deserialize<UpdateInfo>(json);
-                var current = AppInfo.VersionString;
-
-                if (Version.Parse(info!.Version) > Version.Parse(current))
-                {
-                    await UpdateServices.ShowUpdateNotification(info.DownloadUrl);
-                }
-            }
-            catch
+            var info = JsonSerializer.Deserialize<UpdateInfo>(json, new JsonSerializerOptions
             {
-                // optionally log error or ignore if offline
-            }
+                PropertyNameCaseInsensitive = true
+            });
+
+            return info; // Return the object to the ViewModel
         }
-
-        private static async Task ShowUpdateNotification(string url)
+        catch (Exception ex)
         {
-            var toast = Toast.Make("A new version is available! Tap to download.", ToastDuration.Long, 14);
-            await toast.Show();
-            // You can open browser directly (optional)
-            await Launcher.OpenAsync(url);
+            System.Diagnostics.Debug.WriteLine($"Update check failed: {ex.Message}");
+            return null; // Return null so the ViewModel knows it failed
         }
-    }
-
-    public class UpdateInfo
-    {
-        public required string Version { get; set; }
-        public required string DownloadUrl { get; set; }
     }
 }
-

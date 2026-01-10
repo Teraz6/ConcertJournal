@@ -1,8 +1,9 @@
-﻿using SQLite;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SQLite;
 
 namespace ConcertJournal.Models
 {
-    public class Concert
+    public partial class Concert : ObservableObject
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -15,6 +16,9 @@ namespace ConcertJournal.Models
         public double Rating { get; set; }
         public string? Notes { get; set; }
         public string? MediaPaths { get; set; }
+
+        [ObservableProperty]
+        private bool _isSelected;
 
         public string Location => $"{City}, {Country}";
 

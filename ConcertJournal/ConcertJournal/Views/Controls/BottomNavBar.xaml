@@ -67,7 +67,7 @@
 
     <Grid BackgroundColor="{DynamicResource NavBarBackground}"
           Padding="8,4"
-          ColumnDefinitions="*,*,*,*,*"
+          ColumnDefinitions="*,*,*,*"
           VerticalOptions="End"
           HorizontalOptions="Fill"
           HeightRequest="68">
@@ -115,30 +115,8 @@
                 InputTransparent="True"/>
         </Grid>
 
-        <!--Add concert icon-->
-        <Grid Grid.Column="2"
-              RowDefinitions="*,*">
-            <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="AddConcertPage"/>
-            </Grid.GestureRecognizers>
-
-            <Image 
-                x:Name="AddBtn" 
-                Grid.Row="0"
-                Source="{DynamicResource PlusIcon}" 
-                Style="{StaticResource NavButtonStyle}" 
-                InputTransparent="True"/>
-
-            <Label 
-                x:Name="AddLbl" 
-                Grid.Row="1"
-                Text="Add" 
-                Style="{StaticResource NavLabelStyle}" 
-                InputTransparent="True"/>
-        </Grid>
-
         <!--Stats icon-->
-        <Grid Grid.Column="3"
+        <Grid Grid.Column="2"
               RowDefinitions="*,*">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="StatisticsPage"/>
@@ -160,7 +138,7 @@
         </Grid>
 
         <!--Settings icon-->
-        <Grid Grid.Column="4"
+        <Grid Grid.Column="3"
               RowDefinitions="*,*">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="SettingsPage"/>

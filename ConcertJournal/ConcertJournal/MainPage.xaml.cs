@@ -1,77 +1,22 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using ConcertJournal.ViewModels;
 
 namespace ConcertJournal;
 
 public partial class MainPage : ContentPage
 {
-    private string? _downloadUrl;
+    private readonly MainViewModel _viewModel;
 
-    public MainPage()
+    public MainPage(MainViewModel viewModel)
     {
         InitializeComponent();
-        CheckForUpdate();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
 
-    private async void CheckForUpdate()
+    protected override async void OnAppearing()
     {
-        VersionLabel.Text = $"Current version: {AppInfo.VersionString}";
-
-        try
-        {
-            using var client = new HttpClient();
-            string json = await client.GetStringAsync("https://raw.githubusercontent.com/Teraz6/ConcertJournal/main/update.json");
-
-            var info = JsonSerializer.Deserialize<UpdateInfo>(json) ?? throw new Exception("Invalid update.json format");
-            _downloadUrl = info.DownloadUrl;
-
-            var currentVersion = Version.Parse(AppInfo.VersionString);
-            var latestVersion = Version.Parse(info.Version);
-
-            if (currentVersion >= latestVersion)
-            {
-                // Latest version
-                UpdateCard.Stroke = Colors.Green;
-                UpdateMessageLabel.Text = "You are using the latest version!";
-                UpdateButton.IsVisible = false;
-            }
-            else
-            {
-                // Needs update
-                UpdateCard.Stroke = Colors.Yellow;
-                UpdateMessageLabel.Text = $"A new version {latestVersion} is available!";
-                UpdateButton.IsVisible = true;
-            }
-        }
-        catch (Exception ex)
-        {
-            UpdateCard.Stroke = Colors.Gray;
-            UpdateMessageLabel.Text = "Unable to check for updates.";
-            UpdateButton.IsVisible = false;
-            Console.WriteLine(ex);
-        }
-    }
-
-    private async void UpdateButton_Clicked(object sender, EventArgs e)
-    {
-        bool confirm = await DisplayAlert("Update", "This will download the latest version.", "Yes", "No");
-
-        if (!confirm)
-            return;
-
-        if (!string.IsNullOrEmpty(_downloadUrl))
-        {
-            await Launcher.OpenAsync(_downloadUrl);
-        }
-    }
-
-    //Json data structure
-    private class UpdateInfo
-    {
-        [JsonPropertyName("version")]
-        public required string Version { get; set; }
-        [JsonPropertyName("downloadUrl")]
-        public required string DownloadUrl { get; set; }
+        base.OnAppearing();
+        await _viewModel.CheckForUpdatesAsync();
     }
 }
 

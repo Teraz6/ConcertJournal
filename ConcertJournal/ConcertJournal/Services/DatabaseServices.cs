@@ -1,6 +1,6 @@
 ﻿namespace ConcertJournal.Services
 {
-    public class DatabaseHelper
+    public class DatabaseServices
     {
         public static string GetDatabasePath()
         {

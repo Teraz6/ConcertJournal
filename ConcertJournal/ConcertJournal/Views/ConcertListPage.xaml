@@ -1,217 +1,209 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<uranium:UraniumContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<uranium:UraniumContentPage 
+             x:Name="ConcertPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.ConcertListPage"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:models="clr-namespace:ConcertJournal.Models"
-             xmlns:local="clr-namespace:ConcertJournal"
-
+             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:ConcertListViewModel"
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="input:RadioButton">
-                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
-                <Setter Property="CircleColor" Value="{DynamicResource White}" />
-                <Setter Property="Color" Value="{DynamicResource Secondary}" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-
     <Grid RowDefinitions="*,Auto">
-        <!--MainContent-->
         <Grid RowDefinitions="Auto,*">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,*" BackgroundColor="{DynamicResource CardBackground}" >
 
-            <Grid 
-                ColumnDefinitions=".1*,.8*,.1*"
-                RowDefinitions="*,*"
-                Grid.Row="0"
-                BackgroundColor="{DynamicResource CardBackground}">
+                <Button 
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Padding="8"
+                    FontAttributes="Bold"
+                    Text="+ Add Event"
+                    BorderWidth="0"
+                    BackgroundColor="Transparent"
+                    Command="{Binding GoAddConcertCommand}"/>
 
                 <Label 
-                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
                     Grid.Row="0"
-                    x:Name="AddConcertPageTitle"
-                    Text="Event List"
-                    FontSize="32"
-                    FontAttributes="Bold"
-                    Margin="0,12,0,4"
-                    HorizontalOptions="Center"/>
+                    Text="Event List" 
+                    FontSize="32" 
+                    FontAttributes="Bold" 
+                    HorizontalTextAlignment="Center"/>
 
-                <Label
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    x:Name="TotalConcertsLabel"
-                    FontSize="14"
-                    HorizontalTextAlignment="Center"
-                    VerticalOptions="Center"
+                <Label 
+                    Grid.ColumnSpan="3" 
+                    Grid.Row="1" 
+                    Text="{Binding TotalConcertsText}" 
+                    FontSize="14" 
+                    HorizontalTextAlignment="Center" 
                     Margin="0,0,0,4"/>
 
                 <ImageButton 
-                    Grid.RowSpan="2"
+                    Grid.RowSpan="2" 
                     Grid.Column="2"
-                    x:Name="FilterButton"
                     Source="{DynamicResource FilterIcon}"
-                    Clicked="OnBackdropClicked"
-                    HorizontalOptions="End"
-                    Margin="0,0,12,0"
-                    Padding="4"/>
+                    Command="{Binding ToggleFilterCommand}"
+                    HorizontalOptions="End" 
+                    Margin="0,0,12,0"/>
             </Grid>
 
-            <!--Event display-->
             <CollectionView 
-                Grid.Row="1"
-                x:Name="ConcertListView"
+                Grid.Row="1" 
+                x:Name="ConcertListView" 
                 Margin="8"
                 ItemsSource="{Binding Concerts}"
-                RemainingItemsThreshold="7"
-                RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
-                SelectionMode="Multiple"
-                SelectionChanged="OnSelectionChanged"
-                SelectionChangedCommand="{Binding SelectionChangedCommand}">
+                SelectionMode="None"
+                VerticalOptions="Fill"
+                RemainingItemsThreshold="5"
+                RemainingItemsThresholdReachedCommand="{Binding LoadMoreConcertsCommand}">
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="PointerOver" />
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Opacity" Value="0.7" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Concert">
                         <Grid Margin="0,0,0,12">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter TargetName="CardBorder" Property="BackgroundColor" Value="{DynamicResource CardBackgroundSelected}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            
                             <Border 
-                                x:Name="CardBorder"
-                                Padding="12"
-                                Stroke="{DynamicResource CardBorder}"
+                                x:Name="CardBorder" 
+                                Padding="12" 
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 16"
                                 BackgroundColor="{DynamicResource CardBackground}">
 
-                                <Grid RowDefinitions="*,*" ColumnDefinitions="*, Auto" VerticalOptions="Center">
-                                    <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center">
-                                        <Label Text="{Binding EventTitle}" FontSize="24" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.CardClickedCommand, Source={x:Reference ConcertPage}}"
+                                        CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource CardBackgroundSelected}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource Primary}" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="False">
+                                        <Setter Property="Stroke" Value="{DynamicResource CardBorder}" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Grid 
+                                    RowDefinitions="Auto,Auto" 
+                                    ColumnDefinitions="*, Auto" 
+                                    InputTransparent="True">
+                                    <VerticalStackLayout 
+                                        Grid.Row="0" 
+                                        Grid.ColumnSpan="2" 
+                                        HorizontalOptions="Center">
+                                        <Label 
+                                            Text="{Binding EventTitle}" 
+                                            FontSize="24" 
+                                            FontAttributes="Bold" 
+                                            HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
 
-                                    <VerticalStackLayout Grid.Column="0" Grid.Row="1">
-                                        <Label Text="{Binding DisplayPerformers}" FontSize="16" LineBreakMode="TailTruncation" MaxLines="1"/>
-                                        <Label Text="{Binding Venue}" FontSize="14" />
-                                        <HorizontalStackLayout Spacing="8">
-                                            <Label Text="{Binding Country}" FontSize="12" />
-                                            <Label Text="{Binding City}" FontSize="12" />
+                                    <VerticalStackLayout 
+                                        Grid.Column="0" 
+                                        Grid.Row="1">
+
+                                        <Label 
+                                            Text="{Binding DisplayPerformers}" 
+                                            FontSize="16"
+                                            LineBreakMode="TailTruncation" 
+                                            MaxLines="1"/>
+
+                                        <Label 
+                                            Text="{Binding Venue}" 
+                                            FontSize="14" />
+
+                                        <HorizontalStackLayout 
+                                            Spacing="8">
+
+                                            <Label 
+                                                Text="{Binding Country}" 
+                                                FontSize="12" />
+
+                                            <Label 
+                                                Text="{Binding City}" 
+                                                FontSize="12" />
                                         </HorizontalStackLayout>
-                                        <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" FontSize="12" TextColor="{DynamicResource MutedText}"/>
-                                    </VerticalStackLayout>
 
-                                    <BoxView Grid.Row="1" Grid.Column="1" WidthRequest="40" Color="Transparent"/>
+                                        <Label 
+                                            Text="{Binding Date, StringFormat='{0:dd MMM yyyy}'}" 
+                                            FontSize="12" 
+                                            TextColor="{DynamicResource MutedText}"/>
+                                    </VerticalStackLayout>
                                 </Grid>
                             </Border>
 
-                            <Button 
-                                BackgroundColor="Transparent"
-                                BorderColor="Transparent"
-                                BorderWidth="0"
-                                CornerRadius="16"
-                                Pressed="OnCardPressed"
-                                Released="OnCardReleased"
-                                Clicked="OnCardClicked"
-                                BindingContext="{Binding .}"/>
-
-                            <ImageButton
-                                Source="{DynamicResource ThreeDotsIcon}"
-                                BackgroundColor="Transparent"
-                                Clicked="OnOptionsClicked"
-                                BindingContext="{Binding .}"
-                                HorizontalOptions="End"
-                                VerticalOptions="End"
-                                Margin="16" 
-                                Padding="4"
-                                InputTransparent="False"/>
-
+                            <ImageButton 
+                                        Source="{DynamicResource ThreeDotsIcon}" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertListViewModel}}, Path=ShowOptionsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalOptions="End" 
+                                        VerticalOptions="End" 
+                                        Margin="16"
+                                        Padding="4"
+                                        BackgroundColor="Transparent"/>
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,50">
+                        <Label Text="No concerts found" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           HorizontalTextAlignment="Center"/>
+                        <Label Text="Try adjusting your filters or add a new event." 
+                           HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
             </CollectionView>
-
-
-
         </Grid>
 
-        <Grid ColumnDefinitions="*,*"
-              x:Name="SelectionButtonBackground"
-              BackgroundColor="{DynamicResource Background}"
-              IsVisible="False"
-              VerticalOptions="End"
-              HeightRequest="64">
-            <Button 
-                x:Name="DeleteSelectedButton"
-                Grid.Column="1"
-                Text="Delete selected"
-                TextColor="{DynamicResource ButtonRed}"
-                BackgroundColor="Transparent"
-                BorderColor="{DynamicResource ButtonRed}"
-                BorderWidth="2"
-                CornerRadius="24"
-                FontSize="18"
-                Margin="8,4"
-                Clicked="OnDeleteSelectedClicked" 
-                IsVisible="False"/>
-
-            <Button 
-                x:Name="UnselectAllButton"
-                Grid.Column="0"
-                Text="Unselect all"
-                TextColor="{DynamicResource ButtonGreen}"
-                BackgroundColor="Transparent"
-                BorderColor="{DynamicResource ButtonGreen}"
-                BorderWidth="2"
-                CornerRadius="24"
-                FontSize="18"
-                Margin="8,4"
-                Clicked="OnUnselectAllClicked" 
-                IsVisible="False"/>
-        </Grid>
-
-        <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" ActiveRoute="ConcertListPage"/>
     </Grid>
-    
-    <!--Back drop-->
+
     <uranium:UraniumContentPage.Attachments>
-        <material:BackdropView x:Name="FilterBackdrop" BackgroundColor="{DynamicResource PrimaryDark}">
+        <material:BackdropView IsPresented="{Binding IsFilterPresented}" BackgroundColor="{DynamicResource PrimaryDark}">
             <VerticalStackLayout Spacing="32" Padding="8,16">
 
-                <!-- Search Bar -->
-                <Border 
-                    Stroke="Transparent"
-                    StrokeThickness="0"
-                    BackgroundColor="{DynamicResource Surface}"
-                    StrokeShape="RoundRectangle 16">
+                <SearchBar Placeholder="Search..." 
+                           Text="{Binding SearchText}">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior 
+                            EventName="TextChanged"
+                            Command="{Binding SearchCommand}" />
+                    </SearchBar.Behaviors>
+                </SearchBar>
 
-                    <SearchBar 
-                        x:Name="SearchBar"
-                        HeightRequest="48"
-                        Placeholder="Search by title, performer or location"
-                        TextChanged="OnSearchTextChanged"/>
-                </Border>
-                
-                <!--Radio button for sorting-->
-                <input:RadioButtonGroupView x:Name="SortRadioGroup">
-                    <input:RadioButton Text="Default" Value="Default" IsChecked="True"/>
+                <input:RadioButtonGroupView SelectedItem="{Binding SelectedSort, Mode=TwoWay}">
+                    <input:RadioButton Text="Latest Added" Value="LatestAdded" />
                     <input:RadioButton Text="Newest By Date" Value="NewestByDate" />
                     <input:RadioButton Text="Oldest By Date" Value="OldestByDate" />
                 </input:RadioButtonGroupView>
+
             </VerticalStackLayout>
         </material:BackdropView>
     </uranium:UraniumContentPage.Attachments>

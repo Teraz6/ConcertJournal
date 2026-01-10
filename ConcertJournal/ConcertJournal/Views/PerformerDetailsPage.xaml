@@ -4,6 +4,9 @@
              x:Class="ConcertJournal.Views.PerformerDetailsPage"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
+             xmlns:models="clr-namespace:ConcertJournal.Models"
+             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
+             x:DataType="vm:PerformerDetailsViewModel"
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
     
@@ -16,17 +19,12 @@
                   ColumnDefinitions=".1*,.8*,.1*"
                   BackgroundColor="{DynamicResource CardBackground}"
                   Padding="4">
-                <ImageButton 
-                    Source="{DynamicResource DoubleLeftArrowIcon}"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="2"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Start"
-                    Clicked="OnBackClicked"/>
+                
+                <ImageButton Source="{DynamicResource DoubleLeftArrowIcon}" Command="{Binding BackCommand}"/>
         
                 <Label 
                     Grid.Column="1"
-                    Text="{Binding PerformerName}" 
+                    Text="{Binding PerformerName}"
                     FontAttributes="Bold"
                     FontSize="28" 
                     TextTransform="Uppercase"
@@ -70,12 +68,7 @@
                                     FontAttributes="Bold"
                                     Text="Total Shows Seen"
                                     HorizontalTextAlignment="Center"/>
-                                <Label 
-                                    FontSize="32"
-                                    FontAttributes="Bold"
-                                    x:Name="TimesSeenLabel"
-                                    Text="-" 
-                                    HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding TimesSeen}" FontSize="32" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
@@ -90,12 +83,7 @@
                                     FontAttributes="Bold"
                                     Text="Countries Seen In"
                                     HorizontalTextAlignment="Center"/>
-                                <Label 
-                                    FontSize="32"
-                                    FontAttributes="Bold"
-                                    x:Name="CountriesSeenLabel" 
-                                    Text="-" 
-                                    HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding CountriesSeen}" FontSize="32" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
@@ -110,12 +98,7 @@
                                     FontAttributes="Bold"
                                     Text="First Show Attended"
                                     HorizontalTextAlignment="Center"/>
-                                <Label
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    x:Name="FirstSeenLabel" 
-                                    Text="-" 
-                                    HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding FirstSeen}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
@@ -130,12 +113,7 @@
                                     FontAttributes="Bold"
                                     Text="Last Show Attended"
                                     HorizontalTextAlignment="Center"/>
-                                <Label 
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    x:Name="RecentSeenLabel" 
-                                    Text="-" 
-                                    HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding RecentSeen}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
@@ -165,9 +143,8 @@
                                              HorizontalItemSpacing="8"
                                              VerticalItemSpacing="8"/>
                         </CollectionView.ItemsLayout>
-                        <!--TODO: Add spacing between items but keep them on verticalgrid-->
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="models:Concert">
                                 <Border
                                     StrokeShape="RoundRectangle 16"
                                     Stroke="{DynamicResource CardBorder}">
@@ -204,8 +181,8 @@
                                             Grid.RowSpan="2"
                                             Grid.Column="1"
                                             Source="{DynamicResource DetailsIcon}"
-                                            Clicked="OnDetailsClicked"
-                                            BindingContext="{Binding .}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PerformerDetailsViewModel}}, Path=GoToDetailsCommand}"
+                                            CommandParameter="{Binding .}"
                                             HorizontalOptions="End"
                                             VerticalOptions="End"
                                             HeightRequest="48"
