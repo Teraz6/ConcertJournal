@@ -13,7 +13,6 @@
 		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
 
-		<MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>ConcertJournal</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -58,7 +57,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="C:\Users\maili\.nuget\packages\inputkit.maui\4.5.1\contentFiles\any\net9.0-android35.0\icon512.png" />
 	  <None Remove="C:\Users\reten\.nuget\packages\inputkit.maui\4.5.1\contentFiles\any\net9.0-android35.0\icon512.png" />
 	</ItemGroup>
 

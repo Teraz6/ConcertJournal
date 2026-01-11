@@ -182,7 +182,6 @@
                         <VerticalStackLayout Spacing="10" Padding="10">
 
                             <CarouselView 
-                                x:Name="MediaCarousel"
                                 ItemsSource="{Binding MediaFiles}"
                                 IndicatorView="indicatorView"
                                 HeightRequest="300"
@@ -199,7 +198,7 @@
                                                 HorizontalOptions="Center">
                                                 <Image.GestureRecognizers>
                                                     <TapGestureRecognizer 
-                                                        Command="{Binding Source={x:Reference MediaCarousel}, Path=BindingContext.OpenImageZoomCommand}"
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertDetailsViewModel}}, Path=OpenImageZoomCommand}"
                                                         CommandParameter="{Binding .}"/>
                                                 </Image.GestureRecognizers>
                                             </Image>

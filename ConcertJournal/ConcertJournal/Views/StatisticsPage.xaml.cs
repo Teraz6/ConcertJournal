@@ -33,7 +33,7 @@ public partial class StatisticsPage : ContentPage
             // Professional way: Use route names and dictionaries
             await Shell.Current.GoToAsync("PerformerDetailsPage", new Dictionary<string, object>
         {
-            { "PerformerName", performer.Name! }
+            { "PerformerName", performer.Name }
         });
         }
     }

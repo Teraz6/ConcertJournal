@@ -15,7 +15,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
     private readonly IConcertService _concertService;
 
     [ObservableProperty]
-    private Concert? _concert;
+    private Concert _concert;
 
     // These collections will hold the parsed data for the UI
     public ObservableCollection<string> Performers { get; } = new();
@@ -68,7 +68,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
         // Navigate to the Add/Edit page, passing the current concert
         await Shell.Current.GoToAsync(nameof(AddConcertPage), new Dictionary<string, object>
         {
-            { "SelectedConcert", Concert! }
+            { "SelectedConcert", Concert }
         });
     }
 
@@ -80,7 +80,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
 
         if (confirm)
         {
-            await _concertService.DeleteConcertAsync(Concert!);
+            await _concertService.DeleteConcertAsync(Concert);
             await Shell.Current.GoToAsync(".."); // Go back to the list
         }
     }

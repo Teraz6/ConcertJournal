@@ -106,7 +106,9 @@
                                     <Button 
                                         Text="X"
                                         TextColor="{DynamicResource ButtonRed}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemovePerformerCommand}"                                        StyleClass="TextButton" FontSize="16" FontAttributes="Bold"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemovePerformerCommand}"
+                                        CommandParameter="{Binding .}"
+                                        StyleClass="TextButton" FontSize="16" FontAttributes="Bold"
                                         BackgroundColor="Transparent" BorderWidth="0"/>
                                 </StackLayout>
                             </DataTemplate>
@@ -184,8 +186,7 @@
                             Grid.Column="1" 
                             Text="Rate event" 
                             FontSize="18" 
-                            FontAttributes="Bold"
-                            VerticalTextAlignment="Center"/>
+                            FontAttributes="Bold"/>
 
                         <toolkit:RatingView 
                             Grid.Row="3"
@@ -201,7 +202,7 @@
 			                Shape="Star"
 			                ShapeBorderColor="{DynamicResource ButtonBorderColor}"
 			                ShapeBorderThickness="1"
-			                Spacing="4"/>
+			                Spacing="8"/>
                     </Grid>
 
                     <!--Notes-->
@@ -231,7 +232,7 @@
                         Margin="0,0,0,12"/>
                     
                     <!--Image display-->
-                    <CollectionView ItemsSource="{Binding MediaFiles}" x:Name="MediaList">
+                    <CollectionView ItemsSource="{Binding MediaFiles}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <Grid RowDefinitions="Auto,*">
@@ -241,7 +242,8 @@
                                     <Button 
                                         Grid.Row="1"
                                         Text="Remove image"
-                                        Command="{Binding Source={x:Reference MediaList}, Path=BindingContext.RemoveMediaCommand}"                                        CommandParameter="{Binding .}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemoveMediaCommand}"
+                                        CommandParameter="{Binding .}"
                                         BackgroundColor="{DynamicResource ButtonRed}"
                                         MaximumWidthRequest="150" 
                                         Margin="0,0,0,20"/>

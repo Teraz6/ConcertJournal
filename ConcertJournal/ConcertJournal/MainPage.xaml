@@ -5,8 +5,6 @@
              xmlns:models="clr-namespace:ConcertJournal.Models"
              xmlns:material="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
-             x:DataType="vm:MainViewModel"
              BackgroundColor="{DynamicResource Background}">
 
     <Grid RowDefinitions="*,Auto">

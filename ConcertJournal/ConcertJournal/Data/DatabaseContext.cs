@@ -67,10 +67,10 @@ namespace ConcertJournal.Data
 
                 // Use ToLower() on the fields to ensure a case-insensitive match
                 query = query.Where(c =>
-                    c.EventTitle!.ToLower().Contains(lowerSearch) ||
-                    c.Performers!.ToLower().Contains(lowerSearch) ||
-                    c.Country!.ToLower().Contains(lowerSearch) ||
-                    c.City!.ToLower().Contains(lowerSearch));
+                    c.EventTitle.ToLower().Contains(lowerSearch) ||
+                    c.Performers.ToLower().Contains(lowerSearch) ||
+                    c.Country.ToLower().Contains(lowerSearch) ||
+                    c.City.ToLower().Contains(lowerSearch));
             }
 
             // 2. Sort - Map the RadioButton "Value" to the SQL Logic

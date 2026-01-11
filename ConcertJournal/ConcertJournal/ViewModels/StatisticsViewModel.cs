@@ -163,7 +163,7 @@ public partial class StatisticsViewModel : BaseViewModel
     {
         _filteredPerformers = string.IsNullOrWhiteSpace(SearchQuery)
             ? _allPerformers
-            : _allPerformers.Where(p => p.Name!.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            : _allPerformers.Where(p => p.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         ResetAndLoadFirstPage();
     }
 
