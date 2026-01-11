@@ -26,11 +26,11 @@ public partial class ConcertListViewModel : ObservableObject
     [ObservableProperty] private bool _isLoading;
     [ObservableProperty] private string _totalConcertsText = "Loading...";
     [ObservableProperty] private bool _isFilterPresented;
-    [ObservableProperty] private string _filterIcon;
+    [ObservableProperty] private string? _filterIcon;
     [ObservableProperty] private bool _hasSelection;
 
     // Search
-    [ObservableProperty] private string _searchText = string.Empty;
+    [ObservableProperty] private string? _searchText = string.Empty;
     private CancellationTokenSource _searchCancellation;
 
     // Sorting
@@ -157,7 +157,7 @@ public partial class ConcertListViewModel : ObservableObject
 
     private void UpdateFilterIcon()
     {
-        bool isDark = App.Current.RequestedTheme == AppTheme.Dark;
+        bool isDark = App.Current?.RequestedTheme == AppTheme.Dark;
         string colorSuffix = isDark ? "white" : "black";
 
         string iconName = IsFilterPresented ? "up" : "filter";

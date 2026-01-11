@@ -2,6 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertJournal.Views.StatisticsPage"
+             x:Name="StatsPage"
+             x:DataType="vm:StatisticsViewModel"
              xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -34,7 +36,8 @@
                         Padding="0,12,0,12">
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                                <Setter Property="BorderColor" Value="{DynamicResource Secondary}" />
+                                <Setter Property="BorderWidth" Value="2" />
                                 <Setter Property="FontAttributes" Value="Bold"/>
                             </DataTrigger>
                         </Button.Triggers>
@@ -48,7 +51,6 @@
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
                         <ScrollView>
                             <VerticalStackLayout 
-                                BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                 Padding="12" 
                                 Spacing="12">
 
@@ -129,85 +131,84 @@
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
                         <Grid 
-                        BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                        RowDefinitions="Auto,Auto,*" 
-                        RowSpacing="15" 
-                        Padding="12">
+                            RowDefinitions="Auto,Auto,*" 
+                            RowSpacing="15" 
+                            Padding="12">
 
                             <!-- Search Bar -->
                             <SearchBar 
-                            Placeholder="Search performer..."
-                            Text="{Binding SearchQuery}"
-                            HeightRequest="48"
-                            TextColor="{DynamicResource TextColor}"
-                            CancelButtonColor="{DynamicResource ButtonRed}"/>
+                                Placeholder="Search performer..."
+                                Text="{Binding SearchQuery}"
+                                HeightRequest="48"
+                                TextColor="{DynamicResource TextColor}"
+                                CancelButtonColor="{DynamicResource ButtonRed}"/>
 
                             <!-- Sort Buttons -->
                             <HorizontalStackLayout 
-                            Grid.Row="1" 
-                            Spacing="12" 
-                            HorizontalOptions="Center">
+                                Grid.Row="1" 
+                                Spacing="12" 
+                                HorizontalOptions="Center">
 
                                 <Button 
-                                Text="Most Concerts"
-                                Command="{Binding SortMostCommand}" />
+                                    Text="Most Concerts"
+                                    Command="{Binding SortMostCommand}" />
 
                                 <Button 
-                                Text="Least Concerts" 
-                                Command="{Binding SortLeastCommand}" />
+                                    Text="Least Concerts" 
+                                    Command="{Binding SortLeastCommand}" />
                             </HorizontalStackLayout>
 
                             <!-- Performer List -->
                             <CollectionView 
-                            Grid.Row="2"
-                            x:Name="PerformersCollection"
-                            VerticalOptions="Fill"
-                            HorizontalOptions="Fill"
-                            ItemsSource="{Binding DisplayedPerformers}"
-                            RemainingItemsThreshold="8"
-                            RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
-                            VerticalScrollBarVisibility="Never">
+                                Grid.Row="2"
+                                x:Name="PerformersCollection"
+                                VerticalOptions="Fill"
+                                HorizontalOptions="Fill"
+                                ItemsSource="{Binding DisplayedPerformers}"
+                                RemainingItemsThreshold="8"
+                                RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                                VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemsLayout>
                                     <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="vm:PerformerViewModel">
                                         <Border 
-                                        BackgroundColor="{DynamicResource CardBackground}"
-                                        StrokeShape="RoundRectangle 16"
-                                        Padding="12"
-                                        Margin="0,0,0,12">
+                                            BackgroundColor="{DynamicResource CardBackground}"
+                                            StrokeShape="RoundRectangle 16"
+                                            Padding="12"
+                                            Margin="0,0,0,12">
                                             <Grid 
-                                            ColumnDefinitions=".2*,.6*,.2*"
-                                            VerticalOptions="Center">
+                                                ColumnDefinitions=".2*,.6*,.2*"
+                                                VerticalOptions="Center">
                                                 <!--Icon image-->
                                                 <Image 
-                                                Grid.Column="0"
-                                                Source="{DynamicResource BandIcon}" 
-                                                WidthRequest="32" 
-                                                HeightRequest="32"
-                                                HorizontalOptions="Start"/>
+                                                    Grid.Column="0"
+                                                    Source="{DynamicResource BandIcon}" 
+                                                    WidthRequest="32" 
+                                                    HeightRequest="32"
+                                                    HorizontalOptions="Start"/>
 
                                                 <!--Performer name-->
                                                 <Button 
-                                                Grid.Column="1"
-                                                Text="{Binding Name}" 
-                                                FontAttributes="Bold"
-                                                FontSize="22"
-                                                HorizontalOptions="Center"
-                                                LineBreakMode="WordWrap"
-                                                BackgroundColor="Transparent"
-                                                BorderWidth="0"
-                                                TextColor="{DynamicResource TextColor}"
-                                                Command="{Binding SelectPerformerCommand}"/>
+                                                    Grid.Column="1"
+                                                    Text="{Binding Name}" 
+                                                    FontAttributes="Bold"
+                                                    FontSize="22"
+                                                    HorizontalOptions="Center"
+                                                    LineBreakMode="WordWrap"
+                                                    BackgroundColor="Transparent"
+                                                    BorderWidth="0"
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    Command="{Binding SelectPerformerCommand}"/>
 
                                                 <!--Concert count-->
                                                 <Label 
-                                                Grid.Column="2"
-                                                Text="{Binding CountText}" 
-                                                HorizontalTextAlignment="Center"
-                                                TextColor="{DynamicResource TextColor}"
-                                                VerticalOptions="Center"/>
+                                                    Grid.Column="2"
+                                                    Text="{Binding CountText}" 
+                                                    HorizontalTextAlignment="Center"
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    VerticalOptions="Center"/>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
@@ -232,6 +233,7 @@
 
                         <!-- Livecharts2 Chart -->
                         <lvc:CartesianChart
+                            x:DataType="vm:CountryChartViewModel"
                             x:Name="CountriesChart"
                             BindingContext="{Binding ChartVM}"
                             Series="{Binding CountrySeries}"
@@ -251,7 +253,6 @@
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
                         <ScrollView>
                             <VerticalStackLayout 
-                                BindingContext="{Binding BindingContext, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
                                 Padding="12" 
                                 Spacing="20">
 

@@ -7,22 +7,17 @@ using System.Collections.ObjectModel;
 namespace ConcertJournal.ViewModels;
 
 [QueryProperty(nameof(PerformerName), "PerformerName")]
-public partial class PerformerDetailsViewModel : ObservableObject
+public partial class PerformerDetailsViewModel(IConcertService concertService) : ObservableObject
 {
-    private readonly IConcertService _concertService;
+    private readonly IConcertService _concertService = concertService;
 
-    [ObservableProperty] private string _performerName;
+    [ObservableProperty] private string? _performerName;
     [ObservableProperty] private string _timesSeen = "-";
     [ObservableProperty] private string _countriesSeen = "-";
     [ObservableProperty] private string _firstSeen = "-";
     [ObservableProperty] private string _recentSeen = "-";
 
     public ObservableCollection<Concert> Concerts { get; } = new();
-
-    public PerformerDetailsViewModel(IConcertService concertService)
-    {
-        _concertService = concertService;
-    }
 
     // This triggers automatically when PerformerName is passed via navigation
     partial void OnPerformerNameChanged(string value)
