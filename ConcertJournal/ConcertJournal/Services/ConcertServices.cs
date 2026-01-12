@@ -45,6 +45,11 @@ namespace ConcertJournal.Services
             // If you added this method to your DatabaseContext, call it here
             return await _db.GetConcertByIdAsync(id);
         }
+        public async Task<int> GetConcertCountAsync(string? searchTerm = null)
+        {
+            // The Service simply delegates to the Database layer
+            return await _db.GetConcertCountAsync(searchTerm);
+        }
 
         public List<string> ConvertStringToList(string? input, char separator)
         {

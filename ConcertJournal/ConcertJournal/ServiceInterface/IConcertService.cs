@@ -20,6 +20,8 @@ namespace ConcertJournal.ServiceInterface
         // --- READ (Single) ---
         Task<Concert> GetConcertByIdAsync(int id);
 
+        Task<int> GetConcertCountAsync(string? searchTerm = null);
+
         List<string> ConvertStringToList(string? input, char separator);
         string ConvertListToString(IEnumerable<string> items, string separator);
     }
