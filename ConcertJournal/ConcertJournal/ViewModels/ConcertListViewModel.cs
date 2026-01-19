@@ -84,7 +84,9 @@ public partial class ConcertListViewModel : ObservableObject
                 SelectedSort,
                 SearchText);
 
-            if (newConcerts.Count < PageSize) _hasMoreItems = false;
+            // If we got fewer items than requested, we've hit the end
+            if (newConcerts.Count < PageSize)
+                _hasMoreItems = false;
 
             foreach (var concert in newConcerts)
                 Concerts.Add(concert);
@@ -100,9 +102,17 @@ public partial class ConcertListViewModel : ObservableObject
     [RelayCommand]
     private async Task UpdateTotalCountAsync()
     {
-        // 3. Service handles fetching all for the count
-        var all = await _concertService.GetConcertsPagedAsync(0, 9999, "Default", "");
-        TotalConcertsText = all?.Count > 0 ? $"Total concerts: {all.Count}" : "No concert data available.";
+        // Pass the current SearchText to ensure the count matches what is on screen
+        int count = await _concertService.GetConcertCountAsync(SearchText);
+
+        TotalConcertsText = count switch
+        {
+            0 => string.IsNullOrWhiteSpace(SearchText)
+                 ? "No concerts saved yet."
+                 : "No matches found.",
+            1 => "1 concert found.",
+            _ => $"{count} concerts found."
+        };
     }
 
     [RelayCommand]
