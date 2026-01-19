@@ -15,6 +15,16 @@
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="input:RadioButton">
+                <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
+                <Setter Property="Color" Value="GreenYellow" />
+                <Setter Property="CircleColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="*,Auto">
         <Grid RowDefinitions="Auto,*">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" RowDefinitions="*,*" BackgroundColor="{DynamicResource CardBackground}" >
@@ -184,7 +194,7 @@
 
         <controls:BottomNavBar Grid.Row="1" ActiveRoute="ConcertListPage"/>
     </Grid>
-
+    
     <uranium:UraniumContentPage.Attachments>
         <material:BackdropView IsPresented="{Binding IsFilterPresented}" BackgroundColor="{DynamicResource PrimaryDark}">
             <VerticalStackLayout Spacing="32" Padding="8,16">

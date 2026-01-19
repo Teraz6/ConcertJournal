@@ -86,5 +86,27 @@ namespace ConcertJournal.Data
             // 3. Paging
             return await query.Skip(skip).Take(take).ToListAsync();
         }
+
+        public async Task<int> GetConcertCountAsync(string? searchTerm = null)
+        {
+            await InitAsync();
+            var query = _database.Table<Concert>();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // 1. Same processing as Paging
+                var lowerSearch = searchTerm.ToLower().Trim();
+
+                // 2. Exact same fields as GetConcertsPagedAsync
+                // Added Performers here so "Metallica" is counted correctly!
+                query = query.Where(c =>
+                    c.EventTitle.ToLower().Contains(lowerSearch) ||
+                    c.Performers.ToLower().Contains(lowerSearch) ||
+                    c.Country.ToLower().Contains(lowerSearch) ||
+                    c.City.ToLower().Contains(lowerSearch));
+            }
+
+            return await query.CountAsync();
+        }
     }
 }
