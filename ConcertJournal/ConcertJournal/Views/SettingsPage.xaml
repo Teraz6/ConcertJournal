@@ -8,189 +8,122 @@
              x:DataType="vm:SettingsViewModel"
              BackgroundColor="{DynamicResource Background}">
 
-    <!--For UraniumUI Material styles-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="material:TextField">
-                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontSize" Value="15" />
                 <Setter Property="TextColor" Value="{DynamicResource TextColor}" />
-                <Setter Property="AccentColor" Value="{DynamicResource InputAccent}" />
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="AllowClear" Value="True" />
+                <Setter Property="AccentColor" Value="{DynamicResource Primary}" />
+                <Setter Property="TitleColor" Value="{DynamicResource Primary}" />
                 <Setter Property="BorderColor" Value="{DynamicResource CardBorder}" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!--Main content-->
-        <Label 
-            Grid.Row="0"
-            Text="Settings"
-            FontSize="32"
-            FontAttributes="Bold"
-            Padding="12"
-            HorizontalTextAlignment="Center"
-            Margin="0,0,0,24"
-            BackgroundColor="{DynamicResource CardBackground}"/>
+        <VerticalStackLayout Grid.Row="0" Padding="20,15,20,10" BackgroundColor="{DynamicResource CardBackground}">
+            <Label Text="Settings" FontSize="28" FontAttributes="Bold" TextColor="{DynamicResource Primary}" HorizontalOptions="Center"/>
+            <Label Text="App preferences and data management" FontSize="12" Opacity="0.6" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
 
-        <!--TabView-->
-        <material:TabView 
-                TabPlacement="Top"
-                Grid.Row="1">
+        <material:TabView Grid.Row="1" x:Name="SettingsTabView" TabPlacement="Top">
+
             <material:TabView.TabHeaderItemTemplate>
                 <DataTemplate x:DataType="material:TabItem">
-                    <Button 
-                        Text="{Binding Title}"
-                        Command="{Binding Command}"
-                        TextColor="{DynamicResource TextColor}"
-                        BackgroundColor="Transparent"
-                        FontSize="16"
-                        Margin="4,0,4,46"
-                        Padding="0,12,0,12">
-                        <Button.Triggers>
-                            <DataTrigger TargetType="Button" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="BorderColor" Value="{DynamicResource Secondary}" />
-                                <Setter Property="BorderWidth" Value="2" />
-                                <Setter Property="FontAttributes" Value="Bold"/>
+                    <Label Text="{Binding Title}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="14" Padding="10,15">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="TextColor" Value="{DynamicResource Primary}" />
+                                <Setter Property="FontAttributes" Value="Bold" />
                             </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
+                        </Label.Triggers>
+                    </Label>
                 </DataTemplate>
             </material:TabView.TabHeaderItemTemplate>
 
-            <material:TabItem Title="Theme">
+            <material:TabItem Title="Interface">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:SettingsViewModel">
-                        <VerticalStackLayout>
-                            <Grid ColumnDefinitions="*,*">
-                                <Label 
-                                    Grid.Column="0"
-                                    Text="Dark theme"
-                                    TextColor="{DynamicResource TextColor}"
-                                    FontSize="24"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"/>
-
-                                <Switch 
-                                    Grid.Column="1"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"
-                                    x:Name="ThemeSwitch"
-                                    IsToggled="{Binding IsDevilTheme}"
-                                    ThumbColor="{DynamicResource Primary}"
-                                    OnColor="{DynamicResource Surface}"
-                                    Scale="1.5">
-                                </Switch>
-                            </Grid>
-                        </VerticalStackLayout>
-
+                        <ScrollView Padding="20">
+                            <Border BackgroundColor="{DynamicResource CardBackground}" Padding="20" StrokeShape="RoundRectangle 15">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <VerticalStackLayout VerticalOptions="Center">
+                                        <Label Text="Dark Mode" FontSize="18" FontAttributes="Bold"/>
+                                        <Label Text="Switch between light and dark themes" FontSize="12" Opacity="0.6"/>
+                                    </VerticalStackLayout>
+                                    <Switch Grid.Column="1" IsToggled="{Binding IsDevilTheme}" ThumbColor="{DynamicResource Primary}" OnColor="{DynamicResource Primary}" Opacity="0.8"/>
+                                </Grid>
+                            </Border>
+                        </ScrollView>
                     </DataTemplate>
                 </material:TabItem.ContentTemplate>
             </material:TabItem>
 
-            <material:TabItem Title="Import/Export">
+            <material:TabItem Title="Data">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:SettingsViewModel">
-                        <VerticalStackLayout Spacing="48">
-                            <!--Import-->
-                            <Grid ColumnDefinitions="*,*">
-                                <Label 
-                                    Grid.Column="0"
-                                    Text="Import Excel"
-                                    FontSize="24"
-                                    HorizontalTextAlignment="Center"
-                                    TextColor="{DynamicResource TextColor}"/>
+                        <ScrollView Padding="20">
+                            <VerticalStackLayout Spacing="15">
+                                <Label Text="Backup &amp; Restore" FontSize="14" FontAttributes="Bold" Margin="5,0" Opacity="0.7"/>
 
-                                <Button 
-                                    Grid.Column="1"
-                                    Text="Import Excel"
-                                    FontSize="16"
-                                    Command="{Binding ImportDataCommand}"
-                                    Margin="48,0"/>
-                            </Grid>
+                                <Border BackgroundColor="{DynamicResource CardBackground}" Padding="15" StrokeShape="RoundRectangle 15">
+                                    <VerticalStackLayout Spacing="20">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <VerticalStackLayout>
+                                                <Label Text="Import Data" FontAttributes="Bold"/>
+                                                <Label Text="Load concerts from Excel (.xlsx)" FontSize="12" Opacity="0.6"/>
+                                            </VerticalStackLayout>
+                                            <Button Grid.Column="1" Text="Import" Command="{Binding ImportDataCommand}" StyleClass="ElevatedButton" HeightRequest="40"/>
+                                        </Grid>
 
-                            <!--Export-->
-                            <Grid ColumnDefinitions="*,*">
-                                <Label 
-                                    Grid.Column="0"
-                                    Text="Export Events"
-                                    FontSize="24"
-                                    HorizontalOptions="Center"
-                                    TextColor="{DynamicResource TextColor}"/>
+                                        <BoxView HeightRequest="1" Color="{DynamicResource Background}" Opacity="0.5"/>
 
-                                <Button 
-                                    Grid.Column="1"
-                                    Text="Export Excel"
-                                    FontSize="16"
-                                    Command="{Binding ExportDataCommand}"
-                                    Margin="48,0"/>
-                            </Grid>
-                        </VerticalStackLayout>
-
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <VerticalStackLayout>
+                                                <Label Text="Export Data" FontAttributes="Bold"/>
+                                                <Label Text="Save your journey to Excel" FontSize="12" Opacity="0.6"/>
+                                            </VerticalStackLayout>
+                                            <Button Grid.Column="1" Text="Export" Command="{Binding ExportDataCommand}" BackgroundColor="Transparent" BorderWidth="1" BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource TextColor}" HeightRequest="40"/>
+                                        </Grid>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </VerticalStackLayout>
+                        </ScrollView>
                     </DataTemplate>
                 </material:TabItem.ContentTemplate>
             </material:TabItem>
 
-            <material:TabItem Title="Default values">
+            <material:TabItem Title="Defaults">
                 <material:TabItem.ContentTemplate>
                     <DataTemplate x:DataType="vm:SettingsViewModel">
-                        <VerticalStackLayout Spacing="48">
-                            <!--Default country-->
-                            <Grid ColumnDefinitions="*,*">
-                                <Label 
-                                    Grid.Column="0"
-                                    FontSize="24"
-                                    Text="Default Country" 
-                                    TextColor="{DynamicResource TextColor}"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"/>
+                        <ScrollView Padding="20">
+                            <VerticalStackLayout Spacing="20">
+                                <Border BackgroundColor="{DynamicResource CardBackground}" Padding="20" StrokeShape="RoundRectangle 15">
+                                    <VerticalStackLayout Spacing="20">
+                                        <material:TextField Title="Home Country" 
+                                                            Text="{Binding DefaultCountry}"/>
 
-                                <material:TextField
-                                    Grid.Column="1"
-                                    x:Name="CountryEntry" 
-                                    Title="Default country"
-                                    CornerRadius="12"
-                                    Text="{Binding DefaultCountry}"
-                                    Margin="24,0"/>
-                            </Grid>
+                                        <material:TextField Title="Home City" 
+                                                            Text="{Binding DefaultCity}"/>
+                                    </VerticalStackLayout>
+                                </Border>
 
-                            <!--Default city-->
-                            <Grid ColumnDefinitions="*,*">
-                                <Label 
-                                    Grid.Column="0"
-                                    FontSize="24"
-                                    Text="Default City" 
-                                    TextColor="{DynamicResource TextColor}"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="Center"/>
-
-                                <material:TextField
-                                    Grid.Column="1"
-                                    x:Name="CityEntry" 
-                                    Title="Default city" 
-                                    CornerRadius="12"
-                                    Text="{Binding DefaultCity}"
-                                    Margin="24,0"/>
-
-                            </Grid>
-
-                            <Button 
-                                Text="Save values"
-                                FontSize="16"
-                                Command="{Binding SaveDefaultsCommand}"
-                                BorderWidth="0"
-                                BackgroundColor="{DynamicResource ButtonGreen}"
-                                TextColor="{DynamicResource ButtonUpdateDeleteText}"
-                                HorizontalOptions="Center"
-                                Padding="12"/>
-                        </VerticalStackLayout>
+                                <Button Text="Save Default Preferences" 
+                                        Command="{Binding SaveDefaultsCommand}"
+                                        BackgroundColor="{DynamicResource Primary}"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        CornerRadius="25"
+                                        HeightRequest="50"
+                                        Margin="0,10"/>
+                            </VerticalStackLayout>
+                        </ScrollView>
                     </DataTemplate>
                 </material:TabItem.ContentTemplate>
             </material:TabItem>
         </material:TabView>
-        <!--Navigation bar-->
+
         <controls:BottomNavBar Grid.Row="2" ActiveRoute="SettingsPage"/>
     </Grid>
 </ContentPage>
