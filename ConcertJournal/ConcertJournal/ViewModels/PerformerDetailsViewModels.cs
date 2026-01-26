@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ConcertJournal.Models;
 using ConcertJournal.ServiceInterface;
+using ConcertJournal.Services;
 using System.Collections.ObjectModel;
 
 namespace ConcertJournal.ViewModels;
@@ -10,24 +11,28 @@ namespace ConcertJournal.ViewModels;
 public partial class PerformerDetailsViewModel : ObservableObject
 {
     private readonly IConcertService _concertService;
+    private readonly AudioDbServices _audioDbServices;
 
     [ObservableProperty] private string _performerName;
     [ObservableProperty] private string _timesSeen = "-";
     [ObservableProperty] private string _countriesSeen = "-";
     [ObservableProperty] private string _firstSeen = "-";
     [ObservableProperty] private string _recentSeen = "-";
+    [ObservableProperty] private string _backgroundImageUrl = "";
 
     public ObservableCollection<Concert> Concerts { get; } = new();
 
-    public PerformerDetailsViewModel(IConcertService concertService)
+    public PerformerDetailsViewModel(IConcertService concertService, AudioDbServices audioDbServices)
     {
         _concertService = concertService;
+        _audioDbServices = audioDbServices;
     }
 
     // This triggers automatically when PerformerName is passed via navigation
     partial void OnPerformerNameChanged(string value)
     {
         _ = LoadStatsAsync();
+        _ = LoadBackgroundImageAsync();
     }
 
     [RelayCommand]
@@ -64,6 +69,23 @@ public partial class PerformerDetailsViewModel : ObservableObject
 
         var recent = filtered.OrderByDescending(c => c.Date).FirstOrDefault();
         RecentSeen = recent?.Date?.ToString("dd MMM yyyy") ?? "-";
+    }
+
+    private async Task LoadBackgroundImageAsync()
+    {
+        if (string.IsNullOrEmpty(PerformerName)) return;
+
+        var artist = await _audioDbServices.GetArtistDetailsAsync(PerformerName);
+
+        // Use banner for background, fallback to fanart if banner is missing
+        if (!string.IsNullOrWhiteSpace(artist?.StrArtistFanart))
+        {
+            BackgroundImageUrl = artist.StrArtistFanart;
+        }
+        else
+        {
+            BackgroundImageUrl = artist?.StrArtistBanner!;
+        }
     }
 
     [RelayCommand]

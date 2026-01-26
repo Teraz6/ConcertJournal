@@ -15,22 +15,38 @@
         <Grid
             Grid.Row="0"
             RowDefinitions="Auto,*">
+
             <Grid Grid.Row="0"
+                  RowDefinitions="*,*"
                   ColumnDefinitions=".1*,.8*,.1*"
-                  BackgroundColor="{DynamicResource CardBackground}"
                   Padding="4">
+
+                <Image
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Source="{Binding BackgroundImageUrl}"
+                    Aspect="AspectFit"
+                    MaximumHeightRequest="150"/>
                 
-                <ImageButton Source="{DynamicResource DoubleLeftArrowIcon}" Command="{Binding BackCommand}"/>
-        
-                <Label 
+                <ImageButton 
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Source="{DynamicResource DoubleLeftArrowIcon}" 
+                    Command="{Binding BackCommand}"/>
+                
+                <Label
+                    Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding PerformerName}"
                     FontAttributes="Bold"
-                    FontSize="28" 
+                    FontSize="46" 
                     TextTransform="Uppercase"
                     HorizontalTextAlignment="Center" 
+                    VerticalTextAlignment="Center"
                     LineBreakMode="WordWrap"
                     Padding="0,8"/>
+
+                
             </Grid>
 
             <Grid 
@@ -198,6 +214,6 @@
         </Grid>
 
         <!--Navigation bar-->
-        <controls:BottomNavBar Grid.Row="2" />
+        <controls:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
