@@ -9,211 +9,133 @@
              x:DataType="vm:PerformerDetailsViewModel"
              BackgroundColor="{DynamicResource Background}"
              Shell.NavBarIsVisible="False">
-    
-    <Grid RowDefinitions="*,Auto">
-        <!--Main content-->
-        <Grid
-            Grid.Row="0"
-            RowDefinitions="Auto,*">
 
-            <Grid Grid.Row="0"
-                  RowDefinitions="*,*"
-                  ColumnDefinitions=".1*,.8*,.1*"
-                  Padding="4">
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="0">
 
-                <Image
-                    Grid.Row="0"
-                    Grid.ColumnSpan="3"
-                    Source="{Binding BackgroundImageUrl}"
-                    Aspect="AspectFit"
-                    MaximumHeightRequest="150"/>
-                
-                <ImageButton 
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    Source="{DynamicResource DoubleLeftArrowIcon}" 
-                    Command="{Binding BackCommand}"/>
-                
-                <Label
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Text="{Binding PerformerName}"
-                    FontAttributes="Bold"
-                    FontSize="46" 
-                    TextTransform="Uppercase"
-                    HorizontalTextAlignment="Center" 
-                    VerticalTextAlignment="Center"
-                    LineBreakMode="WordWrap"
-                    Padding="0,8"/>
+                <Grid HeightRequest="300">
+                    <Image Source="{Binding BackgroundImageUrl}"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"/>
 
-                
-            </Grid>
+                    <BoxView VerticalOptions="Fill" HorizontalOptions="Fill">
+                        <BoxView.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Color="Transparent" Offset="0.0" />
+                                <GradientStop Color="{DynamicResource Background}" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </BoxView.Background>
+                    </BoxView>
 
-            <Grid 
-                Grid.Row="1"
-                RowDefinitions="Auto,*"
-                Padding="4">
+                    <ImageButton Source="{DynamicResource DoubleLeftArrowIcon}" 
+                                 Command="{Binding BackCommand}"
+                                 HorizontalOptions="Start"
+                                 VerticalOptions="Start"
+                                 Margin="20,50"
+                                 HeightRequest="40"
+                                 WidthRequest="40"/>
 
-                <!--Stats labels-->
-                <VerticalStackLayout 
-                    Grid.Row="0"
-                    HorizontalOptions="Center">
+                    <Label Text="{Binding PerformerName}"
+                           FontSize="42"
+                           FontAttributes="Bold"
+                           TextColor="{DynamicResource Primary}"
+                           VerticalOptions="End"
+                           HorizontalOptions="Start"
+                           Margin="20,0,20,20"
+                           LineBreakMode="WordWrap"
+                           CharacterSpacing="1.2"/>
+                </Grid>
 
-                    <!--Stats title-->
-                    <Label 
-                        Grid.Row="0"
-                        Text="Statistics"
-                        FontAttributes="Bold"
-                        TextDecorations="Underline"
-                        FontSize="24" 
-                        HorizontalOptions="Center"
-                        Margin="4"/>
+                <VerticalStackLayout Padding="20" Spacing="15">
+                    <Label Text="JOURNEY STATS" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{DynamicResource Secondary}"
+                           CharacterSpacing="2"
+                           Margin="5,0"/>
 
-                    <Grid
-                        RowDefinitions="*,*"
-                        ColumnDefinitions="*,*">
-
-                        <!-- Total Shows Seen -->
-                        <Border
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Padding="8">
-                            <VerticalStackLayout>
-                                <Label 
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    Text="Total Shows Seen"
-                                    HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding TimesSeen}" FontSize="32" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                        <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 12" BackgroundColor="{DynamicResource Surface}" Padding="15">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="Shows" FontSize="12" HorizontalOptions="Center" Opacity="0.7"/>
+                                <Label Text="{Binding TimesSeen}" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{DynamicResource Primary}"/>
                             </VerticalStackLayout>
                         </Border>
 
-                        <!-- Countries Seen In -->
-                        <Border
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Padding="8">
-                            <VerticalStackLayout>
-                                <Label
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    Text="Countries Seen In"
-                                    HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding CountriesSeen}" FontSize="32" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                        <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 12" BackgroundColor="{DynamicResource Surface}" Padding="15">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="Countries" FontSize="12" HorizontalOptions="Center" Opacity="0.7"/>
+                                <Label Text="{Binding CountriesSeen}" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" TextColor="{DynamicResource Primary}"/>
                             </VerticalStackLayout>
                         </Border>
 
-                        <!-- First Show Attended -->
-                        <Border
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Padding="8">
-                            <VerticalStackLayout>
-                                <Label 
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    Text="First Show Attended"
-                                    HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding FirstSeen}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
-                        </Border>
-
-                        <!-- Last Show Attended -->
-                        <Border
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Padding="8">
-                            <VerticalStackLayout>
-                                <Label 
-                                    FontSize="20"
-                                    FontAttributes="Bold"
-                                    Text="Last Show Attended"
-                                    HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding RecentSeen}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
+                        <Border Grid.Row="1" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 12" BackgroundColor="{DynamicResource Surface}" Padding="15">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout>
+                                    <Label Text="First Experience" FontSize="12" Opacity="0.7"/>
+                                    <Label Text="{Binding FirstSeen}" FontSize="16" FontAttributes="Bold"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                    <Label Text="Most Recent" FontSize="12" Opacity="0.7" HorizontalOptions="End"/>
+                                    <Label Text="{Binding RecentSeen}" FontSize="16" FontAttributes="Bold" HorizontalOptions="End"/>
+                                </VerticalStackLayout>
+                            </Grid>
                         </Border>
                     </Grid>
                 </VerticalStackLayout>
 
-                <Grid 
-                    Grid.Row="1"
-                    RowDefinitions="Auto,*">
-                    
-                    <!--Concerts list-->
-                    <Label 
-                        Grid.Row="0"
-                        Text="Concerts Attended"
-                        FontAttributes="Bold"
-                        TextDecorations="Underline"
-                        FontSize="24" 
-                        HorizontalOptions="Center"
-                        Margin="4"/>
-                    
-                    <CollectionView
-                        Grid.Row="1"
-                        ItemsSource="{Binding Concerts}"
-                        VerticalScrollBarVisibility="Never">
+                <VerticalStackLayout Padding="20" Spacing="15">
+                    <Label Text="CONCERT HISTORY" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="{DynamicResource Secondary}"
+                           CharacterSpacing="2"
+                           Margin="5,0"/>
+
+                    <CollectionView ItemsSource="{Binding Concerts}"
+                                    EmptyView="No concerts logged yet."
+                                    SelectionMode="None">
                         <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical"
-                                             Span="2"
-                                             HorizontalItemSpacing="8"
-                                             VerticalItemSpacing="8"/>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="12"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Concert">
-                                <Border
-                                    StrokeShape="RoundRectangle 16"
-                                    Stroke="{DynamicResource CardBorder}">
-                                    <Grid 
-                                        ColumnDefinitions=".8*,.2*"
-                                        RowDefinitions="*,*,*"
-                                        Padding="8">
+                                <Border StrokeShape="RoundRectangle 16" 
+                                        BackgroundColor="{DynamicResource Surface}"
+                                        StrokeThickness="0">
+                                    <Grid ColumnDefinitions="*, Auto" Padding="16">
+                                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                            <Label Text="{Binding EventTitle}" 
+                                                   FontAttributes="Bold" 
+                                                   FontSize="18"
+                                                   TextColor="{DynamicResource TextColor}"/>
+                                            <Label Text="{Binding Location}" 
+                                                   FontSize="14" 
+                                                   Opacity="0.8"/>
+                                            <Label Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
+                                                   FontSize="12" 
+                                                   TextColor="{DynamicResource Secondary}"/>
+                                        </VerticalStackLayout>
 
-                                        <Label 
-                                            Grid.Row="0"
-                                            Grid.ColumnSpan="2"
-                                            Text="{Binding EventTitle}" 
-                                            FontAttributes="Bold" 
-                                            FontSize="16"
-                                            LineBreakMode="TailTruncation"/>
-
-                                        <Label 
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            Text="{Binding Location}" 
-                                            FontSize="14"
-                                            LineBreakMode="TailTruncation"
-                                            VerticalTextAlignment="Center"/>
-
-                                        <Label 
-                                            Grid.Row="2"
-                                            Grid.Column="0"
-                                            Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" 
-                                            FontSize="12"
-                                            VerticalTextAlignment="End"/>
-
-                                        <ImageButton 
-                                            Grid.Row="1"
-                                            Grid.RowSpan="2"
-                                            Grid.Column="1"
-                                            Source="{DynamicResource DetailsIcon}"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PerformerDetailsViewModel}}, Path=GoToDetailsCommand}"
-                                            CommandParameter="{Binding .}"
-                                            HorizontalOptions="End"
-                                            VerticalOptions="End"
-                                            HeightRequest="48"
-                                            WidthRequest="48"
-                                            Padding="8"/>
+                                        <ImageButton Grid.Column="1"
+                                                     Source="{DynamicResource DetailsIcon}"
+                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PerformerDetailsViewModel}}, Path=GoToDetailsCommand}"
+                                                     CommandParameter="{Binding .}"
+                                                     HeightRequest="35"
+                                                     WidthRequest="35"
+                                                     VerticalOptions="Center"
+                                                     BackgroundColor="Transparent"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </Grid>
-            </Grid>
-        </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
 
-        <!--Navigation bar-->
         <controls:BottomNavBar Grid.Row="1" />
     </Grid>
 </ContentPage>
