@@ -80,7 +80,7 @@ public partial class AddConcertViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(EventTitle))
         {
-            await Shell.Current.DisplayAlert("Error", "Event Title is required.", "OK");
+            await Shell.Current.DisplayAlertAsync("Error", "Event Title is required.", "OK");
             return;
         }
 
@@ -118,7 +118,7 @@ public partial class AddConcertViewModel : ObservableObject
             MediaFiles.Clear();
         }
 
-        await Shell.Current.DisplayAlert("Success", isNew ? "Concert created!" : "Concert updated!", "OK");
+        await Shell.Current.DisplayAlertAsync("Success", isNew ? "Concert created!" : "Concert updated!", "OK");
   
         // Go back to the previous page
         if (!isNew)
@@ -137,13 +137,13 @@ public partial class AddConcertViewModel : ObservableObject
         var name = PerformerInput?.Trim();
         if (string.IsNullOrEmpty(name))
         { 
-            await Shell.Current.DisplayAlert("Empty", "Please enter a performer name.", "OK");
+            await Shell.Current.DisplayAlertAsync("Empty", "Please enter a performer name.", "OK");
             return;
         }
 
         if (Performers.Contains(name))
         {
-            await Shell.Current.DisplayAlert("Duplicate", "Performer already added.", "OK");
+            await Shell.Current.DisplayAlertAsync("Duplicate", "Performer already added.", "OK");
             return;
         }
 

@@ -76,7 +76,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
     [RelayCommand]
     private async Task DeleteConcertAsync()
     {
-        var confirm = await Shell.Current.DisplayAlert("Delete", "Are you sure you want to delete this memory?", "Yes", "No");
+        var confirm = await Shell.Current.DisplayAlertAsync("Delete", "Are you sure you want to delete this memory?", "Yes", "No");
 
         if (confirm)
         {
@@ -114,7 +114,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
         else
         {
             // 2. Multiple performers: Let the user choose
-            selectedPerformer = await Shell.Current.DisplayActionSheet(
+            selectedPerformer = await Shell.Current.DisplayActionSheetAsync(
                 "Select Performer",
                 "Cancel",
                 null,

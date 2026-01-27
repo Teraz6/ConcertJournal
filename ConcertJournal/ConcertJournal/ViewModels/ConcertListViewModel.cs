@@ -133,7 +133,7 @@ public partial class ConcertListViewModel : ObservableObject
     {
         if (SelectedItems.Count == 0) return;
 
-        bool confirm = await Shell.Current.DisplayAlert("Delete",
+        bool confirm = await Shell.Current.DisplayAlertAsync("Delete",
             $"Delete {SelectedItems.Count} concerts?", "Yes", "No");
 
         if (!confirm) return;
@@ -258,7 +258,7 @@ public partial class ConcertListViewModel : ObservableObject
         if (concert == null) return;
 
         // Simple placeholder to prevent binding errors
-        string action = await Shell.Current.DisplayActionSheet("Options", "Cancel", null, "Edit", "Delete");
+        string action = await Shell.Current.DisplayActionSheetAsync("Options", "Cancel", null, "Edit", "Delete");
         if (action == "Delete")
         {
             SelectedItems.Clear();
