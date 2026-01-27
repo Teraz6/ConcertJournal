@@ -77,14 +77,18 @@ public partial class PerformerDetailsViewModel : ObservableObject
 
         var artist = await _audioDbServices.GetArtistDetailsAsync(PerformerName);
 
-        // Use fanart for background, fallback to banner if fanart is missing
-        if (!string.IsNullOrWhiteSpace(artist?.StrArtistFanart))
+        // Use thumb for background, fallback to banner if thumb is missing
+        if (!string.IsNullOrWhiteSpace(artist?.StrArtistThumb))
         {
-            BackgroundImageUrl = artist.StrArtistFanart;
+            BackgroundImageUrl = artist.StrArtistThumb;
+        }
+        else if (!string.IsNullOrWhiteSpace(artist?.StrArtistBanner))
+        {
+            BackgroundImageUrl = artist?.StrArtistBanner!;
         }
         else
         {
-            BackgroundImageUrl = artist?.StrArtistBanner!;
+            BackgroundImageUrl = "artist_placeholder.png"; //Placeholder image
         }
     }
 

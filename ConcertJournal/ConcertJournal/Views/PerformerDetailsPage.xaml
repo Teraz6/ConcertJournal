@@ -15,10 +15,13 @@
             <VerticalStackLayout Spacing="0">
 
                 <Grid HeightRequest="300">
+                    
+                    <!--Remove max height request if image is clipping out of the boxView-->
                     <Image Source="{Binding BackgroundImageUrl}"
                            Aspect="AspectFill"
                            HorizontalOptions="Fill"
-                           VerticalOptions="Fill"/>
+                           VerticalOptions="Fill"
+                           MaximumHeightRequest="400"/>
 
                     <BoxView VerticalOptions="Fill" HorizontalOptions="Fill">
                         <BoxView.Background>
