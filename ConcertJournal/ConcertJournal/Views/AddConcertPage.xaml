@@ -102,9 +102,11 @@
                     </Border>
                 </Grid>
 
-                <material:EditorField Title="Your Experience" 
-                                      Text="{Binding Notes, Mode=TwoWay}" 
-                                      HeightRequest="120"/>
+                <material:EditorField 
+                    Title="Your Experience" 
+                    Text="{Binding Notes, Mode=TwoWay}" 
+                    HeightRequest="120"
+                    TextColor="{DynamicResource TextColor}"/>
 
                 <VerticalStackLayout Spacing="10">
                     <Grid ColumnDefinitions="*,Auto">
@@ -123,9 +125,9 @@
                                     <ImageButton Source="{DynamicResource DeleteIcon}" 
                                                  BackgroundColor="#80000000"
                                                  CornerRadius="15"
-                                                 HeightRequest="25" WidthRequest="25"
+                                                 HeightRequest="24" WidthRequest="24"
                                                  VerticalOptions="Start" HorizontalOptions="End"
-                                                 Margin="5"
+                                                 Margin="4"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddConcertViewModel}}, Path=RemoveMediaCommand}"
                                                  CommandParameter="{Binding .}"/>
                                 </Grid>

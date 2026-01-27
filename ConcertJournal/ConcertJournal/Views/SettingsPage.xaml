@@ -84,7 +84,7 @@
                                                 <Label Text="Export Data" FontAttributes="Bold"/>
                                                 <Label Text="Save your journey to Excel" FontSize="12" Opacity="0.6"/>
                                             </VerticalStackLayout>
-                                            <Button Grid.Column="1" Text="Export" Command="{Binding ExportDataCommand}" BackgroundColor="Transparent" BorderWidth="1" BorderColor="{DynamicResource Primary}" TextColor="{DynamicResource TextColor}" HeightRequest="40"/>
+                                            <Button Grid.Column="1" Text="Export" Command="{Binding ExportDataCommand}" StyleClass="ElevatedButton" HeightRequest="40"/>
                                         </Grid>
                                     </VerticalStackLayout>
                                 </Border>
