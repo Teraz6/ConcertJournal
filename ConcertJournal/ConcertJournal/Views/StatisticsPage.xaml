@@ -102,22 +102,22 @@
                                         <Border Margin="0,5" Padding="5" BackgroundColor="{DynamicResource CardBackground}" StrokeShape="RoundRectangle 12">
                                             <Grid ColumnDefinitions="Auto, *, Auto">
                                                 <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" StrokeShape="RoundRectangle 20" 
-                                            BackgroundColor="{DynamicResource Primary}" Opacity="0.1" Margin="5"/>
+                                                    BackgroundColor="{DynamicResource Primary}" Opacity="0.1" Margin="5"/>
                                                 <Image Grid.Column="0" Source="{DynamicResource BandIcon}" WidthRequest="18" HorizontalOptions="Center"/>
 
                                                 <Button Grid.Column="1" 
-                                            Text="{Binding Name}" 
-                                            Command="{Binding SelectPerformerCommand}"
-                                            BackgroundColor="Transparent"
-                                            TextColor="{DynamicResource TextColor}"
-                                            FontAttributes="Bold"
-                                            FontSize="16"
-                                            HorizontalOptions="Start"
-                                            Padding="10,0"
-                                            BorderWidth="0"/>
+                                                    Text="{Binding Name}" 
+                                                    Command="{Binding SelectPerformerCommand}"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{DynamicResource TextColor}"
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    HorizontalOptions="Start"
+                                                    Padding="10,0"
+                                                    BorderWidth="0"/>
 
                                                 <Border Grid.Column="2" VerticalOptions="Center" Margin="0,0,10,0"
-                                            Padding="12,4" StrokeShape="RoundRectangle 15" BackgroundColor="{DynamicResource Background}">
+                                                    Padding="12,4" StrokeShape="RoundRectangle 15" BackgroundColor="{DynamicResource Background}">
                                                     <Label Text="{Binding CountText}" FontSize="12" FontAttributes="Bold" TextColor="{DynamicResource Primary}"/>
                                                 </Border>
                                             </Grid>
@@ -155,9 +155,9 @@
                                             <BoxView HeightRequest="1" Color="{DynamicResource Background}" Opacity="0.5"/>
 
                                             <Label FormattedText="{Binding ConcertsByYearFormatted}" 
-                                       HorizontalOptions="Start" 
-                                       FontSize="16"
-                                       LineHeight="1.6"/>
+                                               HorizontalOptions="Start" 
+                                               FontSize="16"
+                                               LineHeight="1.6"/>
                                         </VerticalStackLayout>
                                     </Border>
                                 </VerticalStackLayout>
@@ -175,7 +175,7 @@
                             <Label Text="World Tour Progress" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10"/>
                             <lvc:CartesianChart
                                 x:Name="CountriesChart"
-                                BindingContext="{Binding ChartVM}"
+                                x:DataType="{x:Null}"
                                 Series="{Binding CountrySeries}"
                                 XAxes="{Binding XAxes}"
                                 YAxes="{Binding YAxes}" 

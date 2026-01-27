@@ -8,6 +8,7 @@
              xmlns:controls="clr-namespace:ConcertJournal.Views.Controls"
              xmlns:vm="clr-namespace:ConcertJournal.ViewModels"
              x:DataType="vm:ConcertDetailsViewModel"
+             x:Name="ConcertDetails"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{DynamicResource Background}">
 
@@ -115,7 +116,7 @@
                                     <Grid>
                                         <Image Source="{Binding .}" Aspect="AspectFill">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertDetailsViewModel}}, Path=OpenImageZoomCommand}"
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference ConcertDetails}, Path=BindingContext.OpenZoomImageCommand}"
                                                                       CommandParameter="{Binding .}"/>
                                             </Image.GestureRecognizers>
                                         </Image>

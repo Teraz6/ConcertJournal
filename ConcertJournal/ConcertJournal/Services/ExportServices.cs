@@ -108,7 +108,7 @@ namespace ConcertJournal.Services
             {
                 using var stream = await file.OpenStreamForWriteAsync();
                 workbook.SaveAs(stream);
-                await page.DisplayAlert("Export Complete", $"Saved to: {file.Path}", "OK");
+                await page.DisplayAlertAsync("Export Complete", $"Saved to: {file.Path}", "OK");
             }
 #else
             // Mobile: write to cache and share

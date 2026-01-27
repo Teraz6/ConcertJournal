@@ -186,7 +186,7 @@ public partial class ConcertListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task CardClicked(Concert concert)
+    private async Task CardClicked(Concert? concert)
     {
         if (concert == null || IsLoading) return;
 
@@ -201,9 +201,9 @@ public partial class ConcertListViewModel : ObservableObject
         // It's a good idea to set a small "IsBusy" flag to prevent double-taps 
         // from opening two pages.
         await Shell.Current.GoToAsync(nameof(ConcertDetailsPage), new Dictionary<string, object>
-    {
-        { "Concert", concert }
-    });
+        {
+            ["Concert"] = concert
+        });
     }
 
     [RelayCommand]
