@@ -67,10 +67,10 @@ namespace ConcertJournal.Data
 
                 // Use ToLower() on the fields to ensure a case-insensitive match
                 query = query.Where(c =>
-                    c.EventTitle.ToLower().Contains(lowerSearch) ||
-                    c.Performers.ToLower().Contains(lowerSearch) ||
-                    c.Country.ToLower().Contains(lowerSearch) ||
-                    c.City.ToLower().Contains(lowerSearch));
+                    c.EventTitle!.ToLower().Contains(lowerSearch) ||
+                    c.Performers!.ToLower().Contains(lowerSearch) ||
+                    c.Country!.ToLower().Contains(lowerSearch) ||
+                    c.City!.ToLower().Contains(lowerSearch));
             }
 
             // 2. Sort - Map the RadioButton "Value" to the SQL Logic
@@ -98,12 +98,11 @@ namespace ConcertJournal.Data
                 var lowerSearch = searchTerm.ToLower().Trim();
 
                 // 2. Exact same fields as GetConcertsPagedAsync
-                // Added Performers here so "Metallica" is counted correctly!
                 query = query.Where(c =>
-                    c.EventTitle.ToLower().Contains(lowerSearch) ||
-                    c.Performers.ToLower().Contains(lowerSearch) ||
-                    c.Country.ToLower().Contains(lowerSearch) ||
-                    c.City.ToLower().Contains(lowerSearch));
+                    c.EventTitle!.ToLower().Contains(lowerSearch) ||
+                    c.Performers!.ToLower().Contains(lowerSearch) ||
+                    c.Country!.ToLower().Contains(lowerSearch) ||
+                    c.City!.ToLower().Contains(lowerSearch));
             }
 
             return await query.CountAsync();

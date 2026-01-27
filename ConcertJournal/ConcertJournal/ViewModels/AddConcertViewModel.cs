@@ -60,7 +60,7 @@ public partial class AddConcertViewModel : ObservableObject
         Country = value.Country ?? "";
         City = value.City ?? "";
         Notes = value.Notes ?? "";
-        Date = (DateTime)value.Date;
+        Date = (DateTime)value.Date!;
         Rating = value.Rating;
 
         // Load collections

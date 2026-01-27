@@ -14,7 +14,7 @@ public class CountryChartViewModel
     public double ChartHeight { get; set; }
 
     private readonly int maxLabelLength = 12;
-    private string[] originalLabels;
+    private readonly string[] originalLabels;
 
     public CountryChartViewModel(
         IEnumerable<(string Country, int ConcertCount, int PerformerCount)> data)
