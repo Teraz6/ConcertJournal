@@ -92,7 +92,11 @@
                             TextColor="{DynamicResource TextColor}"/>
                             </HorizontalStackLayout>
 
-                            <CollectionView Grid.Row="2" ItemsSource="{Binding DisplayedPerformers}">
+                            <CollectionView 
+                                Grid.Row="2" ItemsSource="{Binding DisplayedPerformers}"
+                                RemainingItemsThreshold="8"
+                                RemainingItemsThresholdReached="OnRemainingItemsThresholdReached"
+                                VerticalScrollBarVisibility="Never">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="vm:PerformerViewModel">
                                         <Border Margin="0,5" Padding="5" BackgroundColor="{DynamicResource CardBackground}" StrokeShape="RoundRectangle 12">
