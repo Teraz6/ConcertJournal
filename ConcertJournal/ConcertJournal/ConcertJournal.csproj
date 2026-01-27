@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android;net9.0-ios;net9.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
 
@@ -12,6 +12,8 @@
 		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
 		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
+		<LangVersion>preview</LangVersion>
 
 		<OutputType>Exe</OutputType>
 		<RootNamespace>ConcertJournal</RootNamespace>
@@ -58,30 +60,30 @@
 
 	<ItemGroup>
 	  <None Remove="C:\Users\reten\.nuget\packages\inputkit.maui\4.5.1\contentFiles\any\net9.0-android35.0\icon512.png" />
+	  <None Remove="C:\Users\reten\.nuget\packages\inputkit.maui\4.6.0\contentFiles\any\net10.0-android36.0\icon512.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="ClosedXML" Version="0.105.0" />
-		<PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="13.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CustomShellMaui" Version="1.0.6" />
-		<PackageReference Include="InputKit.Maui" Version="4.5.1" />
+		<PackageReference Include="InputKit.Maui" Version="4.6.0" />
 		<PackageReference Include="LiveChartsCore" Version="2.0.0-rc6.1" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc6.1" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc6.1" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.12" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.10" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
-		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="9.0.120" />
-		<PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.120" />
-		<PackageReference Include="Microsoft.Maui.Maps" Version="9.0.120" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.30" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.30" />
+		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="10.0.30" />
+		<PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.30" />
+		<PackageReference Include="Microsoft.Maui.Maps" Version="10.0.30" />
 		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="3.119.1" />
 		<PackageReference Include="SourceGear.sqlite3" Version="3.50.4.5" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-		<PackageReference Include="System.ObjectModel" Version="4.3.0" />
-		<PackageReference Include="UraniumUI" Version="2.13.0" />
-		<PackageReference Include="UraniumUI.Material" Version="2.13.0" />
+		<PackageReference Include="UraniumUI" Version="2.14.0" />
+		<PackageReference Include="UraniumUI.Material" Version="2.14.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -13,12 +13,12 @@ public partial class PerformerDetailsViewModel : ObservableObject
     private readonly IConcertService _concertService;
     private readonly AudioDbServices _audioDbServices;
 
-    [ObservableProperty] private string _performerName;
-    [ObservableProperty] private string _timesSeen = "-";
-    [ObservableProperty] private string _countriesSeen = "-";
-    [ObservableProperty] private string _firstSeen = "-";
-    [ObservableProperty] private string _recentSeen = "-";
-    [ObservableProperty] private string _backgroundImageUrl = "";
+    [ObservableProperty] public partial string PerformerName { get; set; } = string.Empty;
+    [ObservableProperty] public partial string TimesSeen { get; set; } = "-";
+    [ObservableProperty] public partial string CountriesSeen { get; set; } = "-";
+    [ObservableProperty] public partial string FirstSeen { get; set; } = "-";
+    [ObservableProperty] public partial string RecentSeen { get; set; } = "-";
+    [ObservableProperty] public partial string BackgroundImageUrl { get; set; } = "artist_placeholder.png";
 
     public ObservableCollection<Concert> Concerts { get; } = new();
 

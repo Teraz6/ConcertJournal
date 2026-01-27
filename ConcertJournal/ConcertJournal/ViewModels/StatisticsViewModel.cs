@@ -12,26 +12,26 @@ public partial class StatisticsViewModel : BaseViewModel
     public DatabaseContext Database { get; }
 
     // --- Overview Properties ---
-    [ObservableProperty] private string totalConcertsText = "Loading...";
-    [ObservableProperty] private double averageRating;
-    [ObservableProperty] private string latestConcertText = "N/A";
-    [ObservableProperty] private string mostConcertsYearText = "N/A";
-    [ObservableProperty] private string mostPerformersYearText = "N/A";
-    [ObservableProperty] private FormattedString concertsByYearFormatted = new();
+    [ObservableProperty] public partial string TotalConcertsText { get; set; } = "Loading...";
+    [ObservableProperty] public partial double AverageRating { get; set; }
+    [ObservableProperty] public partial string LatestConcertText { get; set; } = "N/A";
+    [ObservableProperty] public partial string MostConcertsYearText { get; set; } = "N/A";
+    [ObservableProperty] public partial string MostPerformersYearText { get; set; } = "N/A";
+    [ObservableProperty] public partial FormattedString ConcertsByYearFormatted { get; set; } = new();
 
     // --- Performers Tab Properties ---
-    private List<PerformerViewModel> _allPerformers = new();
-    private List<PerformerViewModel> _filteredPerformers = new();
+    private List<PerformerViewModel> _allPerformers = [];
+    private List<PerformerViewModel> _filteredPerformers = [];
     public ObservableCollection<PerformerViewModel> DisplayedPerformers { get; } = new();
 
-    [ObservableProperty] private string searchQuery = string.Empty;
+    [ObservableProperty] public partial string SearchQuery { get; set; } = string.Empty;
 
     private const int PageSize = 20;
     private int _currentPage = 0;
     private bool _isAddingItems;
 
     // --- Chart Property ---
-    [ObservableProperty] private CountryChartViewModel? chartVM;
+    [ObservableProperty] public partial CountryChartViewModel? ChartVM { get; set; }
 
     public StatisticsViewModel(DatabaseContext database)
     {
@@ -163,7 +163,7 @@ public partial class StatisticsViewModel : BaseViewModel
     {
         _filteredPerformers = string.IsNullOrWhiteSpace(SearchQuery)
             ? _allPerformers
-            : _allPerformers.Where(p => p.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            : _allPerformers.Where(p => p.Name!.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         ResetAndLoadFirstPage();
     }
 

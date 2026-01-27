@@ -23,26 +23,26 @@ public partial class ConcertListViewModel : ObservableObject
     private int _currentPage = 0;
     private bool _hasMoreItems = true;
 
-    [ObservableProperty] private bool _isLoading;
-    [ObservableProperty] private string _totalConcertsText = "Loading...";
-    [ObservableProperty] private bool _isFilterPresented;
-    [ObservableProperty] private string _filterIcon;
-    [ObservableProperty] private bool _hasSelection;
+    [ObservableProperty] public partial bool IsLoading { get; set; }
+    [ObservableProperty] public partial string TotalConcertsText { get; set; } = "Loading...";
+    [ObservableProperty] public partial bool IsFilterPresented { get;set; }
+    [ObservableProperty] public partial string FilterIcon { get; set; } = "filter_black.png";
+    [ObservableProperty] public partial bool HasSelection { get; set; }
 
     // Search
-    [ObservableProperty] private string _searchText = string.Empty;
-    private CancellationTokenSource _searchCancellation;
+    [ObservableProperty] public partial string SearchText { get; set; } = string.Empty;
+    private CancellationTokenSource? _searchCancellation;
 
     // Sorting
     private const string SortPreferenceKey = "SortRadioGroup";
-    [ObservableProperty] private string _selectedSort;
+    [ObservableProperty] public partial string SelectedSort { get; set; }
 
     // 1. Constructor with Dependency Injection
     public ConcertListViewModel(IConcertService concertService)
     {
         _concertService = concertService;
 
-        _selectedSort = Preferences.Get(SortPreferenceKey, "LatestAdded");
+        SelectedSort = Preferences.Get(SortPreferenceKey, "LatestAdded");
 
         UpdateFilterIcon();
 
@@ -133,7 +133,7 @@ public partial class ConcertListViewModel : ObservableObject
     {
         if (SelectedItems.Count == 0) return;
 
-        bool confirm = await Shell.Current.DisplayAlert("Delete",
+        bool confirm = await Shell.Current.DisplayAlertAsync("Delete",
             $"Delete {SelectedItems.Count} concerts?", "Yes", "No");
 
         if (!confirm) return;
@@ -167,7 +167,7 @@ public partial class ConcertListViewModel : ObservableObject
 
     private void UpdateFilterIcon()
     {
-        bool isDark = App.Current.RequestedTheme == AppTheme.Dark;
+        bool isDark = App.Current!.RequestedTheme == AppTheme.Dark;
         string colorSuffix = isDark ? "white" : "black";
 
         string iconName = IsFilterPresented ? "up" : "filter";
@@ -258,7 +258,7 @@ public partial class ConcertListViewModel : ObservableObject
         if (concert == null) return;
 
         // Simple placeholder to prevent binding errors
-        string action = await Shell.Current.DisplayActionSheet("Options", "Cancel", null, "Edit", "Delete");
+        string action = await Shell.Current.DisplayActionSheetAsync("Options", "Cancel", null, "Edit", "Delete");
         if (action == "Delete")
         {
             SelectedItems.Clear();

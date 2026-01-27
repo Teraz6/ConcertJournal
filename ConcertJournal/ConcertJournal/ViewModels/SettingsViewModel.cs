@@ -15,18 +15,17 @@ public partial class SettingsViewModel : ObservableObject
     private const string DefaultCityKey = "DefaultCity";
     private const string AppThemeKey = "AppTheme";
 
-    [ObservableProperty] private bool _isDevilTheme;
-    [ObservableProperty] private string _defaultCountry;
-    [ObservableProperty] private string _defaultCity;
-
+    [ObservableProperty] public partial bool IsDevilTheme { get; set; }
+    [ObservableProperty] public partial string DefaultCountry { get; set; }
+    [ObservableProperty] public partial string DefaultCity {  get; set; }
     public SettingsViewModel(IConcertService concertService, ImportServices importService)
     {
         _concertService = concertService;
 
         // Load Initial States
-        _isDevilTheme = Preferences.Get(AppThemeKey, "Angel") == "Devil";
-        _defaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
-        _defaultCity = Preferences.Get(DefaultCityKey, string.Empty);
+        IsDevilTheme = Preferences.Get(AppThemeKey, "Angel") == "Devil";
+        DefaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
+        DefaultCity = Preferences.Get(DefaultCityKey, string.Empty);
         _importService = importService;
     }
 
@@ -51,7 +50,7 @@ public partial class SettingsViewModel : ObservableObject
     {
         Preferences.Set(DefaultCountryKey, DefaultCountry?.Trim() ?? string.Empty);
         Preferences.Set(DefaultCityKey, DefaultCity?.Trim() ?? string.Empty);
-        await Shell.Current.DisplayAlert("Success", "Default values saved!", "OK");
+        await Shell.Current.DisplayAlertAsync("Success", "Default values saved!", "OK");
     }
 
     [RelayCommand]
@@ -60,7 +59,7 @@ public partial class SettingsViewModel : ObservableObject
         var concerts = await _concertService.GetConcertsPagedAsync(0, 10000, "Default", "");
         if (!concerts.Any())
         {
-            await Shell.Current.DisplayAlert("No Data", "Nothing to export.", "OK");
+            await Shell.Current.DisplayAlertAsync("No Data", "Nothing to export.", "OK");
             return;
         }
         await ExportServices.ExportConcertsToExcelAsync(concerts.ToList(), Shell.Current.CurrentPage);
@@ -79,11 +78,11 @@ public partial class SettingsViewModel : ObservableObject
             // FIX: Use the private field (_importService) instead of the Class name (ImportServices)
             await _importService.ImportConcertsFromExcelAsync(stream);
 
-            await Shell.Current.DisplayAlert("Success", "Concerts imported!", "OK");
+            await Shell.Current.DisplayAlertAsync("Success", "Concerts imported!", "OK");
         }
         catch (Exception ex)
         {
-            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
         }
     }
 }

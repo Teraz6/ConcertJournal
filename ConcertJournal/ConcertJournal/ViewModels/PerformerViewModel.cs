@@ -6,7 +6,7 @@ namespace ConcertJournal.ViewModels
 {
     public partial class PerformerViewModel : ObservableObject
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int Count { get; set; }
         public string CountText => $"{Count} {(Count == 1 ? "Concert" : "Concerts")}";
 
