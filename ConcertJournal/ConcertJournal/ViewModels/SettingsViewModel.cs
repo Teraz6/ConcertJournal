@@ -15,18 +15,17 @@ public partial class SettingsViewModel : ObservableObject
     private const string DefaultCityKey = "DefaultCity";
     private const string AppThemeKey = "AppTheme";
 
-    [ObservableProperty] private bool _isDevilTheme;
-    [ObservableProperty] private string _defaultCountry;
-    [ObservableProperty] private string _defaultCity;
-
+    [ObservableProperty] public partial bool IsDevilTheme { get; set; }
+    [ObservableProperty] public partial string DefaultCountry { get; set; }
+    [ObservableProperty] public partial string DefaultCity {  get; set; }
     public SettingsViewModel(IConcertService concertService, ImportServices importService)
     {
         _concertService = concertService;
 
         // Load Initial States
-        _isDevilTheme = Preferences.Get(AppThemeKey, "Angel") == "Devil";
-        _defaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
-        _defaultCity = Preferences.Get(DefaultCityKey, string.Empty);
+        IsDevilTheme = Preferences.Get(AppThemeKey, "Angel") == "Devil";
+        DefaultCountry = Preferences.Get(DefaultCountryKey, string.Empty);
+        DefaultCity = Preferences.Get(DefaultCityKey, string.Empty);
         _importService = importService;
     }
 

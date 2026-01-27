@@ -16,21 +16,21 @@ public partial class AddConcertViewModel : ObservableObject
 
     // The backing property for the QueryProperty
     [ObservableProperty]
-    private Concert? _concert;
+    public partial Concert? Concert { get; set; }
 
     // --- UI State Properties ---
-    [ObservableProperty] private string _pageTitle = "New Event";
-    [ObservableProperty] private string _saveButtonText = "Create";
+    [ObservableProperty] public partial string PageTitle { get; set; } = "New Event";
+    [ObservableProperty] public partial string SaveButtonText { get; set; } = "Create";
 
     // --- Form Properties ---
-    [ObservableProperty] private string _eventTitle = string.Empty;
-    [ObservableProperty] private string _venue = string.Empty;
-    [ObservableProperty] private string _country = string.Empty;
-    [ObservableProperty] private string _city = string.Empty;
-    [ObservableProperty] private string _notes = string.Empty;
-    [ObservableProperty] private DateTime _date = DateTime.Today;
-    [ObservableProperty] private double _rating;
-    [ObservableProperty] private string _performerInput = string.Empty;
+    [ObservableProperty] public partial string EventTitle { get; set; } = string.Empty;
+    [ObservableProperty] public partial string Venue { get; set; } = string.Empty;
+    [ObservableProperty] public partial string Country { get; set; } = string.Empty;
+    [ObservableProperty] public partial string City { get; set; } = string.Empty;
+    [ObservableProperty] public partial string Notes { get; set; } = string.Empty;
+    [ObservableProperty] public partial DateTime Date { get; set; } = DateTime.Today;
+    [ObservableProperty] public partial double Rating { get; set; }
+    [ObservableProperty] public partial string PerformerInput { get; set; } = string.Empty;
 
     public ObservableCollection<string> Performers { get; } = new();
     public ObservableCollection<string> MediaFiles { get; } = new();

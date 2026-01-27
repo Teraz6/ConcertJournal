@@ -15,11 +15,11 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
     private readonly IConcertService _concertService;
 
     [ObservableProperty]
-    private Concert _concert;
+    public partial Concert? Concert { get; set; } = null;
 
     // These collections will hold the parsed data for the UI
-    public ObservableCollection<string> Performers { get; } = new();
-    public ObservableCollection<string> MediaFiles { get; } = new();
+    public ObservableCollection<string> Performers { get; } = [];
+    public ObservableCollection<string> MediaFiles { get; } = [];
 
     public ConcertDetailsViewModel(IConcertService concertService)
     {
@@ -27,8 +27,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
         WeakReferenceMessenger.Default.Register(this);
     }
 
-    // This runs automatically when the "Concert" property is set via navigation
-    partial void OnConcertChanged(Concert value)
+    partial void OnConcertChanged(Concert? value)
     {
         if (value == null) return;
 
@@ -68,7 +67,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
         // Navigate to the Add/Edit page, passing the current concert
         await Shell.Current.GoToAsync(nameof(AddConcertPage), new Dictionary<string, object>
         {
-            { "SelectedConcert", Concert }
+            { "SelectedConcert", Concert!}
         });
     }
 
@@ -80,7 +79,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
 
         if (confirm)
         {
-            await _concertService.DeleteConcertAsync(Concert);
+            await _concertService.DeleteConcertAsync(Concert!);
             await Shell.Current.GoToAsync(".."); // Go back to the list
         }
     }

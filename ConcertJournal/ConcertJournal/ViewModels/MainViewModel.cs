@@ -8,19 +8,19 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly UpdateServices _updateService;
 
-    [ObservableProperty] private string _versionText = $"Current version: {AppInfo.VersionString}";
+    [ObservableProperty] public partial string VersionText { get; set; } = $"Current version: {AppInfo.VersionString}";
 
-    [ObservableProperty] private Color _statusColor = Colors.Gray;
+    [ObservableProperty] public partial Color StatusColor { get; set; } = Colors.Gray;
 
-    [ObservableProperty] private string _updateMessage = string.Empty;
+    [ObservableProperty] public partial string UpdateMessage { get; set; } = string.Empty;
 
-    [ObservableProperty] private bool _canUpdate;
+    [ObservableProperty] public partial bool CanUpdate { get; set; }
 
     private string? _downloadUrl;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    private bool _isBusy;
+    public partial bool IsBusy { get; set; }
 
     // This property provides the inverted value to the UI directly
     public bool IsNotBusy => !IsBusy;

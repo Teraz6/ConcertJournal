@@ -5,9 +5,9 @@ namespace ConcertJournal.ViewModels
     public partial class BaseViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool isLoading;
+        public partial bool IsLoading { get; set; }
 
         [ObservableProperty]
-        private string title = string.Empty;
+        public partial string Title { get; set; } = string.Empty;
     }
 }
