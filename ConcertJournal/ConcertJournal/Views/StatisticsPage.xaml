@@ -41,7 +41,7 @@
                     <DataTemplate x:DataType="vm:StatisticsViewModel">
                         <ScrollView Padding="15">
                             <VerticalStackLayout Spacing="15">
-                                <Border BackgroundColor="{DynamicResource Primary}" Padding="20" StrokeShape="RoundRectangle 20">
+                                <Border BackgroundColor="{DynamicResource CardBackground}" Padding="20" StrokeShape="RoundRectangle 20">
                                     <VerticalStackLayout Spacing="5">
                                         <Label Text="LATEST MEMORY" FontSize="10" FontAttributes="Bold" TextColor="White" Opacity="0.8"/>
                                         <Label Text="{Binding LatestConcertText}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
@@ -175,7 +175,6 @@
                             <Label Text="World Tour Progress" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,10"/>
                             <lvc:CartesianChart
                                 x:Name="CountriesChart"
-                                x:DataType="{x:Null}"
                                 Series="{Binding CountrySeries}"
                                 XAxes="{Binding XAxes}"
                                 YAxes="{Binding YAxes}" 

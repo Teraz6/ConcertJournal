@@ -186,7 +186,7 @@ public partial class ConcertListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task CardClicked(Concert? concert)
+    public async Task CardClicked(Concert? concert)
     {
         if (concert == null || IsLoading) return;
 
@@ -253,7 +253,7 @@ public partial class ConcertListViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task ShowOptions(Concert concert)
+    public async Task ShowOptions(Concert concert)
     {
         if (concert == null) return;
 

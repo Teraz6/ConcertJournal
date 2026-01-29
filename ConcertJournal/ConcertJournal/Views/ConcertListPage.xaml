@@ -63,10 +63,7 @@
 
                                 <Grid ColumnDefinitions="Auto, *, Auto" Padding="12" ColumnSpacing="15">
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                            Command="{Binding Source={x:Reference ConcertPage}, Path=BindingContext.CardClickedCommand}"
-                                            CommandParameter="{Binding .}"
-                                            x:DataType="{x:Null}"/>
+                                        <TapGestureRecognizer Tapped="OnCardTapped"/>
                                     </Grid.GestureRecognizers>
                                     <Border Grid.Column="0" WidthRequest="55" HeightRequest="60" 
                                             StrokeShape="RoundRectangle 10" BackgroundColor="{DynamicResource Background}">
@@ -92,12 +89,10 @@
 
                                     <ImageButton Grid.Column="2" 
                                                  Source="{DynamicResource ThreeDotsIcon}"
-                                                 Command="{Binding Source={x:Reference ConcertPage}, Path=BindingContext.ShowOptionsCommand}"
-                                                 CommandParameter="{Binding .}"
-                                                 x:DataType="{x:Null}"
                                                  BackgroundColor="Transparent"
                                                  VerticalOptions="Start"
-                                                 HeightRequest="30"/>
+                                                 HeightRequest="30"
+                                                 Clicked="OnShowOptionsClicked"/>
                                 </Grid>
                             </Border>
                         </Grid>

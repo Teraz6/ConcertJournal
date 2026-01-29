@@ -116,8 +116,8 @@
                                     <Grid>
                                         <Image Source="{Binding .}" Aspect="AspectFill">
                                             <Image.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={x:Reference ConcertDetails}, Path=BindingContext.OpenZoomImageCommand}"
-                                                                      CommandParameter="{Binding .}"/>
+                                                <TapGestureRecognizer Tapped="OnImageTapped" 
+                                                                      x:DataType="x:String"/>
                                             </Image.GestureRecognizers>
                                         </Image>
                                         <BoxView VerticalOptions="End" HeightRequest="60">

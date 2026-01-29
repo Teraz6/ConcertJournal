@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ConcertJournal.Models;
 using ConcertJournal.ServiceInterface;
 using ConcertJournal.Services;
+using ConcertJournal.Views;
 using System.Collections.ObjectModel;
 
 namespace ConcertJournal.ViewModels;
@@ -95,7 +96,7 @@ public partial class PerformerDetailsViewModel : ObservableObject
     [RelayCommand]
     private async Task GoToDetailsAsync(Concert concert)
     {
-        await Shell.Current.GoToAsync(nameof(Views.ConcertDetailsPage), new Dictionary<string, object>
+        await Shell.Current.GoToAsync(nameof(ConcertDetailsPage), new Dictionary<string, object>
         {
             { "Concert", concert }
         });

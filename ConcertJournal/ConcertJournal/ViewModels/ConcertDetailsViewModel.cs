@@ -85,15 +85,6 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
     }
 
     [RelayCommand]
-    private async Task OpenImageZoomAsync(string imagePath)
-    {
-        if (string.IsNullOrEmpty(imagePath)) return;
-
-        // Use a modal navigation to push the zoom page
-        await Shell.Current.Navigation.PushModalAsync(new Views.ImageZoomPage(imagePath));
-    }
-
-    [RelayCommand]
     private async Task PerformerTappedAsync()
     {
         if (string.IsNullOrWhiteSpace(Concert?.Performers)) return;

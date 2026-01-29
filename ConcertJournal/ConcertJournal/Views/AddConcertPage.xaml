@@ -67,7 +67,7 @@
                                                 <Label Text="{Binding .}" VerticalOptions="Center" FontSize="12"/>
                                                 <ImageButton Source="{DynamicResource DeleteIcon}" HeightRequest="12"
                                                              WidthRequest="12"
-                                                             Command="{Binding Source={x:Reference AddConcert}, Path=BindingContext.RemovePerformerCommand}"
+                                                             Command="{Binding Path=RemovePerformerCommand, Source={x:Reference AddPage}}"
                                                              CommandParameter="{Binding .}"
                                                              x:DataType="vm:AddConcertViewModel"/>
                                             </HorizontalStackLayout>
@@ -130,8 +130,9 @@
                                                  HeightRequest="24" WidthRequest="24"
                                                  VerticalOptions="Start" HorizontalOptions="End"
                                                  Margin="4"
-                                                 Command="{Binding Source={x:Reference AddConcert}, Path=BindingContext.RemoveMediaCommand}"
-                                                 CommandParameter="{Binding .}"/>
+                                                 Command="{Binding Source={x:Reference AddConcert}, Path=RemoveMediaCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 x:DataType="vm:AddConcertViewModel"/>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
