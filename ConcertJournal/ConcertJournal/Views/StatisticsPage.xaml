@@ -43,8 +43,8 @@
                             <VerticalStackLayout Spacing="15">
                                 <Border BackgroundColor="{DynamicResource CardBackground}" Padding="20" StrokeShape="RoundRectangle 20">
                                     <VerticalStackLayout Spacing="5">
-                                        <Label Text="LATEST MEMORY" FontSize="10" FontAttributes="Bold" TextColor="White" Opacity="0.8"/>
-                                        <Label Text="{Binding LatestConcertText}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                        <Label Text="LATEST MEMORY" FontSize="10" FontAttributes="Bold" TextColor="{DynamicResource TextColor}" Opacity="0.8"/>
+                                        <Label Text="{Binding LatestConcertText}" FontSize="20" FontAttributes="Bold" TextColor="{DynamicResource TextColor}"/>
                                     </VerticalStackLayout>
                                 </Border>
 
