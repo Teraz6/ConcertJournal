@@ -67,7 +67,7 @@
                                                 <Label Text="{Binding .}" VerticalOptions="Center" FontSize="12"/>
                                                 <ImageButton Source="{DynamicResource DeleteIcon}" HeightRequest="12"
                                                              WidthRequest="12"
-                                                             Command="{Binding Path=RemovePerformerCommand, Source={x:Reference AddPage}}"
+                                                             Command="{Binding Path=RemovePerformerCommand, Source={x:Reference AddConcert}}"
                                                              CommandParameter="{Binding .}"
                                                              x:DataType="vm:AddConcertViewModel"/>
                                             </HorizontalStackLayout>

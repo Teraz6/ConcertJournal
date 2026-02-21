@@ -67,7 +67,7 @@ public partial class ConcertDetailsViewModel : ObservableObject, IRecipient<Conc
         // Navigate to the Add/Edit page, passing the current concert
         await Shell.Current.GoToAsync(nameof(AddConcertPage), new Dictionary<string, object>
         {
-            { "SelectedConcert", Concert!}
+            { "SelectedConcert", Concert}
         });
     }
 

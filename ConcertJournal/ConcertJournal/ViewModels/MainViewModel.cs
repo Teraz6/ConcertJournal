@@ -53,7 +53,7 @@ public partial class MainViewModel : ObservableObject
             if (info == null)
             {
                 StatusColor = Colors.Gray;
-                UpdateMessage = "Unable to check for updates.";
+                UpdateMessage = "This app isn't updated anymore.";
                 CanUpdate = false;
                 return;
             }

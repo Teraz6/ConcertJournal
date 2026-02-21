@@ -65,6 +65,7 @@ public static class MauiProgram
         builder.Services.AddTransient<StatisticsViewModel>();
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<PerformerViewModel>();
+        builder.Services.AddTransient<BaseViewModel>();
 
         //Register pages
         builder.Services.AddTransient<AddConcertPage>();
