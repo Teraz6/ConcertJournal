@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using ConcertJournal.Resources.Themes;
 using ConcertJournal.ServiceInterface;
 using ConcertJournal.Services;
+using ConcertJournal.Tools;
 
 namespace ConcertJournal.ViewModels;
 
@@ -83,6 +84,20 @@ public partial class SettingsViewModel : ObservableObject
         catch (Exception ex)
         {
             await Shell.Current.DisplayAlertAsync("Error", ex.Message, "OK");
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportForExpoAsync()
+    {
+        try
+        {
+            var exportPath = await Exporter.ExportAsync();
+            await Shell.Current.DisplayAlertAsync("Export Complete", $"Export saved:\n{exportPath}", "OK");
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlertAsync("Export Error", ex.Message, "OK");
         }
     }
 }

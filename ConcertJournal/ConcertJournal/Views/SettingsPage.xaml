@@ -86,6 +86,16 @@
                                             </VerticalStackLayout>
                                             <Button Grid.Column="1" Text="Export" Command="{Binding ExportDataCommand}" StyleClass="ElevatedButton" HeightRequest="40"/>
                                         </Grid>
+
+                                        <BoxView HeightRequest="1" Color="{DynamicResource Background}" Opacity="0.5"/>
+
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <VerticalStackLayout>
+                                                <Label Text="Export for React Native (Expo)" FontAttributes="Bold"/>
+                                                <Label Text="Export data as JSON for import into the Expo app" FontSize="12" Opacity="0.6"/>
+                                            </VerticalStackLayout>
+                                            <Button Grid.Column="1" Text="Export for Expo" Command="{Binding ExportForExpoCommand}" StyleClass="ElevatedButton" HeightRequest="40"/>
+                                        </Grid>
                                     </VerticalStackLayout>
                                 </Border>
                             </VerticalStackLayout>
